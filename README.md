@@ -1,5 +1,3 @@
 # Nihongo-app
 
-Ajout token d'auth
-
-Modif numéro 2
+Mise en place auth SSH
