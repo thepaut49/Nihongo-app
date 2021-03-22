@@ -1,5 +1,4 @@
 import React from "react";
-import { GridList, GridListTile } from "@material-ui/core";
 import { radicals, nbrOfStrokesString } from "../common/Radicals";
 import CustomInput from "../common/CustomInput";
 import CustomInputPronunciation from "../common/CustomInputPronunciation";
@@ -7,7 +6,13 @@ import CustomIntegerInput from "../common/CustomIntegerInput";
 import PropTypes from "prop-types";
 
 function KanjiForm(props) {
-  const gridListStyle = { width: "60%" };
+  const gridListStyle = {
+    width: "100%",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, 3.5em)",
+    textAlign: "center",
+    margin: "0.5em",
+  };
   const numberStyle = {
     backgroundColor: "blue",
     color: "white",
@@ -75,21 +80,23 @@ function KanjiForm(props) {
 
       <input type="submit" value="Save" className="btn btn-primary" />
 
-      <br />
-      <br />
-      <GridList cellHeight={"auto"} cols={10} style={gridListStyle}>
+      <div style={gridListStyle}>
         {radicals.map((radical) => {
           return (
-            <GridListTile key={radical} cols={1}>
+            <>
               {nbrOfStrokesString.includes(radical) ? (
-                <button style={numberStyle}>{radical}</button>
+                <button key={radical} style={numberStyle}>
+                  {radical}
+                </button>
               ) : (
-                <button onClick={props.onClick}>{radical}</button>
+                <button key={radical} onClick={props.onClick}>
+                  {radical}
+                </button>
               )}
-            </GridListTile>
+            </>
           );
         })}
-      </GridList>
+      </div>
     </form>
   );
 }

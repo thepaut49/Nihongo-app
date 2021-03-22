@@ -16,6 +16,8 @@ import ManageNamePage from "./name/ManageNamePage";
 import NamesPage from "./name/NamesPage";
 import ManageWordPage from "./word/ManageWordPage";
 import WordsPage from "./word/WordsPage";
+import ManageSentencePage from "./sentence/ManageSentencePage";
+import SentencesPage from "./sentence/SentencesPage";
 import ManageParticulePage from "./particule/ManageParticulePage";
 import ParticulesPage from "./particule/ParticulesPage";
 import ManageGrammarRulePage from "./grammarrule/ManageGrammarRulePage";
@@ -62,6 +64,9 @@ function App() {
           <Route path="/grammarRules" component={GrammarRulesPage} />
           <Route path="/grammarRule/:title" component={ManageGrammarRulePage} />
           <Route path="/grammarRule" component={ManageGrammarRulePage} />
+          <Route path="/sentences" component={SentencesPage} />
+          <Route path="/sentence/:kanjis" component={ManageSentencePage} />
+          <Route path="/sentence" component={ManageSentencePage} />
           <Route path="/translation" component={Translation} />
           <Route path="/hiraganas" component={HiraganasPage} />
           <Route path="/katakanas" component={KatakanasPage} />

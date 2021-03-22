@@ -38,6 +38,10 @@ function Header() {
         Particles
       </NavLink>
 
+      <NavLink activeStyle={activeStyle} to="/sentences">
+        Sentences
+      </NavLink>
+
       <NavLink activeStyle={activeStyle} to="/Translation">
         Translation
       </NavLink>

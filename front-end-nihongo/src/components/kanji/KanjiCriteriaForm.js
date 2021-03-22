@@ -1,5 +1,4 @@
 import React from "react";
-import { GridList, GridListTile } from "@material-ui/core";
 import { radicals, nbrOfStrokesString } from "../common/Radicals";
 import CustomInput from "../common/CustomInput";
 import CustomIntegerInput from "../common/CustomIntegerInput";
@@ -7,7 +6,13 @@ import PropTypes from "prop-types";
 import "./kanjiCriteriaForm.css";
 
 function KanjiCriteriaForm(props) {
-  const gridListStyle = { width: "100%" };
+  const gridListStyle = {
+    width: "100%",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, 3.5em)",
+    textAlign: "center",
+    margin: "0.5em",
+  };
   const numberStyle = {
     backgroundColor: "blue",
     color: "white",
@@ -116,21 +121,24 @@ function KanjiCriteriaForm(props) {
           />
         </div>
 
-        <GridList cellHeight={"auto"} cols={20} style={gridListStyle}>
+        <div style={gridListStyle}>
           {radicals.map((radical) => {
             return (
-              <GridListTile key={radical} cols={1}>
+              <>
                 {nbrOfStrokesString.includes(radical) ? (
-                  <button style={numberStyle}>{radical}</button>
+                  <button key={radical} style={numberStyle}>
+                    {radical}
+                  </button>
                 ) : (
-                  <button onClick={props.onClick}>{radical}</button>
+                  <button key={radical} onClick={props.onClick}>
+                    {radical}
+                  </button>
                 )}
-              </GridListTile>
+              </>
             );
           })}
-        </GridList>
-        <br />
-        <br />
+        </div>
+
         <div className="buttons" style={buttonSearchClearStyle}>
           <input type="submit" value="Search" className="btn btn-primary" />
           <button onClick={props.onReset} className="btn btn-primary">

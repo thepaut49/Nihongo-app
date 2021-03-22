@@ -98,6 +98,15 @@ function HomePage() {
         <li>Add and modify a Grammar rule in the database</li>
         <li>Delete a Grammar rule in the database</li>
       </ul>
+      <h2>Sentences</h2>
+      <ul>
+        <li>List the Sentences in the database</li>
+        <li>Add and modify a Sentence in the database</li>
+        <li>Delete a Sentence in the database</li>
+        <li>
+          Find Sentences with search criteria (kanjis, pronunciation, meaning)
+        </li>
+      </ul>
       <h2>Translation</h2>
       <ul>
         <li>List the kanjis in a sentence</li>
