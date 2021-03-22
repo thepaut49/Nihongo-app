@@ -1,0 +1,15 @@
+.grid-container-form-criteria-na-adjective {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1em 1em;
+  grid-template-areas: "divkanjisCriteria divpronunciationCriteria divmeaningCriteria";
+}
+#divkanjisCriteria {
+  grid-area: divkanjisCriteria;
+}
+#divpronunciationCriteria {
+  grid-area: divpronunciationCriteria;
+}
+#divmeaningCriteria {
+  grid-area: divmeaningCriteria;
+}
