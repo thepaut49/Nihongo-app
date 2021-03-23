@@ -141,7 +141,7 @@ function KanjisPage(props) {
         onSubmit={handleSubmit}
         onReset={handleReset}
       />
-      <Link className="btn btn-primary" to="/kanji">
+      <Link className="btn btn-primary" to="/kanji/create">
         Add Kanji
       </Link>
       <KanjiList kanjis={kanjis} deleteKanji={deleteKanji} />

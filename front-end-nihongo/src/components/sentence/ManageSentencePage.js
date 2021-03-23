@@ -92,7 +92,6 @@ const ManageSentencePage = (props) => {
     for (let j = 0; j < newMeaning.length; j++) {
       newMeaning[j] = newMeaning[j].replace(";", "");
     }
-    debugger;
     const savedSentence = {
       ...sentence,
       kanjis: sentence.kanjis,

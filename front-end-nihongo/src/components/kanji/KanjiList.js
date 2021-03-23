@@ -3,6 +3,11 @@ import "./KanjisPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+const styleLink = {
+  margin: "0.5em",
+  padding: "0.5em",
+};
+
 function KanjiList(props) {
   return (
     <table>
@@ -13,25 +18,31 @@ function KanjiList(props) {
               <td>
                 <div className="grid-container">
                   <div className="kanji">
-                    <Link to={"/kanji/" + kanji.kanji}>{kanji.kanji}</Link>
+                    <Link to={"/kanji/visualize/" + kanji.kanji}>
+                      {kanji.kanji}
+                    </Link>
                   </div>
                   <div className="pronunciation">
-                    {kanji.pronunciation.map((pro, index) => {
-                      return (
-                        <span key={index} className="onemeaning">
-                          {pro}
-                        </span>
-                      );
-                    })}
+                    {kanji.pronunciation &&
+                      kanji.pronunciation.length > 0 &&
+                      kanji.pronunciation.map((pro, index) => {
+                        return (
+                          <span key={index} className="onemeaning">
+                            {pro}
+                          </span>
+                        );
+                      })}
                   </div>
                   <div className="meaning">
-                    {kanji.meaning.map((mean, index) => {
-                      return (
-                        <span key={index} className="onemeaning">
-                          {mean}
-                        </span>
-                      );
-                    })}
+                    {kanji.meaning &&
+                      kanji.meaning.length > 0 &&
+                      kanji.meaning.map((mean, index) => {
+                        return (
+                          <span key={index} className="onemeaning">
+                            {mean}
+                          </span>
+                        );
+                      })}
                   </div>
                   <div className="strokes">
                     <span>
@@ -43,7 +54,7 @@ function KanjiList(props) {
                       {kanji.radicals}
                     </span>
                   </div>
-                  <div className="delete">
+                  <div>
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
@@ -52,6 +63,9 @@ function KanjiList(props) {
                     >
                       Delete
                     </button>
+                    <Link to={"/kanji/modify/" + kanji.kanji} style={styleLink}>
+                      Modify
+                    </Link>
                   </div>
                 </div>
               </td>

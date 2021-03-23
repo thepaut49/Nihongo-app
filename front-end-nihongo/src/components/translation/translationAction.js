@@ -835,7 +835,6 @@ const wordCandidate = (sentencePart, currentIndex, words) => {
 const particuleCandidate = (sentencePart, currentIndex, particules) => {
   let part = null;
   let candidateList = [];
-  debugger;
   if (!particules) return candidateList;
   for (let index = 0; index < particules.length; index++) {
     let particule = particules[index];

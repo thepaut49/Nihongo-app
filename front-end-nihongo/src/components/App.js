@@ -7,6 +7,7 @@ import VerbsPage from "./verb/VerbsPage";
 import { Route, Switch, Redirect } from "react-router-dom";
 import NotFoundPage from "./common/NotFoundPage";
 import ManageKanjiPage from "./kanji/ManageKanjiPage";
+import VisualizeKanjiPage from "./kanji/VisualizeKanjiPage";
 import ManageVerbPage from "./verb/ManageVerbPage";
 import ManageNaAdjectivePage from "./naAdjective/ManageNaAdjectivePage";
 import NaAdjectivesPage from "./naAdjective/NaAdjectivesPage";
@@ -38,8 +39,12 @@ function App() {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/kanjis" component={KanjisPage} />
-          <Route path="/kanji/:kanji" component={ManageKanjiPage} />
-          <Route path="/kanji" component={ManageKanjiPage} />
+          <Route
+            path="/kanji/visualize/:kanji"
+            component={VisualizeKanjiPage}
+          />
+          <Route path="/kanji/modify/:kanji" component={ManageKanjiPage} />
+          <Route path="/kanji/create" component={ManageKanjiPage} />
           <Route path="/verbs" component={VerbsPage} />
           <Route path="/verb/:neutralForm" component={ManageVerbPage} />
           <Route path="/verb" component={ManageVerbPage} />
