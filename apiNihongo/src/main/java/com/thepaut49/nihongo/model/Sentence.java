@@ -26,7 +26,7 @@ public class Sentence implements Serializable {
 	@Column(nullable = false)
 	private String pronunciation;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 500)
 	private String meaning;
 	
 	@Column(nullable = false, length = 50)

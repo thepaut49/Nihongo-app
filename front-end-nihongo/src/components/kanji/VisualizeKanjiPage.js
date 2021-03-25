@@ -99,16 +99,15 @@ const VisualizeKanjiPage = (props) => {
         setWordsLinkedToKanji(
           objectsLinkedToKanji(kanji, wordStore.getWords())
         );
-
-      return function () {
-        kanjiStore.removeChangeListener(onChangeKanjis);
-        verbStore.removeChangeListener(onChangeVerbs);
-        naAdjectiveStore.removeChangeListener(onChangeNaAdjectives);
-        iAdjectiveStore.removeChangeListener(onChangeIAdjectives);
-        nameStore.removeChangeListener(onChangeNames);
-        wordStore.removeChangeListener(onChangeWords);
-      };
     }
+    return function () {
+      kanjiStore.removeChangeListener(onChangeKanjis);
+      verbStore.removeChangeListener(onChangeVerbs);
+      naAdjectiveStore.removeChangeListener(onChangeNaAdjectives);
+      iAdjectiveStore.removeChangeListener(onChangeIAdjectives);
+      nameStore.removeChangeListener(onChangeNames);
+      wordStore.removeChangeListener(onChangeWords);
+    };
   }, [
     kanji,
     kanjis.length,

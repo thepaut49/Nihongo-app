@@ -91,7 +91,7 @@ function NamesPage(props) {
         onClick={handleClick}
         onReset={handleReset}
       />
-      <Link className="btn btn-primary" to="/name">
+      <Link className="btn btn-primary" to="/name/create">
         Add Name
       </Link>
       <NameList names={names} deleteName={deleteName} />

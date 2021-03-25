@@ -97,7 +97,7 @@ function NaAdjectivesPage(props) {
         onClick={handleClick}
         onReset={handleReset}
       />
-      <Link className="btn btn-primary" to="/naAdjective">
+      <Link className="btn btn-primary" to="/naAdjective/create">
         Add NaAdjective
       </Link>
       <NaAdjectiveList

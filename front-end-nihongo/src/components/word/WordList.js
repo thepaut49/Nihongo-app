@@ -3,6 +3,10 @@ import "./WordsPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+const styleLink = {
+  margin: "0.5em",
+};
+
 function WordList(props) {
   return (
     <table>
@@ -13,7 +17,9 @@ function WordList(props) {
               <td>
                 <div className="grid-container-word">
                   <div className="word">
-                    <Link to={"/word/" + word.kanjis}>{word.kanjis}</Link>
+                    <Link to={"/word/visualize/" + word.kanjis}>
+                      {word.kanjis}
+                    </Link>
                   </div>
                   <div className="pronunciation">
                     {word.pronunciation.map((pronunciation, index) => {
@@ -42,6 +48,13 @@ function WordList(props) {
                     >
                       Delete
                     </button>
+                    <Link
+                      to={"/word/modify/" + word.kanjis}
+                      style={styleLink}
+                      className="btn btn-primary"
+                    >
+                      Modify
+                    </Link>
                   </div>
                 </div>
               </td>

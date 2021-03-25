@@ -103,7 +103,7 @@ function SentencesPage(props) {
         onClick={handleClick}
         onReset={handleReset}
       />
-      <Link className="btn btn-primary" to="/sentence">
+      <Link className="btn btn-primary" to="/sentence/create">
         Add Sentence
       </Link>
       <SentenceList sentences={sentences} deleteSentence={deleteSentence} />

@@ -14,6 +14,10 @@ const particuleTitleStyle = {
   fontSize: "xxx-large",
 };
 
+const styleLink = {
+  margin: "0.5em",
+};
+
 function ParticuleList(props) {
   return (
     <div>
@@ -21,7 +25,7 @@ function ParticuleList(props) {
         return (
           <div key={particule.id} style={particuleListStyle}>
             <div style={particuleTitleStyle}>
-              <Link to={"/particule/" + particule.kanjis}>
+              <Link to={"/particule/visualize/" + particule.kanjis}>
                 The Japanese particle {particule.kanjis}
               </Link>
             </div>
@@ -55,6 +59,13 @@ function ParticuleList(props) {
               >
                 Delete
               </button>
+              <Link
+                to={"/particule/modify/" + particule.kanjis}
+                style={styleLink}
+                className="btn btn-primary"
+              >
+                Modify
+              </Link>
             </div>
           </div>
         );

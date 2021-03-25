@@ -91,7 +91,7 @@ function WordsPage(props) {
         onClick={handleClick}
         onReset={handleReset}
       />
-      <Link className="btn btn-primary" to="/word">
+      <Link className="btn btn-primary" to="/word/create">
         Add Word
       </Link>
       <WordList words={words} deleteWord={deleteWord} />

@@ -12,6 +12,10 @@
   grid-template-areas:
     "iAdjective pronunciation pronunciation pronunciation"
     "iAdjective meaning meaning meaning";
+  border-radius: 10px;
+  background-color: rgba(38, 113, 22, 0.48);
+  margin: 0.5em;
+  padding: 0.5em;
 }
 
 .iAdjective {

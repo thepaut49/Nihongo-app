@@ -26,7 +26,7 @@ public class Name implements Serializable {
 	@Column(nullable = false)
 	private String pronunciation;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 500)
 	private String meaning;
 	
 	private Integer numberOfUse;

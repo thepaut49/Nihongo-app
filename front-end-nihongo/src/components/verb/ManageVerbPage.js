@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import verbStore from "../../stores/verbStore";
 import { Prompt } from "react-router-dom";
 import * as verbActions from "../../actions/verbActions";
-import VerbConjugationTable from "./VerbConjugationTable";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 
 const ManageVerbPage = (props) => {
@@ -116,8 +115,6 @@ const ManageVerbPage = (props) => {
     });
   }
 
-  const displayConjugationTable = verb.id && verb.neutralForm.length >= 2;
-
   return (
     <>
       <h2>Manage Verb</h2>
@@ -130,7 +127,6 @@ const ManageVerbPage = (props) => {
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
       />
-      {displayConjugationTable && <VerbConjugationTable verb={verb} />}
     </>
   );
 };

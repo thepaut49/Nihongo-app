@@ -12,6 +12,10 @@
   grid-template-areas:
     "name pronunciation pronunciation pronunciation"
     "name meaning meaning meaning";
+  border-radius: 10px;
+  background-color: rgba(38, 113, 22, 0.48);
+  margin: 0.5em;
+  padding: 0.5em;
 }
 .name {
   grid-area: name;

@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import iAdjectiveStore from "../../stores/iAdjectiveStore";
 import { Prompt } from "react-router-dom";
 import * as iAdjectiveActions from "../../actions/iAdjectiveActions";
-import IAdjectiveConjugationTable from "./IAdjectiveConjugationTable";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 
 const ManageIAdjectivePage = (props) => {
@@ -12,10 +11,9 @@ const ManageIAdjectivePage = (props) => {
   const [errors, setErrors] = useState({});
   const [iAdjective, setIAdjective] = useState({
     id: null,
-    neutralForm: "",
+    kanjis: "",
     pronunciation: "",
     meaning: "",
-    groupe: "",
     numberOfUse: null,
     version: null,
   });
@@ -46,21 +44,19 @@ const ManageIAdjectivePage = (props) => {
     if (kanjis) {
       // on récupère le iAdjective du store et on le transforme pour qu'il corresponde au formulaire
       let tempIAdjective = iAdjectiveStore.getIAdjectiveByKanjis(kanjis);
-      let newPronunciation = tempIAdjective.pronunciation.split("・");
+      let newPronunciation = tempIAdjective.pronunciation[0];
       for (let i = 0; i < newPronunciation.length; i++) {
-        newPronunciation[i] = newPronunciation[i].replace("・", "");
+        newPronunciation =
+          newPronunciation + "・" + tempIAdjective.pronunciation[i];
       }
       let newMeaning = tempIAdjective.meaning[0];
       for (let i = 1; i < tempIAdjective.meaning.length; i++) {
         newMeaning = newMeaning + ";" + tempIAdjective.meaning[i];
       }
       const iAdjectiveForm = {
-        id: tempIAdjective.id,
-        kanjis: tempIAdjective.kanjis,
+        ...tempIAdjective,
         pronunciation: newPronunciation,
         meaning: newMeaning,
-        numberOfUse: tempIAdjective.numberOfUse,
-        version: tempIAdjective.version,
       };
       setIAdjective(iAdjectiveForm);
     }
@@ -89,30 +85,29 @@ const ManageIAdjectivePage = (props) => {
     if (!formIsValid()) return;
     setModified(false);
     // on transforme les chaine de caractères en liste de chaines
-    let newPronunciation = iAdjective.pronunciation.split("・");
-    for (let i = 0; i < newPronunciation.length; i++) {
-      newPronunciation[i] = newPronunciation[i].replace("・", "");
+    let newPronunciation = [];
+    if (iAdjective.pronunciation.includes("・")) {
+      newPronunciation = iAdjective.pronunciation.split("・");
+      for (let i = 0; i < newPronunciation.length; i++) {
+        newPronunciation[i] = newPronunciation[i].replace("・", "");
+      }
+    } else {
+      newPronunciation = [iAdjective.pronunciation];
     }
     let newMeaning = iAdjective.meaning.split(";");
     for (let j = 0; j < newMeaning.length; j++) {
       newMeaning[j] = newMeaning[j].replace(";", "");
     }
     const savedIAdjective = {
-      id: iAdjective.id,
-      kanjis: iAdjective.kanjis,
-      pronunciation: iAdjective.pronunciation,
+      ...iAdjective,
+      pronunciation: newPronunciation,
       meaning: newMeaning,
-      numberOfUse: iAdjective.numberOfUse,
-      version: iAdjective.version,
     };
     iAdjectiveActions.saveIAdjective(savedIAdjective).then(() => {
       props.history.push("/iAdjectives");
       toast.success("IAdjective saved.");
     });
   }
-
-  const displayConjugationTable =
-    iAdjective.id && iAdjective.kanjis.length >= 2;
 
   return (
     <>
@@ -126,9 +121,6 @@ const ManageIAdjectivePage = (props) => {
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
       />
-      {displayConjugationTable && (
-        <IAdjectiveConjugationTable iAdjective={iAdjective} />
-      )}
     </>
   );
 };

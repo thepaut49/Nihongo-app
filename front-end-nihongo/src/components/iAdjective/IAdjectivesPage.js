@@ -97,7 +97,7 @@ function IAdjectivesPage(props) {
         onClick={handleClick}
         onReset={handleReset}
       />
-      <Link className="btn btn-primary" to="/iAdjective">
+      <Link className="btn btn-primary" to="/iAdjective/create">
         Add IAdjective
       </Link>
       <IAdjectiveList

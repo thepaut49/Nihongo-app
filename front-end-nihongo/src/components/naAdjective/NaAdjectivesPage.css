@@ -12,6 +12,10 @@
   grid-template-areas:
     "naAdjective pronunciation pronunciation pronunciation"
     "naAdjective meaning meaning meaning";
+  border-radius: 10px;
+  background-color: rgba(38, 113, 22, 0.48);
+  margin: 0.5em;
+  padding: 0.5em;
 }
 .naAdjective {
   grid-area: naAdjective;

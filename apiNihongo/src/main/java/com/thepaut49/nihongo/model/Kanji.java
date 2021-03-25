@@ -26,7 +26,7 @@ public class Kanji implements Serializable{
 	@Column(nullable = false , length = 255)
 	private String pronunciation;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 500)
 	private String meaning;
 	
 	@Column(nullable = false)

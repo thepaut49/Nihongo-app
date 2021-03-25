@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 const styleLink = {
   margin: "0.5em",
-  padding: "0.5em",
 };
 
 function KanjiList(props) {
@@ -63,7 +62,11 @@ function KanjiList(props) {
                     >
                       Delete
                     </button>
-                    <Link to={"/kanji/modify/" + kanji.kanji} style={styleLink}>
+                    <Link
+                      to={"/kanji/modify/" + kanji.kanji}
+                      style={styleLink}
+                      className="btn btn-primary"
+                    >
                       Modify
                     </Link>
                   </div>

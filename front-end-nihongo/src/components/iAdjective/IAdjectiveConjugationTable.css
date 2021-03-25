@@ -1,15 +1,21 @@
+.iConjugationTable {
+  margin: 0.5em;
+}
+
 .iConjugationTable table,
 .iConjugationTable td,
 .iConjugationTable th {
   border: solid;
-  border-color: black;
+  border-color: rgba(3, 54, 18, 0.575);
 }
 
 .iConjugationTable th {
-  background-color: #fc3903;
+  background-color: #22a952;
   font-weight: bold;
+  padding: 0.5em;
 }
 
 .iConjugationTable td {
-  background-color: #ebe8e8;
+  background-color: rgba(38, 113, 22, 0.48);
+  padding: 0.5em;
 }

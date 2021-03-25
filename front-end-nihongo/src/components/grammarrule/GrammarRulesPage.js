@@ -27,7 +27,7 @@ const GrammarRulesPage = () => {
   return (
     <>
       <h2>GrammarRules</h2>
-      <Link className="btn btn-primary" to="/grammarRule">
+      <Link className="btn btn-primary" to="/grammarRule/create">
         Add GrammarRule
       </Link>
       {grammarRules && grammarRules.length > 0 && (

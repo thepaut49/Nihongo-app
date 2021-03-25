@@ -97,7 +97,7 @@ function VerbsPage(props) {
         onClick={handleClick}
         onReset={handleReset}
       />
-      <Link className="btn btn-primary" to="/verb">
+      <Link className="btn btn-primary" to="/verb/create">
         Add Verb
       </Link>
       <VerbList verbs={verbs} deleteVerb={deleteVerb} />

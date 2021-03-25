@@ -25,7 +25,7 @@ const ParticulesPage = () => {
   return (
     <>
       <h2>Particules</h2>
-      <Link className="btn btn-primary" to="/particule">
+      <Link className="btn btn-primary" to="/particule/create">
         Add Particule
       </Link>
       {particules && particules.length > 0 && (

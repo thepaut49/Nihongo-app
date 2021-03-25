@@ -3,6 +3,10 @@ import "./SentencesPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+const styleLink = {
+  margin: "0.5em",
+};
+
 function SentenceList(props) {
   return (
     <table>
@@ -13,7 +17,7 @@ function SentenceList(props) {
               <td>
                 <div className="grid-container-sentence">
                   <div className="sentence">
-                    <Link to={"/sentence/" + sentence.kanjis}>
+                    <Link to={"/sentence/visualize/" + sentence.kanjis}>
                       {sentence.kanjis}
                     </Link>
                   </div>
@@ -48,6 +52,13 @@ function SentenceList(props) {
                     >
                       Delete
                     </button>
+                    <Link
+                      to={"/sentence/modify/" + sentence.kanjis}
+                      style={styleLink}
+                      className="btn btn-primary"
+                    >
+                      Modify
+                    </Link>
                   </div>
                 </div>
               </td>

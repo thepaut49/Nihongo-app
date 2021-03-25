@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import naAdjectiveStore from "../../stores/naAdjectiveStore";
 import { Prompt } from "react-router-dom";
 import * as naAdjectiveActions from "../../actions/naAdjectiveActions";
-import NaAdjectiveConjugationTable from "./NaAdjectiveConjugationTable";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 
 const ManageNaAdjectivePage = (props) => {
@@ -12,7 +11,7 @@ const ManageNaAdjectivePage = (props) => {
   const [errors, setErrors] = useState({});
   const [naAdjective, setNaAdjective] = useState({
     id: null,
-    neutralForm: "",
+    kanjis: "",
     pronunciation: "",
     meaning: "",
     groupe: "",
@@ -47,22 +46,18 @@ const ManageNaAdjectivePage = (props) => {
       // on récupère le naAdjective du store et on le transforme pour qu'il corresponde au formulaire
       let tempNaAdjective = naAdjectiveStore.getNaAdjectiveByKanjis(kanjis);
       let newPronunciation = tempNaAdjective.pronunciation[0];
-      for (let i = 1; i < tempNaAdjective.pronunciation.length; i++) {
+      for (let i = 0; i < newPronunciation.length; i++) {
         newPronunciation =
           newPronunciation + "・" + tempNaAdjective.pronunciation[i];
       }
-
       let newMeaning = tempNaAdjective.meaning[0];
       for (let i = 1; i < tempNaAdjective.meaning.length; i++) {
         newMeaning = newMeaning + ";" + tempNaAdjective.meaning[i];
       }
       const naAdjectiveForm = {
-        id: tempNaAdjective.id,
-        kanjis: tempNaAdjective.kanjis,
+        ...tempNaAdjective,
         pronunciation: newPronunciation,
         meaning: newMeaning,
-        numberOfUse: tempNaAdjective.numberOfUse,
-        version: tempNaAdjective.version,
       };
       setNaAdjective(naAdjectiveForm);
     }
@@ -91,30 +86,29 @@ const ManageNaAdjectivePage = (props) => {
     if (!formIsValid()) return;
     setModified(false);
     // on transforme les chaine de caractères en liste de chaines
-    let newPronunciation = naAdjective.pronunciation.split("・");
-    for (let i = 0; i < newPronunciation.length; i++) {
-      newPronunciation[i] = newPronunciation[i].replace("・", "");
+    let newPronunciation = [];
+    if (naAdjective.pronunciation.includes("・")) {
+      newPronunciation = naAdjective.pronunciation.split("・");
+      for (let i = 0; i < newPronunciation.length; i++) {
+        newPronunciation[i] = newPronunciation[i].replace("・", "");
+      }
+    } else {
+      newPronunciation = [naAdjective.pronunciation];
     }
     let newMeaning = naAdjective.meaning.split(";");
     for (let j = 0; j < newMeaning.length; j++) {
       newMeaning[j] = newMeaning[j].replace(";", "");
     }
     const savedNaAdjective = {
-      id: naAdjective.id,
-      kanjis: naAdjective.kanjis,
+      ...naAdjective,
       pronunciation: newPronunciation,
       meaning: newMeaning,
-      numberOfUse: naAdjective.numberOfUse,
-      version: naAdjective.version,
     };
     naAdjectiveActions.saveNaAdjective(savedNaAdjective).then(() => {
       props.history.push("/naAdjectives");
       toast.success("NaAdjective saved.");
     });
   }
-
-  const displayConjugationTable =
-    naAdjective.id && naAdjective.kanjis.length >= 2;
 
   return (
     <>
@@ -128,9 +122,6 @@ const ManageNaAdjectivePage = (props) => {
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
       />
-      {displayConjugationTable && (
-        <NaAdjectiveConjugationTable naAdjective={naAdjective} />
-      )}
     </>
   );
 };

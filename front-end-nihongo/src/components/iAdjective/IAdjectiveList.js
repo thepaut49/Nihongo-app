@@ -3,6 +3,10 @@ import "./IAdjectivesPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+const styleLink = {
+  margin: "0.5em",
+};
+
 function IAdjectiveList(props) {
   return (
     <table>
@@ -13,12 +17,18 @@ function IAdjectiveList(props) {
               <td>
                 <div className="grid-container-iAdjective">
                   <div className="iAdjective">
-                    <Link to={"/iAdjective/" + iAdjective.kanjis}>
+                    <Link to={"/iAdjective/visualize/" + iAdjective.kanjis}>
                       {iAdjective.kanjis}
                     </Link>
                   </div>
                   <div className="pronunciation">
-                    {iAdjective.pronunciation}
+                    {iAdjective.pronunciation.map((pro, index) => {
+                      return (
+                        <span key={index} className="onemeaning">
+                          {pro}
+                        </span>
+                      );
+                    })}
                   </div>
                   <div className="meaning">
                     {iAdjective.meaning.map((mean, index) => {
@@ -29,7 +39,7 @@ function IAdjectiveList(props) {
                       );
                     })}
                   </div>
-                  <div className="delete">
+                  <div>
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
@@ -38,6 +48,13 @@ function IAdjectiveList(props) {
                     >
                       Delete
                     </button>
+                    <Link
+                      to={"/iAdjective/modify/" + iAdjective.kanjis}
+                      style={styleLink}
+                      className="btn btn-primary"
+                    >
+                      Modify
+                    </Link>
                   </div>
                 </div>
               </td>

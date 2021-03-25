@@ -3,6 +3,10 @@ import "./NaAdjectivesPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+const styleLink = {
+  margin: "0.5em",
+};
+
 function NaAdjectiveList(props) {
   return (
     <table>
@@ -13,7 +17,7 @@ function NaAdjectiveList(props) {
               <td>
                 <div className="grid-container-naAdjective">
                   <div className="naAdjective">
-                    <Link to={"/naAdjective/" + naAdjective.kanjis}>
+                    <Link to={"/naAdjective/visualize/" + naAdjective.kanjis}>
                       {naAdjective.kanjis}
                     </Link>
                   </div>
@@ -44,6 +48,13 @@ function NaAdjectiveList(props) {
                     >
                       Delete
                     </button>
+                    <Link
+                      to={"/naAdjective/modify/" + naAdjective.kanjis}
+                      style={styleLink}
+                      className="btn btn-primary"
+                    >
+                      Modify
+                    </Link>
                   </div>
                 </div>
               </td>

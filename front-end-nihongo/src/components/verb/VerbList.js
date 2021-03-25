@@ -3,6 +3,10 @@ import "./VerbsPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+const styleLink = {
+  margin: "0.5em",
+};
+
 function VerbList(props) {
   return (
     <table>
@@ -13,7 +17,7 @@ function VerbList(props) {
               <td>
                 <div className="grid-container-verb">
                   <div className="verb">
-                    <Link to={"/verb/" + verb.neutralForm}>
+                    <Link to={"/verb/visualize/" + verb.neutralForm}>
                       {verb.neutralForm}
                     </Link>
                   </div>
@@ -48,6 +52,13 @@ function VerbList(props) {
                     >
                       Delete
                     </button>
+                    <Link
+                      to={"/verb/modify/" + verb.neutralForm}
+                      style={styleLink}
+                      className="btn btn-primary"
+                    >
+                      Modify
+                    </Link>
                   </div>
                 </div>
               </td>

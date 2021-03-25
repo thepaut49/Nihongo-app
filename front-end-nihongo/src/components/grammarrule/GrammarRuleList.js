@@ -19,6 +19,10 @@ const keywordStyle = {
   fontSize: "large",
 };
 
+const styleLink = {
+  margin: "0.5em",
+};
+
 function GrammarRuleList(props) {
   return (
     <div>
@@ -26,7 +30,7 @@ function GrammarRuleList(props) {
         return (
           <div key={grammarRule.id} style={grammarRuleListStyle}>
             <div style={grammarRuleTitleStyle}>
-              <Link to={"/grammarRule/" + grammarRule.title}>
+              <Link to={"/grammarRule/visualize/" + grammarRule.title}>
                 {grammarRule.title}
               </Link>
             </div>
@@ -65,6 +69,13 @@ function GrammarRuleList(props) {
               >
                 Delete
               </button>
+              <Link
+                to={"/grammarRule/modify/" + grammarRule.title}
+                style={styleLink}
+                className="btn btn-primary"
+              >
+                Modify
+              </Link>
             </div>
           </div>
         );

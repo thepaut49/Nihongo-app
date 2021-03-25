@@ -3,6 +3,10 @@ import "./NamesPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+const styleLink = {
+  margin: "0.5em",
+};
+
 function NameList(props) {
   return (
     <table>
@@ -13,7 +17,9 @@ function NameList(props) {
               <td>
                 <div className="grid-container-name">
                   <div className="name">
-                    <Link to={"/name/" + name.kanjis}>{name.kanjis}</Link>
+                    <Link to={"/name/visualize/" + name.kanjis}>
+                      {name.kanjis}
+                    </Link>
                   </div>
                   <div className="pronunciation">
                     {name.pronunciation.map((pronunciation, index) => {
@@ -33,7 +39,7 @@ function NameList(props) {
                       );
                     })}
                   </div>
-                  <div className="delete">
+                  <div>
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
@@ -42,6 +48,13 @@ function NameList(props) {
                     >
                       Delete
                     </button>
+                    <Link
+                      to={"/name/modify/" + name.kanjis}
+                      style={styleLink}
+                      className="btn btn-primary"
+                    >
+                      Modify
+                    </Link>
                   </div>
                 </div>
               </td>
