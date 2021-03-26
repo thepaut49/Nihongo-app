@@ -30,7 +30,6 @@ class AboutPage extends React.Component {
           <li>spring-boot-starter-test:test</li>
           <li>spring-restdocs-mockmvc: test</li>
           <li>commons-lang3</li>
-          <li></li>
         </ul>
         <h3>Front-end</h3>
         <p>The front-end uses javascript and the framework React js.</p>

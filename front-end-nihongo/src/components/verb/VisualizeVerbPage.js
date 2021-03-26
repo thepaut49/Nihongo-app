@@ -8,7 +8,7 @@ import { loadKanjis } from "../../actions/kanjiActions";
 import { loadVerbs } from "../../actions/verbActions";
 
 const VisualizeVerbPage = (props) => {
-  const verb = verbStore.getVerbByKanjis(props.match.params.kanjis);
+  const verb = verbStore.getVerbByNeutralForm(props.match.params.neutralForm);
 
   // read all the list of object and see if the verb is contained in the attribute verbs of object
   const searchKanjisLinkedToVerb = (verb, list) => {

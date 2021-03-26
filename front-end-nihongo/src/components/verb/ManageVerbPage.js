@@ -55,13 +55,9 @@ const ManageVerbPage = (props) => {
         newMeaning = newMeaning + ";" + tempVerb.meaning[i];
       }
       const verbForm = {
-        id: tempVerb.id,
-        neutralForm: tempVerb.neutralForm,
+        ...tempVerb,
         pronunciation: newPronunciation,
         meaning: newMeaning,
-        groupe: tempVerb.groupe,
-        numberOfUse: tempVerb.numberOfUse,
-        version: tempVerb.version,
       };
       setVerb(verbForm);
     }
@@ -101,13 +97,9 @@ const ManageVerbPage = (props) => {
       newMeaning[j] = newMeaning[j].replace(";", "");
     }
     const savedVerb = {
-      id: verb.id,
-      neutralForm: verb.neutralForm,
+      ...verb,
       pronunciation: newPronunciation,
       meaning: newMeaning,
-      groupe: verb.groupe,
-      numberOfUse: verb.numberOfUse,
-      version: verb.version,
     };
     verbActions.saveVerb(savedVerb).then(() => {
       props.history.push("/verbs");

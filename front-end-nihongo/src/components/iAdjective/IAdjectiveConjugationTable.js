@@ -1,5 +1,4 @@
 import React from "react";
-import "./IAdjectiveConjugationTable.css";
 import {
   presentIndicative,
   pastIndicative,
