@@ -79,6 +79,5 @@ export async function filterObjects(criteria) {
     });
   });
 
-  debugger;
   return results;
 }

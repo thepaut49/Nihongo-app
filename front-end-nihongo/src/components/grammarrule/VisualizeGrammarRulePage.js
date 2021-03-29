@@ -25,12 +25,7 @@ const VisualizeGrammarRulePage = (props) => {
     setGrammarRules(grammarRuleStore.getGrammarRules());
   }
 
-  return (
-    <>
-      <h2>Grammar Rule</h2>
-      {grammarRule && <GrammarRule grammarRule={grammarRule} />}
-    </>
-  );
+  return <>{grammarRule && <GrammarRule grammarRule={grammarRule} />}</>;
 };
 
 export default VisualizeGrammarRulePage;

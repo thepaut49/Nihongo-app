@@ -1,43 +1,43 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const grammarruleListStyle = {
+const particuleListStyle = {
   borderRadius: "10px",
   backgroundColor: "rgba(38, 113, 22, 0.48)",
   margin: "0.5em",
   padding: "0.5em",
 };
 
-const grammarruleTitleStyle = {
+const particuleTitleStyle = {
   fontWeight: "bold",
   fontSize: "xxx-large",
 };
 
-function GrammarRule(props) {
-  const grammarRule = props.grammarRule;
+function Particule(props) {
+  const particule = props.particule;
 
   return (
-    <div style={grammarruleListStyle}>
-      <div style={grammarruleTitleStyle}>
-        <h2>The Japanese particle {grammarRule.kanjis}</h2>
+    <div style={particuleListStyle}>
+      <div style={particuleTitleStyle}>
+        <h2>The Japanese particle {particule.kanjis}</h2>
       </div>
 
       <div>
-        <h2>Summary</h2>
-        {grammarRule.summary}
+        <h3>Summary</h3>
+        {particule.summary}
 
-        <h2>Function of the {grammarRule.kanjis}</h2>
-        {grammarRule.function}
+        <h3>Function of the {particule.kanjis}</h3>
+        {particule.function}
 
-        <h2>How to use the particle {grammarRule.kanjis}</h2>
-        {grammarRule.howToUse}
+        <h3>How to use the particle {particule.kanjis}</h3>
+        {particule.howToUse}
 
-        <h2>
-          Japanese Examples SENTENCES with the particle {grammarRule.kanjis}
-        </h2>
+        <h3>
+          Japanese Examples SENTENCES with the particle {particule.kanjis}
+        </h3>
         <div
           dangerouslySetInnerHTML={{
-            __html: grammarRule.examples,
+            __html: particule.examples,
           }}
         />
       </div>
@@ -45,8 +45,8 @@ function GrammarRule(props) {
   );
 }
 
-GrammarRule.propTypes = {
-  grammarRule: PropTypes.object.isRequired,
+Particule.propTypes = {
+  particule: PropTypes.object.isRequired,
 };
 
-export default GrammarRule;
+export default Particule;

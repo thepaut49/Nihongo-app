@@ -28,14 +28,14 @@ function GrammarRule(props) {
       </div>
 
       <div>
-        <h2>Description</h2>
+        <h3>Description</h3>
         <div
           dangerouslySetInnerHTML={{
             __html: grammarRule.htmlDescription,
           }}
         />
 
-        <h2>Keywords</h2>
+        <h3>Keywords</h3>
         <ul style={keywordStyle}>
           <li>{grammarRule.firstKeyWord}</li>
           {grammarRule.secondKeyWord && <li>{grammarRule.secondKeyWord}</li>}

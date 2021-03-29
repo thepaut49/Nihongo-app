@@ -23,12 +23,7 @@ const VisualizeParticulePage = (props) => {
     setParticules(particuleStore.getParticules());
   }
 
-  return (
-    <>
-      <h2>Particule</h2>
-      {particule && <Particule particule={particule} />}
-    </>
-  );
+  return <>{particule && <Particule particule={particule} />}</>;
 };
 
 export default VisualizeParticulePage;

@@ -14,7 +14,9 @@ const objectStyle = {
 
 const kanjisStyle = {
   gridRowStart: "span 2",
-  textAlign: "left",
+};
+
+const resultButtonStyle = {
   fontWeight: "bold",
   fontSize: "xxx-large",
 };
@@ -31,15 +33,23 @@ const oneSpanStyle = {
 };
 
 const ResultList = (props) => {
+  /*************/
+  /* variables */
+  /*************/
   const typeSelectSearch = props.typeSelectSearch;
 
+  /*************/
+  /* functions */
+  /*************/
   const handleClick = (event, result) => {
     event.preventDefault();
-    debugger;
     props.onClick(event, result);
     props.close();
   };
 
+  /*************/
+  /*   render  */
+  /*************/
   return (
     <div>
       {props.results.map((result, index) => {
@@ -49,6 +59,7 @@ const ResultList = (props) => {
               <button
                 onClick={(event) => handleClick(event, result)}
                 className="btn btn-success"
+                style={resultButtonStyle}
               >
                 {typeSelectSearch === translationConstants.TYPE_KANJI
                   ? result.kanji
@@ -83,7 +94,10 @@ const ResultList = (props) => {
 };
 
 ResultList.propTypes = {
-  results: PropTypes.arrayOf(Object),
+  results: PropTypes.arrayOf(Object).isRequired,
+  typeSelectSearch: PropTypes.string.isRequired,
+  close: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ResultList;

@@ -4,7 +4,6 @@ import { hiraganaMapToDisplay } from "../common/hiragana";
 const hiraganaListStyle = {
   display: "grid",
   gridTemplateColumns: "repeat(5,max-content)",
-  margin: "auto",
 };
 
 const hiraganaStyle = {

@@ -36,7 +36,7 @@ CustomIntegerInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.number,
+  value: PropTypes.string,
   error: PropTypes.string,
   step: PropTypes.string,
 };

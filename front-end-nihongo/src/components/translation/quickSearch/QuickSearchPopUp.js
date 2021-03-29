@@ -35,6 +35,7 @@ const contentStyle = {
 };
 
 const QuickSearchPopUp = (props) => {
+  /* variables */
   const typeSelectSearchListOfValue = [
     translationConstants.TYPE_ALL,
     translationConstants.TYPE_KANJI,
@@ -42,9 +43,7 @@ const QuickSearchPopUp = (props) => {
   const [typeSelectSearch, setTypeSelectSearch] = useState(
     translationConstants.TYPE_KANJI
   );
-
   const [results, setResults] = useState([]);
-
   const [criteria, setCriteria] = useState({
     kanjis: "",
     pronunciation: "",
@@ -56,11 +55,14 @@ const QuickSearchPopUp = (props) => {
   });
   const [errors, setErrors] = useState({});
 
+  /* functions */
+  // handle the change of the type of word
   const handleTypeSelectSearchChange = (event) => {
     setTypeSelectSearch(event.target.value);
+    setResults([]);
   };
 
-  // fonction for criteria form
+  // handle the changes in the field of the criteria form
   function handleCriteriaChange(event) {
     let newValue = event.target.value;
     if (event.target.name === "pronunciation") {
@@ -74,6 +76,7 @@ const QuickSearchPopUp = (props) => {
     });
   }
 
+  // verify that the content of the form is correct
   function formIsValid() {
     const _errors = {};
     if (
@@ -93,6 +96,7 @@ const QuickSearchPopUp = (props) => {
     return Object.keys(_errors).length === 0;
   }
 
+  // function launch when the user submit the form
   function handleSubmit(event) {
     event.preventDefault();
     if (!formIsValid()) return;
@@ -121,6 +125,7 @@ const QuickSearchPopUp = (props) => {
     }
   }
 
+  // function that handle the click on radicals button in the criteria form
   function handleClick(event) {
     event.preventDefault();
     if (criteria.radicals.indexOf(event.target.innerText) > -1)
@@ -136,6 +141,7 @@ const QuickSearchPopUp = (props) => {
     }
   }
 
+  // function that handle the click on the clear button
   function handleClearSearch(event) {
     event.preventDefault();
     Array.from(document.querySelectorAll("input")).forEach(
@@ -153,17 +159,18 @@ const QuickSearchPopUp = (props) => {
     setResults([]);
   }
 
+  // function that handle the click on the result button
   const handleResultClick = (event, result) => {
     event.preventDefault();
-    debugger;
     props.onQuickSearchClick(event, result);
   };
 
+  /* Render */
   return (
     <Popup
       trigger={(open) => (
         <div style={styleTriggerButton}>
-          <button className="btn btn-primary"> Open Modal </button>
+          <button className="btn btn-primary"> Quick search </button>
         </div>
       )}
       position="center center"
