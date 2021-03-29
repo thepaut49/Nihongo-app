@@ -40,3 +40,13 @@ export function filterNames(nameCriteria) {
     });
   });
 }
+
+export function updateNumberOfUse(id) {
+  return nameApi.updateNumberOfUse(id).then((updatedName) => {
+    // Hey dispatcher go tell all the stores that a kanji was created.
+    dispatcher.dispatch({
+      actionType: actionTypes.UPDATE_NAME,
+      name: updatedName,
+    });
+  });
+}

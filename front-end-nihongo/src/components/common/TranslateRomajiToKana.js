@@ -3,15 +3,15 @@ export const specialKanas = ["ん", "ぢ", "づ", "ヅ", "ヂ", "ン"];
 export function translateRomajiToKana(sentence) {
   if (!sentence || sentence.length === 0) return "";
   let newString = sentence;
-  console.log("newString before first transformation : " + newString);
+  //console.log("newString before first transformation : " + newString);
   newString = firtPhaseOfTranslation(newString);
-  console.log("newString after first transformation : " + newString);
+  //console.log("newString after first transformation : " + newString);
   newString = secondPhaseOfTranslation(newString);
-  console.log("newString after second transformation : " + newString);
+  //console.log("newString after second transformation : " + newString);
   newString = thirdPhase(newString);
-  console.log("newString after third transformation : " + newString);
+  //console.log("newString after third transformation : " + newString);
   newString = fourthPhase(newString);
-  console.log("newString after fourth transformation : " + newString);
+  //console.log("newString after fourth transformation : " + newString);
   return newString;
 }
 

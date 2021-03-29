@@ -22,6 +22,7 @@ import { loadIAdjectives } from "../../actions/iAdjectiveActions";
 import { loadNames } from "../../actions/nameActions";
 import { loadWords } from "../../actions/wordActions";
 import { loadParticules } from "../../actions/particuleActions";
+import { updateNumberOfUse } from "../../actions/translationActions";
 import {
   extractListOfKanji,
   extractParts,
@@ -139,7 +140,7 @@ const Translation = () => {
 
   const handleListClick = (event) => {
     setSentence(sentence + event.target.innerText);
-    translationApi.updateNumberOfUse(typeSelect, event.target.id);
+    updateNumberOfUse(typeSelect, event.target.id);
   };
 
   const handleSelectChange = (event) => {
@@ -197,6 +198,17 @@ const Translation = () => {
     setListParts([]);
     setListOfKanjis([]);
     setPronunciation("");
+  };
+
+  const handleQuickSearchClick = (event, result) => {
+    if (!result.typeWord) {
+      setSentence(sentence + result.kanji);
+    } else if (result.typeWord === translationConstants.TYPE_VERB) {
+      setSentence(sentence + result.neutralForm);
+    } else {
+      setSentence(sentence + result.kanjis);
+    }
+    updateNumberOfUse(typeSelect, result.id);
   };
 
   const handleSentenceChange = (event) => {
@@ -289,6 +301,7 @@ const Translation = () => {
           onClearClick={handleClearClick}
           onKanaClick={handleKanaClick}
           pronunciation={pronunciation}
+          onQuickSearchClick={handleQuickSearchClick}
         />
         <ListOfParts
           list={listParts}

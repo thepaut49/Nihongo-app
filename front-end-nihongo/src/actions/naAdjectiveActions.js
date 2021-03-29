@@ -46,3 +46,13 @@ export function filterNaAdjectives(naAdjectiveCriteria) {
       });
     });
 }
+
+export function updateNumberOfUse(id) {
+  return naAdjectiveApi.updateNumberOfUse(id).then((updatedNaAdj) => {
+    // Hey dispatcher go tell all the stores that a kanji was created.
+    dispatcher.dispatch({
+      actionType: actionTypes.UPDATE_NA_ADJECTIVE,
+      naAdjective: updatedNaAdj,
+    });
+  });
+}

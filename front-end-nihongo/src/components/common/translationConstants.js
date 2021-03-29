@@ -10,6 +10,7 @@ const translationConstants = {
   TYPE_UNKNOWN: "Unknown",
   TYPE_PARTICULE: "Particle",
   TYPE_PUNCTUATION: "Punctuation",
+  TYPE_ALL: "All",
 };
 
 export default translationConstants;

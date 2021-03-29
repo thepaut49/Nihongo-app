@@ -24,27 +24,3 @@ export function getMostUsedObject(typeSelect, quantity) {
       return kanjiApi.getMostUsedKanjis(quantity);
   }
 }
-
-export function updateNumberOfUse(typeSelect, id) {
-  switch (typeSelect) {
-    case translationConstants.TYPE_KANJI:
-      kanjiApi.updateNumberOfUse(id);
-      break;
-    case translationConstants.TYPE_VERB:
-      verbApi.updateNumberOfUse(id);
-      break;
-    case translationConstants.TYPE_NA_ADJECTIVE:
-      naAdjectiveApi.updateNumberOfUse(id);
-      break;
-    case translationConstants.TYPE_I_ADJECTIVE:
-      iAdjectiveApi.updateNumberOfUse(id);
-      break;
-    case translationConstants.TYPE_NAME:
-      nameApi.updateNumberOfUse(id);
-      break;
-    case translationConstants.TYPE_WORD:
-      wordApi.updateNumberOfUse(id);
-      break;
-    default:
-  }
-}

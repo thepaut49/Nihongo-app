@@ -1,6 +1,7 @@
 import React from "react";
 import CustomTextArea from "../common/CustomTextArea";
 import PropTypes from "prop-types";
+import QuickSearchPopUp from "./quickSearch/QuickSearchPopUp";
 
 const TranslationArea = (props) => {
   const styleTranslationArea = {
@@ -21,28 +22,34 @@ const TranslationArea = (props) => {
 
   return (
     <>
-      <form id="translationArea" style={styleTranslationArea}>
-        <CustomTextArea
-          id="textToTranslate"
-          label="Sentence to Translate :"
-          name="textToTranslate"
-          cols={35}
-          rows={5}
-          value={props.sentence}
-          onChange={props.onSentenceChange}
-          onKanaClick={props.onKanaClick}
-        />
-        <div style={buttonGroupStyle}>
-          <button className="btn btn-primary" onClick={props.onTranslateClick}>
-            Translate
-          </button>
-          <button className="btn btn-primary" onClick={props.onClearClick}>
-            Clear
-          </button>
-        </div>
+      <div id="translationArea">
+        <form style={styleTranslationArea}>
+          <CustomTextArea
+            id="textToTranslate"
+            label="Sentence to Translate :"
+            name="textToTranslate"
+            cols={35}
+            rows={5}
+            value={props.sentence}
+            onChange={props.onSentenceChange}
+            onKanaClick={props.onKanaClick}
+          />
+          <div style={buttonGroupStyle}>
+            <button
+              className="btn btn-primary"
+              onClick={props.onTranslateClick}
+            >
+              Translate
+            </button>
+            <button className="btn btn-primary" onClick={props.onClearClick}>
+              Clear
+            </button>
+          </div>
+        </form>
+        <QuickSearchPopUp onQuickSearchClick={props.onQuickSearchClick} />
         <h4>Pronunciation :</h4>
         <p style={pronunciationStyle}>{props.pronunciation}</p>
-      </form>
+      </div>
     </>
   );
 };

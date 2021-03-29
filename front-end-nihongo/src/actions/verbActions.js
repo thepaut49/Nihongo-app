@@ -40,3 +40,13 @@ export function filterVerbs(verbCriteria) {
     });
   });
 }
+
+export function updateNumberOfUse(id) {
+  return verbApi.updateNumberOfUse(id).then((updatedverb) => {
+    // Hey dispatcher go tell all the stores that a kanji was created.
+    dispatcher.dispatch({
+      actionType: actionTypes.UPDATE_VERB,
+      verb: updatedverb,
+    });
+  });
+}

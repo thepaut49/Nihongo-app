@@ -40,3 +40,13 @@ export function filterWords(wordCriteria) {
     });
   });
 }
+
+export function updateNumberOfUse(id) {
+  return wordApi.updateNumberOfUse(id).then((updatedWord) => {
+    // Hey dispatcher go tell all the stores that a kanji was created.
+    dispatcher.dispatch({
+      actionType: actionTypes.UPDATE_WORD,
+      word: updatedWord,
+    });
+  });
+}

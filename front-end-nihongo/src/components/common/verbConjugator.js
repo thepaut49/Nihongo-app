@@ -1,7 +1,6 @@
 import { verbConstants } from "./verbConstants";
 
 export function presentIndicative(verb, form, sign) {
-  debugger;
   const lastKana = verb.neutralForm.charAt(verb.neutralForm.length - 1);
   switch (verb.groupe) {
     case verbConstants.ICHIDAN_GROUPE:

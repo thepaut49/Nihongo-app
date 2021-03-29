@@ -42,3 +42,13 @@ export function filterKanjis(kanjiCriteria) {
     });
   });
 }
+
+export function updateNumberOfUse(id) {
+  return kanjiApi.updateNumberOfUse(id).then((updatedKanji) => {
+    // Hey dispatcher go tell all the stores that a kanji was created.
+    dispatcher.dispatch({
+      actionType: actionTypes.UPDATE_KANJI,
+      kanji: updatedKanji,
+    });
+  });
+}

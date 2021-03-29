@@ -44,3 +44,13 @@ export function filterIAdjectives(iAdjectiveCriteria) {
       });
     });
 }
+
+export function updateNumberOfUse(id) {
+  return iAdjectiveApi.updateNumberOfUse(id).then((updatedIAdj) => {
+    // Hey dispatcher go tell all the stores that a kanji was created.
+    dispatcher.dispatch({
+      actionType: actionTypes.UPDATE_I_ADJECTIVE,
+      iAdjective: updatedIAdj,
+    });
+  });
+}

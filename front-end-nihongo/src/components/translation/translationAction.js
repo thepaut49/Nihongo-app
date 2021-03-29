@@ -489,6 +489,21 @@ const partIsANaAdjective = (sentencePart, currentIndex, naAdjectives) => {
       indexTense < tenseFunctionList.length;
       indexTense++
     ) {
+      if (naAdjective.kanjis === sentencePart) {
+        part = {
+          type: translationConstants.TYPE_NA_ADJECTIVE,
+          kanjis: sentencePart,
+          selectedPronunciation: naAdjective.pronunciation[0],
+          selectedMeaning: naAdjective.meaning[0],
+          pronunciations: naAdjective.pronunciation,
+          meanings: naAdjective.meaning,
+          unknown: false,
+          length: sentencePart.length,
+          currentIndex: currentIndex,
+          listOfValues: [],
+        };
+        return part;
+      }
       for (let indexForm = 0; indexForm < formList.length; indexForm++) {
         for (let indexSign = 0; indexSign < signList.length; indexSign++) {
           let tense = tenseFunctionList[indexTense];
