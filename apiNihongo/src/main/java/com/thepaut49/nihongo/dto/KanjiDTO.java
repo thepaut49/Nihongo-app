@@ -12,8 +12,8 @@ public class KanjiDTO  {
 	private char kanji;
 
 	private Set<String> pronunciation;
-
-	private Set<String> meaning;
+	
+	private Set<KanjiMeaningDTO> meanings;
 
 	private Integer strokeNumber;
 
@@ -49,13 +49,13 @@ public class KanjiDTO  {
 	public void setPronunciation(Set<String> pronunciation) {
 		this.pronunciation = pronunciation;
 	}
-
-	public Set<String> getMeaning() {
-		return meaning;
+	
+	public Set<KanjiMeaningDTO> getMeanings() {
+		return meanings;
 	}
 
-	public void setMeaning(Set<String> meaning) {
-		this.meaning = meaning;
+	public void setMeanings(Set<KanjiMeaningDTO> meanings) {
+		this.meanings = meanings;
 	}
 
 	public Integer getStrokeNumber() {

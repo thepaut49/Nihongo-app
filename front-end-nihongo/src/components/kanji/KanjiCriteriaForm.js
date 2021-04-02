@@ -126,11 +126,11 @@ function KanjiCriteriaForm(props) {
             return (
               <>
                 {nbrOfStrokesString.includes(radical) ? (
-                  <button key={radical} style={numberStyle}>
+                  <button key={radical.toString()} style={numberStyle}>
                     {radical}
                   </button>
                 ) : (
-                  <button key={radical} onClick={props.onClick}>
+                  <button key={radical.toString()} onClick={props.onClick}>
                     {radical}
                   </button>
                 )}

@@ -17,35 +17,62 @@ import { loadNaAdjectives } from "../../actions/naAdjectiveActions";
 import { loadIAdjectives } from "../../actions/iAdjectiveActions";
 import { loadNames } from "../../actions/nameActions";
 import { loadWords } from "../../actions/wordActions";
+import translationConstants from "../common/translationConstants";
 
 const VisualizeKanjiPage = (props) => {
   const kanji = kanjiStore.getKanjiByCharacter(props.match.params.kanji);
 
   // read all the list of object and see if the kanji is contained in the attribute kanjis of object
-  const objectsLinkedToKanji = (kanji, list) => {
-    let listOfVerbLinkToKanji = [];
+  const objectsLinkedToKanji = (kanji, list, typeWord) => {
+    let listOfObjectLinkToKanji = [];
     list.forEach((element) => {
-      if (element.kanjis.includes(kanji.kanji)) {
-        listOfVerbLinkToKanji.push(element);
+      if (typeWord === translationConstants.TYPE_VERB) {
+        if (element.neutralForm.includes(kanji.kanji)) {
+          listOfObjectLinkToKanji.push(element);
+        }
+      } else {
+        if (element.kanjis.includes(kanji.kanji)) {
+          listOfObjectLinkToKanji.push(element);
+        }
       }
     });
-    return listOfVerbLinkToKanji;
+    return listOfObjectLinkToKanji;
   };
 
   const [verbsLinkedToKanji, setVerbsLinkedToKanji] = useState(
-    objectsLinkedToKanji(kanji, verbStore.getVerbs())
+    objectsLinkedToKanji(
+      kanji,
+      verbStore.getVerbs(),
+      translationConstants.TYPE_VERB
+    )
   );
   const [naAdjectivesLinkedToKanji, setNaAdjectivesLinkedToKanji] = useState(
-    objectsLinkedToKanji(kanji, naAdjectiveStore.getNaAdjectives())
+    objectsLinkedToKanji(
+      kanji,
+      naAdjectiveStore.getNaAdjectives(),
+      translationConstants.TYPE_NA_ADJECTIVE
+    )
   );
   const [iAdjectivesLinkedToKanji, setIAdjectivesLinkedToKanji] = useState(
-    objectsLinkedToKanji(kanji, iAdjectiveStore.getIAdjectives())
+    objectsLinkedToKanji(
+      kanji,
+      iAdjectiveStore.getIAdjectives(),
+      translationConstants.TYPE_I_ADJECTIVE
+    )
   );
   const [namesLinkedToKanji, setNamesLinkedToKanji] = useState(
-    objectsLinkedToKanji(kanji, iAdjectiveStore.getIAdjectives())
+    objectsLinkedToKanji(
+      kanji,
+      nameStore.getNames(),
+      translationConstants.TYPE_NAME
+    )
   );
   const [wordsLinkedToKanji, setWordsLinkedToKanji] = useState(
-    objectsLinkedToKanji(kanji, iAdjectiveStore.getIAdjectives())
+    objectsLinkedToKanji(
+      kanji,
+      wordStore.getWords(),
+      translationConstants.TYPE_WORD
+    )
   );
 
   const [kanjis, setKanjis] = useState(kanjiStore.getKanjis());
@@ -77,27 +104,47 @@ const VisualizeKanjiPage = (props) => {
     if (kanji) {
       if (verbStore.getVerbs() > 0)
         setVerbsLinkedToKanji(
-          objectsLinkedToKanji(kanji, verbStore.getVerbs())
+          objectsLinkedToKanji(
+            kanji,
+            verbStore.getVerbs(),
+            translationConstants.TYPE_VERB
+          )
         );
 
       if (naAdjectiveStore.getNaAdjectives().length > 0)
         setNaAdjectivesLinkedToKanji(
-          objectsLinkedToKanji(kanji, naAdjectiveStore.getNaAdjectives())
+          objectsLinkedToKanji(
+            kanji,
+            naAdjectiveStore.getNaAdjectives(),
+            translationConstants.TYPE_NA_ADJECTIVE
+          )
         );
 
       if (iAdjectiveStore.getIAdjectives().length > 0)
         setIAdjectivesLinkedToKanji(
-          objectsLinkedToKanji(kanji, iAdjectiveStore.getIAdjectives())
+          objectsLinkedToKanji(
+            kanji,
+            iAdjectiveStore.getIAdjectives(),
+            translationConstants.TYPE_I_ADJECTIVE
+          )
         );
 
       if (nameStore.getNames().length > 0)
         setNamesLinkedToKanji(
-          objectsLinkedToKanji(kanji, nameStore.getNames())
+          objectsLinkedToKanji(
+            kanji,
+            nameStore.getNames(),
+            translationConstants.TYPE_NAME
+          )
         );
 
       if (wordStore.getWords().length > 0)
         setWordsLinkedToKanji(
-          objectsLinkedToKanji(kanji, wordStore.getWords())
+          objectsLinkedToKanji(
+            kanji,
+            wordStore.getWords(),
+            translationConstants.TYPE_WORD
+          )
         );
     }
     return function () {

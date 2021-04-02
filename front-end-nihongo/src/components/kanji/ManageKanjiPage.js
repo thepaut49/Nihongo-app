@@ -14,7 +14,12 @@ const ManageKanjiPage = (props) => {
     id: null,
     kanji: "",
     pronunciation: "",
-    meaning: "",
+    meanings: [
+      {
+        meaningNumber: 0,
+        meaning: "",
+      },
+    ],
     radicals: "",
     strokeNumber: 0,
     numberOfUse: null,
@@ -52,20 +57,9 @@ const ManageKanjiPage = (props) => {
       for (let i = 1; i < tempKanji.pronunciation.length; i++) {
         newPronunciation = newPronunciation + "・" + tempKanji.pronunciation[i];
       }
-
-      let newMeaning = tempKanji.meaning[0];
-      for (let i = 1; i < tempKanji.meaning.length; i++) {
-        newMeaning = newMeaning + ";" + tempKanji.meaning[i];
-      }
       const kanjiForm = {
-        id: tempKanji.id,
-        kanji: tempKanji.kanji,
+        ...tempKanji,
         pronunciation: newPronunciation,
-        meaning: newMeaning,
-        radicals: tempKanji.radicals,
-        strokeNumber: tempKanji.strokeNumber,
-        numberOfUse: tempKanji.numberOfUse,
-        version: tempKanji.version,
       };
       setKanji(kanjiForm);
     }
@@ -81,7 +75,6 @@ const ManageKanjiPage = (props) => {
     if (!kanji.kanji) _errors.kanji = "Kanji is required";
     if (!kanji.pronunciation)
       _errors.pronunciation = "Pronunciation is required";
-    if (!kanji.meaning) _errors.meaning = "Meaning is required";
     if (kanji.radicals.length > 0) {
       for (let i = 0; i < kanji.radicals.length; i++) {
         if (radicalsList.indexOf(kanji.radicals[i]) === -1) {
@@ -98,6 +91,7 @@ const ManageKanjiPage = (props) => {
 
   function handleSubmit(event) {
     event.preventDefault();
+    debugger;
     if (!formIsValid()) return;
     setModified(false);
     // on transforme les chaine de caractères en liste de chaines
@@ -105,20 +99,9 @@ const ManageKanjiPage = (props) => {
     for (let i = 0; i < newPronunciation.length; i++) {
       newPronunciation[i] = newPronunciation[i].replace("・", "");
     }
-
-    let newMeaning = kanji.meaning.split(";");
-    for (let j = 0; j < newMeaning.length; j++) {
-      newMeaning[j] = newMeaning[j].replace(";", "");
-    }
     const savedKanji = {
-      id: kanji.id,
-      kanji: kanji.kanji,
+      ...kanji,
       pronunciation: newPronunciation,
-      meaning: newMeaning,
-      radicals: kanji.radicals,
-      strokeNumber: kanji.strokeNumber,
-      numberOfUse: kanji.numberOfUse,
-      version: kanji.version,
     };
     kanjiActions.saveKanji(savedKanji).then(() => {
       props.history.push("/kanjis");
@@ -141,6 +124,26 @@ const ManageKanjiPage = (props) => {
     }
   }
 
+  function handleAddMeaning(event) {
+    event.preventDefault();
+    let newMeanings = kanji.meanings;
+    newMeanings.push({
+      meaningNumber: kanji.meanings.length,
+      meaning: "",
+    });
+    setKanji({
+      ...kanji,
+      meanings: newMeanings,
+    });
+  }
+
+  function handleMeaningChange(event, index) {
+    let newMeanings = kanji.meanings;
+    newMeanings[index].meaning = event.target.value;
+    setKanji({ ...kanji, meanings: newMeanings });
+    setModified(true);
+  }
+
   return (
     <>
       <h2>Manage Kanji</h2>
@@ -153,6 +156,8 @@ const ManageKanjiPage = (props) => {
         onClick={handleClick}
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
+        addMeaning={handleAddMeaning}
+        onMeaningChange={handleMeaningChange}
       />
     </>
   );

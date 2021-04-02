@@ -52,10 +52,10 @@ function Kanji(props) {
         })}
       </div>
       <div style={styleMeaning}>
-        {kanji.meaning.map((mean, index) => {
+        {kanji.meanings.map((mean, index) => {
           return (
             <span key={index} style={spanStyle}>
-              {mean}
+              {mean.meaning}
             </span>
           );
         })}

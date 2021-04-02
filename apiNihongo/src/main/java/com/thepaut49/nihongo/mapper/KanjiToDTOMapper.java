@@ -1,9 +1,13 @@
 package com.thepaut49.nihongo.mapper;
 
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.thepaut49.nihongo.dto.KanjiDTO;
+import com.thepaut49.nihongo.dto.KanjiMeaningDTO;
 import com.thepaut49.nihongo.model.Kanji;
+import com.thepaut49.nihongo.model.KanjiMeaning;
 
 public class KanjiToDTOMapper {
 	
@@ -22,11 +26,8 @@ public class KanjiToDTOMapper {
 			kanjiDTO.getPronunciation().add(pronunciations[index].replace(";", ""));	
 		}
 		
-		kanjiDTO.setMeaning(new HashSet<String>());
-		String[] meanings = kanji.getMeaning().split(";");
-		for(int index = 0; index < meanings.length; index++) {
-			kanjiDTO.getMeaning().add(meanings[index].replace(";", ""));	
-		}	
+		Set<KanjiMeaningDTO> meaningsTemp = kanji.getMeanings().stream().map(tempKanji -> KanjiMeaningToDTOMapper.map(tempKanji)).collect(Collectors.toSet());
+		kanjiDTO.setMeanings(meaningsTemp);
 		return kanjiDTO;
 	}
 	
@@ -44,12 +45,9 @@ public class KanjiToDTOMapper {
 			pronunciationTemp += pronunciation + ";";	
 		}
 		kanji.setPronunciation(pronunciationTemp);
-		
-		String meaningTemp = "";
-		for(String meaning : kanjiDTO.getMeaning()) {
-			meaningTemp += meaning + ";";	
-		}
-		kanji.setMeaning(meaningTemp);	
+			
+		Set<KanjiMeaning> meaningsTemp = kanjiDTO.getMeanings().stream().map(tempKanji -> KanjiMeaningToDTOMapper.map(tempKanji)).collect(Collectors.toSet());
+		kanji.setMeanings(meaningsTemp);
 		return kanji;
 	}
 

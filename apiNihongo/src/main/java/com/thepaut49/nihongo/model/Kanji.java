@@ -1,12 +1,17 @@
 package com.thepaut49.nihongo.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -26,8 +31,9 @@ public class Kanji implements Serializable{
 	@Column(nullable = false , length = 255)
 	private String pronunciation;
 	
-	@Column(nullable = false, length = 500)
-	private String meaning;
+	@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="KANJI_ID")
+	private Set<KanjiMeaning> meanings = new HashSet<>();
 	
 	@Column(nullable = false)
 	private Integer strokeNumber;
@@ -66,12 +72,12 @@ public class Kanji implements Serializable{
 		this.pronunciation = pronunciation;
 	}
 
-	public String getMeaning() {
-		return meaning;
+	public Set<KanjiMeaning> getMeanings() {
+		return meanings;
 	}
 
-	public void setMeaning(String meaning) {
-		this.meaning = meaning;
+	public void setMeanings(Set<KanjiMeaning> meanings) {
+		this.meanings = meanings;
 	}
 
 	public Integer getStrokeNumber() {
@@ -131,7 +137,7 @@ public class Kanji implements Serializable{
 
 	@Override
 	public String toString() {
-		return "{ Id : " + this.id +" , Kanji : " + this.kanji + ", Pronunciation : " + this.pronunciation + " , Meaning : " + this.meaning +
+		return "{ Id : " + this.id +" , Kanji : " + this.kanji + ", Pronunciation : " + this.pronunciation +
 				" , Strokes number : " + this.strokeNumber + ", Radicals : " + this.radicals + ", Number of use : " + this.numberOfUse + " , version : " + this.version + " }" ;
 	}
 	
