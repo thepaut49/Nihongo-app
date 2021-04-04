@@ -1,12 +1,17 @@
 package com.thepaut49.nihongo.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -26,8 +31,9 @@ public class NaAdjective implements Serializable {
 	@Column(nullable = false)
 	private String pronunciation;
 	
-	@Column(nullable = false, length = 500)
-	private String meaning;
+	@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="NA_ADJECTIVE_ID")
+	private Set<NaAdjectiveMeaning> meanings = new HashSet<>();
 	
 	private Integer numberOfUse;
 	
@@ -60,12 +66,12 @@ public class NaAdjective implements Serializable {
 		this.pronunciation = pronunciation;
 	}
 
-	public String getMeaning() {
-		return meaning;
+	public Set<NaAdjectiveMeaning> getMeanings() {
+		return meanings;
 	}
 
-	public void setMeaning(String meaning) {
-		this.meaning = meaning;
+	public void setMeanings(Set<NaAdjectiveMeaning> meanings) {
+		this.meanings = meanings;
 	}
 
 	public Integer getNumberOfUse() {
@@ -108,8 +114,8 @@ public class NaAdjective implements Serializable {
 
 	@Override
 	public String toString() {
-		return " Na-adjective : { Id : " + this.id +" , Neutral form : " + this.kanjis + ", Pronunciation : " + this.pronunciation + " , Meaning : " 
-	  + this.meaning + " , Number of use : " + this.numberOfUse  + " , version : " + this.version + " }" ;
+		return " Na-adjective : { Id : " + this.id +" , Neutral form : " + this.kanjis + ", Pronunciation : " + this.pronunciation + " , Meaning : [" 
+	  + this.meanings + "] , Number of use : " + this.numberOfUse  + " , version : " + this.version + " }" ;
 	}
 	
 	

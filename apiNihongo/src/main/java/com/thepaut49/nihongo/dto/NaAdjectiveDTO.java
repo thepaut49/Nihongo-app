@@ -10,7 +10,7 @@ public class NaAdjectiveDTO {
 	
 	private Set<String> pronunciation;
 	
-	private Set<String> meaning;
+	private Set<NaAdjectiveMeaningDTO> meanings;
 	
 	private Integer numberOfUse;
 	
@@ -42,12 +42,12 @@ public class NaAdjectiveDTO {
 		this.pronunciation = pronunciation;
 	}
 
-	public Set<String> getMeaning() {
-		return meaning;
+	public Set<NaAdjectiveMeaningDTO> getMeanings() {
+		return meanings;
 	}
 
-	public void setMeaning(Set<String> meaning) {
-		this.meaning = meaning;
+	public void setMeanings(Set<NaAdjectiveMeaningDTO> meanings) {
+		this.meanings = meanings;
 	}
 	
 	public Integer getNumberOfUse() {

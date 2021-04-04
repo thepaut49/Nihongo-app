@@ -20,10 +20,10 @@ function NameList(props) {
               })}
             </div>
             <div className="meaning">
-              {name.meaning.map((mean, index) => {
+              {name.meanings.map((mean, index) => {
                 return (
                   <span key={index} className="onemeaning">
-                    {mean}
+                    {mean.meaning}
                   </span>
                 );
               })}
@@ -41,7 +41,7 @@ NameList.propTypes = {
       id: PropTypes.number.isRequired,
       kanjis: PropTypes.string.isRequired,
       pronunciation: PropTypes.arrayOf.isRequired,
-      meaning: PropTypes.arrayOf.isRequired,
+      meanings: PropTypes.arrayOf.isRequired,
       numberOfUse: PropTypes.number,
       version: PropTypes.number,
     })

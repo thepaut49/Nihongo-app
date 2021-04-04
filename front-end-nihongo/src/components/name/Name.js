@@ -52,10 +52,10 @@ function Name(props) {
         })}
       </div>
       <div style={styleMeaning}>
-        {name.meaning.map((mean, index) => {
+        {name.meanings.map((mean, index) => {
           return (
             <span key={index} style={spanStyle}>
-              {mean}
+              {mean.meaning}
             </span>
           );
         })}

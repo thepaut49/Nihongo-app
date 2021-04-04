@@ -15,7 +15,7 @@ public interface NameRepository extends JpaRepository<Name, Integer> {
 
 	@Query("SELECT v FROM Name v WHERE (:kanjis is null or v.kanjis LIKE  LOWER(concat('%', concat(:kanjis, '%')))) "
 			+ " and (:pronunciation is null or v.pronunciation LIKE  LOWER(concat('%', concat(:pronunciation, '%'))))"
-			+ " and (:meaning is null or v.meaning LIKE  LOWER(concat('%', concat(:meaning, '%'))))")
+			+ " and (:meaning is null or EXISTS(SELECT im from NameMeaning im WHERE v.id = im.name.id AND im.meaning LIKE LOWER(concat('%', concat(:meaning, '%')))))")
 	List<Name> findWithCriteria(String kanjis, String pronunciation, String meaning);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM Name v ORDER BY v.number_of_use DESC LIMIT :quantity ")

@@ -15,7 +15,7 @@ public interface WordRepository extends JpaRepository<Word, Integer> {
 
 	@Query("SELECT v FROM Word v WHERE (:kanjis is null or v.kanjis LIKE  LOWER(concat('%', concat(:kanjis, '%')))) "
 			+ " and (:pronunciation is null or v.pronunciation LIKE  LOWER(concat('%', concat(:pronunciation, '%'))))"
-			+ " and (:meaning is null or v.meaning LIKE  LOWER(concat('%', concat(:meaning, '%'))))")
+			+ " and (:meaning is null or EXISTS(SELECT wm from WordMeaning wm WHERE v.id = wm.word.id AND wm.meaning LIKE LOWER(concat('%', concat(:meaning, '%')))))")
 	List<Word> findWithCriteria(String kanjis, String pronunciation, String meaning);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM Word v ORDER BY v.number_of_use DESC LIMIT :quantity ")

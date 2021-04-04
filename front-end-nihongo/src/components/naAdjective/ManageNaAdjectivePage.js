@@ -13,7 +13,14 @@ const ManageNaAdjectivePage = (props) => {
     id: null,
     kanjis: "",
     pronunciation: "",
-    meaning: "",
+    meanings: [
+      {
+        id: null,
+        meaningNumber: 0,
+        meaning: "",
+        version: null,
+      },
+    ],
     groupe: "",
     numberOfUse: null,
     version: null,
@@ -46,18 +53,15 @@ const ManageNaAdjectivePage = (props) => {
       // on récupère le naAdjective du store et on le transforme pour qu'il corresponde au formulaire
       let tempNaAdjective = naAdjectiveStore.getNaAdjectiveByKanjis(kanjis);
       let newPronunciation = tempNaAdjective.pronunciation[0];
-      for (let i = 0; i < newPronunciation.length; i++) {
-        newPronunciation =
-          newPronunciation + "・" + tempNaAdjective.pronunciation[i];
-      }
-      let newMeaning = tempNaAdjective.meaning[0];
-      for (let i = 1; i < tempNaAdjective.meaning.length; i++) {
-        newMeaning = newMeaning + ";" + tempNaAdjective.meaning[i];
+      if (tempNaAdjective.pronunciation.length > 1) {
+        for (let i = 1; i < tempNaAdjective.pronunciation.length; i++) {
+          newPronunciation =
+            newPronunciation + "・" + tempNaAdjective.pronunciation[i];
+        }
       }
       const naAdjectiveForm = {
         ...tempNaAdjective,
         pronunciation: newPronunciation,
-        meaning: newMeaning,
       };
       setNaAdjective(naAdjectiveForm);
     }
@@ -74,8 +78,6 @@ const ManageNaAdjectivePage = (props) => {
       _errors.kanjis = "Kanjis of the naAdjective is required";
     if (!naAdjective.pronunciation)
       _errors.pronunciation = "Pronunciation is required";
-    if (!naAdjective.meaning) _errors.meaning = "Meaning is required";
-
     setErrors(_errors);
     // form is valid if the erros object has no properties
     return Object.keys(_errors).length === 0;
@@ -95,19 +97,34 @@ const ManageNaAdjectivePage = (props) => {
     } else {
       newPronunciation = [naAdjective.pronunciation];
     }
-    let newMeaning = naAdjective.meaning.split(";");
-    for (let j = 0; j < newMeaning.length; j++) {
-      newMeaning[j] = newMeaning[j].replace(";", "");
-    }
     const savedNaAdjective = {
       ...naAdjective,
       pronunciation: newPronunciation,
-      meaning: newMeaning,
     };
     naAdjectiveActions.saveNaAdjective(savedNaAdjective).then(() => {
       props.history.push("/naAdjectives");
       toast.success("NaAdjective saved.");
     });
+  }
+
+  function handleAddMeaning(event) {
+    event.preventDefault();
+    let newMeanings = naAdjective.meanings;
+    newMeanings.push({
+      meaningNumber: naAdjective.meanings.length,
+      meaning: "",
+    });
+    setNaAdjective({
+      ...naAdjective,
+      meanings: newMeanings,
+    });
+  }
+
+  function handleMeaningChange(event, index) {
+    let newMeanings = naAdjective.meanings;
+    newMeanings[index].meaning = event.target.value;
+    setNaAdjective({ ...naAdjective, meanings: newMeanings });
+    setModified(true);
   }
 
   return (
@@ -121,6 +138,8 @@ const ManageNaAdjectivePage = (props) => {
         onSubmit={handleSubmit}
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
+        addMeaning={handleAddMeaning}
+        onMeaningChange={handleMeaningChange}
       />
     </>
   );

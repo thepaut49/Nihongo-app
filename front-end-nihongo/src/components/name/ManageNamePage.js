@@ -13,7 +13,14 @@ const ManageNamePage = (props) => {
     id: null,
     kanjis: "",
     pronunciation: "",
-    meaning: "",
+    meanings: [
+      {
+        id: null,
+        meaningNumber: 0,
+        meaning: "",
+        version: null,
+      },
+    ],
     numberOfUse: null,
     version: null,
   });
@@ -48,17 +55,9 @@ const ManageNamePage = (props) => {
       for (let i = 1; i < tempName.pronunciation.length; i++) {
         newPronunciation = newPronunciation + "・" + tempName.pronunciation[i];
       }
-      let newMeaning = tempName.meaning[0];
-      for (let i = 1; i < tempName.meaning.length; i++) {
-        newMeaning = newMeaning + ";" + tempName.meaning[i];
-      }
       const nameForm = {
-        id: tempName.id,
-        kanjis: tempName.kanjis,
+        ...tempName,
         pronunciation: newPronunciation,
-        meaning: newMeaning,
-        numberOfUse: tempName.numberOfUse,
-        version: tempName.version,
       };
       setName(nameForm);
     }
@@ -74,7 +73,6 @@ const ManageNamePage = (props) => {
     if (!name.kanjis) _errors.kanjis = "Kanjis of the name is required";
     if (!name.pronunciation)
       _errors.pronunciation = "Pronunciation is required";
-    if (!name.meaning) _errors.meaning = "Meaning is required";
 
     setErrors(_errors);
     // form is valid if the erros object has no properties
@@ -90,22 +88,34 @@ const ManageNamePage = (props) => {
     for (let i = 0; i < newPronunciation.length; i++) {
       newPronunciation[i] = newPronunciation[i].replace("・", "");
     }
-    let newMeaning = name.meaning.split(";");
-    for (let j = 0; j < newMeaning.length; j++) {
-      newMeaning[j] = newMeaning[j].replace(";", "");
-    }
     const savedName = {
-      id: name.id,
-      kanjis: name.kanjis,
+      ...name,
       pronunciation: newPronunciation,
-      meaning: newMeaning,
-      numberOfUse: name.numberOfUse,
-      version: name.version,
     };
     nameActions.saveName(savedName).then(() => {
       props.history.push("/names");
       toast.success("Name saved.");
     });
+  }
+
+  function handleAddMeaning(event) {
+    event.preventDefault();
+    let newMeanings = name.meanings;
+    newMeanings.push({
+      meaningNumber: name.meanings.length,
+      meaning: "",
+    });
+    setName({
+      ...name,
+      meanings: newMeanings,
+    });
+  }
+
+  function handleMeaningChange(event, index) {
+    let newMeanings = name.meanings;
+    newMeanings[index].meaning = event.target.value;
+    setName({ ...name, meanings: newMeanings });
+    setModified(true);
   }
 
   return (
@@ -119,6 +129,8 @@ const ManageNamePage = (props) => {
         onSubmit={handleSubmit}
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
+        addMeaning={handleAddMeaning}
+        onMeaningChange={handleMeaningChange}
       />
     </>
   );

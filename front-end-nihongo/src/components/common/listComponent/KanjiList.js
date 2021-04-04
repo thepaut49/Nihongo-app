@@ -55,10 +55,10 @@ function KanjiList(props) {
               })}
             </div>
             <div style={styleMeaning}>
-              {kanji.meaning.map((mean, index) => {
+              {kanji.meanings.map((mean, index) => {
                 return (
                   <span key={index} style={spanStyle}>
-                    {mean}
+                    {mean.meaning}
                   </span>
                 );
               })}
@@ -88,7 +88,7 @@ KanjiList.propTypes = {
       id: PropTypes.number.isRequired,
       kanji: PropTypes.string.isRequired,
       pronunciation: PropTypes.arrayOf.isRequired,
-      meaning: PropTypes.arrayOf.isRequired,
+      meanings: PropTypes.arrayOf.isRequired,
       strokeNumber: PropTypes.number.isRequired,
       radicals: PropTypes.string,
       version: PropTypes.number.isRequired,

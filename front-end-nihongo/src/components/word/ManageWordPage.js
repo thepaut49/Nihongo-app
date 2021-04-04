@@ -13,7 +13,14 @@ const ManageWordPage = (props) => {
     id: null,
     kanjis: "",
     pronunciation: "",
-    meaning: "",
+    meanings: [
+      {
+        id: null,
+        meaningNumber: 0,
+        meaning: "",
+        version: null,
+      },
+    ],
     numberOfUse: null,
     version: null,
   });
@@ -48,17 +55,9 @@ const ManageWordPage = (props) => {
       for (let i = 1; i < tempWord.pronunciation.length; i++) {
         newPronunciation = newPronunciation + "・" + tempWord.pronunciation[i];
       }
-      let newMeaning = tempWord.meaning[0];
-      for (let i = 1; i < tempWord.meaning.length; i++) {
-        newMeaning = newMeaning + ";" + tempWord.meaning[i];
-      }
       const wordForm = {
-        id: tempWord.id,
-        kanjis: tempWord.kanjis,
+        ...tempWord,
         pronunciation: newPronunciation,
-        meaning: newMeaning,
-        numberOfUse: tempWord.numberOfUse,
-        version: tempWord.version,
       };
       setWord(wordForm);
     }
@@ -74,7 +73,6 @@ const ManageWordPage = (props) => {
     if (!word.kanjis) _errors.kanjis = "Kanjis of the word is required";
     if (!word.pronunciation)
       _errors.pronunciation = "Pronunciation is required";
-    if (!word.meaning) _errors.meaning = "Meaning is required";
 
     setErrors(_errors);
     // form is valid if the erros object has no properties
@@ -90,22 +88,34 @@ const ManageWordPage = (props) => {
     for (let i = 0; i < newPronunciation.length; i++) {
       newPronunciation[i] = newPronunciation[i].replace("・", "");
     }
-    let newMeaning = word.meaning.split(";");
-    for (let j = 0; j < newMeaning.length; j++) {
-      newMeaning[j] = newMeaning[j].replace(";", "");
-    }
     const savedWord = {
-      id: word.id,
-      kanjis: word.kanjis,
+      ...word,
       pronunciation: newPronunciation,
-      meaning: newMeaning,
-      numberOfUse: word.numberOfUse,
-      version: word.version,
     };
     wordActions.saveWord(savedWord).then(() => {
       props.history.push("/words");
       toast.success("Word saved.");
     });
+  }
+
+  function handleAddMeaning(event) {
+    event.preventDefault();
+    let newMeanings = word.meanings;
+    newMeanings.push({
+      meaningNumber: word.meanings.length,
+      meaning: "",
+    });
+    setWord({
+      ...word,
+      meanings: newMeanings,
+    });
+  }
+
+  function handleMeaningChange(event, index) {
+    let newMeanings = word.meanings;
+    newMeanings[index].meaning = event.target.value;
+    setWord({ ...word, meanings: newMeanings });
+    setModified(true);
   }
 
   return (
@@ -119,6 +129,8 @@ const ManageWordPage = (props) => {
         onSubmit={handleSubmit}
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
+        addMeaning={handleAddMeaning}
+        onMeaningChange={handleMeaningChange}
       />
     </>
   );

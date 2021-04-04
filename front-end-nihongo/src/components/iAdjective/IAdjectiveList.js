@@ -31,10 +31,10 @@ function IAdjectiveList(props) {
                     })}
                   </div>
                   <div className="meaning">
-                    {iAdjective.meaning.map((mean, index) => {
+                    {iAdjective.meanings.map((mean, index) => {
                       return (
                         <span key={index} className="onemeaning">
-                          {mean}
+                          {mean.meaning}
                         </span>
                       );
                     })}
@@ -72,8 +72,8 @@ IAdjectiveList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       kanjis: PropTypes.string.isRequired,
-      pronunciation: PropTypes.string.isRequired,
-      meaning: PropTypes.arrayOf.isRequired,
+      pronunciation: PropTypes.arrayOf.isRequired,
+      meanings: PropTypes.arrayOf.isRequired,
       numberOfUse: PropTypes.number,
       version: PropTypes.number,
     })

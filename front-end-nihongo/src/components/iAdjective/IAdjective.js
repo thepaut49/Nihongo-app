@@ -52,10 +52,10 @@ function IAdjective(props) {
         })}
       </div>
       <div style={styleMeaning}>
-        {iAdjective.meaning.map((mean, index) => {
+        {iAdjective.meanings.map((mean, index) => {
           return (
             <span key={index} style={spanStyle}>
-              {mean}
+              {mean.meaning}
             </span>
           );
         })}

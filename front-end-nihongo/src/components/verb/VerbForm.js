@@ -6,8 +6,11 @@ import verbConstants from "../common/verbConstants";
 import PropTypes from "prop-types";
 
 const formStyle = {
+  display: "grid",
+  gridTemplateColumns: "1fr",
   backgroundColor: "#4682B4",
   margin: "1em",
+  gap: "1em",
   padding: "0.5em",
   borderRadius: "10px",
 };

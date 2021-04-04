@@ -20,10 +20,10 @@ function VerbList(props) {
               })}
             </div>
             <div className="meaning">
-              {verb.meaning.map((mean, index) => {
+              {verb.meanings.map((mean, index) => {
                 return (
                   <span key={index} className="onemeaning">
-                    {mean}
+                    {mean.meaning}
                   </span>
                 );
               })}
@@ -45,7 +45,7 @@ VerbList.propTypes = {
       id: PropTypes.number.isRequired,
       neutralForm: PropTypes.string.isRequired,
       pronunciation: PropTypes.string.isRequired,
-      meaning: PropTypes.arrayOf.isRequired,
+      meanings: PropTypes.arrayOf.isRequired,
       groupe: PropTypes.string.isRequired,
     })
   ).isRequired,

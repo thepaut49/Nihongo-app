@@ -1,9 +1,13 @@
 package com.thepaut49.nihongo.mapper;
 
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.thepaut49.nihongo.dto.NameDTO;
+import com.thepaut49.nihongo.dto.NameMeaningDTO;
 import com.thepaut49.nihongo.model.Name;
+import com.thepaut49.nihongo.model.NameMeaning;
 
 public class NameToDTOMapper {
 	
@@ -18,11 +22,8 @@ public class NameToDTOMapper {
 		for(int index = 0; index < pronunciations.length; index++) {
 			nameDTO.getPronunciation().add(pronunciations[index].replace(";", ""));	
 		}
-		nameDTO.setMeaning(new HashSet<String>());
-		String[] meanings = name.getMeaning().split(";");
-		for(int index = 0; index < meanings.length; index++) {
-			nameDTO.getMeaning().add(meanings[index].replace(";", ""));	
-		}
+		Set<NameMeaningDTO> meaningsTemp = name.getMeanings().stream().map(tempName -> NameMeaningToDTOMapper.map(tempName)).collect(Collectors.toSet());
+		nameDTO.setMeanings(meaningsTemp);
 		return nameDTO;
 	}
 	
@@ -37,11 +38,8 @@ public class NameToDTOMapper {
 			pronunciationTemp += pronunciation + ";";	
 		}
 		name.setPronunciation(pronunciationTemp);
-		String meaningTemp = "";
-		for(String meaning : nameDTO.getMeaning()) {
-			meaningTemp += meaning + ";";	
-		}
-		name.setMeaning(meaningTemp);	
+		Set<NameMeaning> meaningsTemp = nameDTO.getMeanings().stream().map(tempName -> NameMeaningToDTOMapper.map(tempName)).collect(Collectors.toSet());
+		name.setMeanings(meaningsTemp);
 		return name;
 	}
 

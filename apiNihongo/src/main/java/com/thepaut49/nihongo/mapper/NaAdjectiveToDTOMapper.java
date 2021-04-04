@@ -1,9 +1,13 @@
 package com.thepaut49.nihongo.mapper;
 
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.thepaut49.nihongo.dto.NaAdjectiveDTO;
+import com.thepaut49.nihongo.dto.NaAdjectiveMeaningDTO;
 import com.thepaut49.nihongo.model.NaAdjective;
+import com.thepaut49.nihongo.model.NaAdjectiveMeaning;
 
 public class NaAdjectiveToDTOMapper {
 	
@@ -18,11 +22,8 @@ public class NaAdjectiveToDTOMapper {
 		for(int index = 0; index < pronunciations.length; index++) {
 			naAdjectiveDTO.getPronunciation().add(pronunciations[index].replace(";", ""));	
 		}
-		naAdjectiveDTO.setMeaning(new HashSet<String>());
-		String[] meanings = naAdjective.getMeaning().split(";");
-		for(int index = 0; index < meanings.length; index++) {
-			naAdjectiveDTO.getMeaning().add(meanings[index].replace(";", ""));	
-		}
+		Set<NaAdjectiveMeaningDTO> meaningsTemp = naAdjective.getMeanings().stream().map(tempNaAdj -> NaAdjectiveMeaningToDTOMapper.map(tempNaAdj)).collect(Collectors.toSet());
+		naAdjectiveDTO.setMeanings(meaningsTemp);
 		return naAdjectiveDTO;
 	}
 	
@@ -38,12 +39,8 @@ public class NaAdjectiveToDTOMapper {
 			pronunciationTemp += pronunciation + ";";	
 		}
 		naAdjective.setPronunciation(pronunciationTemp);
-		
-		String meaningTemp = "";
-		for(String meaning : naAdjectiveDTO.getMeaning()) {
-			meaningTemp += meaning + ";";	
-		}
-		naAdjective.setMeaning(meaningTemp);	
+		Set<NaAdjectiveMeaning> meaningsTemp = naAdjectiveDTO.getMeanings().stream().map(tempAdj -> NaAdjectiveMeaningToDTOMapper.map(tempAdj)).collect(Collectors.toSet());
+		naAdjective.setMeanings(meaningsTemp);	
 		return naAdjective;
 	}
 

@@ -13,7 +13,14 @@ const ManageIAdjectivePage = (props) => {
     id: null,
     kanjis: "",
     pronunciation: "",
-    meaning: "",
+    meanings: [
+      {
+        id: null,
+        meaningNumber: 0,
+        meaning: "",
+        version: null,
+      },
+    ],
     numberOfUse: null,
     version: null,
   });
@@ -45,18 +52,15 @@ const ManageIAdjectivePage = (props) => {
       // on récupère le iAdjective du store et on le transforme pour qu'il corresponde au formulaire
       let tempIAdjective = iAdjectiveStore.getIAdjectiveByKanjis(kanjis);
       let newPronunciation = tempIAdjective.pronunciation[0];
-      for (let i = 0; i < newPronunciation.length; i++) {
-        newPronunciation =
-          newPronunciation + "・" + tempIAdjective.pronunciation[i];
-      }
-      let newMeaning = tempIAdjective.meaning[0];
-      for (let i = 1; i < tempIAdjective.meaning.length; i++) {
-        newMeaning = newMeaning + ";" + tempIAdjective.meaning[i];
+      if (tempIAdjective.pronunciation.length > 1) {
+        for (let i = 1; i < tempIAdjective.pronunciation.length; i++) {
+          newPronunciation =
+            newPronunciation + "・" + tempIAdjective.pronunciation[i];
+        }
       }
       const iAdjectiveForm = {
         ...tempIAdjective,
         pronunciation: newPronunciation,
-        meaning: newMeaning,
       };
       setIAdjective(iAdjectiveForm);
     }
@@ -73,8 +77,6 @@ const ManageIAdjectivePage = (props) => {
       _errors.kanjis = "Kanjis of the iAdjective is required";
     if (!iAdjective.pronunciation)
       _errors.pronunciation = "Pronunciation is required";
-    if (!iAdjective.meaning) _errors.meaning = "Meaning is required";
-
     setErrors(_errors);
     // form is valid if the erros object has no properties
     return Object.keys(_errors).length === 0;
@@ -94,19 +96,34 @@ const ManageIAdjectivePage = (props) => {
     } else {
       newPronunciation = [iAdjective.pronunciation];
     }
-    let newMeaning = iAdjective.meaning.split(";");
-    for (let j = 0; j < newMeaning.length; j++) {
-      newMeaning[j] = newMeaning[j].replace(";", "");
-    }
     const savedIAdjective = {
       ...iAdjective,
       pronunciation: newPronunciation,
-      meaning: newMeaning,
     };
     iAdjectiveActions.saveIAdjective(savedIAdjective).then(() => {
       props.history.push("/iAdjectives");
       toast.success("IAdjective saved.");
     });
+  }
+
+  function handleAddMeaning(event) {
+    event.preventDefault();
+    let newMeanings = iAdjective.meanings;
+    newMeanings.push({
+      meaningNumber: iAdjective.meanings.length,
+      meaning: "",
+    });
+    setIAdjective({
+      ...iAdjective,
+      meanings: newMeanings,
+    });
+  }
+
+  function handleMeaningChange(event, index) {
+    let newMeanings = iAdjective.meanings;
+    newMeanings[index].meaning = event.target.value;
+    setIAdjective({ ...iAdjective, meanings: newMeanings });
+    setModified(true);
   }
 
   return (
@@ -120,6 +137,8 @@ const ManageIAdjectivePage = (props) => {
         onSubmit={handleSubmit}
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
+        addMeaning={handleAddMeaning}
+        onMeaningChange={handleMeaningChange}
       />
     </>
   );

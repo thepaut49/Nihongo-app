@@ -12,10 +12,10 @@ function IAdjectiveList(props) {
             <div className="iAdjective">{iAdjective.kanjis}</div>
             <div className="pronunciation">{iAdjective.pronunciation}</div>
             <div className="meaning">
-              {iAdjective.meaning.map((mean, index) => {
+              {iAdjective.meanings.map((mean, index) => {
                 return (
                   <span key={index} className="onemeaning">
-                    {mean}
+                    {mean.meaning}
                   </span>
                 );
               })}
@@ -33,7 +33,7 @@ IAdjectiveList.propTypes = {
       id: PropTypes.number.isRequired,
       kanjis: PropTypes.string.isRequired,
       pronunciation: PropTypes.string.isRequired,
-      meaning: PropTypes.arrayOf.isRequired,
+      meanings: PropTypes.arrayOf.isRequired,
       numberOfUse: PropTypes.number,
       version: PropTypes.number,
     })

@@ -52,10 +52,10 @@ function Word(props) {
         })}
       </div>
       <div style={styleMeaning}>
-        {word.meaning.map((mean, index) => {
+        {word.meanings.map((mean, index) => {
           return (
             <span key={index} style={spanStyle}>
-              {mean}
+              {mean.meaning}
             </span>
           );
         })}

@@ -10,7 +10,7 @@ public class WordDTO {
 	
 	private Set<String> pronunciation;
 	
-	private Set<String> meaning;
+	private Set<WordMeaningDTO> meanings;
 	
 	private Integer numberOfUse;
 	
@@ -42,12 +42,12 @@ public class WordDTO {
 		this.pronunciation = pronunciation;
 	}
 
-	public Set<String> getMeaning() {
-		return meaning;
+	public Set<WordMeaningDTO> getMeanings() {
+		return meanings;
 	}
 
-	public void setMeaning(Set<String> meaning) {
-		this.meaning = meaning;
+	public void setMeanings(Set<WordMeaningDTO> meanings) {
+		this.meanings = meanings;
 	}
 	
 	public Integer getNumberOfUse() {

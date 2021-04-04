@@ -31,10 +31,10 @@ function NaAdjectiveList(props) {
                     })}
                   </div>
                   <div className="meaning">
-                    {naAdjective.meaning.map((mean, index) => {
+                    {naAdjective.meanings.map((mean, index) => {
                       return (
                         <span key={index} className="onemeaning">
-                          {mean}
+                          {mean.meaning}
                         </span>
                       );
                     })}
