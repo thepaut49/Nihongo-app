@@ -10,7 +10,7 @@ public class VerbDTO {
 	
 	private Set<String> pronunciation;
 	
-	private Set<String> meaning;
+	private Set<VerbMeaningDTO> meanings;
 	
 	private String groupe;
 	
@@ -44,12 +44,12 @@ public class VerbDTO {
 		this.pronunciation = pronunciation;
 	}
 
-	public Set<String> getMeaning() {
-		return meaning;
+	public Set<VerbMeaningDTO> getMeanings() {
+		return meanings;
 	}
 
-	public void setMeaning(Set<String> meaning) {
-		this.meaning = meaning;
+	public void setMeanings(Set<VerbMeaningDTO> meanings) {
+		this.meanings = meanings;
 	}
 
 	public String getGroupe() {

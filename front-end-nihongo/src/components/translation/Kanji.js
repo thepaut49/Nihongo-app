@@ -16,10 +16,10 @@ const Kanji = (props) => {
         })}
       </div>
       <div className="meaning">
-        {kanji.meaning.map((mean, index) => {
+        {kanji.meanings.map((mean, index) => {
           return (
             <span key={index} className="onemeaning">
-              {mean}
+              {mean.meaning}
             </span>
           );
         })}

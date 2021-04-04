@@ -13,7 +13,14 @@ const ManageVerbPage = (props) => {
     id: null,
     neutralForm: "",
     pronunciation: "",
-    meaning: "",
+    meanings: [
+      {
+        id: null,
+        meaningNumber: 0,
+        meaning: "",
+        version: null,
+      },
+    ],
     groupe: "",
     numberOfUse: null,
     version: null,
@@ -49,15 +56,9 @@ const ManageVerbPage = (props) => {
       for (let i = 1; i < tempVerb.pronunciation.length; i++) {
         newPronunciation = newPronunciation + "・" + tempVerb.pronunciation[i];
       }
-
-      let newMeaning = tempVerb.meaning[0];
-      for (let i = 1; i < tempVerb.meaning.length; i++) {
-        newMeaning = newMeaning + ";" + tempVerb.meaning[i];
-      }
       const verbForm = {
         ...tempVerb,
         pronunciation: newPronunciation,
-        meaning: newMeaning,
       };
       setVerb(verbForm);
     }
@@ -74,7 +75,6 @@ const ManageVerbPage = (props) => {
       _errors.neutralForm = "Neutral form of the verb is required";
     if (!verb.pronunciation)
       _errors.pronunciation = "Pronunciation is required";
-    if (!verb.meaning) _errors.meaning = "Meaning is required";
     if (!verb.groupe) _errors.groupe = "Group is required";
 
     setErrors(_errors);
@@ -91,20 +91,34 @@ const ManageVerbPage = (props) => {
     for (let i = 0; i < newPronunciation.length; i++) {
       newPronunciation[i] = newPronunciation[i].replace("・", "");
     }
-
-    let newMeaning = verb.meaning.split(";");
-    for (let j = 0; j < newMeaning.length; j++) {
-      newMeaning[j] = newMeaning[j].replace(";", "");
-    }
     const savedVerb = {
       ...verb,
       pronunciation: newPronunciation,
-      meaning: newMeaning,
     };
     verbActions.saveVerb(savedVerb).then(() => {
       props.history.push("/verbs");
       toast.success("Verb saved.");
     });
+  }
+
+  function handleAddMeaning(event) {
+    event.preventDefault();
+    let newMeanings = verb.meanings;
+    newMeanings.push({
+      meaningNumber: verb.meanings.length,
+      meaning: "",
+    });
+    setVerb({
+      ...verb,
+      meanings: newMeanings,
+    });
+  }
+
+  function handleMeaningChange(event, index) {
+    let newMeanings = verb.meanings;
+    newMeanings[index].meaning = event.target.value;
+    setVerb({ ...verb, meanings: newMeanings });
+    setModified(true);
   }
 
   return (
@@ -118,6 +132,8 @@ const ManageVerbPage = (props) => {
         onSubmit={handleSubmit}
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
+        addMeaning={handleAddMeaning}
+        onMeaningChange={handleMeaningChange}
       />
     </>
   );

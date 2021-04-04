@@ -52,10 +52,10 @@ function Verb(props) {
         })}
       </div>
       <div style={styleMeaning}>
-        {verb.meaning.map((mean, index) => {
+        {verb.meanings.map((mean, index) => {
           return (
             <span key={index} style={spanStyle}>
-              {mean}
+              {mean.meaning}
             </span>
           );
         })}

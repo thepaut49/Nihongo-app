@@ -1,12 +1,17 @@
 package com.thepaut49.nihongo.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -26,8 +31,9 @@ public class Verb implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String pronunciation;
 	
-	@Column(nullable = false, length = 500)
-	private String meaning;
+	@OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="VERB_ID")
+	private Set<VerbMeaning> meanings = new HashSet<>();
 	
 	@Column(nullable = false, length = 25)
 	private String groupe;
@@ -63,12 +69,12 @@ public class Verb implements Serializable {
 		this.pronunciation = pronunciation;
 	}
 
-	public String getMeaning() {
-		return meaning;
+	public Set<VerbMeaning> getMeanings() {
+		return meanings;
 	}
 
-	public void setMeaning(String meaning) {
-		this.meaning = meaning;
+	public void setMeanings(Set<VerbMeaning> meanings) {
+		this.meanings = meanings;
 	}
 
 	public String getGroupe() {
@@ -120,8 +126,8 @@ public class Verb implements Serializable {
 
 	@Override
 	public String toString() {
-		return " Verb : { Id : " + this.id +" , Neutral form : " + this.neutralForm + ", Pronunciation : " + this.pronunciation + " , Meaning : " + this.meaning +
-				" , Group : " + this.groupe  + " , Number of use : " + this.numberOfUse  + " , version : " + this.version + " }" ;
+		return " Verb : { Id : " + this.id +" , Neutral form : " + this.neutralForm + ", Pronunciation : " + this.pronunciation + " , Meanings : [ " + this.meanings +
+				" ] , Group : " + this.groupe  + " , Number of use : " + this.numberOfUse  + " , version : " + this.version + " }" ;
 	}
 	
 }

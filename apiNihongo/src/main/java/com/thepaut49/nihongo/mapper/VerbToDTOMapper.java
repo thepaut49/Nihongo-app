@@ -1,8 +1,12 @@
 package com.thepaut49.nihongo.mapper;
 
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.thepaut49.nihongo.dto.VerbDTO;
+import com.thepaut49.nihongo.dto.VerbMeaningDTO;
+import com.thepaut49.nihongo.model.VerbMeaning;
 import com.thepaut49.nihongo.model.Verb;
 
 public class VerbToDTOMapper {
@@ -19,11 +23,8 @@ public class VerbToDTOMapper {
 		for(int index = 0; index < pronunciations.length; index++) {
 			verbDTO.getPronunciation().add(pronunciations[index].replace(";", ""));	
 		}
-		verbDTO.setMeaning(new HashSet<String>());
-		String[] meanings = verb.getMeaning().split(";");
-		for(int index = 0; index < meanings.length; index++) {
-			verbDTO.getMeaning().add(meanings[index].replace(";", ""));	
-		}
+		Set<VerbMeaningDTO> meaningsTemp = verb.getMeanings().stream().map(tempVerb -> VerbMeaningToDTOMapper.map(tempVerb)).collect(Collectors.toSet());
+		verbDTO.setMeanings(meaningsTemp);
 		return verbDTO;
 	}
 	
@@ -39,12 +40,8 @@ public class VerbToDTOMapper {
 			pronunciationTemp += pronunciation + ";";	
 		}
 		verb.setPronunciation(pronunciationTemp);
-		String meaningTemp = "";
-		for(String meaning : verbDTO.getMeaning()) {
-			meaningTemp += meaning + ";";	
-		}
-		verb.setMeaning(meaningTemp);	
+		Set<VerbMeaning> meaningsTemp = verbDTO.getMeanings().stream().map(tempVerb -> VerbMeaningToDTOMapper.map(tempVerb)).collect(Collectors.toSet());
+		verb.setMeanings(meaningsTemp);
 		return verb;
 	}
-
 }

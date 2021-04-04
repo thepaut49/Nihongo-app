@@ -16,8 +16,10 @@ const ManageKanjiPage = (props) => {
     pronunciation: "",
     meanings: [
       {
+        id: null,
         meaningNumber: 0,
         meaning: "",
+        version: null,
       },
     ],
     radicals: "",

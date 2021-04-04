@@ -35,14 +35,25 @@ function VerbForm(props) {
         onTranslateClick={props.onTranslateClick}
       />
 
-      <CustomInput
-        id="meaning"
-        label="Meaning"
-        onChange={props.onChange}
-        name="meaning"
-        value={props.verb.meaning}
-        error={props.errors.meaning}
-      />
+      {props.verb.meanings &&
+        props.verb.meanings.length > 0 &&
+        props.verb.meanings.map((_meaning, index) => {
+          return (
+            <CustomInput
+              key={index}
+              id={"meaning" + index}
+              label={"Meaning" + (index + 1) + " :"}
+              typeInput="text"
+              onChange={(event) => props.onMeaningChange(event, index)}
+              name={"meaning" + index}
+              value={props.verb.meanings[index].meaning}
+            />
+          );
+        })}
+
+      <button className="btn btn-primary" onClick={props.addMeaning}>
+        Add meaning
+      </button>
 
       <CustomSelect
         id="groupe"
@@ -66,6 +77,8 @@ VerbForm.propTypes = {
   onMiddlePointClick: PropTypes.func.isRequired,
   onTranslateClick: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  addMeaning: PropTypes.func.isRequired,
+  onMeaningChange: PropTypes.func.isRequired,
 };
 
 export default VerbForm;

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.thepaut49.nihongo.dto.VerbCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
 import com.thepaut49.nihongo.model.Verb;
+import com.thepaut49.nihongo.model.VerbMeaning;
 import com.thepaut49.nihongo.repository.VerbRepository;
 
 @Service

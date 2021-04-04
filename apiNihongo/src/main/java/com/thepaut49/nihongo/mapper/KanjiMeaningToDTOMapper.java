@@ -5,12 +5,12 @@ import com.thepaut49.nihongo.model.KanjiMeaning;
 
 public class KanjiMeaningToDTOMapper {
 	
-	public static KanjiMeaningDTO map(KanjiMeaning kanji) {
+	public static KanjiMeaningDTO map(KanjiMeaning kanjiMeaning) {
 		KanjiMeaningDTO kanjiMeaningDTO = new KanjiMeaningDTO();
-		kanjiMeaningDTO.setId(kanji.getId());
-		kanjiMeaningDTO.setMeaningNumber(kanji.getMeaningNumber());
-		kanjiMeaningDTO.setVersion(kanji.getVersion());
-		kanjiMeaningDTO.setMeaning(kanji.getMeaning());
+		kanjiMeaningDTO.setId(kanjiMeaning.getId());
+		kanjiMeaningDTO.setMeaningNumber(kanjiMeaning.getMeaningNumber());
+		kanjiMeaningDTO.setVersion(kanjiMeaning.getVersion());
+		kanjiMeaningDTO.setMeaning(kanjiMeaning.getMeaning());
 		return kanjiMeaningDTO;
 	}
 	
