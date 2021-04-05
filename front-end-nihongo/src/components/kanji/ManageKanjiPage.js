@@ -6,6 +6,7 @@ import { radicals as radicalsList } from "../common/Radicals";
 import { Prompt } from "react-router-dom";
 import * as kanjiActions from "../../actions/kanjiActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { newMeaningNumber } from "../common/meaningUtils";
 
 const ManageKanjiPage = (props) => {
   const [modified, setModified] = useState(false);
@@ -93,7 +94,6 @@ const ManageKanjiPage = (props) => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    debugger;
     if (!formIsValid()) return;
     setModified(false);
     // on transforme les chaine de caractères en liste de chaines
@@ -130,7 +130,7 @@ const ManageKanjiPage = (props) => {
     event.preventDefault();
     let newMeanings = kanji.meanings;
     newMeanings.push({
-      meaningNumber: kanji.meanings.length,
+      meaningNumber: newMeaningNumber(kanji.meanings),
       meaning: "",
     });
     setKanji({
@@ -140,8 +140,17 @@ const ManageKanjiPage = (props) => {
   }
 
   function handleMeaningChange(event, index) {
+    event.preventDefault();
     let newMeanings = kanji.meanings;
     newMeanings[index].meaning = event.target.value;
+    setKanji({ ...kanji, meanings: newMeanings });
+    setModified(true);
+  }
+
+  function handleDeleteMeaning(event, index) {
+    event.preventDefault();
+    let newMeanings = kanji.meanings;
+    newMeanings.splice(index, 1);
     setKanji({ ...kanji, meanings: newMeanings });
     setModified(true);
   }
@@ -160,6 +169,7 @@ const ManageKanjiPage = (props) => {
         onTranslateClick={handleTranslateClick}
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
+        deleteMeaning={handleDeleteMeaning}
       />
     </>
   );

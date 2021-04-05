@@ -31,7 +31,7 @@ public class Word implements Serializable {
 	@Column(nullable = false)
 	private String pronunciation;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="WORD_ID")
 	private Set<WordMeaning> meanings = new HashSet<>();
 	

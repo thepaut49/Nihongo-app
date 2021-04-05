@@ -31,7 +31,7 @@ public class Verb implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String pronunciation;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="VERB_ID")
 	private Set<VerbMeaning> meanings = new HashSet<>();
 	

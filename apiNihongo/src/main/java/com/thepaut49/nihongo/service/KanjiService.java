@@ -31,7 +31,9 @@ public class KanjiService {
 	
 	public Kanji updateKanji(Kanji kanji) {
 		if (kanji != null) {
-			return kanjiRepository.save(kanji);
+			kanji.getMeanings().stream().forEach(meaning -> meaning.setKanji(kanji) );
+			Kanji updatedKanji = kanjiRepository.save(kanji); 
+			return updatedKanji;
 		}
 		else {
 			return null;
@@ -76,6 +78,7 @@ public class KanjiService {
 	public Kanji updateKanjiNumberOfUse(Integer id) {
 		Kanji kanji = kanjiRepository.findById(id).get();
 		kanji.setNumberOfUse(kanji.getNumberOfUse() + 1);
+		kanji.getMeanings().stream().forEach(meaning -> meaning.setKanji(kanji) );
 		return kanjiRepository.save(kanji);
 	}
 

@@ -13,7 +13,7 @@ function VerbList(props) {
             <div className="pronunciation">
               {verb.pronunciation.map((pronunciation, index) => {
                 return (
-                  <span key={index} className="onemeaning">
+                  <span key={index + 70000} className="onemeaning">
                     {pronunciation}
                   </span>
                 );
@@ -22,14 +22,14 @@ function VerbList(props) {
             <div className="meaning">
               {verb.meanings.map((mean, index) => {
                 return (
-                  <span key={index} className="onemeaning">
+                  <span key={index + 80000} className="onemeaning">
                     {mean.meaning}
                   </span>
                 );
               })}
             </div>
             <div className="groupe">
-              <label>Group :</label>
+              <label>Group : </label>
               {verb.groupe}
             </div>
           </div>
@@ -44,7 +44,7 @@ VerbList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       neutralForm: PropTypes.string.isRequired,
-      pronunciation: PropTypes.string.isRequired,
+      pronunciation: PropTypes.arrayOf.isRequired,
       meanings: PropTypes.arrayOf.isRequired,
       groupe: PropTypes.string.isRequired,
     })

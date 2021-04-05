@@ -29,13 +29,6 @@ const styleMeaning = {
   fontSize: "x-large",
 };
 
-const spanStyle = {
-  margin: "0.5em",
-  backgroundColor: "#4682b4",
-  borderRadius: "10px",
-  padding: "0.3em",
-};
-
 function Kanji(props) {
   const kanji = props.kanji;
 
@@ -45,7 +38,7 @@ function Kanji(props) {
       <div style={stylePronunciation}>
         {kanji.pronunciation.map((pro, index) => {
           return (
-            <span key={index} style={spanStyle}>
+            <span key={index} className="onemeaning">
               {pro}
             </span>
           );
@@ -54,7 +47,7 @@ function Kanji(props) {
       <div style={styleMeaning}>
         {kanji.meanings.map((mean, index) => {
           return (
-            <span key={index} style={spanStyle}>
+            <span key={index} className="onemeaning">
               {mean.meaning}
             </span>
           );

@@ -30,6 +30,7 @@ public class NameService {
 	
 	public Name updateName(Name name) {
 		if (name != null) {
+			name.getMeanings().stream().forEach(meaning -> meaning.setName(name) );
 			return nameRepository.save(name);
 		}
 		else {
@@ -67,6 +68,7 @@ public class NameService {
 	public Name updateNameNumberOfUse(Integer id) {
 		Name name = nameRepository.findById(id).get();
 		name.setNumberOfUse(name.getNumberOfUse() + 1);
+		name.getMeanings().stream().forEach(meaning -> meaning.setName(name) );
 		return nameRepository.save(name);
 	}
 

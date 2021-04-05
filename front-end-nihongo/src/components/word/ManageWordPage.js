@@ -5,6 +5,7 @@ import wordStore from "../../stores/wordStore";
 import { Prompt } from "react-router-dom";
 import * as wordActions from "../../actions/wordActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { newMeaningNumber } from "../common/meaningUtils";
 
 const ManageWordPage = (props) => {
   const [modified, setModified] = useState(false);
@@ -102,7 +103,7 @@ const ManageWordPage = (props) => {
     event.preventDefault();
     let newMeanings = word.meanings;
     newMeanings.push({
-      meaningNumber: word.meanings.length,
+      meaningNumber: newMeaningNumber(word.meanings),
       meaning: "",
     });
     setWord({
@@ -112,8 +113,17 @@ const ManageWordPage = (props) => {
   }
 
   function handleMeaningChange(event, index) {
+    event.preventDefault();
     let newMeanings = word.meanings;
     newMeanings[index].meaning = event.target.value;
+    setWord({ ...word, meanings: newMeanings });
+    setModified(true);
+  }
+
+  function handleDeleteMeaning(event, index) {
+    event.preventDefault();
+    let newMeanings = word.meanings;
+    newMeanings.splice(index, 1);
     setWord({ ...word, meanings: newMeanings });
     setModified(true);
   }
@@ -131,6 +141,7 @@ const ManageWordPage = (props) => {
         onTranslateClick={handleTranslateClick}
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
+        deleteMeaning={handleDeleteMeaning}
       />
     </>
   );

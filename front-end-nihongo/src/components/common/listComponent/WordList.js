@@ -13,7 +13,7 @@ function WordList(props) {
             <div className="pronunciation">
               {word.pronunciation.map((pronunciation, index) => {
                 return (
-                  <span key={index} className="onemeaning">
+                  <span key={index + 90000} className="onemeaning">
                     {pronunciation}
                   </span>
                 );
@@ -22,7 +22,7 @@ function WordList(props) {
             <div className="meaning">
               {word.meanings.map((mean, index) => {
                 return (
-                  <span key={index} className="onemeaning">
+                  <span key={index + 100000} className="onemeaning">
                     {mean.meaning}
                   </span>
                 );

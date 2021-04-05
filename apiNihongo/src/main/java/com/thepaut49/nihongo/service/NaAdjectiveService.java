@@ -30,6 +30,7 @@ public class NaAdjectiveService {
 	
 	public NaAdjective updateNaAdjective(NaAdjective naAdjective) {
 		if (naAdjective != null) {
+			naAdjective.getMeanings().stream().forEach(meaning -> meaning.setNaAdjective(naAdjective) );
 			return naAdjectiveRepository.save(naAdjective);
 		}
 		else {
@@ -67,6 +68,7 @@ public class NaAdjectiveService {
 	public NaAdjective updateNaAdjectiveNumberOfUse(Integer id) {
 		NaAdjective naAdjective = naAdjectiveRepository.findById(id).get();
 		naAdjective.setNumberOfUse(naAdjective.getNumberOfUse() + 1);
+		naAdjective.getMeanings().stream().forEach(meaning -> meaning.setNaAdjective(naAdjective) );
 		return naAdjectiveRepository.save(naAdjective);
 	}
 

@@ -10,11 +10,19 @@ function NaAdjectiveList(props) {
         return (
           <div key={naAdjective.id} className="grid-container-naAdjective">
             <div className="naAdjective">{naAdjective.kanjis}</div>
-            <div className="pronunciation">{naAdjective.pronunciation}</div>
+            <div className="pronunciation">
+              {naAdjective.pronunciation.map((pro, index) => {
+                return (
+                  <span key={index + 30000} className="onemeaning">
+                    {pro}
+                  </span>
+                );
+              })}
+            </div>
             <div className="meaning">
               {naAdjective.meanings.map((mean, index) => {
                 return (
-                  <span key={index} className="onemeaning">
+                  <span key={index + 40000} className="onemeaning">
                     {mean.meaning}
                   </span>
                 );

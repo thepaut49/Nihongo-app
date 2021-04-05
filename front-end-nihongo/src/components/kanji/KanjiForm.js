@@ -1,6 +1,7 @@
 import React from "react";
 import { radicals, nbrOfStrokesString } from "../common/Radicals";
 import CustomInput from "../common/CustomInput";
+import CustomInputMeaning from "../common/CustomInputMeaning";
 import CustomInputPronunciation from "../common/CustomInputPronunciation";
 import CustomIntegerInput from "../common/CustomIntegerInput";
 import PropTypes from "prop-types";
@@ -20,17 +21,8 @@ function KanjiForm(props) {
     textAlign: "center",
   };
 
-  const formStyle = {
-    display: "grid",
-    gridTemplateColumns: "1fr",
-    backgroundColor: "#4682B4",
-    margin: "1em",
-    padding: "0.5em",
-    borderRadius: "10px",
-  };
-
   return (
-    <form onSubmit={props.onSubmit} style={formStyle}>
+    <form onSubmit={props.onSubmit} className="modificationForm">
       <CustomInput
         id="kanji"
         label="Kanji"
@@ -56,14 +48,16 @@ function KanjiForm(props) {
         props.kanji.meanings.length > 0 &&
         props.kanji.meanings.map((_meaning, index) => {
           return (
-            <CustomInput
-              key={index * 1000 + 1}
+            <CustomInputMeaning
+              key={index + 1000}
               id={"meaning" + index}
-              label={"Meaning" + (index + 1) + " :"}
+              label={"Meaning " + (index + 1) + " :"}
               typeInput="text"
               onChange={(event) => props.onMeaningChange(event, index)}
               name={"meaning" + index}
               value={props.kanji.meanings[index].meaning}
+              index={index}
+              deleteMeaning={props.deleteMeaning}
             />
           );
         })}
@@ -98,11 +92,11 @@ function KanjiForm(props) {
           return (
             <>
               {nbrOfStrokesString.includes(radical) ? (
-                <button key={index + 1} style={numberStyle}>
+                <button key={index} style={numberStyle}>
                   {radical}
                 </button>
               ) : (
-                <button key={index + 1} onClick={props.onClick}>
+                <button key={index} onClick={props.onClick}>
                   {radical}
                 </button>
               )}
@@ -123,6 +117,7 @@ KanjiForm.propTypes = {
   onTranslateClick: PropTypes.func.isRequired,
   addMeaning: PropTypes.func.isRequired,
   onMeaningChange: PropTypes.func.isRequired,
+  deleteMeaning: PropTypes.func.isRequired,
 };
 
 export default KanjiForm;

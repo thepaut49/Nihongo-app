@@ -5,6 +5,7 @@ import naAdjectiveStore from "../../stores/naAdjectiveStore";
 import { Prompt } from "react-router-dom";
 import * as naAdjectiveActions from "../../actions/naAdjectiveActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { newMeaningNumber } from "../common/meaningUtils";
 
 const ManageNaAdjectivePage = (props) => {
   const [modified, setModified] = useState(false);
@@ -111,7 +112,7 @@ const ManageNaAdjectivePage = (props) => {
     event.preventDefault();
     let newMeanings = naAdjective.meanings;
     newMeanings.push({
-      meaningNumber: naAdjective.meanings.length,
+      meaningNumber: newMeaningNumber(naAdjective.meanings),
       meaning: "",
     });
     setNaAdjective({
@@ -121,8 +122,17 @@ const ManageNaAdjectivePage = (props) => {
   }
 
   function handleMeaningChange(event, index) {
+    event.preventDefault();
     let newMeanings = naAdjective.meanings;
     newMeanings[index].meaning = event.target.value;
+    setNaAdjective({ ...naAdjective, meanings: newMeanings });
+    setModified(true);
+  }
+
+  function handleDeleteMeaning(event, index) {
+    event.preventDefault();
+    let newMeanings = naAdjective.meanings;
+    newMeanings.splice(index, 1);
     setNaAdjective({ ...naAdjective, meanings: newMeanings });
     setModified(true);
   }
@@ -140,6 +150,7 @@ const ManageNaAdjectivePage = (props) => {
         onTranslateClick={handleTranslateClick}
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
+        deleteMeaning={handleDeleteMeaning}
       />
     </>
   );

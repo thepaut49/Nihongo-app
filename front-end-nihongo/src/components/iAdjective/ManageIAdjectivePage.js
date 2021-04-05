@@ -5,6 +5,7 @@ import iAdjectiveStore from "../../stores/iAdjectiveStore";
 import { Prompt } from "react-router-dom";
 import * as iAdjectiveActions from "../../actions/iAdjectiveActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { newMeaningNumber } from "../common/meaningUtils";
 
 const ManageIAdjectivePage = (props) => {
   const [modified, setModified] = useState(false);
@@ -110,7 +111,7 @@ const ManageIAdjectivePage = (props) => {
     event.preventDefault();
     let newMeanings = iAdjective.meanings;
     newMeanings.push({
-      meaningNumber: iAdjective.meanings.length,
+      meaningNumber: newMeaningNumber(iAdjective.meanings),
       meaning: "",
     });
     setIAdjective({
@@ -120,8 +121,17 @@ const ManageIAdjectivePage = (props) => {
   }
 
   function handleMeaningChange(event, index) {
+    event.preventDefault();
     let newMeanings = iAdjective.meanings;
     newMeanings[index].meaning = event.target.value;
+    setIAdjective({ ...iAdjective, meanings: newMeanings });
+    setModified(true);
+  }
+
+  function handleDeleteMeaning(event, index) {
+    event.preventDefault();
+    let newMeanings = iAdjective.meanings;
+    newMeanings.splice(index, 1);
     setIAdjective({ ...iAdjective, meanings: newMeanings });
     setModified(true);
   }
@@ -139,6 +149,7 @@ const ManageIAdjectivePage = (props) => {
         onTranslateClick={handleTranslateClick}
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
+        deleteMeaning={handleDeleteMeaning}
       />
     </>
   );

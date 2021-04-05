@@ -31,7 +31,7 @@ public class Name implements Serializable {
 	@Column(nullable = false)
 	private String pronunciation;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="NAME_ID")
 	private Set<NameMeaning> meanings = new HashSet<>();
 	

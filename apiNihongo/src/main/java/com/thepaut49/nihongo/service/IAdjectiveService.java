@@ -30,6 +30,7 @@ public class IAdjectiveService {
 	
 	public IAdjective updateIAdjective(IAdjective iAdjective) {
 		if (iAdjective != null) {
+			iAdjective.getMeanings().stream().forEach(meaning -> meaning.setIAdjective(iAdjective) );
 			return iAdjectiveRepository.save(iAdjective);
 		}
 		else {
@@ -67,6 +68,7 @@ public class IAdjectiveService {
 	public IAdjective updateIAdjectiveNumberOfUse(Integer id) {
 		IAdjective iAdjective = iAdjectiveRepository.findById(id).get();
 		iAdjective.setNumberOfUse(iAdjective.getNumberOfUse() + 1);
+		iAdjective.getMeanings().stream().forEach(meaning -> meaning.setIAdjective(iAdjective) );
 		return iAdjectiveRepository.save(iAdjective);
 	}
 

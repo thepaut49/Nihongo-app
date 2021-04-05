@@ -31,7 +31,7 @@ public class NaAdjective implements Serializable {
 	@Column(nullable = false)
 	private String pronunciation;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="NA_ADJECTIVE_ID")
 	private Set<NaAdjectiveMeaning> meanings = new HashSet<>();
 	

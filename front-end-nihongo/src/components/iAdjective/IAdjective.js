@@ -29,13 +29,6 @@ const styleMeaning = {
   fontSize: "x-large",
 };
 
-const spanStyle = {
-  margin: "0.5em",
-  backgroundColor: "#4682b4",
-  borderRadius: "10px",
-  padding: "0.3em",
-};
-
 function IAdjective(props) {
   const iAdjective = props.iAdjective;
 
@@ -45,7 +38,7 @@ function IAdjective(props) {
       <div style={stylePronunciation}>
         {iAdjective.pronunciation.map((pro, index) => {
           return (
-            <span key={index} style={spanStyle}>
+            <span key={index} className="onemeaning">
               {pro}
             </span>
           );
@@ -54,7 +47,7 @@ function IAdjective(props) {
       <div style={styleMeaning}>
         {iAdjective.meanings.map((mean, index) => {
           return (
-            <span key={index} style={spanStyle}>
+            <span key={index} className="onemeaning">
               {mean.meaning}
             </span>
           );

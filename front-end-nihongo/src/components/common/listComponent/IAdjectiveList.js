@@ -10,11 +10,19 @@ function IAdjectiveList(props) {
         return (
           <div key={iAdjective.id} className="grid-container-iAdjective">
             <div className="iAdjective">{iAdjective.kanjis}</div>
-            <div className="pronunciation">{iAdjective.pronunciation}</div>
+            <div className="pronunciation">
+              {iAdjective.pronunciation.map((pro, index) => {
+                return (
+                  <span key={index + 10000} className="onemeaning">
+                    {pro}
+                  </span>
+                );
+              })}
+            </div>
             <div className="meaning">
               {iAdjective.meanings.map((mean, index) => {
                 return (
-                  <span key={index} className="onemeaning">
+                  <span key={index + 20000} className="onemeaning">
                     {mean.meaning}
                   </span>
                 );

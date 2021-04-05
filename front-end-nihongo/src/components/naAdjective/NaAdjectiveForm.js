@@ -1,21 +1,12 @@
 import React from "react";
 import CustomInput from "../common/CustomInput";
+import CustomInputMeaning from "../common/CustomInputMeaning";
 import CustomInputPronunciation from "../common/CustomInputPronunciation";
 import PropTypes from "prop-types";
 
-const formStyle = {
-  display: "grid",
-  gridTemplateColumns: "1fr",
-  backgroundColor: "#4682B4",
-  margin: "1em",
-  gap: "1em",
-  padding: "0.5em",
-  borderRadius: "10px",
-};
-
 function NaAdjectiveForm(props) {
   return (
-    <form onSubmit={props.onSubmit} style={formStyle}>
+    <form onSubmit={props.onSubmit} className="modificationForm">
       <CustomInput
         id="kanjis"
         label="Kanjis"
@@ -40,14 +31,15 @@ function NaAdjectiveForm(props) {
         props.naAdjective.meanings.length > 0 &&
         props.naAdjective.meanings.map((_meaning, index) => {
           return (
-            <CustomInput
+            <CustomInputMeaning
               key={index}
               id={"meaning" + index}
-              label={"Meaning" + (index + 1) + " :"}
+              label={"Meaning " + (index + 1) + " :"}
               typeInput="text"
               onChange={(event) => props.onMeaningChange(event, index)}
               name={"meaning" + index}
               value={props.naAdjective.meanings[index].meaning}
+              deleteMeaning={props.deleteMeaning}
             />
           );
         })}
@@ -70,6 +62,7 @@ NaAdjectiveForm.propTypes = {
   onTranslateClick: PropTypes.func.isRequired,
   addMeaning: PropTypes.func.isRequired,
   onMeaningChange: PropTypes.func.isRequired,
+  deleteMeaning: PropTypes.func.isRequired,
 };
 
 export default NaAdjectiveForm;

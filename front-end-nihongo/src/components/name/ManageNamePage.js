@@ -5,6 +5,7 @@ import nameStore from "../../stores/nameStore";
 import { Prompt } from "react-router-dom";
 import * as nameActions from "../../actions/nameActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { newMeaningNumber } from "../common/meaningUtils";
 
 const ManageNamePage = (props) => {
   const [modified, setModified] = useState(false);
@@ -102,7 +103,7 @@ const ManageNamePage = (props) => {
     event.preventDefault();
     let newMeanings = name.meanings;
     newMeanings.push({
-      meaningNumber: name.meanings.length,
+      meaningNumber: newMeaningNumber(name.meanings),
       meaning: "",
     });
     setName({
@@ -112,8 +113,17 @@ const ManageNamePage = (props) => {
   }
 
   function handleMeaningChange(event, index) {
+    event.preventDefault();
     let newMeanings = name.meanings;
     newMeanings[index].meaning = event.target.value;
+    setName({ ...name, meanings: newMeanings });
+    setModified(true);
+  }
+
+  function handleDeleteMeaning(event, index) {
+    event.preventDefault();
+    let newMeanings = name.meanings;
+    newMeanings.splice(index, 1);
     setName({ ...name, meanings: newMeanings });
     setModified(true);
   }
@@ -131,6 +141,7 @@ const ManageNamePage = (props) => {
         onTranslateClick={handleTranslateClick}
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
+        deleteMeaning={handleDeleteMeaning}
       />
     </>
   );

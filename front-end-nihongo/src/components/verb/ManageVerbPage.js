@@ -5,6 +5,7 @@ import verbStore from "../../stores/verbStore";
 import { Prompt } from "react-router-dom";
 import * as verbActions from "../../actions/verbActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { newMeaningNumber } from "../common/meaningUtils";
 
 const ManageVerbPage = (props) => {
   const [modified, setModified] = useState(false);
@@ -105,7 +106,7 @@ const ManageVerbPage = (props) => {
     event.preventDefault();
     let newMeanings = verb.meanings;
     newMeanings.push({
-      meaningNumber: verb.meanings.length,
+      meaningNumber: newMeaningNumber(verb.meanings),
       meaning: "",
     });
     setVerb({
@@ -115,8 +116,17 @@ const ManageVerbPage = (props) => {
   }
 
   function handleMeaningChange(event, index) {
+    event.preventDefault();
     let newMeanings = verb.meanings;
     newMeanings[index].meaning = event.target.value;
+    setVerb({ ...verb, meanings: newMeanings });
+    setModified(true);
+  }
+
+  function handleDeleteMeaning(event, index) {
+    event.preventDefault();
+    let newMeanings = verb.meanings;
+    newMeanings.splice(index, 1);
     setVerb({ ...verb, meanings: newMeanings });
     setModified(true);
   }
@@ -134,6 +144,7 @@ const ManageVerbPage = (props) => {
         onTranslateClick={handleTranslateClick}
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
+        deleteMeaning={handleDeleteMeaning}
       />
     </>
   );

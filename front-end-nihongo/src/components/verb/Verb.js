@@ -29,13 +29,6 @@ const styleMeaning = {
   fontSize: "x-large",
 };
 
-const spanStyle = {
-  margin: "0.5em",
-  backgroundColor: "#4682b4",
-  borderRadius: "10px",
-  padding: "0.3em",
-};
-
 function Verb(props) {
   const verb = props.verb;
 
@@ -45,7 +38,7 @@ function Verb(props) {
       <div style={stylePronunciation}>
         {verb.pronunciation.map((pro, index) => {
           return (
-            <span key={index} style={spanStyle}>
+            <span key={index} className="onemeaning">
               {pro}
             </span>
           );
@@ -54,7 +47,7 @@ function Verb(props) {
       <div style={styleMeaning}>
         {verb.meanings.map((mean, index) => {
           return (
-            <span key={index} style={spanStyle}>
+            <span key={index} className="onemeaning">
               {mean.meaning}
             </span>
           );

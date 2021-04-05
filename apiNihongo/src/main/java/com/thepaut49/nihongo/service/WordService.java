@@ -30,6 +30,7 @@ public class WordService {
 	
 	public Word updateWord(Word word) {
 		if (word != null) {
+			word.getMeanings().stream().forEach(meaning -> meaning.setWord(word) );
 			return wordRepository.save(word);
 		}
 		else {
@@ -67,6 +68,7 @@ public class WordService {
 	public Word updateWordNumberOfUse(Integer id) {
 		Word word = wordRepository.findById(id).get();
 		word.setNumberOfUse(word.getNumberOfUse() + 1);
+		word.getMeanings().stream().forEach(meaning -> meaning.setWord(word) );
 		return wordRepository.save(word);
 	}
 

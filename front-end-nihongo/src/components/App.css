@@ -1,3 +1,4 @@
+/**** global CSS *****/
 body {
   background-color: #56c1196e;
   color: #ffffff;
@@ -37,4 +38,23 @@ nav a {
 
 label {
   margin: 0.4em;
+}
+
+/**** CSS for creation and modification of entities *****/
+.modificationForm {
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: #4682b4;
+  margin: 1em;
+  gap: 1em;
+  padding: 0.5em;
+  border-radius: 10px;
+}
+
+/**** CSS for individual meaning and pronunciation *****/
+.onemeaning {
+  background-color: #4682b4;
+  border-radius: 10px;
+  padding: 0.3em;
+  margin: 0.5em;
 }

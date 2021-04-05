@@ -31,7 +31,7 @@ public class Kanji implements Serializable{
 	@Column(nullable = false , length = 255)
 	private String pronunciation;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name="KANJI_ID")
 	private Set<KanjiMeaning> meanings = new HashSet<>();
 	

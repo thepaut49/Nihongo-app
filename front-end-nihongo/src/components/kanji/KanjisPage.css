@@ -40,11 +40,6 @@
   margin: 0.5em;
 }
 
-.onemeaning {
-  background-color: #4682b4;
-  border-radius: 10px;
-  padding: 0.3em;
-}
 .strokes {
   grid-area: strokes;
 }
