@@ -85,7 +85,7 @@ function KanjiForm(props) {
         error={props.errors.radicals}
       />
 
-      <input type="submit" value="Save" className="btn btn-primary" />
+      <input type="submit" value="Save" className="btn btn-success" />
 
       <div style={gridListStyle}>
         {radicals.map((radical, index) => {

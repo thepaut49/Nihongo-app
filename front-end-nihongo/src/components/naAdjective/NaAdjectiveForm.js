@@ -39,6 +39,7 @@ function NaAdjectiveForm(props) {
               onChange={(event) => props.onMeaningChange(event, index)}
               name={"meaning" + index}
               value={props.naAdjective.meanings[index].meaning}
+              index={index}
               deleteMeaning={props.deleteMeaning}
             />
           );
@@ -48,7 +49,7 @@ function NaAdjectiveForm(props) {
         Add meaning
       </button>
 
-      <input type="submit" value="Save" className="btn btn-primary" />
+      <input type="submit" value="Save" className="btn btn-success" />
     </form>
   );
 }

@@ -41,6 +41,7 @@ function VerbForm(props) {
               onChange={(event) => props.onMeaningChange(event, index)}
               name={"meaning" + index}
               value={props.verb.meanings[index].meaning}
+              index={index}
               deleteMeaning={props.deleteMeaning}
             />
           );
@@ -60,7 +61,7 @@ function VerbForm(props) {
         listOfValues={verbConstants.verbGroupList}
       />
 
-      <input type="submit" value="Save" className="btn btn-primary" />
+      <input type="submit" value="Save" className="btn btn-success" />
     </form>
   );
 }

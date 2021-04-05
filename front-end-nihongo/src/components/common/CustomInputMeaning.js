@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+const styleButtons = {
+  margin: "0.4em",
+};
+
 function CustomInputMeaning(props) {
   let wrapperClass = "form-group";
   if (props.error.length > 0) {
@@ -21,6 +25,7 @@ function CustomInputMeaning(props) {
           maxLength={props.maxLength}
         />
         <button
+          style={styleButtons}
           className="btn btn-outline-danger"
           onClick={(event) => props.deleteMeaning(event, props.index)}
         >

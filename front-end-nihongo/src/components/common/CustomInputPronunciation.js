@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+const styleButtons = {
+  margin: "0.4em",
+};
+
 function CustomInputPronunciation(props) {
-  const styleButtons = {
-    margin: "0.4em",
-  };
   let wrapperClass = "form-group";
   if (props.error.length > 0) {
     wrapperClass += "has-error";
@@ -23,20 +24,26 @@ function CustomInputPronunciation(props) {
           value={props.value}
           maxLength={props.maxLength}
         />
-        <div style={styleButtons}>
+        <div>
           <button
+            style={styleButtons}
             className="btn btn-primary"
             onClick={props.onMiddlePointClick}
           >
             ・
           </button>
           <button
+            style={styleButtons}
             className="btn btn-primary"
             onClick={props.onMiddlePointClick}
           >
             〜
           </button>
-          <button className="btn btn-primary" onClick={props.onTranslateClick}>
+          <button
+            style={styleButtons}
+            className="btn btn-primary"
+            onClick={props.onTranslateClick}
+          >
             Translate to kanas
           </button>
         </div>

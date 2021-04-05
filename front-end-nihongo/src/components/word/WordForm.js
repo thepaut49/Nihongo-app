@@ -27,15 +27,6 @@ function WordForm(props) {
         onTranslateClick={props.onTranslateClick}
       />
 
-      <CustomInput
-        id="meaning"
-        label="Meaning"
-        onChange={props.onChange}
-        name="meaning"
-        value={props.word.meaning}
-        error={props.errors.meaning}
-      />
-
       {props.word.meanings &&
         props.word.meanings.length > 0 &&
         props.word.meanings.map((_meaning, index) => {
@@ -48,6 +39,7 @@ function WordForm(props) {
               onChange={(event) => props.onMeaningChange(event, index)}
               name={"meaning" + index}
               value={props.word.meanings[index].meaning}
+              index={index}
               deleteMeaning={props.deleteMeaning}
             />
           );
@@ -57,7 +49,7 @@ function WordForm(props) {
         Add meaning
       </button>
 
-      <input type="submit" value="Save" className="btn btn-primary" />
+      <input type="submit" value="Save" className="btn btn-success" />
     </form>
   );
 }
@@ -71,6 +63,7 @@ WordForm.propTypes = {
   onTranslateClick: PropTypes.func.isRequired,
   addMeaning: PropTypes.func.isRequired,
   onMeaningChange: PropTypes.func.isRequired,
+  deleteMeaning: PropTypes.func.isRequired,
 };
 
 export default WordForm;

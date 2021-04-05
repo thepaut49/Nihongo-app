@@ -13,7 +13,7 @@ function NameList(props) {
             <div className="pronunciation">
               {name.pronunciation.map((pronunciation, index) => {
                 return (
-                  <span key={index} className="onemeaning">
+                  <span key={index + 50000} className="onemeaning">
                     {pronunciation}
                   </span>
                 );
@@ -22,7 +22,7 @@ function NameList(props) {
             <div className="meaning">
               {name.meanings.map((mean, index) => {
                 return (
-                  <span key={index} className="onemeaning">
+                  <span key={index + 60000} className="onemeaning">
                     {mean.meaning}
                   </span>
                 );

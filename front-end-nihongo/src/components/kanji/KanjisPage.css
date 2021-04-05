@@ -18,6 +18,7 @@
   margin: 0.5em;
   padding: 0.5em;
 }
+
 .kanji {
   grid-area: kanji;
   text-align: left;

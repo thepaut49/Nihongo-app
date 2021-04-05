@@ -39,6 +39,7 @@ function NameForm(props) {
               onChange={(event) => props.onMeaningChange(event, index)}
               name={"meaning" + index}
               value={props.name.meanings[index].meaning}
+              index={index}
               deleteMeaning={props.deleteMeaning}
             />
           );
@@ -48,7 +49,7 @@ function NameForm(props) {
         Add meaning
       </button>
 
-      <input type="submit" value="Save" className="btn btn-primary" />
+      <input type="submit" value="Save" className="btn btn-success" />
     </form>
   );
 }
