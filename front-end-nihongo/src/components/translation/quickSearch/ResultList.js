@@ -25,13 +25,6 @@ const pronunciationStyle = {
   gridColumnStart: "span 2",
 };
 
-const oneSpanStyle = {
-  backgroundColor: "#4682b4",
-  borderRadius: "10px",
-  padding: "0.3em",
-  margin: "0.3em",
-};
-
 const ResultList = (props) => {
   /*************/
   /* variables */
@@ -71,7 +64,7 @@ const ResultList = (props) => {
             <div style={pronunciationStyle}>
               {result.pronunciation.map((pro, index) => {
                 return (
-                  <span key={index} style={oneSpanStyle}>
+                  <span key={index} className="onemeaning">
                     {pro}
                   </span>
                 );
@@ -80,8 +73,8 @@ const ResultList = (props) => {
             <div style={pronunciationStyle}>
               {result.meaning.map((mean, index) => {
                 return (
-                  <span key={index} style={oneSpanStyle}>
-                    {mean}
+                  <span key={index} className="onemeaning">
+                    {mean.meaning}
                   </span>
                 );
               })}

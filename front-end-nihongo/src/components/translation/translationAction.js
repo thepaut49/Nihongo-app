@@ -311,78 +311,103 @@ const addOfUnknownParts = (
   return listOfPartsWithUnknownParts;
 };
 
-const addPunctuationPart = (listOfParts) => {
-  let listOfPartsUpdated = [];
-  listOfParts.forEach((part) => {
-    if (part.type === translationConstants.TYPE_UNKNOWN) {
-      let indexKanjis = 0;
-      let currentLength = 1;
-      let sentencePart = part.kanjis.substr(indexKanjis, currentLength);
-      let listOfWord = [];
-      while (
-        indexKanjis < part.kanjis.length &&
-        indexKanjis + currentLength < part.kanjis.length
-      ) {
-        if (
-          indexKanjis === 0 &&
-          currentLength === 1 &&
-          wordContainPunctuation(sentencePart)
-        ) {
-          listOfWord.push(sentencePart);
-          indexKanjis = indexKanjis + currentLength;
-          currentLength = 1;
-          sentencePart = part.kanjis.substr(indexKanjis, currentLength);
-        } else if (wordContainPunctuation(sentencePart)) {
-          // il y a un ponctuation dans sentencePart
-          sentencePart = part.kanjis.substr(indexKanjis, currentLength);
-          listOfWord.push(sentencePart);
-          indexKanjis = indexKanjis + currentLength;
-          currentLength = 1;
-        } else {
-          currentLength++;
-          sentencePart = part.kanjis.substr(indexKanjis, currentLength);
-        }
-      }
-      if (reconstructSentence(listOfWord) !== part.kanjis) {
-        sentencePart = part.kanjis.substr(indexKanjis);
-        listOfWord.push(sentencePart);
-      }
-
-      let currentIndex = part.currentIndex;
-      listOfWord.forEach((word) => {
-        if (wordContainPunctuation(word)) {
-          let newPunctuationPart = {
-            type: translationConstants.TYPE_PUNCTUATION,
-            kanjis: word,
-            selectedPronunciation: word,
-            selectedMeaning: "",
-            pronunciations: [word],
-            meanings: [],
-            unknown: false,
-            length: 1,
-            currentIndex: currentIndex,
-            listOfValues: [],
-          };
-          listOfPartsUpdated.push(newPunctuationPart);
-          currentIndex++;
-        } else {
+const extractPunctuationFromPart = (part) => {
+  const word = part.kanjis;
+  const currentIndex = part.currentIndex;
+  let listOfParts = [];
+  if (word.length === 1) {
+    let newPunctuationPart = {
+      type: translationConstants.TYPE_PUNCTUATION,
+      kanjis: word,
+      selectedPronunciation: word,
+      selectedMeaning: "",
+      pronunciations: [word],
+      meanings: [],
+      unknown: false,
+      length: 1,
+      currentIndex: currentIndex,
+      listOfValues: [],
+    };
+    listOfParts.push(newPunctuationPart);
+  } else if (word.length > 1) {
+    debugger;
+    let index = 0;
+    let indexBeginWord = currentIndex;
+    let partWord = "";
+    while (index < word.length) {
+      // si le caractère est une ponctuation on créé une part punctiation
+      if (punctuationListWithoutDoublingkanji.includes(word[index])) {
+        // on ajoute la part précédent la ponctuation
+        if (partWord !== "") {
           // mot inconnu
           let newPart = {
             type: translationConstants.TYPE_UNKNOWN,
-            kanjis: word,
+            kanjis: partWord,
             selectedPronunciation: "?",
             selectedMeaning: "?",
             pronunciations: ["?"],
             meanings: ["?"],
             unknown: true,
-            length: word.length,
-            currentIndex: currentIndex,
+            length: partWord.length,
+            currentIndex: indexBeginWord,
             listOfValues: [],
           };
-          listOfPartsUpdated.push(newPart);
-          currentIndex = currentIndex + word.length;
+          listOfParts.push(newPart);
         }
-      });
+
+        // on ajoute la part punctuation
+        let newPunctuationPart = {
+          type: translationConstants.TYPE_PUNCTUATION,
+          kanjis: word[index],
+          selectedPronunciation: word[index],
+          selectedMeaning: "",
+          pronunciations: [word[index]],
+          meanings: [],
+          unknown: false,
+          length: 1,
+          currentIndex: currentIndex + index,
+          listOfValues: [],
+        };
+        listOfParts.push(newPunctuationPart);
+        partWord = "";
+        indexBeginWord = currentIndex + index + 1;
+      } else {
+        partWord = partWord + word[index];
+      }
+      index++;
+    }
+    if (partWord !== "") {
+      // mot inconnu
+      let newPart = {
+        type: translationConstants.TYPE_UNKNOWN,
+        kanjis: partWord,
+        selectedPronunciation: "?",
+        selectedMeaning: "?",
+        pronunciations: ["?"],
+        meanings: ["?"],
+        unknown: true,
+        length: partWord.length,
+        currentIndex: indexBeginWord,
+        listOfValues: [],
+      };
+      listOfParts.push(newPart);
+    }
+  }
+  return listOfParts;
+};
+
+const addPunctuationPart = (listOfParts) => {
+  let listOfPartsUpdated = [];
+  debugger;
+  listOfParts.forEach((part) => {
+    if (part.type === translationConstants.TYPE_UNKNOWN) {
+      if (wordContainPunctuation(part.kanjis)) {
+        listOfPartsUpdated = listOfPartsUpdated.concat(
+          extractPunctuationFromPart(part)
+        );
+      } else {
+        listOfPartsUpdated.push(part);
+      }
     } else {
       listOfPartsUpdated.push(part);
     }
@@ -453,9 +478,9 @@ const partIsAVerb = (sentencePart, currentIndex, verbs) => {
               type: translationConstants.TYPE_VERB,
               kanjis: sentencePart,
               selectedPronunciation: verb.pronunciation[0],
-              selectedMeaning: verb.meaning[0],
+              selectedMeaning: verb.meanings[0].meaning,
               pronunciations: verb.pronunciation,
-              meanings: verb.meaning,
+              meanings: verb.meanings.map((item) => item.meaning),
               unknown: false,
               length: sentencePart.length,
               currentIndex: currentIndex,
@@ -494,9 +519,9 @@ const partIsANaAdjective = (sentencePart, currentIndex, naAdjectives) => {
           type: translationConstants.TYPE_NA_ADJECTIVE,
           kanjis: sentencePart,
           selectedPronunciation: naAdjective.pronunciation[0],
-          selectedMeaning: naAdjective.meaning[0],
+          selectedMeaning: naAdjective.meanings[0].meaning,
           pronunciations: naAdjective.pronunciation,
-          meanings: naAdjective.meaning,
+          meanings: naAdjective.meanings.map((item) => item.meaning),
           unknown: false,
           length: sentencePart.length,
           currentIndex: currentIndex,
@@ -515,9 +540,9 @@ const partIsANaAdjective = (sentencePart, currentIndex, naAdjectives) => {
               type: translationConstants.TYPE_NA_ADJECTIVE,
               kanjis: sentencePart,
               selectedPronunciation: naAdj.pronunciation[0],
-              selectedMeaning: naAdj.meaning[0],
+              selectedMeaning: naAdj.meanings[0].meaning,
               pronunciations: naAdj.pronunciation,
-              meanings: naAdj.meaning,
+              meanings: naAdj.meanings.map((item) => item.meaning),
               unknown: false,
               length: sentencePart.length,
               currentIndex: currentIndex,
@@ -560,9 +585,9 @@ const partIsAIAdjective = (sentencePart, currentIndex, iAdjectives) => {
               type: translationConstants.TYPE_I_ADJECTIVE,
               kanjis: sentencePart,
               selectedPronunciation: iAdj.pronunciation[0],
-              selectedMeaning: iAdj.meaning[0],
+              selectedMeaning: iAdj.meanings[0].meaning,
               pronunciations: iAdj.pronunciation,
-              meanings: iAdj.meaning,
+              meanings: iAdj.meanings.map((item) => item.meaning),
               unknown: false,
               length: sentencePart.length,
               currentIndex: currentIndex,
@@ -585,9 +610,9 @@ const partIsAName = (sentencePart, currentIndex, names) => {
         type: translationConstants.TYPE_NAME,
         kanjis: sentencePart,
         selectedPronunciation: name.pronunciation[0],
-        selectedMeaning: name.meaning[0],
+        selectedMeaning: name.meanings[0].meaning,
         pronunciations: name.pronunciation,
-        meanings: name.meaning,
+        meanings: name.meanings.map((item) => item.meaning),
         unknown: false,
         length: sentencePart.length,
         currentIndex: currentIndex,
@@ -607,9 +632,9 @@ const partIsAWord = (sentencePart, currentIndex, words) => {
         type: translationConstants.TYPE_WORD,
         kanjis: sentencePart,
         selectedPronunciation: word.pronunciation[0],
-        selectedMeaning: word.meaning[0],
+        selectedMeaning: word.meanings[0].meaning,
         pronunciations: word.pronunciation,
-        meanings: word.meaning,
+        meanings: word.meanings.map((item) => item.meaning),
         unknown: false,
         length: sentencePart.length,
         currentIndex: currentIndex,
@@ -668,9 +693,9 @@ const verbCandidate = (sentencePart, currentIndex, verbs) => {
               type: translationConstants.TYPE_VERB,
               kanjis: sentencePart,
               selectedPronunciation: sentencePart,
-              selectedMeaning: verb.meaning[0],
+              selectedMeaning: verb.meanings[0].meaning,
               pronunciations: [sentencePart],
-              meanings: verb.meaning,
+              meanings: verb.meanings.map((item) => item.meaning),
               unknown: false,
               length: sentencePart.length,
               currentIndex: currentIndex,
@@ -720,9 +745,9 @@ const naAdjectiveCandidate = (sentencePart, currentIndex, naAdjectives) => {
               type: translationConstants.TYPE_NA_ADJECTIVE,
               kanjis: sentencePart,
               selectedPronunciation: sentencePart,
-              selectedMeaning: naAdj.meaning[0],
+              selectedMeaning: naAdj.meanings[0].meaning,
               pronunciations: [sentencePart],
-              meanings: naAdj.meaning,
+              meanings: naAdj.meanings.map((item) => item.meaning),
               unknown: false,
               length: sentencePart.length,
               currentIndex: currentIndex,
@@ -772,9 +797,9 @@ const iAdjectiveCandidate = (sentencePart, currentIndex, iAdjectives) => {
               type: translationConstants.TYPE_I_ADJECTIVE,
               kanjis: sentencePart,
               selectedPronunciation: sentencePart,
-              selectedMeaning: iAdj.meaning[0],
+              selectedMeaning: iAdj.meanings[0].meaning,
               pronunciations: [sentencePart],
-              meanings: iAdj.meaning,
+              meanings: iAdj.meanings.map((item) => item.meaning),
               unknown: false,
               length: sentencePart.length,
               currentIndex: currentIndex,
@@ -804,9 +829,9 @@ const nameCandidate = (sentencePart, currentIndex, names) => {
         type: translationConstants.TYPE_NAME,
         kanjis: sentencePart,
         selectedPronunciation: sentencePart,
-        selectedMeaning: name.meaning[0],
+        selectedMeaning: name.meanings[0].meaning,
         pronunciations: [sentencePart],
-        meanings: name.meaning,
+        meanings: name.meanings.map((item) => item.meaning),
         unknown: false,
         length: sentencePart.length,
         currentIndex: currentIndex,
@@ -833,9 +858,9 @@ const wordCandidate = (sentencePart, currentIndex, words) => {
         type: translationConstants.TYPE_WORD,
         kanjis: sentencePart,
         selectedPronunciation: sentencePart,
-        selectedMeaning: word.meaning[0],
+        selectedMeaning: word.meanings[0].meaning,
         pronunciations: [sentencePart],
-        meanings: word.meaning,
+        meanings: word.meanings.map((item) => item.meaning),
         unknown: false,
         length: sentencePart.length,
         currentIndex: currentIndex,
