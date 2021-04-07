@@ -1,6 +1,7 @@
 package com.thepaut49.nihongo.mapper;
 
 import com.thepaut49.nihongo.dto.ObjectDTO;
+import com.thepaut49.nihongo.model.Counter;
 import com.thepaut49.nihongo.model.IAdjective;
 import com.thepaut49.nihongo.model.Kanji;
 import com.thepaut49.nihongo.model.NaAdjective;
@@ -34,6 +35,11 @@ public class ObjectDTOMapper {
 		else if (object instanceof Word) {
 			Word word = (Word) object;
 			return new ObjectDTO(word.getId(), word.getKanjis());
+		}
+		else if (object instanceof Counter) {
+			Counter counter = (Counter) object;
+			return new ObjectDTO(counter.getId(), counter.getKanjis());
+					
 		}
 		else {
 			return null;

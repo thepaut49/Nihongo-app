@@ -31,6 +31,9 @@ import ParticulesPage from "./particule/ParticulesPage";
 import ManageGrammarRulePage from "./grammarrule/ManageGrammarRulePage";
 import VisualizeGrammarRulePage from "./grammarrule/VisualizeGrammarRulePage";
 import GrammarRulesPage from "./grammarrule/GrammarRulesPage";
+import VisualizeCounterPage from "./counter/VisualizeCounterPage";
+import ManageCounterPage from "./counter/ManageCounterPage";
+import CountersPage from "./counter/CountersPage";
 import HiraganasPage from "./hiragana/HiraganasPage";
 import KatakanasPage from "./katakana/KatakanasPage";
 import Translation from "./translation/Translation";
@@ -121,6 +124,13 @@ function App() {
           <Route path="/translation" component={Translation} />
           <Route path="/hiraganas" component={HiraganasPage} />
           <Route path="/katakanas" component={KatakanasPage} />
+          <Route path="/counters" component={CountersPage} />
+          <Route
+            path="/counter/visualize/:kanjis"
+            component={VisualizeCounterPage}
+          />
+          <Route path="/counter/modify/:kanjis" component={ManageCounterPage} />
+          <Route path="/counter/create" component={ManageCounterPage} />
           <Route path="/about" component={AboutPage} />
           <Redirect from="/about-page" to="/about" />
           <Route component={NotFoundPage} />

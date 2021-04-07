@@ -50,6 +50,10 @@ function Header() {
         Grammar Rules
       </NavLink>
 
+      <NavLink activeStyle={activeStyle} to="/counters">
+        Counter
+      </NavLink>
+
       <NavLink activeStyle={activeStyle} to="/hiraganas">
         Hiraganas
       </NavLink>

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.thepaut49.nihongo.dto.NameCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
@@ -13,6 +14,7 @@ import com.thepaut49.nihongo.model.Name;
 import com.thepaut49.nihongo.repository.NameRepository;
 
 @Service
+@Transactional
 public class NameService {
 	
 	@Autowired
