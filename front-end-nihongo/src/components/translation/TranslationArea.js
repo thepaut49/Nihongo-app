@@ -15,11 +15,6 @@ const TranslationArea = (props) => {
     gap: "1em",
   };
 
-  const pronunciationStyle = {
-    fontWeight: "bold",
-    fontSize: "Large",
-  };
-
   return (
     <>
       <div id="translationArea">
@@ -47,8 +42,6 @@ const TranslationArea = (props) => {
           </div>
         </form>
         <QuickSearchPopUp onQuickSearchClick={props.onQuickSearchClick} />
-        <h4>Pronunciation :</h4>
-        <p style={pronunciationStyle}>{props.pronunciation}</p>
       </div>
     </>
   );
@@ -56,7 +49,6 @@ const TranslationArea = (props) => {
 
 TranslationArea.prototypes = {
   sentence: PropTypes.string.isRequired,
-  pronunciation: PropTypes.string.isRequired,
   onSentenceChange: PropTypes.func.isRequired,
   onKanaClick: PropTypes.func.isRequired,
   onTranslateClick: PropTypes.func.isRequired,

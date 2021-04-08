@@ -24,6 +24,7 @@ import {
 import verbConstants from "../common/verbConstants";
 import translationConstants from "../common/translationConstants";
 import { punctuationListWithoutDoublingkanji } from "../common/japanesePunctuation";
+import { isPartANumber } from "../common/translation/numberRecognition";
 
 export const extractListOfKanji = (sentence, kanjis) => {
   // je transforme ma chaine de charactère en tableau de type SEt pour que chaque element soit unique
@@ -51,7 +52,8 @@ export const extractParts = (
   iAdjectives,
   names,
   words,
-  particules
+  particules,
+  counters
 ) => {
   let listOfParts = [];
 
@@ -63,7 +65,15 @@ export const extractParts = (
         let sentencePart = sentence.substr(indiceCourant, j);
         //console.log("sentancePart = " + sentencePart);
 
-        part = partIsAVerb(sentencePart, indiceCourant, verbs, false);
+        part = isPartANumber(sentencePart, indiceCourant);
+
+        if (j <= 4 && !part) {
+          part = partIsACounter(sentencePart, indiceCourant, counters);
+        }
+
+        if (!part) {
+          part = partIsAVerb(sentencePart, indiceCourant, verbs);
+        }
 
         if (!part) {
           part = partIsANaAdjective(sentencePart, indiceCourant, naAdjectives);
@@ -425,14 +435,6 @@ const wordContainPunctuation = (word) => {
   return false;
 };
 
-const reconstructSentence = (listOfWord) => {
-  let sentence = "";
-  listOfWord.forEach((word) => {
-    sentence = sentence + word;
-  });
-  return sentence;
-};
-
 function isSuru(verb) {
   return verb.neutralForm === "する" ? true : false;
 }
@@ -635,6 +637,28 @@ const partIsAWord = (sentencePart, currentIndex, words) => {
         selectedMeaning: word.meanings[0].meaning,
         pronunciations: word.pronunciation,
         meanings: word.meanings.map((item) => item.meaning),
+        unknown: false,
+        length: sentencePart.length,
+        currentIndex: currentIndex,
+        listOfValues: [],
+      };
+      return part;
+    }
+  }
+};
+
+const partIsACounter = (sentencePart, currentIndex, counters) => {
+  let part = null;
+  for (let index = 0; index < counters.length; index++) {
+    let counter = counters[index];
+    if (counter.kanjis === sentencePart) {
+      part = {
+        type: translationConstants.TYPE_COUNTER,
+        kanjis: sentencePart,
+        selectedPronunciation: counter.pronunciation[0],
+        selectedMeaning: counter.summary,
+        pronunciations: counter.pronunciation,
+        meanings: [counter.summary],
         unknown: false,
         length: sentencePart.length,
         currentIndex: currentIndex,

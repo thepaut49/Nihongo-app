@@ -61,9 +61,6 @@ const ListOfParts = (props) => {
         }
       }
       setListOfParts(listOfParts);
-      if (props.onPronunciationChange) {
-        props.onPronunciationChange(listOfParts);
-      }
     }
   };
 
@@ -133,7 +130,6 @@ ListOfParts.prototypes = {
   list: PropTypes.arrayOf(Object).isRequired,
   listOfKanjis: PropTypes.arrayOf(Object).isRequired,
   onSplitPart: PropTypes.func.isRequired,
-  onPronunciationChange: PropTypes.func.isRequired,
 };
 
 export default ListOfParts;

@@ -11,6 +11,8 @@ const translationConstants = {
   TYPE_PARTICULE: "Particle",
   TYPE_PUNCTUATION: "Punctuation",
   TYPE_ALL: "All",
+  TYPE_NUMBER: "Number",
+  TYPE_COUNTER: "Counter",
 };
 
 export default translationConstants;

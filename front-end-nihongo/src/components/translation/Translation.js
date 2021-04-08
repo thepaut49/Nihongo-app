@@ -15,6 +15,7 @@ import iAdjectiveStore from "../../stores/iAdjectiveStore";
 import nameStore from "../../stores/nameStore";
 import wordStore from "../../stores/wordStore";
 import particuleStore from "../../stores/particuleStore";
+import counterStore from "../../stores/counterStore";
 import { loadKanjis } from "../../actions/kanjiActions";
 import { loadVerbs } from "../../actions/verbActions";
 import { loadNaAdjectives } from "../../actions/naAdjectiveActions";
@@ -22,6 +23,7 @@ import { loadIAdjectives } from "../../actions/iAdjectiveActions";
 import { loadNames } from "../../actions/nameActions";
 import { loadWords } from "../../actions/wordActions";
 import { loadParticules } from "../../actions/particuleActions";
+import { loadCounters } from "../../actions/counterActions";
 import { updateNumberOfUse } from "../../actions/translationActions";
 import {
   extractListOfKanji,
@@ -53,6 +55,8 @@ const Translation = () => {
   const [names, setNames] = useState(nameStore.getNames());
   const [words, setWords] = useState(wordStore.getWords());
   const [particules, setParticules] = useState(particuleStore.getParticules());
+  const [counters, setCounters] = useState(counterStore.getCounters());
+
   // variables locales
   const [sentence, setSentence] = useState("");
   const [quantity, setQuantity] = useState(50);
@@ -72,7 +76,6 @@ const Translation = () => {
   });
   const [listParts, setListParts] = useState([]);
   const [listOfKanjis, setListOfKanjis] = useState([]);
-  const [pronunciation, setPronunciation] = useState("");
 
   useEffect(() => {
     kanjiStore.addChangeListener(onChangeKanjis);
@@ -82,6 +85,7 @@ const Translation = () => {
     nameStore.addChangeListener(onChangeNames);
     wordStore.addChangeListener(onChangeWords);
     particuleStore.addChangeListener(onChangeParticules);
+    counterStore.addChangeListener(onChangeCounters);
 
     if (kanjiStore.getKanjis().length === 0) loadKanjis();
     if (verbStore.getVerbs().length === 0) loadVerbs();
@@ -90,6 +94,7 @@ const Translation = () => {
     if (nameStore.getNames().length === 0) loadNames();
     if (wordStore.getWords().length === 0) loadWords();
     if (particuleStore.getParticules().length === 0) loadParticules();
+    if (counterStore.getCounters().length === 0) loadCounters();
 
     return function () {
       kanjiStore.removeChangeListener(onChangeKanjis); //cleanup on unmount
@@ -99,6 +104,7 @@ const Translation = () => {
       nameStore.removeChangeListener(onChangeNames);
       wordStore.removeChangeListener(onChangeWords);
       particuleStore.removeChangeListener(onChangeParticules);
+      counterStore.removeChangeListener(onChangeCounters);
     };
   }, [
     kanjis.length,
@@ -108,6 +114,7 @@ const Translation = () => {
     names.length,
     words.length,
     particules.length,
+    counters.length,
   ]);
 
   function onChangeKanjis() {
@@ -136,6 +143,10 @@ const Translation = () => {
 
   function onChangeParticules() {
     setParticules(particuleStore.getParticules());
+  }
+
+  function onChangeCounters() {
+    setCounters(counterStore.getCounters());
   }
 
   const handleListClick = (event) => {
@@ -183,21 +194,16 @@ const Translation = () => {
       iAdjectives,
       names,
       words,
-      particules
+      particules,
+      counters
     );
     setListParts(_listOfParts);
-    let _pronunciation = "";
-    _listOfParts.forEach((part) => {
-      _pronunciation = _pronunciation + part.selectedPronunciation;
-    });
-    setPronunciation(_pronunciation);
   };
 
   const handleClearClick = (event) => {
     event.preventDefault();
     setListParts([]);
     setListOfKanjis([]);
-    setPronunciation("");
   };
 
   const handleQuickSearchClick = (event, result) => {
@@ -225,16 +231,6 @@ const Translation = () => {
     let textArea = document.getElementById("textToTranslate");
     textArea.value = textArea.value + event.target.innerHTML;
     setSentence(textArea.value);
-  };
-
-  const handleChangePronunciation = (listOfParts) => {
-    let newPronunciation = "";
-    if (listOfParts && listOfParts.length > 0) {
-      listOfParts.forEach((part) => {
-        newPronunciation += part.selectedPronunciation;
-      });
-      setPronunciation(newPronunciation);
-    }
   };
 
   const handleSplitPart = (newList) => {
@@ -300,13 +296,11 @@ const Translation = () => {
           onTranslateClick={handleTranslateClick}
           onClearClick={handleClearClick}
           onKanaClick={handleKanaClick}
-          pronunciation={pronunciation}
           onQuickSearchClick={handleQuickSearchClick}
         />
         <ListOfParts
           list={listParts}
           listOfKanjis={listOfKanjis}
-          onPronunciationChange={handleChangePronunciation}
           onSplitPart={handleSplitPart}
         />
       </div>
