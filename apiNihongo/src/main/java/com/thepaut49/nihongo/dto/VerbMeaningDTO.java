@@ -2,21 +2,22 @@ package com.thepaut49.nihongo.dto;
 
 public class VerbMeaningDTO {
 	
-	private Integer id;
+	private Integer verbId;
     private Integer meaningNumber;
     private String meaning;
 	private int version;
 
 	   
     /*** getter /setter ***/
-    public Integer getId() {
-		return id;
+	public Integer getVerbId() {
+		return verbId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setVerbId(Integer verbId) {
+		this.verbId = verbId;
 	}
-
+	
+	
 	public Integer getMeaningNumber() {
 		return meaningNumber;
 	}

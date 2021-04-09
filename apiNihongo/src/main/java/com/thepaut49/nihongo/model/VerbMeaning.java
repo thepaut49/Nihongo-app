@@ -4,60 +4,38 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.IdClass;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
+@IdClass(VerbMeaningId.class)
 public class VerbMeaning implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
-    private Integer id;
+    private Integer verbId;
 	
-	@ManyToOne
-	private Verb verb;
+	@Id
+	private Integer meaningNumber;
+	
 	
 	@Column(nullable = false)
 	private String meaning;
-	
-	@Column(nullable = false)
-	private Integer meaningNumber;
 	
 	@Version
 	private int version;
 	
 	/*** getter / setter ***/
 
-	public Integer getId() {
-		return id;
+	public Integer getVerbId() {
+		return verbId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
-	public Verb getVerb() {
-		return verb;
-	}
-
-	public void setVerb(Verb verb) {
-		this.verb = verb;
-	}
-
-	public String getMeaning() {
-		return meaning;
-	}
-
-	public void setMeaning(String meaning) {
-		this.meaning = meaning;
+	public void setVerbId(Integer verbId) {
+		this.verbId = verbId;
 	}
 	
 	public Integer getMeaningNumber() {
@@ -66,6 +44,14 @@ public class VerbMeaning implements Serializable {
 
 	public void setMeaningNumber(Integer meaningNumber) {
 		this.meaningNumber = meaningNumber;
+	}
+
+	public String getMeaning() {
+		return meaning;
+	}
+
+	public void setMeaning(String meaning) {
+		this.meaning = meaning;
 	}
 
 	public int getVersion() {
@@ -77,31 +63,51 @@ public class VerbMeaning implements Serializable {
 	}
 		
 	/*** override methods ***/
-	
+	@Override
+	public String toString() {
+		return " VerbMeaning : { Verb id : " + this.verbId + ", meaningNumber : " + this.meaningNumber + " , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
+	}
+
 	@Override
 	public int hashCode() {
-		final int PRIME = 31;
-		int stringHashCode = this.meaningNumber + this.meaning.hashCode();
-        return new HashCodeBuilder(stringHashCode%2==0?stringHashCode+1:stringHashCode, PRIME).toHashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((meaning == null) ? 0 : meaning.hashCode());
+		result = prime * result + ((meaningNumber == null) ? 0 : meaningNumber.hashCode());
+		result = prime * result + ((verbId == null) ? 0 : verbId.hashCode());
+		result = prime * result + version;
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		VerbMeaning otherMeaning = (VerbMeaning) obj;
-		if (this.id.equals(otherMeaning.getId())) {
+		if (this == obj)
 			return true;
-		}
-		else {
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
+		VerbMeaning other = (VerbMeaning) obj;
+		if (meaning == null) {
+			if (other.meaning != null)
+				return false;
+		} else if (!meaning.equals(other.meaning))
+			return false;
+		if (meaningNumber == null) {
+			if (other.meaningNumber != null)
+				return false;
+		} else if (!meaningNumber.equals(other.meaningNumber))
+			return false;
+		if (verbId == null) {
+			if (other.verbId != null)
+				return false;
+		} else if (!verbId.equals(other.verbId))
+			return false;
+		if (version != other.version)
+			return false;
+		return true;
 	}
 
-	@Override
-	public String toString() {
-		return " VerbMeaning : { Id : " + this.id+" , Meaning number : " + this.meaningNumber  +" , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
-	}
+	
 	
 }

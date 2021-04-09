@@ -32,7 +32,6 @@ public class VerbService {
 	
 	public Verb updateVerb(Verb verb) {
 		if (verb != null) {
-			verb.getMeanings().stream().forEach(meaning -> meaning.setVerb(verb) );
 			Verb updatedVerb = verbRepository.save(verb);
 			return updatedVerb;
 		}

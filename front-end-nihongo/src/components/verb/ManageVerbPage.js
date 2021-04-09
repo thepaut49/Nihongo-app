@@ -16,7 +16,7 @@ const ManageVerbPage = (props) => {
     pronunciation: "",
     meanings: [
       {
-        id: null,
+        verbId: 0,
         meaningNumber: 0,
         meaning: "",
         version: null,
@@ -106,8 +106,10 @@ const ManageVerbPage = (props) => {
     event.preventDefault();
     let newMeanings = verb.meanings;
     newMeanings.push({
+      verbId: verb.id,
       meaningNumber: newMeaningNumber(verb.meanings),
       meaning: "",
+      version: 0,
     });
     setVerb({
       ...verb,

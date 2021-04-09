@@ -14,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 @Entity
 public class Verb implements Serializable {
 	
@@ -31,8 +29,7 @@ public class Verb implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String pronunciation;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
-    @JoinColumn(name="VERB_ID")
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "verbId")
 	private Set<VerbMeaning> meanings = new HashSet<>();
 	
 	@Column(nullable = false, length = 25)
@@ -102,32 +99,68 @@ public class Verb implements Serializable {
 	}
 		
 	/*** override methods ***/
-	
-	@Override
-	public int hashCode() {
-		final int PRIME = 31;
-		int stringHashCode = this.neutralForm.hashCode();
-        return new HashCodeBuilder(stringHashCode%2==0?stringHashCode+1:stringHashCode, PRIME).toHashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		Verb otherVerb = (Verb) obj;
-		if (this.neutralForm.equals(otherVerb.getNeutralForm())) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	@Override
 	public String toString() {
 		return " Verb : { Id : " + this.id +" , Neutral form : " + this.neutralForm + ", Pronunciation : " + this.pronunciation + " , Meanings : [ " + this.meanings +
 				" ] , Group : " + this.groupe  + " , Number of use : " + this.numberOfUse  + " , version : " + this.version + " }" ;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((groupe == null) ? 0 : groupe.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		// result = prime * result + ((meanings == null) ? 0 : meanings.hashCode());
+		result = prime * result + ((neutralForm == null) ? 0 : neutralForm.hashCode());
+		result = prime * result + ((numberOfUse == null) ? 0 : numberOfUse.hashCode());
+		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
+		result = prime * result + version;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Verb other = (Verb) obj;
+		if (groupe == null) {
+			if (other.groupe != null)
+				return false;
+		} else if (!groupe.equals(other.groupe))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (meanings == null) {
+			if (other.meanings != null)
+				return false;
+		} else if (!meanings.equals(other.meanings))
+			return false;
+		if (neutralForm == null) {
+			if (other.neutralForm != null)
+				return false;
+		} else if (!neutralForm.equals(other.neutralForm))
+			return false;
+		if (numberOfUse == null) {
+			if (other.numberOfUse != null)
+				return false;
+		} else if (!numberOfUse.equals(other.numberOfUse))
+			return false;
+		if (pronunciation == null) {
+			if (other.pronunciation != null)
+				return false;
+		} else if (!pronunciation.equals(other.pronunciation))
+			return false;
+		if (version != other.version)
+			return false;
+		return true;
 	}
 	
 }
