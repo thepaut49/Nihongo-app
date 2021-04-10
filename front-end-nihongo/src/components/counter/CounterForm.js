@@ -1,7 +1,7 @@
 import React from "react";
 import CustomInput from "../common/CustomInput";
 import CustomTextArea from "../common/CustomTextArea";
-import CustomInputPronunciation from "../common/CustomInputPronunciation";
+import CustomInputPronunciations from "../common/CustomInputPronunciations";
 
 import PropTypes from "prop-types";
 
@@ -17,16 +17,29 @@ function CounterForm(props) {
         error={props.errors.kanjis}
       />
 
-      <CustomInputPronunciation
-        id="pronunciation"
-        label="Pronunciation"
-        onChange={props.onChange}
-        name="pronunciation"
-        value={props.counter.pronunciation}
-        error={props.errors.pronunciation}
-        onMiddlePointClick={props.onMiddlePointClick}
-        onTranslateClick={props.onTranslateClick}
-      />
+      {props.counter.pronunciations &&
+        props.counter.pronunciations.length > 0 &&
+        props.counter.pronunciations.map((pro, index) => {
+          return (
+            <CustomInputPronunciations
+              key={index}
+              id={"pronunciation" + index}
+              label={"Pronunciation " + (index + 1) + " :"}
+              typeInput="text"
+              onChange={props.onPronunciationChange}
+              name={"pronunciation" + index}
+              value={props.counter.pronunciations[index].pronunciation}
+              index={index}
+              deletePronunciation={props.deletePronunciation}
+              onMiddlePointClick={props.onMiddlePointClick}
+              onTranslateClick={props.onTranslateClick}
+            />
+          );
+        })}
+
+      <button className="btn btn-primary" onClick={props.addPronunciation}>
+        Add pronunciation
+      </button>
 
       <CustomTextArea
         id="use"
@@ -60,6 +73,9 @@ CounterForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  deleteMeaning: PropTypes.func.isRequired,
+  onMiddlePointClick: PropTypes.func.isRequired,
+  onTranslateClick: PropTypes.func.isRequired,
 };
 
 export default CounterForm;

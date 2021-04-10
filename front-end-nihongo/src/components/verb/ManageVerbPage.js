@@ -5,7 +5,10 @@ import verbStore from "../../stores/verbStore";
 import { Prompt } from "react-router-dom";
 import * as verbActions from "../../actions/verbActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import { newMeaningNumber } from "../common/meaningUtils";
+import {
+  newMeaningNumber,
+  newPronunciationNumber,
+} from "../common/meaningUtils";
 
 const ManageVerbPage = (props) => {
   const [modified, setModified] = useState(false);
@@ -13,13 +16,20 @@ const ManageVerbPage = (props) => {
   const [verb, setVerb] = useState({
     id: null,
     neutralForm: "",
-    pronunciation: "",
+    pronunciations: [
+      {
+        verbId: null,
+        pronunciationNumber: 0,
+        pronunciation: "",
+        version: 0,
+      },
+    ],
     meanings: [
       {
-        verbId: 0,
+        verbId: null,
         meaningNumber: 0,
         meaning: "",
-        version: null,
+        version: 0,
       },
     ],
     groupe: "",
@@ -27,40 +37,11 @@ const ManageVerbPage = (props) => {
     version: null,
   });
 
-  const onMiddlePointClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    input.value = input.value + event.target.innerText;
-    setVerb({
-      ...verb,
-      pronunciation: verb.pronunciation + event.target.innerText,
-    });
-  };
-
-  const handleTranslateClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    setVerb({
-      ...verb,
-      pronunciation: newValue,
-    });
-  };
-
   useEffect(() => {
     const neutralForm = props.match.params.neutralForm; // from the path /verbs/:verb
     if (neutralForm) {
       // on récupère le verb du store et on le transforme pour qu'il corresponde au formulaire
-      let tempVerb = verbStore.getVerbByNeutralForm(neutralForm);
-      let newPronunciation = tempVerb.pronunciation[0];
-      for (let i = 1; i < tempVerb.pronunciation.length; i++) {
-        newPronunciation = newPronunciation + "・" + tempVerb.pronunciation[i];
-      }
-      const verbForm = {
-        ...tempVerb,
-        pronunciation: newPronunciation,
-      };
+      const verbForm = verbStore.getVerbByNeutralForm(neutralForm);
       setVerb(verbForm);
     }
   }, [props.match.params.neutralForm]);
@@ -74,8 +55,6 @@ const ManageVerbPage = (props) => {
     const _errors = {};
     if (!verb.neutralForm)
       _errors.neutralForm = "Neutral form of the verb is required";
-    if (!verb.pronunciation)
-      _errors.pronunciation = "Pronunciation is required";
     if (!verb.groupe) _errors.groupe = "Group is required";
 
     setErrors(_errors);
@@ -87,16 +66,7 @@ const ManageVerbPage = (props) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setModified(false);
-    // on transforme les chaine de caractères en liste de chaines
-    let newPronunciation = verb.pronunciation.split("・");
-    for (let i = 0; i < newPronunciation.length; i++) {
-      newPronunciation[i] = newPronunciation[i].replace("・", "");
-    }
-    const savedVerb = {
-      ...verb,
-      pronunciation: newPronunciation,
-    };
-    verbActions.saveVerb(savedVerb).then(() => {
+    verbActions.saveVerb(verb).then(() => {
       props.history.push("/verbs");
       toast.success("Verb saved.");
     });
@@ -133,6 +103,63 @@ const ManageVerbPage = (props) => {
     setModified(true);
   }
 
+  function handleAddPronunciation(event) {
+    event.preventDefault();
+    let pronunciations = verb.pronunciations;
+    pronunciations.push({
+      verbId: verb.id,
+      pronunciationNumber: newPronunciationNumber(verb.pronunciations),
+      pronunciation: "",
+      version: 0,
+    });
+    setVerb({
+      ...verb,
+      pronunciations: pronunciations,
+    });
+  }
+
+  function handlePronunciationChange(event, index) {
+    event.preventDefault();
+    let newPronunciations = verb.pronunciations;
+    newPronunciations[index].pronunciation = event.target.value;
+    setVerb({ ...verb, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  function handleDeletePronunciation(event, index) {
+    event.preventDefault();
+    let newPronunciations = verb.pronunciations;
+    newPronunciations.splice(index, 1);
+    setVerb({ ...verb, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  const onMiddlePointClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    input.value = input.value + event.target.innerText;
+    let newPronunciations = verb.pronunciations;
+    newPronunciations[index].pronunciation =
+      newPronunciations[index].pronunciation + event.target.innerText;
+    setVerb({
+      ...verb,
+      pronunciations: newPronunciations,
+    });
+  };
+
+  const handleTranslateClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    const newValue = translateRomajiToKana(input.value);
+    input.value = newValue;
+    let newPronunciations = verb.pronunciations;
+    newPronunciations[index].pronunciation = newValue;
+    setVerb({
+      ...verb,
+      pronunciations: newPronunciations,
+    });
+  };
+
   return (
     <>
       <h2>Manage Verb</h2>
@@ -147,6 +174,9 @@ const ManageVerbPage = (props) => {
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
         deleteMeaning={handleDeleteMeaning}
+        addPronunciation={handleAddPronunciation}
+        onPronunciationChange={handlePronunciationChange}
+        deletePronunciation={handleDeletePronunciation}
       />
     </>
   );

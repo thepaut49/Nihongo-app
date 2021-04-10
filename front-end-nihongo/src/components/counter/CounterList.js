@@ -25,10 +25,10 @@ function CounterList(props) {
                   <div className="counterPronunciation">
                     <label>Pronunciations : </label>
                     <div>
-                      {counter.pronunciation.map((pro, index) => {
+                      {counter.pronunciations.map((pro, index) => {
                         return (
                           <span key={index} className="onemeaning">
-                            {pro}
+                            {pro.pronunciation}
                           </span>
                         );
                       })}

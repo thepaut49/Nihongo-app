@@ -8,9 +8,9 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.thepaut49.nihongo.dto.WordCriteriaDTO;
+import com.thepaut49.nihongo.dto.word.WordCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
-import com.thepaut49.nihongo.model.Word;
+import com.thepaut49.nihongo.model.word.Word;
 import com.thepaut49.nihongo.repository.WordRepository;
 
 @Service
@@ -32,7 +32,6 @@ public class WordService {
 	
 	public Word updateWord(Word word) {
 		if (word != null) {
-			word.getMeanings().stream().forEach(meaning -> meaning.setWord(word) );
 			return wordRepository.save(word);
 		}
 		else {
@@ -70,7 +69,6 @@ public class WordService {
 	public Word updateWordNumberOfUse(Integer id) {
 		Word word = wordRepository.findById(id).get();
 		word.setNumberOfUse(word.getNumberOfUse() + 1);
-		word.getMeanings().stream().forEach(meaning -> meaning.setWord(word) );
 		return wordRepository.save(word);
 	}
 

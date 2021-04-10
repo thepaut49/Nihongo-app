@@ -22,10 +22,10 @@ function VerbList(props) {
                     </Link>
                   </div>
                   <div className="pronunciation">
-                    {verb.pronunciation.map((pronunciation, index) => {
+                    {verb.pronunciations.map((pronunciation, index) => {
                       return (
                         <span key={index} className="onemeaning">
-                          {pronunciation}
+                          {pronunciation.pronunciation}
                         </span>
                       );
                     })}

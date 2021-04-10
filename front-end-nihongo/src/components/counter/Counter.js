@@ -10,10 +10,10 @@ function Counter(props) {
       <div className="counterPronunciation">
         <label>Pronunciations : </label>
         <div>
-          {counter.pronunciation.map((pro, index) => {
+          {counter.pronunciations.map((pro, index) => {
             return (
               <span key={index + 1000} className="onemeaning">
-                {pro}
+                {pro.pronunciation}
               </span>
             );
           })}

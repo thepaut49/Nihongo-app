@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thepaut49.nihongo.dto.KanjiCriteriaDTO;
-import com.thepaut49.nihongo.dto.KanjiDTO;
 import com.thepaut49.nihongo.dto.ObjectDTO;
-import com.thepaut49.nihongo.mapper.KanjiToDTOMapper;
+import com.thepaut49.nihongo.dto.kanji.KanjiCriteriaDTO;
+import com.thepaut49.nihongo.dto.kanji.KanjiDTO;
 import com.thepaut49.nihongo.mapper.ObjectDTOMapper;
-import com.thepaut49.nihongo.model.Kanji;
+import com.thepaut49.nihongo.mapper.kanji.KanjiToDTOMapper;
+import com.thepaut49.nihongo.model.kanji.Kanji;
 import com.thepaut49.nihongo.service.KanjiService;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)

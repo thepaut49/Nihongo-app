@@ -340,7 +340,6 @@ const extractPunctuationFromPart = (part) => {
     };
     listOfParts.push(newPunctuationPart);
   } else if (word.length > 1) {
-    debugger;
     let index = 0;
     let indexBeginWord = currentIndex;
     let partWord = "";
@@ -408,7 +407,6 @@ const extractPunctuationFromPart = (part) => {
 
 const addPunctuationPart = (listOfParts) => {
   let listOfPartsUpdated = [];
-  debugger;
   listOfParts.forEach((part) => {
     if (part.type === translationConstants.TYPE_UNKNOWN) {
       if (wordContainPunctuation(part.kanjis)) {

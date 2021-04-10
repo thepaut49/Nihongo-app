@@ -8,9 +8,9 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.thepaut49.nihongo.dto.NameCriteriaDTO;
+import com.thepaut49.nihongo.dto.name.NameCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
-import com.thepaut49.nihongo.model.Name;
+import com.thepaut49.nihongo.model.name.Name;
 import com.thepaut49.nihongo.repository.NameRepository;
 
 @Service
@@ -32,7 +32,6 @@ public class NameService {
 	
 	public Name updateName(Name name) {
 		if (name != null) {
-			name.getMeanings().stream().forEach(meaning -> meaning.setName(name) );
 			return nameRepository.save(name);
 		}
 		else {
@@ -70,7 +69,6 @@ public class NameService {
 	public Name updateNameNumberOfUse(Integer id) {
 		Name name = nameRepository.findById(id).get();
 		name.setNumberOfUse(name.getNumberOfUse() + 1);
-		name.getMeanings().stream().forEach(meaning -> meaning.setName(name) );
 		return nameRepository.save(name);
 	}
 

@@ -1,13 +1,13 @@
 package com.thepaut49.nihongo.mapper;
 
 import com.thepaut49.nihongo.dto.ObjectDTO;
-import com.thepaut49.nihongo.model.Counter;
-import com.thepaut49.nihongo.model.IAdjective;
-import com.thepaut49.nihongo.model.Kanji;
-import com.thepaut49.nihongo.model.NaAdjective;
-import com.thepaut49.nihongo.model.Name;
-import com.thepaut49.nihongo.model.Verb;
-import com.thepaut49.nihongo.model.Word;
+import com.thepaut49.nihongo.model.counter.Counter;
+import com.thepaut49.nihongo.model.iadjective.IAdjective;
+import com.thepaut49.nihongo.model.kanji.Kanji;
+import com.thepaut49.nihongo.model.naadjective.NaAdjective;
+import com.thepaut49.nihongo.model.name.Name;
+import com.thepaut49.nihongo.model.verb.Verb;
+import com.thepaut49.nihongo.model.word.Word;
 
 public class ObjectDTOMapper {
 	

@@ -29,13 +29,6 @@ const styleMeaning = {
   fontSize: "x-large",
 };
 
-const spanStyle = {
-  margin: "0.5em",
-  backgroundColor: "#4682b4",
-  borderRadius: "10px",
-  padding: "0.3em",
-};
-
 function Word(props) {
   const word = props.word;
 
@@ -43,10 +36,10 @@ function Word(props) {
     <div style={styleGridContainer}>
       <div style={styleword}>{word.kanjis}</div>
       <div style={stylePronunciation}>
-        {word.pronunciation.map((pro, index) => {
+        {word.pronunciations.map((pro, index) => {
           return (
-            <span key={index} style={spanStyle}>
-              {pro}
+            <span key={index} className="onemeaning">
+              {pro.pronunciation}
             </span>
           );
         })}
@@ -54,7 +47,7 @@ function Word(props) {
       <div style={styleMeaning}>
         {word.meanings.map((mean, index) => {
           return (
-            <span key={index} style={spanStyle}>
+            <span key={index} className="onemeaning">
               {mean.meaning}
             </span>
           );

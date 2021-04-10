@@ -1,7 +1,7 @@
 import React from "react";
 import CustomInput from "../common/CustomInput";
 import CustomInputMeaning from "../common/CustomInputMeaning";
-import CustomInputPronunciation from "../common/CustomInputPronunciation";
+import CustomInputPronunciations from "../common/CustomInputPronunciations";
 import PropTypes from "prop-types";
 
 function WordForm(props) {
@@ -16,16 +16,29 @@ function WordForm(props) {
         error={props.errors.kanjis}
       />
 
-      <CustomInputPronunciation
-        id="pronunciation"
-        label="Pronunciation"
-        onChange={props.onChange}
-        name="pronunciation"
-        value={props.word.pronunciation}
-        error={props.errors.pronunciation}
-        onMiddlePointClick={props.onMiddlePointClick}
-        onTranslateClick={props.onTranslateClick}
-      />
+      {props.word.pronunciations &&
+        props.word.pronunciations.length > 0 &&
+        props.word.pronunciations.map((pro, index) => {
+          return (
+            <CustomInputPronunciations
+              key={index}
+              id={"pronunciation" + index}
+              label={"Pronunciation " + (index + 1) + " :"}
+              typeInput="text"
+              onChange={props.onPronunciationChange}
+              name={"pronunciation" + index}
+              value={props.word.pronunciations[index].pronunciation}
+              index={index}
+              deleteMeaning={props.deletePronunciation}
+              onMiddlePointClick={props.onMiddlePointClick}
+              onTranslateClick={props.onTranslateClick}
+            />
+          );
+        })}
+
+      <button className="btn btn-primary" onClick={props.addPronunciation}>
+        Add pronunciation
+      </button>
 
       {props.word.meanings &&
         props.word.meanings.length > 0 &&
@@ -64,6 +77,9 @@ WordForm.propTypes = {
   addMeaning: PropTypes.func.isRequired,
   onMeaningChange: PropTypes.func.isRequired,
   deleteMeaning: PropTypes.func.isRequired,
+  addPronunciation: PropTypes.func.isRequired,
+  onPronunciationChange: PropTypes.func.isRequired,
+  deletePronunciation: PropTypes.func.isRequired,
 };
 
 export default WordForm;

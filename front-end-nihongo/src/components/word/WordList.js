@@ -21,16 +21,16 @@ function WordList(props) {
                       {word.kanjis}
                     </Link>
                   </div>
-                  <div className="pronunciation">
-                    {word.pronunciation.map((pronunciation, index) => {
+                  <div className="pronunciationWord">
+                    {word.pronunciations.map((pronunciation, index) => {
                       return (
                         <span key={index} className="onemeaning">
-                          {pronunciation}
+                          {pronunciation.pronunciation}
                         </span>
                       );
                     })}
                   </div>
-                  <div className="meaning">
+                  <div className="meaningWord">
                     {word.meanings.map((mean, index) => {
                       return (
                         <span key={index} className="onemeaning">
@@ -39,7 +39,7 @@ function WordList(props) {
                       );
                     })}
                   </div>
-                  <div className="delete">
+                  <div className="wordButtons">
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {

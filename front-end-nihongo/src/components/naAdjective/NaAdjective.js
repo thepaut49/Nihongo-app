@@ -36,10 +36,10 @@ function NaAdjective(props) {
     <div style={styleGridContainer}>
       <div style={stylenaadjective}>{naAdjective.kanjis}</div>
       <div style={stylePronunciation}>
-        {naAdjective.pronunciation.map((pro, index) => {
+        {naAdjective.pronunciations.map((pro, index) => {
           return (
             <span key={index} className="onemeaning">
-              {pro}
+              {pro.pronunciation}
             </span>
           );
         })}

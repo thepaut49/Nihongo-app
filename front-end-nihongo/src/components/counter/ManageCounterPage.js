@@ -5,6 +5,7 @@ import counterStore from "../../stores/counterStore";
 import { Prompt } from "react-router-dom";
 import * as counterActions from "../../actions/counterActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { newPronunciationNumber } from "../common/meaningUtils";
 
 const ManageCounterPage = (props) => {
   const [modified, setModified] = useState(false);
@@ -12,50 +13,23 @@ const ManageCounterPage = (props) => {
   const [counter, setCounter] = useState({
     id: null,
     kanjis: "",
-    pronunciation: "",
+    pronunciations: {
+      counterId: 0,
+      pronunciation: "",
+      pronunciationNumber: 0,
+      version: 0,
+    },
     use: "",
     summary: "",
     numberOfUse: null,
     version: null,
   });
 
-  const onMiddlePointClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    input.value = input.value + event.target.innerText;
-    setCounter({
-      ...counter,
-      pronunciation: counter.pronunciation + event.target.innerText,
-    });
-  };
-
-  const handleTranslateClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    setCounter({
-      ...counter,
-      pronunciation: newValue,
-    });
-  };
-
   useEffect(() => {
     const kanjis = props.match.params.kanjis; // from the path /counters/:counter
     if (kanjis) {
       // on récupère le counter du store et on le transforme pour qu'il corresponde au formulaire
-      let tempCounter = counterStore.getCounterByKanjis(kanjis);
-      let newPronunciation = tempCounter.pronunciation[0];
-      if (tempCounter.pronunciation.length > 1) {
-        for (let i = 1; i < tempCounter.pronunciation.length; i++) {
-          newPronunciation =
-            newPronunciation + "・" + tempCounter.pronunciation[i];
-        }
-      }
-      const counterForm = {
-        ...tempCounter,
-        pronunciation: newPronunciation,
-      };
+      const counterForm = counterStore.getCounterByKanjis(kanjis);
       setCounter(counterForm);
     }
   }, [props.match.params.kanjis]);
@@ -81,25 +55,68 @@ const ManageCounterPage = (props) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setModified(false);
-    // on transforme les chaine de caractères en liste de chaines
-    let newPronunciation = [];
-    if (counter.pronunciation.includes("・")) {
-      newPronunciation = counter.pronunciation.split("・");
-      for (let i = 0; i < newPronunciation.length; i++) {
-        newPronunciation[i] = newPronunciation[i].replace("・", "");
-      }
-    } else {
-      newPronunciation = [counter.pronunciation];
-    }
-    const savedCounter = {
-      ...counter,
-      pronunciation: newPronunciation,
-    };
-    counterActions.saveCounter(savedCounter).then(() => {
+    counterActions.saveCounter(counter).then(() => {
       props.history.push("/counters");
       toast.success("Counter saved.");
     });
   }
+
+  function handleAddPronunciation(event) {
+    event.preventDefault();
+    let pronunciations = counter.pronunciations;
+    pronunciations.push({
+      counterId: counter.id,
+      pronunciationNumber: newPronunciationNumber(counter.pronunciations),
+      pronunciation: "",
+      version: 0,
+    });
+    setCounter({
+      ...counter,
+      pronunciations: pronunciations,
+    });
+  }
+
+  function handlePronunciationChange(event, index) {
+    event.preventDefault();
+    let newPronunciations = counter.pronunciations;
+    newPronunciations[index].pronunciation = event.target.value;
+    setCounter({ ...counter, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  function handleDeletePronunciation(event, index) {
+    event.preventDefault();
+    let newPronunciations = counter.pronunciations;
+    newPronunciations.splice(index, 1);
+    setCounter({ ...counter, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  const onMiddlePointClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    input.value = input.value + event.target.innerText;
+    let newPronunciations = counter.pronunciations;
+    newPronunciations[index].pronunciation =
+      newPronunciations[index].pronunciation + event.target.innerText;
+    setCounter({
+      ...counter,
+      pronunciations: newPronunciations,
+    });
+  };
+
+  const handleTranslateClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    const newValue = translateRomajiToKana(input.value);
+    input.value = newValue;
+    let newPronunciations = counter.pronunciations;
+    newPronunciations[index].pronunciation = newValue;
+    setCounter({
+      ...counter,
+      pronunciations: newPronunciations,
+    });
+  };
 
   return (
     <>
@@ -112,6 +129,9 @@ const ManageCounterPage = (props) => {
         onSubmit={handleSubmit}
         onMiddlePointClick={onMiddlePointClick}
         onTranslateClick={handleTranslateClick}
+        addPronunciation={handleAddPronunciation}
+        onPronunciationChange={handlePronunciationChange}
+        deletePronunciation={handleDeletePronunciation}
       />
     </>
   );

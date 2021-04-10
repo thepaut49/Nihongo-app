@@ -36,10 +36,10 @@ function Name(props) {
     <div style={styleGridContainer}>
       <div style={stylename}>{name.kanjis}</div>
       <div style={stylePronunciation}>
-        {name.pronunciation.map((pro, index) => {
+        {name.pronunciations.map((pro, index) => {
           return (
             <span key={index} className="onemeaning">
-              {pro}
+              {pro.pronunciation}
             </span>
           );
         })}

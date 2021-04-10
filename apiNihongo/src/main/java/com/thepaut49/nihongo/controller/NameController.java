@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thepaut49.nihongo.dto.NameCriteriaDTO;
-import com.thepaut49.nihongo.dto.NameDTO;
 import com.thepaut49.nihongo.dto.ObjectDTO;
-import com.thepaut49.nihongo.mapper.NameToDTOMapper;
+import com.thepaut49.nihongo.dto.name.NameCriteriaDTO;
+import com.thepaut49.nihongo.dto.name.NameDTO;
 import com.thepaut49.nihongo.mapper.ObjectDTOMapper;
-import com.thepaut49.nihongo.model.Name;
+import com.thepaut49.nihongo.mapper.name.NameToDTOMapper;
+import com.thepaut49.nihongo.model.name.Name;
 import com.thepaut49.nihongo.service.NameService;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)

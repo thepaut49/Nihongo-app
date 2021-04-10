@@ -46,11 +46,6 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- HashCodeBuilder -->
-		<dependency>
-		    <groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
 		<!-- open api -->
 		<dependency>
 			<groupId>org.springdoc</groupId>

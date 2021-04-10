@@ -5,7 +5,10 @@ import nameStore from "../../stores/nameStore";
 import { Prompt } from "react-router-dom";
 import * as nameActions from "../../actions/nameActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import { newMeaningNumber } from "../common/meaningUtils";
+import {
+  newMeaningNumber,
+  newPronunciationNumber,
+} from "../common/meaningUtils";
 
 const ManageNamePage = (props) => {
   const [modified, setModified] = useState(false);
@@ -13,7 +16,14 @@ const ManageNamePage = (props) => {
   const [name, setName] = useState({
     id: null,
     kanjis: "",
-    pronunciation: "",
+    pronunciations: [
+      {
+        id: null,
+        pronunciationNumber: 0,
+        pronunciation: "",
+        version: 0,
+      },
+    ],
     meanings: [
       {
         id: null,
@@ -26,40 +36,11 @@ const ManageNamePage = (props) => {
     version: null,
   });
 
-  const onMiddlePointClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    input.value = input.value + event.target.innerText;
-    setName({
-      ...name,
-      pronunciation: name.pronunciation + event.target.innerText,
-    });
-  };
-
-  const handleTranslateClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    setName({
-      ...name,
-      pronunciation: newValue,
-    });
-  };
-
   useEffect(() => {
     const kanjis = props.match.params.kanjis; // from the path /names/:name
     if (kanjis) {
       // on récupère le name du store et on le transforme pour qu'il corresponde au formulaire
-      let tempName = nameStore.getNameByKanjis(kanjis);
-      let newPronunciation = tempName.pronunciation[0];
-      for (let i = 1; i < tempName.pronunciation.length; i++) {
-        newPronunciation = newPronunciation + "・" + tempName.pronunciation[i];
-      }
-      const nameForm = {
-        ...tempName,
-        pronunciation: newPronunciation,
-      };
+      const nameForm = nameStore.getNameByKanjis(kanjis);
       setName(nameForm);
     }
   }, [props.match.params.kanjis]);
@@ -72,9 +53,6 @@ const ManageNamePage = (props) => {
   function formIsValid() {
     const _errors = {};
     if (!name.kanjis) _errors.kanjis = "Kanjis of the name is required";
-    if (!name.pronunciation)
-      _errors.pronunciation = "Pronunciation is required";
-
     setErrors(_errors);
     // form is valid if the erros object has no properties
     return Object.keys(_errors).length === 0;
@@ -84,16 +62,8 @@ const ManageNamePage = (props) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setModified(false);
-    // on transforme les chaine de caractères en liste de chaines
-    let newPronunciation = name.pronunciation.split("・");
-    for (let i = 0; i < newPronunciation.length; i++) {
-      newPronunciation[i] = newPronunciation[i].replace("・", "");
-    }
-    const savedName = {
-      ...name,
-      pronunciation: newPronunciation,
-    };
-    nameActions.saveName(savedName).then(() => {
+    debugger;
+    nameActions.saveName(name).then(() => {
       props.history.push("/names");
       toast.success("Name saved.");
     });
@@ -103,8 +73,10 @@ const ManageNamePage = (props) => {
     event.preventDefault();
     let newMeanings = name.meanings;
     newMeanings.push({
+      nameId: name.id,
       meaningNumber: newMeaningNumber(name.meanings),
       meaning: "",
+      version: 0,
     });
     setName({
       ...name,
@@ -128,6 +100,63 @@ const ManageNamePage = (props) => {
     setModified(true);
   }
 
+  function handleAddPronunciation(event) {
+    event.preventDefault();
+    let pronunciations = name.pronunciations;
+    pronunciations.push({
+      nameId: name.id,
+      pronunciationNumber: newPronunciationNumber(name.pronunciations),
+      pronunciation: "",
+      version: 0,
+    });
+    setName({
+      ...name,
+      pronunciations: pronunciations,
+    });
+  }
+
+  function handlePronunciationChange(event, index) {
+    event.preventDefault();
+    let newPronunciations = name.pronunciations;
+    newPronunciations[index].pronunciation = event.target.value;
+    setName({ ...name, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  function handleDeletePronunciation(event, index) {
+    event.preventDefault();
+    let newPronunciations = name.pronunciations;
+    newPronunciations.splice(index, 1);
+    setName({ ...name, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  const onMiddlePointClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    input.value = input.value + event.target.innerText;
+    let newPronunciations = name.pronunciations;
+    newPronunciations[index].pronunciation =
+      newPronunciations[index].pronunciation + event.target.innerText;
+    setName({
+      ...name,
+      pronunciations: newPronunciations,
+    });
+  };
+
+  const handleTranslateClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    const newValue = translateRomajiToKana(input.value);
+    input.value = newValue;
+    let newPronunciations = name.pronunciations;
+    newPronunciations[index].pronunciation = newValue;
+    setName({
+      ...name,
+      pronunciations: newPronunciations,
+    });
+  };
+
   return (
     <>
       <h2>Manage Name</h2>
@@ -142,6 +171,9 @@ const ManageNamePage = (props) => {
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
         deleteMeaning={handleDeleteMeaning}
+        addPronunciation={handleAddPronunciation}
+        onPronunciationChange={handlePronunciationChange}
+        deletePronunciation={handleDeletePronunciation}
       />
     </>
   );

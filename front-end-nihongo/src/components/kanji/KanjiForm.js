@@ -2,7 +2,7 @@ import React from "react";
 import { radicals, nbrOfStrokesString } from "../common/Radicals";
 import CustomInput from "../common/CustomInput";
 import CustomInputMeaning from "../common/CustomInputMeaning";
-import CustomInputPronunciation from "../common/CustomInputPronunciation";
+import CustomInputPronunciations from "../common/CustomInputPronunciations";
 import CustomIntegerInput from "../common/CustomIntegerInput";
 import PropTypes from "prop-types";
 
@@ -33,16 +33,29 @@ function KanjiForm(props) {
         error={props.errors.kanji}
       />
 
-      <CustomInputPronunciation
-        id="pronunciation"
-        label="Pronunciation"
-        onChange={props.onChange}
-        name="pronunciation"
-        value={props.kanji.pronunciation}
-        error={props.errors.pronunciation}
-        onMiddlePointClick={props.onMiddlePointClick}
-        onTranslateClick={props.onTranslateClick}
-      />
+      {props.kanji.pronunciations &&
+        props.kanji.pronunciations.length > 0 &&
+        props.kanji.pronunciations.map((pro, index) => {
+          return (
+            <CustomInputPronunciations
+              key={index}
+              id={"pronunciation" + index}
+              label={"Pronunciation " + (index + 1) + " :"}
+              typeInput="text"
+              onChange={props.onPronunciationChange}
+              name={"pronunciation" + index}
+              value={props.kanji.pronunciations[index].pronunciation}
+              index={index}
+              deletePronunciation={props.deletePronunciation}
+              onMiddlePointClick={props.onMiddlePointClick}
+              onTranslateClick={props.onTranslateClick}
+            />
+          );
+        })}
+
+      <button className="btn btn-primary" onClick={props.addPronunciation}>
+        Add pronunciation
+      </button>
 
       {props.kanji.meanings &&
         props.kanji.meanings.length > 0 &&
@@ -118,6 +131,9 @@ KanjiForm.propTypes = {
   addMeaning: PropTypes.func.isRequired,
   onMeaningChange: PropTypes.func.isRequired,
   deleteMeaning: PropTypes.func.isRequired,
+  addPronunciation: PropTypes.func.isRequired,
+  onPronunciationChange: PropTypes.func.isRequired,
+  deletePronunciation: PropTypes.func.isRequired,
 };
 
 export default KanjiForm;

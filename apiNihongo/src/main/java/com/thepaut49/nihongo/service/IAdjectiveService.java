@@ -8,9 +8,9 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.thepaut49.nihongo.dto.IAdjectiveCriteriaDTO;
+import com.thepaut49.nihongo.dto.iadjective.IAdjectiveCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
-import com.thepaut49.nihongo.model.IAdjective;
+import com.thepaut49.nihongo.model.iadjective.IAdjective;
 import com.thepaut49.nihongo.repository.IAdjectiveRepository;
 
 @Service
@@ -32,7 +32,6 @@ public class IAdjectiveService {
 	
 	public IAdjective updateIAdjective(IAdjective iAdjective) {
 		if (iAdjective != null) {
-			iAdjective.getMeanings().stream().forEach(meaning -> meaning.setIAdjective(iAdjective) );
 			return iAdjectiveRepository.save(iAdjective);
 		}
 		else {
@@ -70,7 +69,6 @@ public class IAdjectiveService {
 	public IAdjective updateIAdjectiveNumberOfUse(Integer id) {
 		IAdjective iAdjective = iAdjectiveRepository.findById(id).get();
 		iAdjective.setNumberOfUse(iAdjective.getNumberOfUse() + 1);
-		iAdjective.getMeanings().stream().forEach(meaning -> meaning.setIAdjective(iAdjective) );
 		return iAdjectiveRepository.save(iAdjective);
 	}
 

@@ -5,7 +5,10 @@ import iAdjectiveStore from "../../stores/iAdjectiveStore";
 import { Prompt } from "react-router-dom";
 import * as iAdjectiveActions from "../../actions/iAdjectiveActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import { newMeaningNumber } from "../common/meaningUtils";
+import {
+  newMeaningNumber,
+  newPronunciationNumber,
+} from "../common/meaningUtils";
 
 const ManageIAdjectivePage = (props) => {
   const [modified, setModified] = useState(false);
@@ -13,10 +16,17 @@ const ManageIAdjectivePage = (props) => {
   const [iAdjective, setIAdjective] = useState({
     id: null,
     kanjis: "",
-    pronunciation: "",
+    pronunciations: [
+      {
+        iiAdjectiveId: null,
+        pronunciationNumber: 0,
+        pronunciation: "",
+        version: null,
+      },
+    ],
     meanings: [
       {
-        id: null,
+        iiAdjectiveId: null,
         meaningNumber: 0,
         meaning: "",
         version: null,
@@ -26,43 +36,11 @@ const ManageIAdjectivePage = (props) => {
     version: null,
   });
 
-  const onMiddlePointClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    input.value = input.value + event.target.innerText;
-    setIAdjective({
-      ...iAdjective,
-      pronunciation: iAdjective.pronunciation + event.target.innerText,
-    });
-  };
-
-  const handleTranslateClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    setIAdjective({
-      ...iAdjective,
-      pronunciation: newValue,
-    });
-  };
-
   useEffect(() => {
     const kanjis = props.match.params.kanjis; // from the path /iAdjectives/:iAdjective
     if (kanjis) {
       // on récupère le iAdjective du store et on le transforme pour qu'il corresponde au formulaire
-      let tempIAdjective = iAdjectiveStore.getIAdjectiveByKanjis(kanjis);
-      let newPronunciation = tempIAdjective.pronunciation[0];
-      if (tempIAdjective.pronunciation.length > 1) {
-        for (let i = 1; i < tempIAdjective.pronunciation.length; i++) {
-          newPronunciation =
-            newPronunciation + "・" + tempIAdjective.pronunciation[i];
-        }
-      }
-      const iAdjectiveForm = {
-        ...tempIAdjective,
-        pronunciation: newPronunciation,
-      };
+      const iAdjectiveForm = iAdjectiveStore.getIAdjectiveByKanjis(kanjis);
       setIAdjective(iAdjectiveForm);
     }
   }, [props.match.params.kanjis]);
@@ -76,8 +54,6 @@ const ManageIAdjectivePage = (props) => {
     const _errors = {};
     if (!iAdjective.kanjis)
       _errors.kanjis = "Kanjis of the iAdjective is required";
-    if (!iAdjective.pronunciation)
-      _errors.pronunciation = "Pronunciation is required";
     setErrors(_errors);
     // form is valid if the erros object has no properties
     return Object.keys(_errors).length === 0;
@@ -87,21 +63,7 @@ const ManageIAdjectivePage = (props) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setModified(false);
-    // on transforme les chaine de caractères en liste de chaines
-    let newPronunciation = [];
-    if (iAdjective.pronunciation.includes("・")) {
-      newPronunciation = iAdjective.pronunciation.split("・");
-      for (let i = 0; i < newPronunciation.length; i++) {
-        newPronunciation[i] = newPronunciation[i].replace("・", "");
-      }
-    } else {
-      newPronunciation = [iAdjective.pronunciation];
-    }
-    const savedIAdjective = {
-      ...iAdjective,
-      pronunciation: newPronunciation,
-    };
-    iAdjectiveActions.saveIAdjective(savedIAdjective).then(() => {
+    iAdjectiveActions.saveIAdjective(iAdjective).then(() => {
       props.history.push("/iAdjectives");
       toast.success("IAdjective saved.");
     });
@@ -111,8 +73,10 @@ const ManageIAdjectivePage = (props) => {
     event.preventDefault();
     let newMeanings = iAdjective.meanings;
     newMeanings.push({
+      iiAdjectiveId: iAdjective.id,
       meaningNumber: newMeaningNumber(iAdjective.meanings),
       meaning: "",
+      version: 0,
     });
     setIAdjective({
       ...iAdjective,
@@ -136,6 +100,63 @@ const ManageIAdjectivePage = (props) => {
     setModified(true);
   }
 
+  function handleAddPronunciation(event) {
+    event.preventDefault();
+    let pronunciations = iAdjective.pronunciations;
+    pronunciations.push({
+      iiAdjectiveId: iAdjective.id,
+      pronunciationNumber: newPronunciationNumber(iAdjective.pronunciations),
+      pronunciation: "",
+      version: 0,
+    });
+    setIAdjective({
+      ...iAdjective,
+      pronunciations: pronunciations,
+    });
+  }
+
+  function handlePronunciationChange(event, index) {
+    event.preventDefault();
+    let newPronunciations = iAdjective.pronunciations;
+    newPronunciations[index].pronunciation = event.target.value;
+    setIAdjective({ ...iAdjective, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  function handleDeletePronunciation(event, index) {
+    event.preventDefault();
+    let newPronunciations = iAdjective.pronunciations;
+    newPronunciations.splice(index, 1);
+    setIAdjective({ ...iAdjective, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  const onMiddlePointClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    input.value = input.value + event.target.innerText;
+    let newPronunciations = iAdjective.pronunciations;
+    newPronunciations[index].pronunciation =
+      newPronunciations[index].pronunciation + event.target.innerText;
+    setIAdjective({
+      ...iAdjective,
+      pronunciations: newPronunciations,
+    });
+  };
+
+  const handleTranslateClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    const newValue = translateRomajiToKana(input.value);
+    input.value = newValue;
+    let newPronunciations = iAdjective.pronunciations;
+    newPronunciations[index].pronunciation = newValue;
+    setIAdjective({
+      ...iAdjective,
+      pronunciations: newPronunciations,
+    });
+  };
+
   return (
     <>
       <h2>Manage IAdjective</h2>
@@ -150,6 +171,9 @@ const ManageIAdjectivePage = (props) => {
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
         deleteMeaning={handleDeleteMeaning}
+        addPronunciation={handleAddPronunciation}
+        onPronunciationChange={handlePronunciationChange}
+        deletePronunciation={handleDeletePronunciation}
       />
     </>
   );

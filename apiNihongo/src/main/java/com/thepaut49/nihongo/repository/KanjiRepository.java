@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.thepaut49.nihongo.model.Kanji;
+import com.thepaut49.nihongo.model.kanji.Kanji;
 
 public interface KanjiRepository extends JpaRepository<Kanji, Integer> {
 
@@ -14,8 +14,8 @@ public interface KanjiRepository extends JpaRepository<Kanji, Integer> {
 	Kanji findByKanji(char kanji);
 
 	@Query("SELECT k FROM Kanji k WHERE (:kanji is null or k.kanji = :kanji) "
-			+ " and (:pronunciation is null or k.pronunciation LIKE  LOWER(concat('%', concat(:pronunciation, '%'))))"
-			+ " and (:meaning is null or EXISTS(SELECT km from KanjiMeaning km WHERE k.id = km.kanji.id AND km.meaning LIKE LOWER(concat('%', concat(:meaning, '%')))))"
+			+ " and (:pronunciation is null or EXISTS(SELECT vp from KanjiPronunciation vp WHERE k.id = vp.kanjiId AND vp.pronunciation LIKE LOWER(concat('%', concat(:pronunciation, '%')))))"
+			+ " and (:meaning is null or EXISTS(SELECT vm from KanjiMeaning vm WHERE k.id = vm.kanjiId AND vm.meaning LIKE LOWER(concat('%', concat(:meaning, '%')))))"
 			+ " and (:radicals is null or k.radicals LIKE  LOWER(concat('%', concat(:radicals, '%'))))"
 			+ " and (:strokeNumber is null or k.strokeNumber = :strokeNumber)"
 			+ " and (:minStrokeNumber is null or k.strokeNumber >= :minStrokeNumber)"

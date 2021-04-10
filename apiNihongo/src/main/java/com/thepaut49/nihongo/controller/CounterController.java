@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thepaut49.nihongo.dto.CounterCriteriaDTO;
-import com.thepaut49.nihongo.dto.CounterDTO;
 import com.thepaut49.nihongo.dto.ObjectDTO;
-import com.thepaut49.nihongo.mapper.CounterToDTOMapper;
+import com.thepaut49.nihongo.dto.counter.CounterCriteriaDTO;
+import com.thepaut49.nihongo.dto.counter.CounterDTO;
 import com.thepaut49.nihongo.mapper.ObjectDTOMapper;
-import com.thepaut49.nihongo.model.Counter;
+import com.thepaut49.nihongo.mapper.counter.CounterToDTOMapper;
+import com.thepaut49.nihongo.model.counter.Counter;
 import com.thepaut49.nihongo.service.CounterService;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)

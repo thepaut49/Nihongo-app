@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.thepaut49.nihongo.model.NaAdjective;
+import com.thepaut49.nihongo.model.naadjective.NaAdjective;
 
 public interface NaAdjectiveRepository extends JpaRepository<NaAdjective, Integer> {
 
@@ -14,8 +14,8 @@ public interface NaAdjectiveRepository extends JpaRepository<NaAdjective, Intege
 	NaAdjective findByKanjis(String kanjis);
 
 	@Query("SELECT v FROM NaAdjective v WHERE (:kanjis is null or v.kanjis LIKE  LOWER(concat('%', concat(:kanjis, '%')))) "
-			+ " and (:pronunciation is null or v.pronunciation LIKE  LOWER(concat('%', concat(:pronunciation, '%'))))"
-			+ " and (:meaning is null or EXISTS(SELECT im from NaAdjectiveMeaning im WHERE v.id = im.naAdjective.id AND im.meaning LIKE LOWER(concat('%', concat(:meaning, '%')))))")
+			+ " and (:pronunciation is null or EXISTS(SELECT vp from NaAdjectivePronunciation vp WHERE v.id = vp.naAdjectiveId AND vp.pronunciation LIKE LOWER(concat('%', concat(:pronunciation, '%')))))"
+			+ " and (:meaning is null or EXISTS(SELECT vm from NaAdjectiveMeaning vm WHERE v.id = vm.naAdjectiveId AND vm.meaning LIKE LOWER(concat('%', concat(:meaning, '%')))))")
 	List<NaAdjective> findWithCriteria(String kanjis, String pronunciation, String meaning);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM na_adjective v ORDER BY v.number_of_use DESC LIMIT :quantity ")

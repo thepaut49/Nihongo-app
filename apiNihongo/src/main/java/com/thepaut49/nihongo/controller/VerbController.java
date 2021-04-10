@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thepaut49.nihongo.dto.ObjectDTO;
-import com.thepaut49.nihongo.dto.VerbCriteriaDTO;
-import com.thepaut49.nihongo.dto.VerbDTO;
+import com.thepaut49.nihongo.dto.verb.VerbCriteriaDTO;
+import com.thepaut49.nihongo.dto.verb.VerbDTO;
 import com.thepaut49.nihongo.mapper.ObjectDTOMapper;
-import com.thepaut49.nihongo.mapper.VerbToDTOMapper;
-import com.thepaut49.nihongo.model.Verb;
+import com.thepaut49.nihongo.mapper.verb.VerbToDTOMapper;
+import com.thepaut49.nihongo.model.verb.Verb;
 import com.thepaut49.nihongo.service.VerbService;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)

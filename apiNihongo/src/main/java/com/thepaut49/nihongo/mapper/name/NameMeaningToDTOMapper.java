@@ -1,0 +1,27 @@
+package com.thepaut49.nihongo.mapper.name;
+
+import com.thepaut49.nihongo.dto.name.NameMeaningDTO;
+import com.thepaut49.nihongo.model.name.NameMeaning;
+
+
+public class NameMeaningToDTOMapper {
+	
+	public static NameMeaningDTO map(NameMeaning nameMeaning) {
+		NameMeaningDTO nameMeaningDTO = new NameMeaningDTO();
+		nameMeaningDTO.setNameId(nameMeaning.getNameId());
+		nameMeaningDTO.setMeaningNumber(nameMeaning.getMeaningNumber());
+		nameMeaningDTO.setVersion(nameMeaning.getVersion());
+		nameMeaningDTO.setMeaning(nameMeaning.getMeaning());
+		return nameMeaningDTO;
+	}
+	
+	public static NameMeaning map(NameMeaningDTO nameMeaningDTO) {
+		NameMeaning nameMeaning = new NameMeaning();
+		nameMeaning.setNameId(nameMeaningDTO.getNameId());
+		nameMeaning.setMeaningNumber(nameMeaningDTO.getMeaningNumber());
+		nameMeaning.setVersion(nameMeaningDTO.getVersion());
+		nameMeaning.setMeaning(nameMeaningDTO.getMeaning());
+		return nameMeaning;
+	}
+
+}

@@ -8,9 +8,9 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.thepaut49.nihongo.dto.VerbCriteriaDTO;
+import com.thepaut49.nihongo.dto.verb.VerbCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
-import com.thepaut49.nihongo.model.Verb;
+import com.thepaut49.nihongo.model.verb.Verb;
 import com.thepaut49.nihongo.repository.VerbRepository;
 
 @Service

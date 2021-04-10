@@ -5,7 +5,10 @@ import wordStore from "../../stores/wordStore";
 import { Prompt } from "react-router-dom";
 import * as wordActions from "../../actions/wordActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import { newMeaningNumber } from "../common/meaningUtils";
+import {
+  newMeaningNumber,
+  newPronunciationNumber,
+} from "../common/meaningUtils";
 
 const ManageWordPage = (props) => {
   const [modified, setModified] = useState(false);
@@ -13,53 +16,31 @@ const ManageWordPage = (props) => {
   const [word, setWord] = useState({
     id: null,
     kanjis: "",
-    pronunciation: "",
+    pronunciations: [
+      {
+        wordId: null,
+        pronunciationNumber: 0,
+        pronunciation: "",
+        version: 0,
+      },
+    ],
     meanings: [
       {
-        id: null,
+        wordId: null,
         meaningNumber: 0,
         meaning: "",
-        version: null,
+        version: 0,
       },
     ],
     numberOfUse: null,
     version: null,
   });
 
-  const onMiddlePointClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    input.value = input.value + event.target.innerText;
-    setWord({
-      ...word,
-      pronunciation: word.pronunciation + event.target.innerText,
-    });
-  };
-
-  const handleTranslateClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    setWord({
-      ...word,
-      pronunciation: newValue,
-    });
-  };
-
   useEffect(() => {
     const kanjis = props.match.params.kanjis; // from the path /words/:word
     if (kanjis) {
       // on récupère le word du store et on le transforme pour qu'il corresponde au formulaire
-      let tempWord = wordStore.getWordByKanjis(kanjis);
-      let newPronunciation = tempWord.pronunciation[0];
-      for (let i = 1; i < tempWord.pronunciation.length; i++) {
-        newPronunciation = newPronunciation + "・" + tempWord.pronunciation[i];
-      }
-      const wordForm = {
-        ...tempWord,
-        pronunciation: newPronunciation,
-      };
+      const wordForm = wordStore.getWordByKanjis(kanjis);
       setWord(wordForm);
     }
   }, [props.match.params.kanjis]);
@@ -72,9 +53,6 @@ const ManageWordPage = (props) => {
   function formIsValid() {
     const _errors = {};
     if (!word.kanjis) _errors.kanjis = "Kanjis of the word is required";
-    if (!word.pronunciation)
-      _errors.pronunciation = "Pronunciation is required";
-
     setErrors(_errors);
     // form is valid if the erros object has no properties
     return Object.keys(_errors).length === 0;
@@ -84,16 +62,7 @@ const ManageWordPage = (props) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setModified(false);
-    // on transforme les chaine de caractères en liste de chaines
-    let newPronunciation = word.pronunciation.split("・");
-    for (let i = 0; i < newPronunciation.length; i++) {
-      newPronunciation[i] = newPronunciation[i].replace("・", "");
-    }
-    const savedWord = {
-      ...word,
-      pronunciation: newPronunciation,
-    };
-    wordActions.saveWord(savedWord).then(() => {
+    wordActions.saveWord(word).then(() => {
       props.history.push("/words");
       toast.success("Word saved.");
     });
@@ -103,8 +72,10 @@ const ManageWordPage = (props) => {
     event.preventDefault();
     let newMeanings = word.meanings;
     newMeanings.push({
+      wordId: word.id,
       meaningNumber: newMeaningNumber(word.meanings),
       meaning: "",
+      version: 0,
     });
     setWord({
       ...word,
@@ -128,6 +99,63 @@ const ManageWordPage = (props) => {
     setModified(true);
   }
 
+  function handleAddPronunciation(event) {
+    event.preventDefault();
+    let pronunciations = word.pronunciations;
+    pronunciations.push({
+      wordId: word.id,
+      pronunciationNumber: newPronunciationNumber(word.pronunciations),
+      pronunciation: "",
+      version: 0,
+    });
+    setWord({
+      ...word,
+      pronunciations: pronunciations,
+    });
+  }
+
+  function handlePronunciationChange(event, index) {
+    event.preventDefault();
+    let newPronunciations = word.pronunciations;
+    newPronunciations[index].pronunciation = event.target.value;
+    setWord({ ...word, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  function handleDeletePronunciation(event, index) {
+    event.preventDefault();
+    let newPronunciations = word.pronunciations;
+    newPronunciations.splice(index, 1);
+    setWord({ ...word, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  const onMiddlePointClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    input.value = input.value + event.target.innerText;
+    let newPronunciations = word.pronunciations;
+    newPronunciations[index].pronunciation =
+      newPronunciations[index].pronunciation + event.target.innerText;
+    setWord({
+      ...word,
+      pronunciations: newPronunciations,
+    });
+  };
+
+  const handleTranslateClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    const newValue = translateRomajiToKana(input.value);
+    input.value = newValue;
+    let newPronunciations = word.pronunciations;
+    newPronunciations[index].pronunciation = newValue;
+    setWord({
+      ...word,
+      pronunciations: newPronunciations,
+    });
+  };
+
   return (
     <>
       <h2>Manage Word</h2>
@@ -142,6 +170,9 @@ const ManageWordPage = (props) => {
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
         deleteMeaning={handleDeleteMeaning}
+        addPronunciation={handleAddPronunciation}
+        onPronunciationChange={handlePronunciationChange}
+        deletePronunciation={handleDeletePronunciation}
       />
     </>
   );

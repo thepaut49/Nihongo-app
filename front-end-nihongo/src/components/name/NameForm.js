@@ -1,7 +1,7 @@
 import React from "react";
 import CustomInput from "../common/CustomInput";
 import CustomInputMeaning from "../common/CustomInputMeaning";
-import CustomInputPronunciation from "../common/CustomInputPronunciation";
+import CustomInputPronunciations from "../common/CustomInputPronunciations";
 import PropTypes from "prop-types";
 
 function NameForm(props) {
@@ -16,16 +16,29 @@ function NameForm(props) {
         error={props.errors.kanjis}
       />
 
-      <CustomInputPronunciation
-        id="pronunciation"
-        label="Pronunciation"
-        onChange={props.onChange}
-        name="pronunciation"
-        value={props.name.pronunciation}
-        error={props.errors.pronunciation}
-        onMiddlePointClick={props.onMiddlePointClick}
-        onTranslateClick={props.onTranslateClick}
-      />
+      {props.name.pronunciations &&
+        props.name.pronunciations.length > 0 &&
+        props.name.pronunciations.map((pro, index) => {
+          return (
+            <CustomInputPronunciations
+              key={index}
+              id={"pronunciation" + index}
+              label={"Pronunciation " + (index + 1) + " :"}
+              typeInput="text"
+              onChange={props.onPronunciationChange}
+              name={"pronunciation" + index}
+              value={props.name.pronunciations[index].pronunciation}
+              index={index}
+              deletePronunciation={props.deletePronunciation}
+              onMiddlePointClick={props.onMiddlePointClick}
+              onTranslateClick={props.onTranslateClick}
+            />
+          );
+        })}
+
+      <button className="btn btn-primary" onClick={props.addPronunciation}>
+        Add pronunciation
+      </button>
 
       {props.name.meanings &&
         props.name.meanings.length > 0 &&
@@ -64,6 +77,9 @@ NameForm.propTypes = {
   addMeaning: PropTypes.func.isRequired,
   onMeaningChange: PropTypes.func.isRequired,
   deleteMeaning: PropTypes.func.isRequired,
+  addPronunciation: PropTypes.func.isRequired,
+  onPronunciationChange: PropTypes.func.isRequired,
+  deletePronunciation: PropTypes.func.isRequired,
 };
 
 export default NameForm;

@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Version;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 public class Particule implements Serializable {
@@ -99,26 +98,6 @@ public class Particule implements Serializable {
 	}
 	
 	/*** methods ***/
-	@Override
-	public int hashCode() {
-		final int PRIME = 31;
-		int stringHashCode = this.kanjis.hashCode();
-        return new HashCodeBuilder(stringHashCode%2==0?stringHashCode+1:stringHashCode, PRIME).toHashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		Particule otherParticule = (Particule) obj;
-		if (this.kanjis.equals(otherParticule.getKanjis())) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 
 	@Override
 	public String toString() {
@@ -126,4 +105,58 @@ public class Particule implements Serializable {
 				" , Function : " + this.particuleFunction + " , How to use : " + this.howToUse  + " , Version : " + this.version + " }" ;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((examples == null) ? 0 : examples.hashCode());
+		result = prime * result + ((howToUse == null) ? 0 : howToUse.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((kanjis == null) ? 0 : kanjis.hashCode());
+		result = prime * result + ((particuleFunction == null) ? 0 : particuleFunction.hashCode());
+		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Particule other = (Particule) obj;
+		if (examples == null) {
+			if (other.examples != null)
+				return false;
+		} else if (!examples.equals(other.examples))
+			return false;
+		if (howToUse == null) {
+			if (other.howToUse != null)
+				return false;
+		} else if (!howToUse.equals(other.howToUse))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (kanjis == null) {
+			if (other.kanjis != null)
+				return false;
+		} else if (!kanjis.equals(other.kanjis))
+			return false;
+		if (particuleFunction == null) {
+			if (other.particuleFunction != null)
+				return false;
+		} else if (!particuleFunction.equals(other.particuleFunction))
+			return false;
+		if (summary == null) {
+			if (other.summary != null)
+				return false;
+		} else if (!summary.equals(other.summary))
+			return false;
+		return true;
+	}
 }

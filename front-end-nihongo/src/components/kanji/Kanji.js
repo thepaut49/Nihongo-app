@@ -36,10 +36,10 @@ function Kanji(props) {
     <div style={styleGridContainer}>
       <div style={stylekanji}>{kanji.kanji}</div>
       <div style={stylePronunciation}>
-        {kanji.pronunciation.map((pro, index) => {
+        {kanji.pronunciations.map((pro, index) => {
           return (
             <span key={index} className="onemeaning">
-              {pro}
+              {pro.pronunciation}
             </span>
           );
         })}

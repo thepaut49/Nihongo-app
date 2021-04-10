@@ -8,9 +8,9 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.thepaut49.nihongo.dto.KanjiCriteriaDTO;
+import com.thepaut49.nihongo.dto.kanji.KanjiCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
-import com.thepaut49.nihongo.model.Kanji;
+import com.thepaut49.nihongo.model.kanji.Kanji;
 import com.thepaut49.nihongo.repository.KanjiRepository;
 import com.thepaut49.nihongo.utils.StringUtils;
 
@@ -33,9 +33,7 @@ public class KanjiService {
 	
 	public Kanji updateKanji(Kanji kanji) {
 		if (kanji != null) {
-			kanji.getMeanings().stream().forEach(meaning -> meaning.setKanji(kanji) );
-			Kanji updatedKanji = kanjiRepository.save(kanji); 
-			return updatedKanji;
+			return kanjiRepository.save(kanji); 
 		}
 		else {
 			return null;
@@ -80,7 +78,6 @@ public class KanjiService {
 	public Kanji updateKanjiNumberOfUse(Integer id) {
 		Kanji kanji = kanjiRepository.findById(id).get();
 		kanji.setNumberOfUse(kanji.getNumberOfUse() + 1);
-		kanji.getMeanings().stream().forEach(meaning -> meaning.setKanji(kanji) );
 		return kanjiRepository.save(kanji);
 	}
 

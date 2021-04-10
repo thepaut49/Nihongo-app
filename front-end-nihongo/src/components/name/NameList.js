@@ -22,10 +22,10 @@ function NameList(props) {
                     </Link>
                   </div>
                   <div className="pronunciation">
-                    {name.pronunciation.map((pronunciation, index) => {
+                    {name.pronunciations.map((pronunciation, index) => {
                       return (
                         <span key={index} className="onemeaning">
-                          {pronunciation}
+                          {pronunciation.pronunciation}
                         </span>
                       );
                     })}
@@ -72,7 +72,7 @@ NameList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       kanjis: PropTypes.string.isRequired,
-      pronunciation: PropTypes.arrayOf.isRequired,
+      pronunciations: PropTypes.arrayOf.isRequired,
       meanings: PropTypes.arrayOf.isRequired,
       numberOfUse: PropTypes.number,
       version: PropTypes.number,

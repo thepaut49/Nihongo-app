@@ -36,10 +36,10 @@ function IAdjective(props) {
     <div style={styleGridContainer}>
       <div style={styleiadjective}>{iAdjective.kanjis}</div>
       <div style={stylePronunciation}>
-        {iAdjective.pronunciation.map((pro, index) => {
+        {iAdjective.pronunciations.map((pro, index) => {
           return (
             <span key={index} className="onemeaning">
-              {pro}
+              {pro.pronunciation}
             </span>
           );
         })}

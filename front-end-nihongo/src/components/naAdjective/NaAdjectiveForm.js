@@ -1,7 +1,7 @@
 import React from "react";
 import CustomInput from "../common/CustomInput";
 import CustomInputMeaning from "../common/CustomInputMeaning";
-import CustomInputPronunciation from "../common/CustomInputPronunciation";
+import CustomInputPronunciations from "../common/CustomInputPronunciations";
 import PropTypes from "prop-types";
 
 function NaAdjectiveForm(props) {
@@ -16,16 +16,29 @@ function NaAdjectiveForm(props) {
         error={props.errors.kanjis}
       />
 
-      <CustomInputPronunciation
-        id="pronunciation"
-        label="Pronunciation"
-        onChange={props.onChange}
-        name="pronunciation"
-        value={props.naAdjective.pronunciation}
-        error={props.errors.pronunciation}
-        onMiddlePointClick={props.onMiddlePointClick}
-        onTranslateClick={props.onTranslateClick}
-      />
+      {props.naAdjective.pronunciations &&
+        props.naAdjective.pronunciations.length > 0 &&
+        props.naAdjective.pronunciations.map((pro, index) => {
+          return (
+            <CustomInputPronunciations
+              key={index}
+              id={"pronunciation" + index}
+              label={"Pronunciation " + (index + 1) + " :"}
+              typeInput="text"
+              onChange={props.onPronunciationChange}
+              name={"pronunciation" + index}
+              value={props.naAdjective.pronunciations[index].pronunciation}
+              index={index}
+              deletePronunciation={props.deletePronunciation}
+              onMiddlePointClick={props.onMiddlePointClick}
+              onTranslateClick={props.onTranslateClick}
+            />
+          );
+        })}
+
+      <button className="btn btn-primary" onClick={props.addPronunciation}>
+        Add pronunciation
+      </button>
 
       {props.naAdjective.meanings &&
         props.naAdjective.meanings.length > 0 &&
@@ -64,6 +77,9 @@ NaAdjectiveForm.propTypes = {
   addMeaning: PropTypes.func.isRequired,
   onMeaningChange: PropTypes.func.isRequired,
   deleteMeaning: PropTypes.func.isRequired,
+  addPronunciation: PropTypes.func.isRequired,
+  onPronunciationChange: PropTypes.func.isRequired,
+  deletePronunciation: PropTypes.func.isRequired,
 };
 
 export default NaAdjectiveForm;

@@ -70,7 +70,6 @@ export const isPartANumber = (sentencePart, indiceCourant) => {
 };
 
 const patternXTenThousandX = (japaneseNumberString) => {
-  debugger;
   const tenThousand = 10000;
   if (japaneseNumberString.includes("万")) {
     if (japaneseNumberString === "万") {
@@ -260,7 +259,6 @@ const japaneseNumberToArabicNumber = (japaneseNumberString) => {
 };
 
 const numberPronunciation = (number) => {
-  debugger;
   let numberTemp = number;
   // on commence par remplacer les prononciation particulières de 1000
   numberTemp = numberTemp.replace("三千", "さんぜん");

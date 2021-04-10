@@ -36,10 +36,10 @@ function Verb(props) {
     <div style={styleGridContainer}>
       <div style={styleverb}>{verb.neutralForm}</div>
       <div style={stylePronunciation}>
-        {verb.pronunciation.map((pro, index) => {
+        {verb.pronunciations.map((pro, index) => {
           return (
             <span key={index} className="onemeaning">
-              {pro}
+              {pro.pronunciation}
             </span>
           );
         })}

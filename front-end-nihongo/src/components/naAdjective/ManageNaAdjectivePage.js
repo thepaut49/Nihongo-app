@@ -5,7 +5,10 @@ import naAdjectiveStore from "../../stores/naAdjectiveStore";
 import { Prompt } from "react-router-dom";
 import * as naAdjectiveActions from "../../actions/naAdjectiveActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import { newMeaningNumber } from "../common/meaningUtils";
+import {
+  newMeaningNumber,
+  newPronunciationNumber,
+} from "../common/meaningUtils";
 
 const ManageNaAdjectivePage = (props) => {
   const [modified, setModified] = useState(false);
@@ -13,57 +16,32 @@ const ManageNaAdjectivePage = (props) => {
   const [naAdjective, setNaAdjective] = useState({
     id: null,
     kanjis: "",
-    pronunciation: "",
+    pronunciations: [
+      {
+        id: null,
+        pronunciationNumber: 0,
+        pronunciation: "",
+        version: 0,
+      },
+    ],
     meanings: [
       {
         id: null,
         meaningNumber: 0,
         meaning: "",
-        version: null,
+        version: 0,
       },
     ],
     groupe: "",
-    numberOfUse: null,
-    version: null,
+    numberOfUse: 0,
+    version: 0,
   });
-
-  const onMiddlePointClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    input.value = input.value + event.target.innerText;
-    setNaAdjective({
-      ...naAdjective,
-      pronunciation: naAdjective.pronunciation + event.target.innerText,
-    });
-  };
-
-  const handleTranslateClick = (event) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation");
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    setNaAdjective({
-      ...naAdjective,
-      pronunciation: newValue,
-    });
-  };
 
   useEffect(() => {
     const kanjis = props.match.params.kanjis; // from the path /naAdjectives/:naAdjective
     if (kanjis) {
       // on récupère le naAdjective du store et on le transforme pour qu'il corresponde au formulaire
-      let tempNaAdjective = naAdjectiveStore.getNaAdjectiveByKanjis(kanjis);
-      let newPronunciation = tempNaAdjective.pronunciation[0];
-      if (tempNaAdjective.pronunciation.length > 1) {
-        for (let i = 1; i < tempNaAdjective.pronunciation.length; i++) {
-          newPronunciation =
-            newPronunciation + "・" + tempNaAdjective.pronunciation[i];
-        }
-      }
-      const naAdjectiveForm = {
-        ...tempNaAdjective,
-        pronunciation: newPronunciation,
-      };
+      const naAdjectiveForm = naAdjectiveStore.getNaAdjectiveByKanjis(kanjis);
       setNaAdjective(naAdjectiveForm);
     }
   }, [props.match.params.kanjis]);
@@ -77,8 +55,6 @@ const ManageNaAdjectivePage = (props) => {
     const _errors = {};
     if (!naAdjective.kanjis)
       _errors.kanjis = "Kanjis of the naAdjective is required";
-    if (!naAdjective.pronunciation)
-      _errors.pronunciation = "Pronunciation is required";
     setErrors(_errors);
     // form is valid if the erros object has no properties
     return Object.keys(_errors).length === 0;
@@ -88,21 +64,7 @@ const ManageNaAdjectivePage = (props) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setModified(false);
-    // on transforme les chaine de caractères en liste de chaines
-    let newPronunciation = [];
-    if (naAdjective.pronunciation.includes("・")) {
-      newPronunciation = naAdjective.pronunciation.split("・");
-      for (let i = 0; i < newPronunciation.length; i++) {
-        newPronunciation[i] = newPronunciation[i].replace("・", "");
-      }
-    } else {
-      newPronunciation = [naAdjective.pronunciation];
-    }
-    const savedNaAdjective = {
-      ...naAdjective,
-      pronunciation: newPronunciation,
-    };
-    naAdjectiveActions.saveNaAdjective(savedNaAdjective).then(() => {
+    naAdjectiveActions.saveNaAdjective(naAdjective).then(() => {
       props.history.push("/naAdjectives");
       toast.success("NaAdjective saved.");
     });
@@ -112,8 +74,10 @@ const ManageNaAdjectivePage = (props) => {
     event.preventDefault();
     let newMeanings = naAdjective.meanings;
     newMeanings.push({
+      naAdjectiveId: naAdjective.id,
       meaningNumber: newMeaningNumber(naAdjective.meanings),
       meaning: "",
+      version: 0,
     });
     setNaAdjective({
       ...naAdjective,
@@ -137,6 +101,63 @@ const ManageNaAdjectivePage = (props) => {
     setModified(true);
   }
 
+  function handleAddPronunciation(event) {
+    event.preventDefault();
+    let pronunciations = naAdjective.pronunciations;
+    pronunciations.push({
+      naAdjectiveId: naAdjective.id,
+      pronunciationNumber: newPronunciationNumber(naAdjective.pronunciations),
+      pronunciation: "",
+      version: 0,
+    });
+    setNaAdjective({
+      ...naAdjective,
+      pronunciations: pronunciations,
+    });
+  }
+
+  function handlePronunciationChange(event, index) {
+    event.preventDefault();
+    let newPronunciations = naAdjective.pronunciations;
+    newPronunciations[index].pronunciation = event.target.value;
+    setNaAdjective({ ...naAdjective, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  function handleDeletePronunciation(event, index) {
+    event.preventDefault();
+    let newPronunciations = naAdjective.pronunciations;
+    newPronunciations.splice(index, 1);
+    setNaAdjective({ ...naAdjective, pronunciations: newPronunciations });
+    setModified(true);
+  }
+
+  const onMiddlePointClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    input.value = input.value + event.target.innerText;
+    let newPronunciations = naAdjective.pronunciations;
+    newPronunciations[index].pronunciation =
+      newPronunciations[index].pronunciation + event.target.innerText;
+    setNaAdjective({
+      ...naAdjective,
+      pronunciations: newPronunciations,
+    });
+  };
+
+  const handleTranslateClick = (event, index) => {
+    event.preventDefault();
+    let input = document.getElementById("pronunciation" + index);
+    const newValue = translateRomajiToKana(input.value);
+    input.value = newValue;
+    let newPronunciations = naAdjective.pronunciations;
+    newPronunciations[index].pronunciation = newValue;
+    setNaAdjective({
+      ...naAdjective,
+      pronunciations: newPronunciations,
+    });
+  };
+
   return (
     <>
       <h2>Manage NaAdjective</h2>
@@ -151,6 +172,9 @@ const ManageNaAdjectivePage = (props) => {
         addMeaning={handleAddMeaning}
         onMeaningChange={handleMeaningChange}
         deleteMeaning={handleDeleteMeaning}
+        addPronunciation={handleAddPronunciation}
+        onPronunciationChange={handlePronunciationChange}
+        deletePronunciation={handleDeletePronunciation}
       />
     </>
   );
