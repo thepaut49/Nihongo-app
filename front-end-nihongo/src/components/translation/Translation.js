@@ -25,11 +25,9 @@ import { loadWords } from "../../actions/wordActions";
 import { loadParticules } from "../../actions/particuleActions";
 import { loadCounters } from "../../actions/counterActions";
 import { updateNumberOfUse } from "../../actions/translationActions";
-import {
-  extractListOfKanji,
-  extractParts,
-  findListOfCandidates,
-} from "./translationAction";
+import { extractParts, findListOfCandidates } from "./translationAction";
+import * as translationActions from "../../actions/translationActions";
+import translationStore from "../../stores/translationStore";
 
 const typeSelectListOfValue = [
   translationConstants.TYPE_KANJI,
@@ -41,6 +39,26 @@ const typeSelectListOfValue = [
 ];
 
 const quantityListOfValue = translationConstants.quantityListOfValue;
+
+const getListObjectStyle = (typeSelect) => {
+  let style = {};
+  if (!typeSelect || typeSelect === translationConstants.TYPE_KANJI) {
+    style = {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit,3em)",
+      margin: "0.2em",
+      gap: "0.2em",
+    };
+  } else {
+    style = {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit,10em)",
+      margin: "0.2em",
+      gap: "0.2em",
+    };
+  }
+  return style;
+};
 
 const Translation = () => {
   // récupération des listes de chaques type de mots
@@ -58,24 +76,23 @@ const Translation = () => {
   const [counters, setCounters] = useState(counterStore.getCounters());
 
   // variables locales
-  const [sentence, setSentence] = useState("");
-  const [quantity, setQuantity] = useState(50);
+  const [sentence, setSentence] = useState(translationStore.getSentence());
+  const [quantity, setQuantity] = useState(translationStore.getQuantity());
   const [typeSelect, setTypeSelect] = useState(
-    translationConstants.DEFAULT_TYPE
+    translationStore.getTypeSelect()
   );
   let typeSelectField = document.querySelectorAll("typeSelect");
-  typeSelectField.value = translationConstants.DEFAULT_TYPE;
+  typeSelectField.value = translationStore.getTypeSelect();
   const [listObjects, setListObjects] = useState(
     translationApi.getMostUsedObject(typeSelect, quantity)
   );
-  const [listObjectsStyle, setListObjectsStyle] = useState({
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit,3em)",
-    margin: "0.2em",
-    gap: "0.2em",
-  });
-  const [listParts, setListParts] = useState([]);
-  const [listOfKanjis, setListOfKanjis] = useState([]);
+  const [listObjectsStyle, setListObjectsStyle] = useState(
+    getListObjectStyle(typeSelect)
+  );
+  const [listParts, setListParts] = useState(translationStore.getListParts());
+  const [listOfKanjis, setListOfKanjis] = useState(
+    translationStore.getListOfKanjis()
+  );
 
   useEffect(() => {
     kanjiStore.addChangeListener(onChangeKanjis);
@@ -86,6 +103,11 @@ const Translation = () => {
     wordStore.addChangeListener(onChangeWords);
     particuleStore.addChangeListener(onChangeParticules);
     counterStore.addChangeListener(onChangeCounters);
+    translationStore.addChangeListener(onChangeQuantity);
+    translationStore.addChangeListener(onChangeSentence);
+    translationStore.addChangeListener(onChangeTypeSelect);
+    translationStore.addChangeListener(onChangeListOfKanjis);
+    translationStore.addChangeListener(onChangeListParts);
 
     if (kanjiStore.getKanjis().length === 0) loadKanjis();
     if (verbStore.getVerbs().length === 0) loadVerbs();
@@ -105,6 +127,11 @@ const Translation = () => {
       wordStore.removeChangeListener(onChangeWords);
       particuleStore.removeChangeListener(onChangeParticules);
       counterStore.removeChangeListener(onChangeCounters);
+      translationStore.removeChangeListener(onChangeQuantity);
+      translationStore.removeChangeListener(onChangeSentence);
+      translationStore.removeChangeListener(onChangeTypeSelect);
+      translationStore.removeChangeListener(onChangeListOfKanjis);
+      translationStore.removeChangeListener(onChangeListParts);
     };
   }, [
     kanjis.length,
@@ -116,6 +143,26 @@ const Translation = () => {
     particules.length,
     counters.length,
   ]);
+
+  function onChangeListParts() {
+    setListParts(translationStore.getListParts());
+  }
+
+  function onChangeListOfKanjis() {
+    setListOfKanjis(translationStore.getListOfKanjis());
+  }
+
+  function onChangeQuantity() {
+    setQuantity(translationStore.getQuantity());
+  }
+
+  function onChangeSentence() {
+    setSentence(translationStore.getSentence());
+  }
+
+  function onChangeTypeSelect() {
+    setTypeSelect(translationStore.getTypeSelect());
+  }
 
   function onChangeKanjis() {
     setKanjis(kanjiStore.getKanjis());
@@ -150,7 +197,7 @@ const Translation = () => {
   }
 
   const handleListClick = (event) => {
-    setSentence(sentence + event.target.innerText);
+    translationActions.updateSentence(sentence + event.target.innerText);
     updateNumberOfUse(typeSelect, event.target.id);
   };
 
@@ -158,35 +205,21 @@ const Translation = () => {
     let _typeSelect = "";
     let _quantity = 0;
     if (event.target.name === "typeSelect") {
-      setTypeSelect(event.target.value);
+      translationActions.updateTypeSelect(event.target.value);
       _typeSelect = event.target.value;
       _quantity = quantity;
     } else {
-      setQuantity(event.target.value);
+      translationActions.updateQuantity(event.target.value);
       _typeSelect = typeSelect;
       _quantity = event.target.value;
     }
-    if (!_typeSelect || _typeSelect === translationConstants.TYPE_KANJI) {
-      setListObjectsStyle({
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit,3em)",
-        margin: "0.2em",
-        gap: "0.2em",
-      });
-    } else {
-      setListObjectsStyle({
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit,10em)",
-        margin: "0.2em",
-        gap: "0.2em",
-      });
-    }
+    setListObjectsStyle(getListObjectStyle(_typeSelect));
     setListObjects(translationApi.getMostUsedObject(_typeSelect, _quantity));
   };
 
   const handleTranslateClick = (event) => {
     event.preventDefault();
-    setListOfKanjis(extractListOfKanji(sentence, kanjis));
+    translationActions.extractListOfKanji(sentence, kanjis);
     const _listOfParts = extractParts(
       sentence,
       verbs,
@@ -197,22 +230,21 @@ const Translation = () => {
       particules,
       counters
     );
-    setListParts(_listOfParts);
+    translationActions.loadParts(_listOfParts);
   };
 
   const handleClearClick = (event) => {
     event.preventDefault();
-    setListParts([]);
-    setListOfKanjis([]);
+    translationActions.clearTranslation();
   };
 
   const handleQuickSearchClick = (event, result) => {
     if (!result.typeWord) {
-      setSentence(sentence + result.kanji);
+      translationActions.updateSentence(sentence + result.kanji);
     } else if (result.typeWord === translationConstants.TYPE_VERB) {
-      setSentence(sentence + result.neutralForm);
+      translationActions.updateSentence(sentence + result.neutralForm);
     } else {
-      setSentence(sentence + result.kanjis);
+      translationActions.updateSentence(sentence + result.kanjis);
     }
     updateNumberOfUse(typeSelect, result.id);
   };
@@ -223,14 +255,14 @@ const Translation = () => {
     newValue = translateRomajiToKana(newValue);
     let textArea = document.getElementById("textToTranslate");
     textArea.value = newValue;
-    setSentence(newValue);
+    translationActions.updateSentence(newValue);
   };
 
   const handleKanaClick = (event) => {
     event.preventDefault();
     let textArea = document.getElementById("textToTranslate");
     textArea.value = textArea.value + event.target.innerHTML;
-    setSentence(textArea.value);
+    translationActions.updateSentence(textArea.value);
   };
 
   const handleSplitPart = (newList) => {
@@ -258,7 +290,7 @@ const Translation = () => {
         newPartsList.push(part);
       }
     });
-    setListParts(newPartsList);
+    translationActions.loadParts(newPartsList);
   };
 
   return (

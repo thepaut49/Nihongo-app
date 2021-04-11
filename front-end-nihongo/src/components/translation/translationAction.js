@@ -56,7 +56,7 @@ export const extractParts = (
   counters
 ) => {
   let listOfParts = [];
-
+  debugger;
   let indiceCourant = 0;
   while (indiceCourant < sentence.length) {
     for (let j = 10; j > 0; j--) {
@@ -477,9 +477,11 @@ const partIsAVerb = (sentencePart, currentIndex, verbs) => {
             part = {
               type: translationConstants.TYPE_VERB,
               kanjis: sentencePart,
-              selectedPronunciation: verb.pronunciation[0],
+              selectedPronunciation: verb.pronunciations[0].pronunciation,
               selectedMeaning: verb.meanings[0].meaning,
-              pronunciations: verb.pronunciation,
+              pronunciations: verb.pronunciations.map(
+                (item) => item.pronunciation
+              ),
               meanings: verb.meanings.map((item) => item.meaning),
               unknown: false,
               length: sentencePart.length,
@@ -518,9 +520,11 @@ const partIsANaAdjective = (sentencePart, currentIndex, naAdjectives) => {
         part = {
           type: translationConstants.TYPE_NA_ADJECTIVE,
           kanjis: sentencePart,
-          selectedPronunciation: naAdjective.pronunciation[0],
+          selectedPronunciation: naAdjective.pronunciations[0].pronunciation,
           selectedMeaning: naAdjective.meanings[0].meaning,
-          pronunciations: naAdjective.pronunciation,
+          pronunciations: naAdjective.pronunciations.map(
+            (item) => item.pronunciation
+          ),
           meanings: naAdjective.meanings.map((item) => item.meaning),
           unknown: false,
           length: sentencePart.length,
@@ -539,9 +543,11 @@ const partIsANaAdjective = (sentencePart, currentIndex, naAdjectives) => {
             part = {
               type: translationConstants.TYPE_NA_ADJECTIVE,
               kanjis: sentencePart,
-              selectedPronunciation: naAdj.pronunciation[0],
+              selectedPronunciation: naAdj.pronunciations[0].pronunciation,
               selectedMeaning: naAdj.meanings[0].meaning,
-              pronunciations: naAdj.pronunciation,
+              pronunciations: naAdj.pronunciations.map(
+                (item) => item.pronunciation
+              ),
               meanings: naAdj.meanings.map((item) => item.meaning),
               unknown: false,
               length: sentencePart.length,
@@ -584,9 +590,11 @@ const partIsAIAdjective = (sentencePart, currentIndex, iAdjectives) => {
             part = {
               type: translationConstants.TYPE_I_ADJECTIVE,
               kanjis: sentencePart,
-              selectedPronunciation: iAdj.pronunciation[0],
+              selectedPronunciation: iAdj.pronunciations[0].pronunciation,
               selectedMeaning: iAdj.meanings[0].meaning,
-              pronunciations: iAdj.pronunciation,
+              pronunciations: iAdj.pronunciations.map(
+                (item) => item.pronunciation
+              ),
               meanings: iAdj.meanings.map((item) => item.meaning),
               unknown: false,
               length: sentencePart.length,
@@ -609,9 +617,9 @@ const partIsAName = (sentencePart, currentIndex, names) => {
       part = {
         type: translationConstants.TYPE_NAME,
         kanjis: sentencePart,
-        selectedPronunciation: name.pronunciation[0],
+        selectedPronunciation: name.pronunciations[0].pronunciation,
         selectedMeaning: name.meanings[0].meaning,
-        pronunciations: name.pronunciation,
+        pronunciations: name.pronunciations.map((item) => item.pronunciation),
         meanings: name.meanings.map((item) => item.meaning),
         unknown: false,
         length: sentencePart.length,
@@ -631,9 +639,9 @@ const partIsAWord = (sentencePart, currentIndex, words) => {
       part = {
         type: translationConstants.TYPE_WORD,
         kanjis: sentencePart,
-        selectedPronunciation: word.pronunciation[0],
+        selectedPronunciation: word.pronunciations[0].pronunciation,
         selectedMeaning: word.meanings[0].meaning,
-        pronunciations: word.pronunciation,
+        pronunciations: word.pronunciations.map((item) => item.pronunciation),
         meanings: word.meanings.map((item) => item.meaning),
         unknown: false,
         length: sentencePart.length,
@@ -653,9 +661,11 @@ const partIsACounter = (sentencePart, currentIndex, counters) => {
       part = {
         type: translationConstants.TYPE_COUNTER,
         kanjis: sentencePart,
-        selectedPronunciation: counter.pronunciation[0],
+        selectedPronunciation: counter.pronunciations[0].pronunciation,
         selectedMeaning: counter.summary,
-        pronunciations: counter.pronunciation,
+        pronunciations: counter.pronunciations.map(
+          (item) => item.pronunciation
+        ),
         meanings: [counter.summary],
         unknown: false,
         length: sentencePart.length,
@@ -700,7 +710,8 @@ const verbCandidate = (sentencePart, currentIndex, verbs) => {
           let form = formList[indexForm];
           let sign = signList[indexSign];
           let listOfVerbConj = [];
-          verb.pronunciation.forEach((pronunciation) => {
+          verb.pronunciations.forEach((pro) => {
+            let pronunciation = pro.pronunciation;
             if (!isSuru(verb)) {
               listOfVerbConj.push(
                 pronunciation.substr(0, pronunciation.length - 1) +
@@ -756,7 +767,8 @@ const naAdjectiveCandidate = (sentencePart, currentIndex, naAdjectives) => {
           let form = formList[indexForm];
           let sign = signList[indexSign];
           let listOfNaAdjConj = [];
-          naAdj.pronunciation.forEach((pronunciation) => {
+          naAdj.pronunciations.forEach((pro) => {
+            const pronunciation = pro.pronunciation;
             listOfNaAdjConj.push(
               pronunciation.substr(0, pronunciation.length - 1) +
                 tense(naAdj, form, sign)
@@ -808,7 +820,8 @@ const iAdjectiveCandidate = (sentencePart, currentIndex, iAdjectives) => {
           let form = formList[indexForm];
           let sign = signList[indexSign];
           let listOfIAdjConj = [];
-          iAdj.pronunciation.forEach((pronunciation) => {
+          iAdj.pronunciations.forEach((pro) => {
+            const pronunciation = pro.pronunciation;
             listOfIAdjConj.push(
               pronunciation.substr(0, pronunciation.length - 1) +
                 tense(iAdj, form, sign)
@@ -843,7 +856,8 @@ const nameCandidate = (sentencePart, currentIndex, names) => {
   for (let index = 0; index < names.length; index++) {
     let name = names[index];
     let listOfNamePro = [];
-    name.pronunciation.forEach((pronunciation) => {
+    name.pronunciations.forEach((pro) => {
+      const pronunciation = pro.pronunciation;
       listOfNamePro.push(pronunciation.substr(0, pronunciation.length));
     });
     if (listOfNamePro.includes(sentencePart)) {
@@ -872,7 +886,8 @@ const wordCandidate = (sentencePart, currentIndex, words) => {
   for (let index = 0; index < words.length; index++) {
     let word = words[index];
     let listOfWordPro = [];
-    word.pronunciation.forEach((pronunciation) => {
+    word.pronunciations.forEach((pro) => {
+      const pronunciation = pro.pronunciation;
       listOfWordPro.push(pronunciation.substr(0, pronunciation.length));
     });
     if (listOfWordPro.includes(sentencePart)) {

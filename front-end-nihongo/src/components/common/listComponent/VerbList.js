@@ -11,10 +11,10 @@ function VerbList(props) {
           <div key={verb.id} className="grid-container-verb">
             <div className="verb">{verb.neutralForm}</div>
             <div className="pronunciation">
-              {verb.pronunciation.map((pronunciation, index) => {
+              {verb.pronunciations.map((pronunciation, index) => {
                 return (
                   <span key={index + 70000} className="onemeaning">
-                    {pronunciation}
+                    {pronunciation.pronunciation}
                   </span>
                 );
               })}
@@ -44,7 +44,7 @@ VerbList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       neutralForm: PropTypes.string.isRequired,
-      pronunciation: PropTypes.arrayOf.isRequired,
+      pronunciations: PropTypes.arrayOf.isRequired,
       meanings: PropTypes.arrayOf.isRequired,
       groupe: PropTypes.string.isRequired,
     })

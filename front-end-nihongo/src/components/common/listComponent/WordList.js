@@ -11,10 +11,10 @@ function WordList(props) {
           <div key={word.id} className="grid-container-word">
             <div className="word">{word.kanjis}</div>
             <div className="pronunciation">
-              {word.pronunciation.map((pronunciation, index) => {
+              {word.pronunciations.map((pronunciation, index) => {
                 return (
                   <span key={index + 90000} className="onemeaning">
-                    {pronunciation}
+                    {pronunciation.pronunciation}
                   </span>
                 );
               })}
@@ -40,7 +40,7 @@ WordList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       kanjis: PropTypes.string.isRequired,
-      pronunciation: PropTypes.arrayOf.isRequired,
+      pronunciations: PropTypes.arrayOf.isRequired,
       meanings: PropTypes.arrayOf.isRequired,
       numberOfUse: PropTypes.number,
       version: PropTypes.number,

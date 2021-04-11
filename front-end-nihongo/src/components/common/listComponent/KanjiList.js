@@ -39,10 +39,10 @@ function KanjiList(props) {
           <div style={styleGridContainer} key={kanji.id}>
             <div style={stylekanji}>{kanji.kanji}</div>
             <div style={stylePronunciation}>
-              {kanji.pronunciation.map((pro, index) => {
+              {kanji.pronunciations.map((pro, index) => {
                 return (
                   <span key={index} className="onemeaning">
-                    {pro}
+                    {pro.pronunciation}
                   </span>
                 );
               })}
@@ -80,7 +80,7 @@ KanjiList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       kanji: PropTypes.string.isRequired,
-      pronunciation: PropTypes.arrayOf.isRequired,
+      pronunciations: PropTypes.arrayOf.isRequired,
       meanings: PropTypes.arrayOf.isRequired,
       strokeNumber: PropTypes.number.isRequired,
       radicals: PropTypes.string,

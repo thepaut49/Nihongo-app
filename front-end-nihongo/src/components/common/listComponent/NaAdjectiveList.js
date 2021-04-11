@@ -11,10 +11,10 @@ function NaAdjectiveList(props) {
           <div key={naAdjective.id} className="grid-container-naAdjective">
             <div className="naAdjective">{naAdjective.kanjis}</div>
             <div className="pronunciation">
-              {naAdjective.pronunciation.map((pro, index) => {
+              {naAdjective.pronunciations.map((pro, index) => {
                 return (
                   <span key={index + 30000} className="onemeaning">
-                    {pro}
+                    {pro.pronunciation}
                   </span>
                 );
               })}
@@ -40,7 +40,7 @@ NaAdjectiveList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       kanjis: PropTypes.string.isRequired,
-      pronunciation: PropTypes.string.isRequired,
+      pronunciations: PropTypes.string.isRequired,
       meanings: PropTypes.arrayOf.isRequired,
       numberOfUse: PropTypes.number,
       version: PropTypes.number,

@@ -29,7 +29,7 @@ function WordForm(props) {
               name={"pronunciation" + index}
               value={props.word.pronunciations[index].pronunciation}
               index={index}
-              deleteMeaning={props.deletePronunciation}
+              deletePronunciation={props.deletePronunciation}
               onMiddlePointClick={props.onMiddlePointClick}
               onTranslateClick={props.onTranslateClick}
             />
