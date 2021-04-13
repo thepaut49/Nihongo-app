@@ -14,7 +14,7 @@ public class ObjectDTOMapper {
 	public static ObjectDTO map(Object object) {
 		if (object instanceof Kanji) {
 			Kanji kanji = (Kanji) object;
-			return new ObjectDTO(kanji.getId(), kanji.getKanji().toString());
+			return new ObjectDTO(kanji.getId().longValue(), kanji.getKanji().toString());
 		}
 		else if (object instanceof Verb) {
 			Verb verb = (Verb) object;
@@ -22,23 +22,23 @@ public class ObjectDTOMapper {
 		}
 		else if (object instanceof NaAdjective) {
 			NaAdjective naAdjective = (NaAdjective) object;
-			return new ObjectDTO(naAdjective.getId(), naAdjective.getKanjis());
+			return new ObjectDTO(naAdjective.getId().longValue(), naAdjective.getKanjis());
 		}
 		else if (object instanceof IAdjective) {
 			IAdjective iAdjective = (IAdjective) object;
-			return new ObjectDTO(iAdjective.getId(), iAdjective.getKanjis());
+			return new ObjectDTO(iAdjective.getId().longValue(), iAdjective.getKanjis());
 		}
 		else if (object instanceof Name) {
 			Name name = (Name) object;
-			return new ObjectDTO(name.getId(), name.getKanjis());
+			return new ObjectDTO(name.getId().longValue(), name.getKanjis());
 		}
 		else if (object instanceof Word) {
 			Word word = (Word) object;
-			return new ObjectDTO(word.getId(), word.getKanjis());
+			return new ObjectDTO(word.getId().longValue(), word.getKanjis());
 		}
 		else if (object instanceof Counter) {
 			Counter counter = (Counter) object;
-			return new ObjectDTO(counter.getId(), counter.getKanjis());
+			return new ObjectDTO(counter.getId().longValue(), counter.getKanjis());
 					
 		}
 		else {

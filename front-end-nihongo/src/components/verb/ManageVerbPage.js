@@ -18,7 +18,7 @@ const ManageVerbPage = (props) => {
     neutralForm: "",
     pronunciations: [
       {
-        verbId: null,
+        id: null,
         pronunciationNumber: 0,
         pronunciation: "",
         version: 0,
@@ -26,7 +26,7 @@ const ManageVerbPage = (props) => {
     ],
     meanings: [
       {
-        verbId: null,
+        id: null,
         meaningNumber: 0,
         meaning: "",
         version: 0,
@@ -76,7 +76,7 @@ const ManageVerbPage = (props) => {
     event.preventDefault();
     let newMeanings = verb.meanings;
     newMeanings.push({
-      verbId: verb.id,
+      id: null,
       meaningNumber: newMeaningNumber(verb.meanings),
       meaning: "",
       version: 0,
@@ -107,7 +107,7 @@ const ManageVerbPage = (props) => {
     event.preventDefault();
     let pronunciations = verb.pronunciations;
     pronunciations.push({
-      verbId: verb.id,
+      id: null,
       pronunciationNumber: newPronunciationNumber(verb.pronunciations),
       pronunciation: "",
       version: 0,

@@ -23,8 +23,8 @@ public class VerbService {
 	public Verb createVerb(Verb newVerb) {
 		if (!verbRepository.existsByNeutralForm(newVerb.getNeutralForm())) {
 			newVerb.setNumberOfUse(1);
-			newVerb.getMeanings().stream().forEach(meaning -> meaning.setVerbId(newVerb.getId()));
-			newVerb.getPronunciations().stream().forEach(pronunciation -> pronunciation.setVerbId(newVerb.getId()));
+			newVerb.getMeanings().stream().forEach(meaning -> meaning.setVerb(newVerb));
+			newVerb.getPronunciations().stream().forEach(pronunciation -> pronunciation.setVerb(newVerb));
 			return verbRepository.save(newVerb);
 		}
 		else {
@@ -34,8 +34,8 @@ public class VerbService {
 	
 	public Verb updateVerb(Verb verb) {
 		if (verb != null) {
-			verb.getMeanings().stream().forEach(meaning -> meaning.setVerbId(verb.getId()));
-			verb.getPronunciations().stream().forEach(pronunciation -> pronunciation.setVerbId(verb.getId()));
+			verb.getMeanings().stream().forEach(meaning -> meaning.setVerb(verb));
+			verb.getPronunciations().stream().forEach(pronunciation -> pronunciation.setVerb(verb));
 			Verb updatedVerb = verbRepository.save(verb);
 			return updatedVerb;
 		}
@@ -44,7 +44,7 @@ public class VerbService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<Verb> verb = verbRepository.findById(id);
 		if (!verb.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Verb with id : " + id );
@@ -52,7 +52,7 @@ public class VerbService {
 		verbRepository.deleteById(id);
 	}
 
-	public Verb findById(Integer id) {
+	public Verb findById(Long id) {
 		Optional<Verb> verb = verbRepository.findById(id);
 		if (!verb.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Verb with id : " + id );
@@ -72,7 +72,7 @@ public class VerbService {
 		return verbRepository.findWithCriteria(neutralForm, pronunciation, meaning, group);
 	}
 	
-	public Verb updateVerbNumberOfUse(Integer id) {
+	public Verb updateVerbNumberOfUse(Long id) {
 		Verb verb = verbRepository.findById(id).get();
 		verb.setNumberOfUse(verb.getNumberOfUse() + 1);
 		return verbRepository.save(verb);

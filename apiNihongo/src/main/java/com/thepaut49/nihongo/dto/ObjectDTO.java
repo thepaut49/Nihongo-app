@@ -2,15 +2,15 @@ package com.thepaut49.nihongo.dto;
 
 public class ObjectDTO {
 	
-	private Integer id;
+	private Long id;
 	
 	private String value;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -22,7 +22,7 @@ public class ObjectDTO {
 		this.value = value;
 	}
 
-	public ObjectDTO(Integer id, String value) {
+	public ObjectDTO(Long id, String value) {
 		super();
 		this.id = id;
 		this.value = value;

@@ -25,7 +25,7 @@ public interface KanjiRepository extends JpaRepository<Kanji, Integer> {
 	
 	List<Kanji> findByKanjiIn(List<Character> characters);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM Kanji k ORDER BY k.number_of_use DESC LIMIT :quantity ")
+	@Query(nativeQuery = true, value = "SELECT * FROM kanji k ORDER BY k.number_of_use DESC LIMIT :quantity ")
 	List<Kanji> findMostUsedKanji(Integer quantity);
 
 }

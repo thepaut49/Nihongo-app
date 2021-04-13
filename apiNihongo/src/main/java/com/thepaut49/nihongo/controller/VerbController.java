@@ -40,26 +40,26 @@ public class VerbController {
 	}
 
 	@PutMapping("/{id}")
-	public VerbDTO updateVerb( @RequestBody VerbDTO verbDTO, @PathVariable Integer id) {
+	public VerbDTO updateVerb( @RequestBody VerbDTO verbDTO, @PathVariable Long id) {
 		Verb updatedVerb = VerbToDTOMapper.map(verbDTO);  
 		updatedVerb.setId(id);
 		return VerbToDTOMapper.map(verbService.updateVerb(updatedVerb));
 	}
 	
 	@PatchMapping("/{id}")
-	public VerbDTO updateVerbNumberOfUse( @PathVariable Integer id) {
+	public VerbDTO updateVerbNumberOfUse( @PathVariable Long id) {
 		return VerbToDTOMapper.map(verbService.updateVerbNumberOfUse(id));
 	}
 
 
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		verbService.delete(id);
 		return "Verb deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public VerbDTO findById( @PathVariable Integer id) {
+	public VerbDTO findById( @PathVariable Long id) {
 		return VerbToDTOMapper.map(verbService.findById(id));
 	}
 	

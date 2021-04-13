@@ -2,19 +2,19 @@ package com.thepaut49.nihongo.dto.verb;
 
 public class VerbPronunciationDTO {
 	
-	private Integer verbId;
+	private Long id;
     private Integer pronunciationNumber;
     private String pronunciation;
 	private int version;
 
 	   
     /*** getter /setter ***/
-    public Integer getVerbId() {
-		return verbId;
+    public Long getId() {
+		return id;
 	}
 
-	public void setVerbId(Integer verbId) {
-		this.verbId = verbId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getPronunciationNumber() {

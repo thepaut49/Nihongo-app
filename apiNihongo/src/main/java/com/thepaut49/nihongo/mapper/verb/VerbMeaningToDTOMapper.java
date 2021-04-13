@@ -8,7 +8,7 @@ public class VerbMeaningToDTOMapper {
 	
 	public static VerbMeaningDTO map(VerbMeaning verbMeaning) {
 		VerbMeaningDTO verbMeaningDTO = new VerbMeaningDTO();
-		verbMeaningDTO.setVerbId(verbMeaning.getVerbId());
+		verbMeaningDTO.setId(verbMeaning.getId());
 		verbMeaningDTO.setMeaningNumber(verbMeaning.getMeaningNumber());
 		verbMeaningDTO.setVersion(verbMeaning.getVersion());
 		verbMeaningDTO.setMeaning(verbMeaning.getMeaning());
@@ -17,7 +17,7 @@ public class VerbMeaningToDTOMapper {
 	
 	public static VerbMeaning map(VerbMeaningDTO verbMeaningDTO) {
 		VerbMeaning verbMeaning = new VerbMeaning();
-		verbMeaning.setVerbId(verbMeaningDTO.getVerbId());
+		verbMeaning.setId(verbMeaningDTO.getId());
 		verbMeaning.setMeaningNumber(verbMeaningDTO.getMeaningNumber());
 		verbMeaning.setVersion(verbMeaningDTO.getVersion());
 		verbMeaning.setMeaning(verbMeaningDTO.getMeaning());

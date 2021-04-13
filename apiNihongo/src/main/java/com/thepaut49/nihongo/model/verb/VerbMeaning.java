@@ -4,26 +4,28 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
 @Entity
-@IdClass(VerbMeaningId.class)
 public class VerbMeaning implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="verb_id")
-    private Integer verbId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 	
-	@Id
+	@ManyToOne
+    private Verb verb;
+	
+	@Column(nullable = false)
 	private Integer meaningNumber;
-	
 	
 	@Column(nullable = false)
 	private String meaning;
@@ -32,13 +34,20 @@ public class VerbMeaning implements Serializable {
 	private int version;
 	
 	/*** getter / setter ***/
-
-	public Integer getVerbId() {
-		return verbId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setVerbId(Integer verbId) {
-		this.verbId = verbId;
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public Verb getVerb() {
+		return verb;
+	}
+
+	public void setVerb(Verb verb) {
+		this.verb = verb;
 	}
 	
 	public Integer getMeaningNumber() {
@@ -68,7 +77,7 @@ public class VerbMeaning implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " VerbMeaning : { Verb Id : " + this.verbId + ", meaningNumber : " + this.meaningNumber + " , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
+		return " VerbMeaning : {d : " + this.id + " ,  Verb : " + this.verb+ ", meaningNumber : " + this.meaningNumber + " , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -77,7 +86,7 @@ public class VerbMeaning implements Serializable {
 		int result = 1;
 		result = prime * result + ((meaning == null) ? 0 : meaning.hashCode());
 		result = prime * result + ((meaningNumber == null) ? 0 : meaningNumber.hashCode());
-		result = prime * result + ((verbId == null) ? 0 : verbId.hashCode());
+		result = prime * result + ((verb == null) ? 0 : verb.hashCode());
 		return result;
 	}
 
@@ -100,10 +109,10 @@ public class VerbMeaning implements Serializable {
 				return false;
 		} else if (!meaningNumber.equals(other.meaningNumber))
 			return false;
-		if (verbId == null) {
-			if (other.verbId != null)
+		if (verb == null) {
+			if (other.verb != null)
 				return false;
-		} else if (!verbId.equals(other.verbId))
+		} else if (!verb.equals(other.verb))
 			return false;
 		return true;
 	}
