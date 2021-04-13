@@ -5,7 +5,7 @@ import CustomInputPronunciations from "../common/CustomInputPronunciations";
 
 import PropTypes from "prop-types";
 
-function CounterForm(props) {
+function SuffixForm(props) {
   return (
     <form onSubmit={props.onSubmit} className="modificationForm">
       <CustomInput
@@ -13,13 +13,13 @@ function CounterForm(props) {
         label="Kanjis"
         onChange={props.onChange}
         name="kanjis"
-        value={props.counter.kanjis}
+        value={props.suffix.kanjis}
         error={props.errors.kanjis}
       />
 
-      {props.counter.pronunciations &&
-        props.counter.pronunciations.length > 0 &&
-        props.counter.pronunciations.map((pro, index) => {
+      {props.suffix.pronunciations &&
+        props.suffix.pronunciations.length > 0 &&
+        props.suffix.pronunciations.map((pro, index) => {
           return (
             <CustomInputPronunciations
               key={index}
@@ -28,7 +28,7 @@ function CounterForm(props) {
               typeInput="text"
               onChange={props.onPronunciationChange}
               name={"pronunciation" + index}
-              value={props.counter.pronunciations[index].pronunciation}
+              value={props.suffix.pronunciations[index].pronunciation}
               index={index}
               deletePronunciation={props.deletePronunciation}
               onMiddlePointClick={props.onMiddlePointClick}
@@ -47,7 +47,7 @@ function CounterForm(props) {
         name="use"
         cols={70}
         rows={15}
-        value={props.counter.use}
+        value={props.suffix.use}
         onChange={props.onChange}
         error={props.errors.use}
       />
@@ -58,7 +58,7 @@ function CounterForm(props) {
         name="summary"
         cols={70}
         rows={5}
-        value={props.counter.summary}
+        value={props.suffix.summary}
         onChange={props.onChange}
         error={props.errors.summary}
       />
@@ -68,8 +68,8 @@ function CounterForm(props) {
   );
 }
 
-CounterForm.propTypes = {
-  counter: PropTypes.object.isRequired,
+SuffixForm.propTypes = {
+  suffix: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
@@ -80,4 +80,4 @@ CounterForm.propTypes = {
   onTranslateClick: PropTypes.func.isRequired,
 };
 
-export default CounterForm;
+export default SuffixForm;

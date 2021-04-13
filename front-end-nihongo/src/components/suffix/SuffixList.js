@@ -1,5 +1,5 @@
 import React from "react";
-import "./CountersPage.css";
+import "./SuffixsPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -7,25 +7,25 @@ const styleLink = {
   margin: "0.5em",
 };
 
-function CounterList(props) {
+function SuffixList(props) {
   return (
     <table>
       <tbody>
-        {props.counters.map((counter) => {
+        {props.suffixs.map((suffix) => {
           return (
-            <tr key={counter.id}>
+            <tr key={suffix.id}>
               <td>
-                <div className="grid-container-counter">
+                <div className="grid-container-suffix">
                   <Link
-                    to={"/counter/visualize/" + counter.kanjis}
-                    className="counter"
+                    to={"/suffix/visualize/" + suffix.kanjis}
+                    className="suffix"
                   >
-                    The {counter.kanjis} counter
+                    The {suffix.kanjis} suffix
                   </Link>
-                  <div className="counterPronunciation">
+                  <div className="suffixPronunciation">
                     <label>Pronunciations : </label>
                     <div>
-                      {counter.pronunciations.map((pro, index) => {
+                      {suffix.pronunciations.map((pro, index) => {
                         return (
                           <span key={index} className="onemeaning">
                             {pro.pronunciation}
@@ -36,20 +36,20 @@ function CounterList(props) {
                   </div>
 
                   <h2>Use</h2>
-                  <div className="use">{counter.use}</div>
+                  <div className="use">{suffix.use}</div>
                   <label>Summary : </label>
-                  <div className="use">{counter.summary}</div>
-                  <div className="buttonCounter">
+                  <div className="use">{suffix.summary}</div>
+                  <div className="buttonSuffix">
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
-                        props.deleteCounter(counter.id);
+                        props.deleteSuffix(suffix.id);
                       }}
                     >
                       Delete
                     </button>
                     <Link
-                      to={"/counter/modify/" + counter.kanjis}
+                      to={"/suffix/modify/" + suffix.kanjis}
                       style={styleLink}
                       className="btn btn-primary"
                     >
@@ -66,18 +66,17 @@ function CounterList(props) {
   );
 }
 
-CounterList.propTypes = {
-  deleteCounter: PropTypes.func.isRequired,
-  counters: PropTypes.arrayOf(
+SuffixList.propTypes = {
+  deleteSuffix: PropTypes.func.isRequired,
+  suffixs: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       kanjis: PropTypes.string.isRequired,
       pronunciations: PropTypes.arrayOf.isRequired,
       use: PropTypes.string.isRequired,
-      numberOfUse: PropTypes.number,
       version: PropTypes.number,
     })
   ).isRequired,
 };
 
-export default CounterList;
+export default SuffixList;

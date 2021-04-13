@@ -34,6 +34,9 @@ import GrammarRulesPage from "./grammarrule/GrammarRulesPage";
 import VisualizeCounterPage from "./counter/VisualizeCounterPage";
 import ManageCounterPage from "./counter/ManageCounterPage";
 import CountersPage from "./counter/CountersPage";
+import VisualizeSuffixPage from "./suffix/VisualizeSuffixPage";
+import ManageSuffixPage from "./suffix/ManageSuffixPage";
+import SuffixsPage from "./suffix/SuffixsPage";
 import HiraganasPage from "./hiragana/HiraganasPage";
 import KatakanasPage from "./katakana/KatakanasPage";
 import Translation from "./translation/Translation";
@@ -131,6 +134,13 @@ function App() {
           />
           <Route path="/counter/modify/:kanjis" component={ManageCounterPage} />
           <Route path="/counter/create" component={ManageCounterPage} />
+          <Route path="/suffixs" component={SuffixsPage} />
+          <Route
+            path="/suffix/visualize/:kanjis"
+            component={VisualizeSuffixPage}
+          />
+          <Route path="/suffix/modify/:kanjis" component={ManageSuffixPage} />
+          <Route path="/suffix/create" component={ManageSuffixPage} />
           <Route path="/about" component={AboutPage} />
           <Redirect from="/about-page" to="/about" />
           <Route component={NotFoundPage} />

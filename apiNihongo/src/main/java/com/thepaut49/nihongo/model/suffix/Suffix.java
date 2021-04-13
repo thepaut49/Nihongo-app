@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.model.counter;
+package com.thepaut49.nihongo.model.suffix;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 @Entity
-public class Counter implements Serializable {
+public class Suffix implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -25,8 +25,8 @@ public class Counter implements Serializable {
 	@Column(nullable = false, unique = true, length = 10)
 	private String kanjis;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "counterId")
-	private Set<CounterPronunciation> pronunciations;
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "suffixId")
+	private Set<SuffixPronunciation> pronunciations;
 	
 	@Lob
 	@Column(nullable = false, name = "useColumn")
@@ -34,10 +34,6 @@ public class Counter implements Serializable {
 	
 	@Column(nullable = false)
 	private String summary;
-	
-	@Column
-	private Integer numberOfUse;
-	
 	
 	@Version
 	private int version;
@@ -60,11 +56,11 @@ public class Counter implements Serializable {
 		this.kanjis = kanjis;
 	}
 	
-	public Set<CounterPronunciation> getPronunciations() {
+	public Set<SuffixPronunciation> getPronunciations() {
 		return pronunciations;
 	}
 
-	public void setPronunciations(Set<CounterPronunciation> pronunciations) {
+	public void setPronunciations(Set<SuffixPronunciation> pronunciations) {
 		this.pronunciations = pronunciations;
 	}
 	
@@ -84,14 +80,6 @@ public class Counter implements Serializable {
 		this.summary = summary;
 	}
 
-	public Integer getNumberOfUse() {
-		return numberOfUse;
-	}
-
-	public void setNumberOfUse(Integer numberOfUse) {
-		this.numberOfUse = numberOfUse;
-	}
-
 	public int getVersion() {
 		return version;
 	}
@@ -105,7 +93,7 @@ public class Counter implements Serializable {
 	@Override
 	public String toString() {
 		return " Particule : { Id : " + this.id + " , Kanjis : " + this.kanjis + " , Pronunciation : [" + this.pronunciations +
-				" ], Use : " + this.use + " , Summary : " + this.summary + " , Number of use : " + this.numberOfUse  + " , Version : " + this.version + " }" ;
+				" ], Use : " + this.use + " , Summary : " + this.summary + " , Version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -114,7 +102,6 @@ public class Counter implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((kanjis == null) ? 0 : kanjis.hashCode());
-		result = prime * result + ((numberOfUse == null) ? 0 : numberOfUse.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		result = prime * result + ((use == null) ? 0 : use.hashCode());
 		return result;
@@ -128,7 +115,7 @@ public class Counter implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Counter other = (Counter) obj;
+		Suffix other = (Suffix) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -138,11 +125,6 @@ public class Counter implements Serializable {
 			if (other.kanjis != null)
 				return false;
 		} else if (!kanjis.equals(other.kanjis))
-			return false;
-		if (numberOfUse == null) {
-			if (other.numberOfUse != null)
-				return false;
-		} else if (!numberOfUse.equals(other.numberOfUse))
 			return false;
 		if (summary == null) {
 			if (other.summary != null)

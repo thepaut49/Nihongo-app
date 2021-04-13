@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class VerbMeaningId implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	private Integer verbId;
 	
 	private Integer meaningNumber;

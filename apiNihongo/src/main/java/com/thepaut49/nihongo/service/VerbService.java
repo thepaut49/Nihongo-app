@@ -23,6 +23,8 @@ public class VerbService {
 	public Verb createVerb(Verb newVerb) {
 		if (!verbRepository.existsByNeutralForm(newVerb.getNeutralForm())) {
 			newVerb.setNumberOfUse(1);
+			newVerb.getMeanings().stream().forEach(meaning -> meaning.setVerbId(newVerb.getId()));
+			newVerb.getPronunciations().stream().forEach(pronunciation -> pronunciation.setVerbId(newVerb.getId()));
 			return verbRepository.save(newVerb);
 		}
 		else {
@@ -32,6 +34,8 @@ public class VerbService {
 	
 	public Verb updateVerb(Verb verb) {
 		if (verb != null) {
+			verb.getMeanings().stream().forEach(meaning -> meaning.setVerbId(verb.getId()));
+			verb.getPronunciations().stream().forEach(pronunciation -> pronunciation.setVerbId(verb.getId()));
 			Verb updatedVerb = verbRepository.save(verb);
 			return updatedVerb;
 		}

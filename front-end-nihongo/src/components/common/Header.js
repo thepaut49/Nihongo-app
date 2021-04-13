@@ -54,6 +54,10 @@ function Header() {
         Counter
       </NavLink>
 
+      <NavLink activeStyle={activeStyle} to="/suffixs">
+        Suffix
+      </NavLink>
+
       <NavLink activeStyle={activeStyle} to="/hiraganas">
         Hiraganas
       </NavLink>

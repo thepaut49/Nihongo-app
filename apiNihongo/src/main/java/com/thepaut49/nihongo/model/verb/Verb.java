@@ -7,9 +7,11 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
@@ -25,10 +27,12 @@ public class Verb implements Serializable {
 	@Column(nullable = false, unique = true, length = 25)
 	private String neutralForm;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "verbId")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="verb_id")
 	private Set<VerbPronunciation>  pronunciations;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "verbId")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="verb_id")
 	private Set<VerbMeaning> meanings = new HashSet<>();
 	
 	@Column(nullable = false, length = 25)

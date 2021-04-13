@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
@@ -16,13 +18,14 @@ public class VerbPronunciation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name="verb_id")
     private Integer verbId;
 	
 	@Id
 	private Integer pronunciationNumber;
 	
 	
-	@Column(nullable = false, length = 50)
+	@Column( length = 50)
 	private String pronunciation;
 	
 	@Version
@@ -65,7 +68,7 @@ public class VerbPronunciation implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " VerbMeaning : { Verb id : " + this.verbId + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
+		return " VerbMeaning : { Verb ID : " + this.verbId + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
 	}
 
 	@Override

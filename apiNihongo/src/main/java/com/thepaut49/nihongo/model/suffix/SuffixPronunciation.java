@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.model.counter;
+package com.thepaut49.nihongo.model.suffix;
 
 import java.io.Serializable;
 
@@ -10,13 +10,13 @@ import javax.persistence.Version;
 
 
 @Entity
-@IdClass(CounterPronunciationId.class)
-public class CounterPronunciation implements Serializable {
+@IdClass(SuffixPronunciationId.class)
+public class SuffixPronunciation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    private Integer counterId;
+    private Integer suffixId;
 	
 	@Id
 	private Integer pronunciationNumber;
@@ -30,12 +30,12 @@ public class CounterPronunciation implements Serializable {
 	
 	/*** getter / setter ***/
 
-	public Integer getCounterId() {
-		return counterId;
+	public Integer getSuffixId() {
+		return suffixId;
 	}
 
-	public void setCounterId(Integer counterId) {
-		this.counterId = counterId;
+	public void setSuffixId(Integer suffixId) {
+		this.suffixId = suffixId;
 	}
 	
 	public Integer getPronunciationNumber() {
@@ -65,7 +65,7 @@ public class CounterPronunciation implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " CounterPronunciation : { Counter id : " + this.counterId + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
+		return " SuffixcPronunciation : { Counter id : " + this.suffixId + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class CounterPronunciation implements Serializable {
 		int result = 1;
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((counterId == null) ? 0 : counterId.hashCode());
+		result = prime * result + ((suffixId == null) ? 0 : suffixId.hashCode());
 		return result;
 	}
 
@@ -86,7 +86,7 @@ public class CounterPronunciation implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CounterPronunciation other = (CounterPronunciation) obj;
+		SuffixPronunciation other = (SuffixPronunciation) obj;
 		if (pronunciation == null) {
 			if (other.pronunciation != null)
 				return false;
@@ -97,10 +97,10 @@ public class CounterPronunciation implements Serializable {
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
 			return false;
-		if (counterId == null) {
-			if (other.counterId != null)
+		if (suffixId == null) {
+			if (other.suffixId != null)
 				return false;
-		} else if (!counterId.equals(other.counterId))
+		} else if (!suffixId.equals(other.suffixId))
 			return false;
 		return true;
 	}

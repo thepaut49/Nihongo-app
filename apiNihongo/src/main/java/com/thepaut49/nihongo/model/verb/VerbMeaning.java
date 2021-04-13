@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
@@ -16,6 +18,7 @@ public class VerbMeaning implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name="verb_id")
     private Integer verbId;
 	
 	@Id
@@ -65,7 +68,7 @@ public class VerbMeaning implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " VerbMeaning : { Verb id : " + this.verbId + ", meaningNumber : " + this.meaningNumber + " , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
+		return " VerbMeaning : { Verb Id : " + this.verbId + ", meaningNumber : " + this.meaningNumber + " , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
 	}
 
 	@Override
