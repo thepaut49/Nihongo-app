@@ -99,7 +99,7 @@ const ManageKanjiPage = (props) => {
     event.preventDefault();
     let newMeanings = kanji.meanings;
     newMeanings.push({
-      kanjiId: kanji.id,
+      id: null,
       meaningNumber: newMeaningNumber(kanji.meanings),
       meaning: "",
       verison: 0,
@@ -130,7 +130,7 @@ const ManageKanjiPage = (props) => {
     event.preventDefault();
     let pronunciations = kanji.pronunciations;
     pronunciations.push({
-      kanjiId: kanji.id,
+      id: null,
       pronunciationNumber: newPronunciationNumber(kanji.pronunciations),
       pronunciation: "",
       version: 0,

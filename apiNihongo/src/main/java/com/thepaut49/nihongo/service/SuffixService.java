@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
 import com.thepaut49.nihongo.model.suffix.Suffix;
-import com.thepaut49.nihongo.repository.SuffixRepository;
+import com.thepaut49.nihongo.repository.suffix.SuffixRepository;
 
 @Service
 @Transactional

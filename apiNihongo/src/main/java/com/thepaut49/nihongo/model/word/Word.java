@@ -10,8 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
+
 
 @Entity
 public class Word implements Serializable {
@@ -25,10 +27,12 @@ public class Word implements Serializable {
 	@Column(nullable = false, unique = true, length = 25)
 	private String kanjis;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "wordId")
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="word_id")
 	private Set<WordPronunciation> pronunciations;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "wordId")
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="word_id")
 	private Set<WordMeaning> meanings = new HashSet<>();
 	
 	private Integer numberOfUse;
@@ -140,5 +144,5 @@ public class Word implements Serializable {
 		} else if (!pronunciations.equals(other.pronunciations))
 			return false;
 		return true;
-	}
+	}	
 }

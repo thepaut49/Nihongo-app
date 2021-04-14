@@ -18,7 +18,7 @@ const ManageWordPage = (props) => {
     kanjis: "",
     pronunciations: [
       {
-        wordId: null,
+        id: null,
         pronunciationNumber: 0,
         pronunciation: "",
         version: 0,
@@ -26,7 +26,7 @@ const ManageWordPage = (props) => {
     ],
     meanings: [
       {
-        wordId: null,
+        id: null,
         meaningNumber: 0,
         meaning: "",
         version: 0,
@@ -72,7 +72,7 @@ const ManageWordPage = (props) => {
     event.preventDefault();
     let newMeanings = word.meanings;
     newMeanings.push({
-      wordId: word.id,
+      id: null,
       meaningNumber: newMeaningNumber(word.meanings),
       meaning: "",
       version: 0,
@@ -103,7 +103,7 @@ const ManageWordPage = (props) => {
     event.preventDefault();
     let pronunciations = word.pronunciations;
     pronunciations.push({
-      wordId: word.id,
+      id: null,
       pronunciationNumber: newPronunciationNumber(word.pronunciations),
       pronunciation: "",
       version: 0,

@@ -14,7 +14,7 @@ const ManageCounterPage = (props) => {
     id: null,
     kanjis: "",
     pronunciations: {
-      counterId: 0,
+      id: null,
       pronunciation: "",
       pronunciationNumber: 0,
       version: 0,
@@ -65,7 +65,7 @@ const ManageCounterPage = (props) => {
     event.preventDefault();
     let pronunciations = counter.pronunciations;
     pronunciations.push({
-      counterId: counter.id,
+      id: null,
       pronunciationNumber: newPronunciationNumber(counter.pronunciations),
       pronunciation: "",
       version: 0,

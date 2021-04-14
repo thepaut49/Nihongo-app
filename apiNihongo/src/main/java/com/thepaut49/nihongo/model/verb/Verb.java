@@ -113,8 +113,10 @@ public class Verb implements Serializable {
 		int result = 1;
 		result = prime * result + ((groupe == null) ? 0 : groupe.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((meanings == null) ? 0 : meanings.hashCode());
 		result = prime * result + ((neutralForm == null) ? 0 : neutralForm.hashCode());
 		result = prime * result + ((numberOfUse == null) ? 0 : numberOfUse.hashCode());
+		result = prime * result + ((pronunciations == null) ? 0 : pronunciations.hashCode());
 		return result;
 	}
 
@@ -137,6 +139,11 @@ public class Verb implements Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (meanings == null) {
+			if (other.meanings != null)
+				return false;
+		} else if (!meanings.equals(other.meanings))
+			return false;
 		if (neutralForm == null) {
 			if (other.neutralForm != null)
 				return false;
@@ -147,7 +154,11 @@ public class Verb implements Serializable {
 				return false;
 		} else if (!numberOfUse.equals(other.numberOfUse))
 			return false;
+		if (pronunciations == null) {
+			if (other.pronunciations != null)
+				return false;
+		} else if (!pronunciations.equals(other.pronunciations))
+			return false;
 		return true;
 	}
-	
 }

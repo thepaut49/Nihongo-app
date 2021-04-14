@@ -73,7 +73,7 @@ const ManageNamePage = (props) => {
     event.preventDefault();
     let newMeanings = name.meanings;
     newMeanings.push({
-      nameId: name.id,
+      id: null,
       meaningNumber: newMeaningNumber(name.meanings),
       meaning: "",
       version: 0,
@@ -104,7 +104,7 @@ const ManageNamePage = (props) => {
     event.preventDefault();
     let pronunciations = name.pronunciations;
     pronunciations.push({
-      nameId: name.id,
+      id: null,
       pronunciationNumber: newPronunciationNumber(name.pronunciations),
       pronunciation: "",
       version: 0,

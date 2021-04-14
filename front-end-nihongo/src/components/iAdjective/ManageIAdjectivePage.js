@@ -18,7 +18,7 @@ const ManageIAdjectivePage = (props) => {
     kanjis: "",
     pronunciations: [
       {
-        iiAdjectiveId: null,
+        id: null,
         pronunciationNumber: 0,
         pronunciation: "",
         version: null,
@@ -26,7 +26,7 @@ const ManageIAdjectivePage = (props) => {
     ],
     meanings: [
       {
-        iiAdjectiveId: null,
+        id: null,
         meaningNumber: 0,
         meaning: "",
         version: null,
@@ -73,7 +73,7 @@ const ManageIAdjectivePage = (props) => {
     event.preventDefault();
     let newMeanings = iAdjective.meanings;
     newMeanings.push({
-      iiAdjectiveId: iAdjective.id,
+      id: null,
       meaningNumber: newMeaningNumber(iAdjective.meanings),
       meaning: "",
       version: 0,
@@ -104,7 +104,7 @@ const ManageIAdjectivePage = (props) => {
     event.preventDefault();
     let pronunciations = iAdjective.pronunciations;
     pronunciations.push({
-      iiAdjectiveId: iAdjective.id,
+      id: null,
       pronunciationNumber: newPronunciationNumber(iAdjective.pronunciations),
       pronunciation: "",
       version: 0,

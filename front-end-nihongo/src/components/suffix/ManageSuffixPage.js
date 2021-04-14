@@ -15,7 +15,7 @@ const ManageSuffixPage = (props) => {
     kanjis: "",
     pronunciations: [
       {
-        suffixId: 0,
+        id: null,
         pronunciation: "",
         pronunciationNumber: 0,
         version: 0,
@@ -66,7 +66,7 @@ const ManageSuffixPage = (props) => {
     event.preventDefault();
     let pronunciations = suffix.pronunciations;
     pronunciations.push({
-      suffixId: suffix.id,
+      id: null,
       pronunciationNumber: newPronunciationNumber(suffix.pronunciations),
       pronunciation: "",
       version: 0,

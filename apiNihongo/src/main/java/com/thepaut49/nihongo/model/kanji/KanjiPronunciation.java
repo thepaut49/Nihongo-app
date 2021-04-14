@@ -85,9 +85,10 @@ public class KanjiPronunciation implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((kanji == null) ? 0 : kanji.hashCode());
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((kanji == null) ? 0 : kanji.hashCode());
 		return result;
 	}
 
@@ -100,6 +101,16 @@ public class KanjiPronunciation implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		KanjiPronunciation other = (KanjiPronunciation) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (kanji == null) {
+			if (other.kanji != null)
+				return false;
+		} else if (!kanji.equals(other.kanji))
+			return false;
 		if (pronunciation == null) {
 			if (other.pronunciation != null)
 				return false;
@@ -110,14 +121,6 @@ public class KanjiPronunciation implements Serializable {
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
 			return false;
-		if (kanji == null) {
-			if (other.kanji != null)
-				return false;
-		} else if (!kanji.equals(other.kanji))
-			return false;
 		return true;
 	}
-
-	
-	
 }

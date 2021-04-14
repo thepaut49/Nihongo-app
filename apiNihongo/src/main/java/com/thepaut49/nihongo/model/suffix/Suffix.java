@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
@@ -25,7 +26,8 @@ public class Suffix implements Serializable {
 	@Column(nullable = false, unique = true, length = 10)
 	private String kanjis;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "suffixId")
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="suffix_id")
 	private Set<SuffixPronunciation> pronunciations;
 	
 	@Lob
@@ -102,6 +104,7 @@ public class Suffix implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((kanjis == null) ? 0 : kanjis.hashCode());
+		result = prime * result + ((pronunciations == null) ? 0 : pronunciations.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		result = prime * result + ((use == null) ? 0 : use.hashCode());
 		return result;
@@ -126,6 +129,11 @@ public class Suffix implements Serializable {
 				return false;
 		} else if (!kanjis.equals(other.kanjis))
 			return false;
+		if (pronunciations == null) {
+			if (other.pronunciations != null)
+				return false;
+		} else if (!pronunciations.equals(other.pronunciations))
+			return false;
 		if (summary == null) {
 			if (other.summary != null)
 				return false;
@@ -138,5 +146,4 @@ public class Suffix implements Serializable {
 			return false;
 		return true;
 	}
-
 }

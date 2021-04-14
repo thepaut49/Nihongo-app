@@ -74,7 +74,7 @@ const ManageNaAdjectivePage = (props) => {
     event.preventDefault();
     let newMeanings = naAdjective.meanings;
     newMeanings.push({
-      naAdjectiveId: naAdjective.id,
+      id: null,
       meaningNumber: newMeaningNumber(naAdjective.meanings),
       meaning: "",
       version: 0,
@@ -105,7 +105,7 @@ const ManageNaAdjectivePage = (props) => {
     event.preventDefault();
     let pronunciations = naAdjective.pronunciations;
     pronunciations.push({
-      naAdjectiveId: naAdjective.id,
+      id: null,
       pronunciationNumber: newPronunciationNumber(naAdjective.pronunciations),
       pronunciation: "",
       version: 0,

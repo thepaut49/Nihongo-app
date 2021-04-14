@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
@@ -25,10 +26,12 @@ public class IAdjective implements Serializable {
 	@Column(nullable = false, unique = true, length = 25)
 	private String kanjis;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "iAdjectiveId")
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="iadjective_id")
 	private Set<IAdjectivePronunciation> pronunciations;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "iAdjectiveId")
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="iadjective_id")
 	private Set<IAdjectiveMeaning> meanings = new HashSet<>();
 	
 	private Integer numberOfUse;
@@ -101,7 +104,9 @@ public class IAdjective implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((kanjis == null) ? 0 : kanjis.hashCode());
+		result = prime * result + ((meanings == null) ? 0 : meanings.hashCode());
 		result = prime * result + ((numberOfUse == null) ? 0 : numberOfUse.hashCode());
+		result = prime * result + ((pronunciations == null) ? 0 : pronunciations.hashCode());
 		return result;
 	}
 
@@ -124,10 +129,20 @@ public class IAdjective implements Serializable {
 				return false;
 		} else if (!kanjis.equals(other.kanjis))
 			return false;
+		if (meanings == null) {
+			if (other.meanings != null)
+				return false;
+		} else if (!meanings.equals(other.meanings))
+			return false;
 		if (numberOfUse == null) {
 			if (other.numberOfUse != null)
 				return false;
 		} else if (!numberOfUse.equals(other.numberOfUse))
+			return false;
+		if (pronunciations == null) {
+			if (other.pronunciations != null)
+				return false;
+		} else if (!pronunciations.equals(other.pronunciations))
 			return false;
 		return true;
 	}

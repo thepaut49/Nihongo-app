@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.repository;
+package com.thepaut49.nihongo.repository.suffix;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

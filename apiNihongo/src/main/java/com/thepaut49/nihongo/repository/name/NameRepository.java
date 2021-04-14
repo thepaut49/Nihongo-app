@@ -14,8 +14,8 @@ public interface NameRepository extends JpaRepository<Name, Long> {
 	Name findByKanjis(String kanjis);
 
 	@Query("SELECT v FROM Name v WHERE (:kanjis is null or v.kanjis LIKE  LOWER(concat('%', concat(:kanjis, '%')))) "
-			+ " and (:pronunciation is null or EXISTS(SELECT vp from NamePronunciation vp WHERE v.id = vp.nameId AND vp.pronunciation LIKE LOWER(concat('%', concat(:pronunciation, '%')))))"
-			+ " and (:meaning is null or EXISTS(SELECT vm from NameMeaning vm WHERE v.id = vm.nameId AND vm.meaning LIKE LOWER(concat('%', concat(:meaning, '%')))))")
+			+ " and (:pronunciation is null or EXISTS(SELECT vp from NamePronunciation vp WHERE v.id = vp.name.id AND vp.pronunciation LIKE LOWER(concat('%', concat(:pronunciation, '%')))))"
+			+ " and (:meaning is null or EXISTS(SELECT vm from NameMeaning vm WHERE v.id = vm.name.id AND vm.meaning LIKE LOWER(concat('%', concat(:meaning, '%')))))")
 	List<Name> findWithCriteria(String kanjis, String pronunciation, String meaning);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM Name v ORDER BY v.number_of_use DESC LIMIT :quantity ")

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
@@ -26,10 +27,12 @@ public class Kanji implements Serializable{
 	@Column(nullable = false, unique = true)
 	private Character kanji;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "kanjiId")
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="kanji_id")
 	private Set<KanjiPronunciation> pronunciations;
 	
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, mappedBy = "kanjiId")
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name="kanji_id")
 	private Set<KanjiMeaning> meanings = new HashSet<>();
 	
 	@Column(nullable = false)
@@ -124,7 +127,9 @@ public class Kanji implements Serializable{
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((kanji == null) ? 0 : kanji.hashCode());
+		result = prime * result + ((meanings == null) ? 0 : meanings.hashCode());
 		result = prime * result + ((numberOfUse == null) ? 0 : numberOfUse.hashCode());
+		result = prime * result + ((pronunciations == null) ? 0 : pronunciations.hashCode());
 		result = prime * result + ((radicals == null) ? 0 : radicals.hashCode());
 		result = prime * result + ((strokeNumber == null) ? 0 : strokeNumber.hashCode());
 		return result;
@@ -149,10 +154,20 @@ public class Kanji implements Serializable{
 				return false;
 		} else if (!kanji.equals(other.kanji))
 			return false;
+		if (meanings == null) {
+			if (other.meanings != null)
+				return false;
+		} else if (!meanings.equals(other.meanings))
+			return false;
 		if (numberOfUse == null) {
 			if (other.numberOfUse != null)
 				return false;
 		} else if (!numberOfUse.equals(other.numberOfUse))
+			return false;
+		if (pronunciations == null) {
+			if (other.pronunciations != null)
+				return false;
+		} else if (!pronunciations.equals(other.pronunciations))
 			return false;
 		if (radicals == null) {
 			if (other.radicals != null)

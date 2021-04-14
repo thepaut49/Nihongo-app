@@ -84,6 +84,7 @@ public class VerbMeaning implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((meaning == null) ? 0 : meaning.hashCode());
 		result = prime * result + ((meaningNumber == null) ? 0 : meaningNumber.hashCode());
 		result = prime * result + ((verb == null) ? 0 : verb.hashCode());
@@ -99,6 +100,11 @@ public class VerbMeaning implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		VerbMeaning other = (VerbMeaning) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
 		if (meaning == null) {
 			if (other.meaning != null)
 				return false;
@@ -116,7 +122,4 @@ public class VerbMeaning implements Serializable {
 			return false;
 		return true;
 	}
-
-	
-	
 }
