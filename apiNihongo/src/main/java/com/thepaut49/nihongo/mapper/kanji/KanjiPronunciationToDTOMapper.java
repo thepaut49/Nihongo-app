@@ -8,7 +8,7 @@ public class KanjiPronunciationToDTOMapper {
 	
 	public static KanjiPronunciationDTO map(KanjiPronunciation kanjiPronunciation) {
 		KanjiPronunciationDTO kanjiPronunciationDTO = new KanjiPronunciationDTO();
-		kanjiPronunciationDTO.setKanjiId(kanjiPronunciation.getKanjiId());
+		kanjiPronunciationDTO.setId(kanjiPronunciation.getId());
 		kanjiPronunciationDTO.setPronunciationNumber(kanjiPronunciation.getPronunciationNumber());
 		kanjiPronunciationDTO.setVersion(kanjiPronunciation.getVersion());
 		kanjiPronunciationDTO.setPronunciation(kanjiPronunciation.getPronunciation());
@@ -17,7 +17,7 @@ public class KanjiPronunciationToDTOMapper {
 	
 	public static KanjiPronunciation map(KanjiPronunciationDTO kanjiPronunciationDTO) {
 		KanjiPronunciation kanjiPronunciation = new KanjiPronunciation();
-		kanjiPronunciation.setKanjiId(kanjiPronunciationDTO.getKanjiId());
+		kanjiPronunciation.setId(kanjiPronunciationDTO.getId());
 		kanjiPronunciation.setPronunciationNumber(kanjiPronunciationDTO.getPronunciationNumber());
 		kanjiPronunciation.setVersion(kanjiPronunciationDTO.getVersion());
 		kanjiPronunciation.setPronunciation(kanjiPronunciationDTO.getPronunciation());

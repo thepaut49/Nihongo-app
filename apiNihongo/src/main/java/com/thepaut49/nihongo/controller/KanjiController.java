@@ -40,26 +40,26 @@ public class KanjiController {
 	}
 
 	@PutMapping("/{id}")
-	public KanjiDTO updateKanji( @RequestBody KanjiDTO kanjiDTO, @PathVariable Integer id) {
+	public KanjiDTO updateKanji( @RequestBody KanjiDTO kanjiDTO, @PathVariable Long id) {
 		Kanji updatedKanji = KanjiToDTOMapper.map(kanjiDTO);  
 		updatedKanji.setId(id);
 		return KanjiToDTOMapper.map(kanjiService.updateKanji(updatedKanji));
 	}
 	
 	@PatchMapping("/{id}")
-	public KanjiDTO updateKanjiNumberOfUse( @PathVariable Integer id) {
+	public KanjiDTO updateKanjiNumberOfUse( @PathVariable Long id) {
 		return KanjiToDTOMapper.map(kanjiService.updateKanjiNumberOfUse(id));
 	}
 
 
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		kanjiService.delete(id);
 		return "Kanji deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public KanjiDTO search( @PathVariable Integer id) {
+	public KanjiDTO search( @PathVariable Long id) {
 		return KanjiToDTOMapper.map(kanjiService.search(id));
 	}
 	

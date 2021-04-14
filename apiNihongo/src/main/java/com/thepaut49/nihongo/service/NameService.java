@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thepaut49.nihongo.dto.name.NameCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
 import com.thepaut49.nihongo.model.name.Name;
-import com.thepaut49.nihongo.repository.NameRepository;
+import com.thepaut49.nihongo.repository.name.NameRepository;
 
 @Service
 @Transactional
@@ -23,6 +23,8 @@ public class NameService {
 	public Name createName(Name newName) {
 		if (!nameRepository.existsByKanjis(newName.getKanjis())) {
 			newName.setNumberOfUse(1);
+			newName.getMeanings().stream().forEach(meaning -> meaning.setName(newName));
+			newName.getPronunciations().stream().forEach(pronunciation -> pronunciation.setName(newName));
 			return nameRepository.save(newName);
 		}
 		else {
@@ -32,6 +34,8 @@ public class NameService {
 	
 	public Name updateName(Name name) {
 		if (name != null) {
+			name.getMeanings().stream().forEach(meaning -> meaning.setName(name));
+			name.getPronunciations().stream().forEach(pronunciation -> pronunciation.setName(name));
 			return nameRepository.save(name);
 		}
 		else {
@@ -39,7 +43,7 @@ public class NameService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<Name> name = nameRepository.findById(id);
 		if (!name.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Name with id : " + id );
@@ -47,7 +51,7 @@ public class NameService {
 		nameRepository.deleteById(id);
 	}
 
-	public Name findById(Integer id) {
+	public Name findById(Long id) {
 		Optional<Name> name = nameRepository.findById(id);
 		if (!name.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Name with id : " + id );
@@ -66,7 +70,7 @@ public class NameService {
 		return nameRepository.findWithCriteria(kanjis, pronunciation, meaning);
 	}
 	
-	public Name updateNameNumberOfUse(Integer id) {
+	public Name updateNameNumberOfUse(Long id) {
 		Name name = nameRepository.findById(id).get();
 		name.setNumberOfUse(name.getNumberOfUse() + 1);
 		return nameRepository.save(name);

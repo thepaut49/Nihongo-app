@@ -8,7 +8,7 @@ public class NameMeaningToDTOMapper {
 	
 	public static NameMeaningDTO map(NameMeaning nameMeaning) {
 		NameMeaningDTO nameMeaningDTO = new NameMeaningDTO();
-		nameMeaningDTO.setNameId(nameMeaning.getNameId());
+		nameMeaningDTO.setId(nameMeaning.getId());
 		nameMeaningDTO.setMeaningNumber(nameMeaning.getMeaningNumber());
 		nameMeaningDTO.setVersion(nameMeaning.getVersion());
 		nameMeaningDTO.setMeaning(nameMeaning.getMeaning());
@@ -17,7 +17,7 @@ public class NameMeaningToDTOMapper {
 	
 	public static NameMeaning map(NameMeaningDTO nameMeaningDTO) {
 		NameMeaning nameMeaning = new NameMeaning();
-		nameMeaning.setNameId(nameMeaningDTO.getNameId());
+		nameMeaning.setId(nameMeaningDTO.getId());
 		nameMeaning.setMeaningNumber(nameMeaningDTO.getMeaningNumber());
 		nameMeaning.setVersion(nameMeaningDTO.getVersion());
 		nameMeaning.setMeaning(nameMeaningDTO.getMeaning());

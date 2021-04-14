@@ -21,6 +21,7 @@ public class SuffixService {
 	
 	public Suffix createSuffix(Suffix newSuffix) {
 		if (!suffixRepository.existsByKanjis(newSuffix.getKanjis())) {
+			newSuffix.getPronunciations().stream().forEach(pro -> pro.setSuffix(newSuffix));
 			return suffixRepository.save(newSuffix);
 		}
 		else {
@@ -30,6 +31,7 @@ public class SuffixService {
 	
 	public Suffix updateSuffix(Suffix suffix) {
 		if (suffix != null) {
+			suffix.getPronunciations().stream().forEach(pro -> pro.setSuffix(suffix));
 			return suffixRepository.save(suffix);
 		}
 		else {
@@ -37,7 +39,7 @@ public class SuffixService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<Suffix> suffix = suffixRepository.findById(id);
 		if (!suffix.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Suffix with id : " + id );
@@ -45,7 +47,7 @@ public class SuffixService {
 		suffixRepository.deleteById(id);
 	}
 
-	public Suffix findById(Integer id) {
+	public Suffix findById(Long id) {
 		Optional<Suffix> suffix = suffixRepository.findById(id);
 		if (!suffix.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Suffix with id : " + id );

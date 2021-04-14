@@ -37,7 +37,7 @@ public class SentenceController {
 	}
 
 	@PutMapping("/{id}")
-	public SentenceDTO updateSentence( @RequestBody SentenceDTO sentenceDTO, @PathVariable Integer id) {
+	public SentenceDTO updateSentence( @RequestBody SentenceDTO sentenceDTO, @PathVariable Long id) {
 		Sentence updatedSentence = SentenceToDTOMapper.map(sentenceDTO);  
 		updatedSentence.setId(id);
 		return SentenceToDTOMapper.map(sentenceService.updateSentence(updatedSentence));
@@ -45,13 +45,13 @@ public class SentenceController {
 	
 
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		sentenceService.delete(id);
 		return "Sentence deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public SentenceDTO findById( @PathVariable Integer id) {
+	public SentenceDTO findById( @PathVariable Long id) {
 		return SentenceToDTOMapper.map(sentenceService.findById(id));
 	}
 	

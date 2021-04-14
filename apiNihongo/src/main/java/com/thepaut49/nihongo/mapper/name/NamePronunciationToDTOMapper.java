@@ -8,7 +8,7 @@ public class NamePronunciationToDTOMapper {
 	
 	public static NamePronunciationDTO map(NamePronunciation namePronunciation) {
 		NamePronunciationDTO namePronunciationDTO = new NamePronunciationDTO();
-		namePronunciationDTO.setNameId(namePronunciation.getNameId());
+		namePronunciationDTO.setId(namePronunciation.getId());
 		namePronunciationDTO.setPronunciationNumber(namePronunciation.getPronunciationNumber());
 		namePronunciationDTO.setVersion(namePronunciation.getVersion());
 		namePronunciationDTO.setPronunciation(namePronunciation.getPronunciation());
@@ -17,7 +17,7 @@ public class NamePronunciationToDTOMapper {
 	
 	public static NamePronunciation map(NamePronunciationDTO namePronunciationDTO) {
 		NamePronunciation namePronunciation = new NamePronunciation();
-		namePronunciation.setNameId(namePronunciationDTO.getNameId());
+		namePronunciation.setId(namePronunciationDTO.getId());
 		namePronunciation.setPronunciationNumber(namePronunciationDTO.getPronunciationNumber());
 		namePronunciation.setVersion(namePronunciationDTO.getVersion());
 		namePronunciation.setPronunciation(namePronunciationDTO.getPronunciation());

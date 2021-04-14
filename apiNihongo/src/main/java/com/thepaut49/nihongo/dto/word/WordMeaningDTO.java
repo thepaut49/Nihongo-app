@@ -2,19 +2,19 @@ package com.thepaut49.nihongo.dto.word;
 
 public class WordMeaningDTO {
 	
-	private Integer wordId;
+	private Long id;
     private Integer meaningNumber;
     private String meaning;
 	private int version;
 
 	   
     /*** getter /setter ***/
-    public Integer getWordId() {
-		return wordId;
+    public Long getId() {
+		return id;
 	}
 
-	public void setWordId(Integer wordId) {
-		this.wordId = wordId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getMeaningNumber() {

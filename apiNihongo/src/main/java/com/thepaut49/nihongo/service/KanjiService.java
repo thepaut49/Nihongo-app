@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thepaut49.nihongo.dto.kanji.KanjiCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
 import com.thepaut49.nihongo.model.kanji.Kanji;
-import com.thepaut49.nihongo.repository.KanjiRepository;
+import com.thepaut49.nihongo.repository.kanji.KanjiRepository;
 import com.thepaut49.nihongo.utils.StringUtils;
 
 @Service
@@ -24,6 +24,8 @@ public class KanjiService {
 	public Kanji createKanji(Kanji newKanji) {
 		if (!kanjiRepository.existsByKanji(newKanji.getKanji())) {
 			newKanji.setNumberOfUse(1);
+			newKanji.getMeanings().stream().forEach(meaning -> meaning.setKanji(newKanji));
+			newKanji.getPronunciations().stream().forEach(pronunciation -> pronunciation.setKanji(newKanji));
 			return kanjiRepository.save(newKanji);
 		}
 		else {
@@ -33,6 +35,8 @@ public class KanjiService {
 	
 	public Kanji updateKanji(Kanji kanji) {
 		if (kanji != null) {
+			kanji.getMeanings().stream().forEach(meaning -> meaning.setKanji(kanji));
+			kanji.getPronunciations().stream().forEach(pronunciation -> pronunciation.setKanji(kanji));
 			return kanjiRepository.save(kanji); 
 		}
 		else {
@@ -40,7 +44,7 @@ public class KanjiService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<Kanji> kanji = kanjiRepository.findById(id);
 		if (!kanji.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Kanji with id : " + id );
@@ -48,7 +52,7 @@ public class KanjiService {
 		kanjiRepository.deleteById(id);
 	}
 
-	public Kanji search(Integer id) {
+	public Kanji search(Long id) {
 		Optional<Kanji> kanji = kanjiRepository.findById(id);
 		if (!kanji.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Kanji with id : " + id );
@@ -75,7 +79,7 @@ public class KanjiService {
 		return kanjiRepository.findByKanjiIn(StringUtils.convertStringToCharList(sentence));
 	}
 
-	public Kanji updateKanjiNumberOfUse(Integer id) {
+	public Kanji updateKanjiNumberOfUse(Long id) {
 		Kanji kanji = kanjiRepository.findById(id).get();
 		kanji.setNumberOfUse(kanji.getNumberOfUse() + 1);
 		return kanjiRepository.save(kanji);

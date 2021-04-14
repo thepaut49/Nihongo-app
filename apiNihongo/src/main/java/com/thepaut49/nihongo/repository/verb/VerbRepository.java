@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.repository;
+package com.thepaut49.nihongo.repository.verb;
 
 import java.util.List;
 

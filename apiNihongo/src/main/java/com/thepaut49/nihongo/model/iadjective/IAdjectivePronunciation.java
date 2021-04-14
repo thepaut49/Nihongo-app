@@ -4,21 +4,27 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
 @Entity
-@IdClass(IAdjectivePronunciationId.class)
 public class IAdjectivePronunciation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    private Integer iAdjectiveId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 	
-	@Id
+	@ManyToOne
+    private IAdjective iAdjective;
+	
+	@Column(nullable = false)
 	private Integer pronunciationNumber;
 	
 	
@@ -29,13 +35,20 @@ public class IAdjectivePronunciation implements Serializable {
 	private int version;
 	
 	/*** getter / setter ***/
-
-	public Integer getIAdjectiveId() {
-		return iAdjectiveId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIAdjectiveId(Integer iAdjectiveId) {
-		this.iAdjectiveId = iAdjectiveId;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public IAdjective getIAdjective() {
+		return iAdjective;
+	}
+
+	public void setIAdjective(IAdjective iAdjective) {
+		this.iAdjective = iAdjective;
 	}
 	
 	public Integer getPronunciationNumber() {
@@ -65,7 +78,7 @@ public class IAdjectivePronunciation implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " IAdjectiveMeaning : { IAdjective id : " + this.iAdjectiveId + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
+		return " IAdjectiveMeaning : {Id : "+ this.id +" IAdjective : " + this.iAdjective + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -74,7 +87,7 @@ public class IAdjectivePronunciation implements Serializable {
 		int result = 1;
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((iAdjectiveId == null) ? 0 : iAdjectiveId.hashCode());
+		result = prime * result + ((iAdjective == null) ? 0 : iAdjective.hashCode());
 		return result;
 	}
 
@@ -97,10 +110,10 @@ public class IAdjectivePronunciation implements Serializable {
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
 			return false;
-		if (iAdjectiveId == null) {
-			if (other.iAdjectiveId != null)
+		if (iAdjective == null) {
+			if (other.iAdjective != null)
 				return false;
-		} else if (!iAdjectiveId.equals(other.iAdjectiveId))
+		} else if (!iAdjective.equals(other.iAdjective))
 			return false;
 		return true;
 	}

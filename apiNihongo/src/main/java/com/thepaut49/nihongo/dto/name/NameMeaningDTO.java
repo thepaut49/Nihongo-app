@@ -2,19 +2,19 @@ package com.thepaut49.nihongo.dto.name;
 
 public class NameMeaningDTO {
 	
-	private Integer nameId;
+	private Long id;
     private Integer meaningNumber;
     private String meaning;
 	private int version;
 
 	   
     /*** getter /setter ***/
-    public Integer getNameId() {
-		return nameId;
+    public Long getId() {
+		return id;
 	}
 
-	public void setNameId(Integer nameId) {
-		this.nameId = nameId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getMeaningNumber() {

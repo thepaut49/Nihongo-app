@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.repository;
+package com.thepaut49.nihongo.repository.counter;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.thepaut49.nihongo.model.counter.Counter;
 
-public interface CounterRepository extends JpaRepository<Counter, Integer> {
+public interface CounterRepository extends JpaRepository<Counter, Long> {
 
 	boolean existsByKanjis(String kanjis);
 

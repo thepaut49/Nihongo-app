@@ -40,26 +40,26 @@ public class NaAdjectiveController {
 	}
 
 	@PutMapping("/{id}")
-	public NaAdjectiveDTO updateNaAdjective( @RequestBody NaAdjectiveDTO naAdjectiveDTO, @PathVariable Integer id) {
+	public NaAdjectiveDTO updateNaAdjective( @RequestBody NaAdjectiveDTO naAdjectiveDTO, @PathVariable Long id) {
 		NaAdjective updatedNaAdjective = NaAdjectiveToDTOMapper.map(naAdjectiveDTO);  
 		updatedNaAdjective.setId(id);
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.updateNaAdjective(updatedNaAdjective));
 	}
 	
 	@PatchMapping("/{id}")
-	public NaAdjectiveDTO updateNaAdjectiveNumberOfUse( @PathVariable Integer id) {
+	public NaAdjectiveDTO updateNaAdjectiveNumberOfUse( @PathVariable Long id) {
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.updateNaAdjectiveNumberOfUse(id));
 	}
 
 
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		naAdjectiveService.delete(id);
 		return "NaAdjective deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public NaAdjectiveDTO findById( @PathVariable Integer id) {
+	public NaAdjectiveDTO findById( @PathVariable Long id) {
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.findById(id));
 	}
 	

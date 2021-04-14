@@ -9,7 +9,7 @@ public class WordPronunciationToDTOMapper {
 	
 	public static WordPronunciationDTO map(WordPronunciation wordPronunciation) {
 		WordPronunciationDTO wordPronunciationDTO = new WordPronunciationDTO();
-		wordPronunciationDTO.setWordId(wordPronunciation.getWordId());
+		wordPronunciationDTO.setId(wordPronunciation.getId());
 		wordPronunciationDTO.setPronunciationNumber(wordPronunciation.getPronunciationNumber());
 		wordPronunciationDTO.setVersion(wordPronunciation.getVersion());
 		wordPronunciationDTO.setPronunciation(wordPronunciation.getPronunciation());
@@ -18,7 +18,7 @@ public class WordPronunciationToDTOMapper {
 	
 	public static WordPronunciation map(WordPronunciationDTO wordPronunciationDTO) {
 		WordPronunciation wordPronunciation = new WordPronunciation();
-		wordPronunciation.setWordId(wordPronunciationDTO.getWordId());
+		wordPronunciation.setId(wordPronunciationDTO.getId());
 		wordPronunciation.setPronunciationNumber(wordPronunciationDTO.getPronunciationNumber());
 		wordPronunciation.setVersion(wordPronunciationDTO.getVersion());
 		wordPronunciation.setPronunciation(wordPronunciationDTO.getPronunciation());

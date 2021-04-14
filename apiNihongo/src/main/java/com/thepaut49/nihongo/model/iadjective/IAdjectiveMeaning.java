@@ -4,23 +4,28 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
 @Entity
-@IdClass(IAdjectiveMeaningId.class)
 public class IAdjectiveMeaning implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
-	@Id
-    private Integer iAdjectiveId;
 	
 	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
+	
+	@ManyToOne
+    private IAdjective iAdjective;
+	
+	@Column(nullable = false)
 	private Integer meaningNumber;
-	
 	
 	@Column(nullable = false)
 	private String meaning;
@@ -29,13 +34,20 @@ public class IAdjectiveMeaning implements Serializable {
 	private int version;
 	
 	/*** getter / setter ***/
-
-	public Integer getIAdjectiveId() {
-		return iAdjectiveId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIAdjectiveId(Integer iAdjectiveId) {
-		this.iAdjectiveId = iAdjectiveId;
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public IAdjective getIAdjective() {
+		return iAdjective;
+	}
+
+	public void setIAdjective(IAdjective iAdjective) {
+		this.iAdjective = iAdjective;
 	}
 	
 	public Integer getMeaningNumber() {
@@ -65,7 +77,7 @@ public class IAdjectiveMeaning implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " IAdjectiveMeaning : { IAdjective id : " + this.iAdjectiveId + ", meaningNumber : " + this.meaningNumber + " , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
+		return " IAdjectiveMeaning : { Id : "+ this.id + " , IAdjective id : " + this.iAdjective + ", meaningNumber : " + this.meaningNumber + " , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -74,7 +86,7 @@ public class IAdjectiveMeaning implements Serializable {
 		int result = 1;
 		result = prime * result + ((meaning == null) ? 0 : meaning.hashCode());
 		result = prime * result + ((meaningNumber == null) ? 0 : meaningNumber.hashCode());
-		result = prime * result + ((iAdjectiveId == null) ? 0 : iAdjectiveId.hashCode());
+		result = prime * result + ((iAdjective == null) ? 0 : iAdjective.hashCode());
 		return result;
 	}
 
@@ -97,10 +109,10 @@ public class IAdjectiveMeaning implements Serializable {
 				return false;
 		} else if (!meaningNumber.equals(other.meaningNumber))
 			return false;
-		if (iAdjectiveId == null) {
-			if (other.iAdjectiveId != null)
+		if (iAdjective == null) {
+			if (other.iAdjective != null)
 				return false;
-		} else if (!iAdjectiveId.equals(other.iAdjectiveId))
+		} else if (!iAdjective.equals(other.iAdjective))
 			return false;
 		return true;
 	}

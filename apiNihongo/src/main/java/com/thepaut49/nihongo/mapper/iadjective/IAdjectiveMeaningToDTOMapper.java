@@ -7,7 +7,7 @@ public class IAdjectiveMeaningToDTOMapper {
 	
 	public static IAdjectiveMeaningDTO map(IAdjectiveMeaning iAdjectiveMeaning) {
 		IAdjectiveMeaningDTO iAdjectiveMeaningDTO = new IAdjectiveMeaningDTO();
-		iAdjectiveMeaningDTO.setIiAdjectiveId(iAdjectiveMeaning.getIAdjectiveId());
+		iAdjectiveMeaningDTO.setId(iAdjectiveMeaning.getId());
 		iAdjectiveMeaningDTO.setMeaningNumber(iAdjectiveMeaning.getMeaningNumber());
 		iAdjectiveMeaningDTO.setVersion(iAdjectiveMeaning.getVersion());
 		iAdjectiveMeaningDTO.setMeaning(iAdjectiveMeaning.getMeaning());
@@ -16,7 +16,7 @@ public class IAdjectiveMeaningToDTOMapper {
 	
 	public static IAdjectiveMeaning map(IAdjectiveMeaningDTO iAdjectiveMeaningDTO) {
 		IAdjectiveMeaning iAdjectiveMeaning = new IAdjectiveMeaning();
-		iAdjectiveMeaning.setIAdjectiveId(iAdjectiveMeaningDTO.getIiAdjectiveId());
+		iAdjectiveMeaning.setId(iAdjectiveMeaningDTO.getId());
 		iAdjectiveMeaning.setMeaningNumber(iAdjectiveMeaningDTO.getMeaningNumber());
 		iAdjectiveMeaning.setVersion(iAdjectiveMeaningDTO.getVersion());
 		iAdjectiveMeaning.setMeaning(iAdjectiveMeaningDTO.getMeaning());

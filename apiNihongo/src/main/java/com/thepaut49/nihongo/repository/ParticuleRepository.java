@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.thepaut49.nihongo.model.Particule;
 
-public interface ParticuleRepository extends JpaRepository<Particule, Integer> {
+public interface ParticuleRepository extends JpaRepository<Particule, Long> {
 
 	boolean existsByKanjis(String kanjis);
 

@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.thepaut49.nihongo.model.GrammarRule;
 
-public interface GrammarRuleRepository extends JpaRepository<GrammarRule, Integer> {
+public interface GrammarRuleRepository extends JpaRepository<GrammarRule, Long> {
 	
 	boolean existsByTitle(String title);
 

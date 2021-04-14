@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.repository;
+package com.thepaut49.nihongo.repository.iadjective;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.thepaut49.nihongo.model.iadjective.IAdjective;
 
-public interface IAdjectiveRepository extends JpaRepository<IAdjective, Integer> {
+public interface IAdjectiveRepository extends JpaRepository<IAdjective, Long> {
 
 	boolean existsByKanjis(String kanjis);
 

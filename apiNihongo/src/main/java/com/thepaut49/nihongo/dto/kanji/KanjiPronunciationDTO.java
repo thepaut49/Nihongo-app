@@ -2,19 +2,19 @@ package com.thepaut49.nihongo.dto.kanji;
 
 public class KanjiPronunciationDTO {
 	
-	private Integer kanjiId;
+	private Long id;
     private Integer pronunciationNumber;
     private String pronunciation;
 	private int version;
 
 	   
     /*** getter /setter ***/
-    public Integer getKanjiId() {
-		return kanjiId;
+    public Long getId() {
+		return id;
 	}
 
-	public void setKanjiId(Integer kanjiId) {
-		this.kanjiId = kanjiId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getPronunciationNumber() {

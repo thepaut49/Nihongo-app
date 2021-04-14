@@ -34,7 +34,7 @@ public class SuffixController {
 	}
 
 	@PutMapping("/{id}")
-	public SuffixDTO updateSuffix( @RequestBody SuffixDTO suffixDTO, @PathVariable Integer id) {
+	public SuffixDTO updateSuffix( @RequestBody SuffixDTO suffixDTO, @PathVariable Long id) {
 		Suffix updatedSuffix = SuffixToDTOMapper.map(suffixDTO);  
 		updatedSuffix.setId(id);
 		return SuffixToDTOMapper.map(suffixService.updateSuffix(updatedSuffix));
@@ -42,13 +42,13 @@ public class SuffixController {
 
 
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		suffixService.delete(id);
 		return "Suffix deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public SuffixDTO findById( @PathVariable Integer id) {
+	public SuffixDTO findById( @PathVariable Long id) {
 		return SuffixToDTOMapper.map(suffixService.findById(id));
 	}
 	

@@ -2,19 +2,19 @@ package com.thepaut49.nihongo.dto.iadjective;
 
 public class IAdjectiveMeaningDTO {
 	
-    private Integer iiAdjectiveId;
+    private Long id;
     private Integer meaningNumber;
     private String meaning;
 	private int version;
 
 	   
     /*** getter /setter ***/
-    public Integer getIiAdjectiveId() {
-		return iiAdjectiveId;
+    public Long getId() {
+		return id;
 	}
 
-	public void setIiAdjectiveId(Integer iiAdjectiveId) {
-		this.iiAdjectiveId = iiAdjectiveId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getMeaningNumber() {

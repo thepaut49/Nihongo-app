@@ -37,7 +37,7 @@ public class GrammarRuleService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<GrammarRule> grammarRule = grammarRuleRepository.findById(id);
 		if (!grammarRule.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the GrammarRule with id : " + id );
@@ -45,7 +45,7 @@ public class GrammarRuleService {
 		grammarRuleRepository.deleteById(id);
 	}
 
-	public GrammarRule findById(Integer id) {
+	public GrammarRule findById(Long id) {
 		Optional<GrammarRule> grammarRule = grammarRuleRepository.findById(id);
 		if (!grammarRule.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the GrammarRule with id : " + id );

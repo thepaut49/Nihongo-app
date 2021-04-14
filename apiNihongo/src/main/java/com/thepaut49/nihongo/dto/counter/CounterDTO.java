@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class CounterDTO {
 
-	private Integer id;
+	private Long id;
 	private String kanjis;
 	private Set<CounterPronunciationDTO> pronunciations;
 	private String use;
@@ -14,11 +14,11 @@ public class CounterDTO {
 	
 	/*** getter-setter ***/
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

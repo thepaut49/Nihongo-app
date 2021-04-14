@@ -3,7 +3,7 @@ package com.thepaut49.nihongo.dto;
 
 public class GrammarRuleDTO {
 
-	private Integer id;
+	private Long id;
 
 	private String title;
 
@@ -21,11 +21,11 @@ public class GrammarRuleDTO {
 
 	/*** getter / setter ***/
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

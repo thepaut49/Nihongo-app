@@ -4,19 +4,25 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
 @Entity
-@IdClass(WordMeaningId.class)
 public class WordMeaning implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    private Integer wordId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
+	
+	@ManyToOne
+    private Word word;
 	
 	@Id
 	private Integer meaningNumber;
@@ -29,13 +35,20 @@ public class WordMeaning implements Serializable {
 	private int version;
 	
 	/*** getter / setter ***/
-
-	public Integer getWordId() {
-		return wordId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setWordId(Integer wordId) {
-		this.wordId = wordId;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Word getWord() {
+		return word;
+	}
+
+	public void setWord(Word word) {
+		this.word = word;
 	}
 	
 	public Integer getMeaningNumber() {
@@ -65,7 +78,7 @@ public class WordMeaning implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " WordMeaning : { Word id : " + this.wordId + ", meaningNumber : " + this.meaningNumber + " , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
+		return " WordMeaning : {Id : " + this.id + " Word : " + this.word + ", meaningNumber : " + this.meaningNumber + " , Meaning : " + this.meaning + " , version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -74,7 +87,7 @@ public class WordMeaning implements Serializable {
 		int result = 1;
 		result = prime * result + ((meaning == null) ? 0 : meaning.hashCode());
 		result = prime * result + ((meaningNumber == null) ? 0 : meaningNumber.hashCode());
-		result = prime * result + ((wordId == null) ? 0 : wordId.hashCode());
+		result = prime * result + ((word == null) ? 0 : word.hashCode());
 		return result;
 	}
 
@@ -97,10 +110,10 @@ public class WordMeaning implements Serializable {
 				return false;
 		} else if (!meaningNumber.equals(other.meaningNumber))
 			return false;
-		if (wordId == null) {
-			if (other.wordId != null)
+		if (word == null) {
+			if (other.word != null)
 				return false;
-		} else if (!wordId.equals(other.wordId))
+		} else if (!word.equals(other.word))
 			return false;
 		return true;
 	}

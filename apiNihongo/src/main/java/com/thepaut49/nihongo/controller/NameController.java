@@ -40,26 +40,26 @@ public class NameController {
 	}
 
 	@PutMapping("/{id}")
-	public NameDTO updateName( @RequestBody NameDTO nameDTO, @PathVariable Integer id) {
+	public NameDTO updateName( @RequestBody NameDTO nameDTO, @PathVariable Long id) {
 		Name updatedName = NameToDTOMapper.map(nameDTO);  
 		updatedName.setId(id);
 		return NameToDTOMapper.map(nameService.updateName(updatedName));
 	}
 	
 	@PatchMapping("/{id}")
-	public NameDTO updateNameNumberOfUse( @PathVariable Integer id) {
+	public NameDTO updateNameNumberOfUse( @PathVariable Long id) {
 		return NameToDTOMapper.map(nameService.updateNameNumberOfUse(id));
 	}
 
 
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		nameService.delete(id);
 		return "Name deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public NameDTO findById( @PathVariable Integer id) {
+	public NameDTO findById( @PathVariable Long id) {
 		return NameToDTOMapper.map(nameService.findById(id));
 	}
 	

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thepaut49.nihongo.dto.verb.VerbCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
 import com.thepaut49.nihongo.model.verb.Verb;
-import com.thepaut49.nihongo.repository.VerbRepository;
+import com.thepaut49.nihongo.repository.verb.VerbRepository;
 
 @Service
 @Transactional

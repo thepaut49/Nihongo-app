@@ -7,7 +7,7 @@ public class KanjiMeaningToDTOMapper {
 	
 	public static KanjiMeaningDTO map(KanjiMeaning kanjiMeaning) {
 		KanjiMeaningDTO kanjiMeaningDTO = new KanjiMeaningDTO();
-		kanjiMeaningDTO.setKanjiId(kanjiMeaning.getKanjiId());
+		kanjiMeaningDTO.setId(kanjiMeaning.getId());
 		kanjiMeaningDTO.setMeaningNumber(kanjiMeaning.getMeaningNumber());
 		kanjiMeaningDTO.setVersion(kanjiMeaning.getVersion());
 		kanjiMeaningDTO.setMeaning(kanjiMeaning.getMeaning());
@@ -16,7 +16,7 @@ public class KanjiMeaningToDTOMapper {
 	
 	public static KanjiMeaning map(KanjiMeaningDTO kanjiMeaningDTO) {
 		KanjiMeaning kanjiMeaning = new KanjiMeaning();
-		kanjiMeaning.setKanjiId(kanjiMeaningDTO.getKanjiId());
+		kanjiMeaning.setId(kanjiMeaningDTO.getId());
 		kanjiMeaning.setMeaningNumber(kanjiMeaningDTO.getMeaningNumber());
 		kanjiMeaning.setVersion(kanjiMeaningDTO.getVersion());
 		kanjiMeaning.setMeaning(kanjiMeaningDTO.getMeaning());

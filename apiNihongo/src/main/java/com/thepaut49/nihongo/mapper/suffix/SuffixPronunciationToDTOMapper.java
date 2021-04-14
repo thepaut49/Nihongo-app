@@ -8,7 +8,7 @@ public class SuffixPronunciationToDTOMapper {
 	
 	public static SuffixPronunciationDTO map(SuffixPronunciation suffixPronunciation) {
 		SuffixPronunciationDTO suffixPronunciationDTO = new SuffixPronunciationDTO();
-		suffixPronunciationDTO.setSuffixId(suffixPronunciation.getSuffixId());
+		suffixPronunciationDTO.setId(suffixPronunciation.getId());
 		suffixPronunciationDTO.setPronunciationNumber(suffixPronunciation.getPronunciationNumber());
 		suffixPronunciationDTO.setVersion(suffixPronunciation.getVersion());
 		suffixPronunciationDTO.setPronunciation(suffixPronunciation.getPronunciation());
@@ -17,7 +17,7 @@ public class SuffixPronunciationToDTOMapper {
 	
 	public static SuffixPronunciation map(SuffixPronunciationDTO suffixPronunciationDTO) {
 		SuffixPronunciation suffixPronunciation = new SuffixPronunciation();
-		suffixPronunciation.setSuffixId(suffixPronunciationDTO.getSuffixId());
+		suffixPronunciation.setId(suffixPronunciationDTO.getId());
 		suffixPronunciation.setPronunciationNumber(suffixPronunciationDTO.getPronunciationNumber());
 		suffixPronunciation.setVersion(suffixPronunciationDTO.getVersion());
 		suffixPronunciation.setPronunciation(suffixPronunciationDTO.getPronunciation());

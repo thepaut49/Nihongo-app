@@ -2,19 +2,19 @@ package com.thepaut49.nihongo.dto.counter;
 
 public class CounterPronunciationDTO {
 	
-	private Integer counterId;
+	private Long id;
     private Integer pronunciationNumber;
     private String pronunciation;
 	private int version;
 
 	   
     /*** getter /setter ***/
-    public Integer getCounterId() {
-		return counterId;
+    public Long getId() {
+		return id;
 	}
 
-	public void setCounterId(Integer counterId) {
-		this.counterId = counterId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getPronunciationNumber() {

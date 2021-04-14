@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.thepaut49.nihongo.model.Sentence;
 
-public interface SentenceRepository extends JpaRepository<Sentence, Integer> {
+public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 
 	boolean existsByKanjis(String kanjis);
 

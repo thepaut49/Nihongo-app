@@ -4,21 +4,27 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
 @Entity
-@IdClass(NaAdjectivePronunciationId.class)
 public class NaAdjectivePronunciation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    private Integer naAdjectiveId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 	
-	@Id
+	@ManyToOne
+    private NaAdjective naAdjective;
+	
+	@Column(nullable = false)
 	private Integer pronunciationNumber;
 	
 	
@@ -29,13 +35,20 @@ public class NaAdjectivePronunciation implements Serializable {
 	private int version;
 	
 	/*** getter / setter ***/
-
-	public Integer getNaAdjectiveId() {
-		return naAdjectiveId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setNaAdjectiveId(Integer naAdjectiveId) {
-		this.naAdjectiveId = naAdjectiveId;
+	public void setId(Long id) {
+		this.id = id;
+	}	
+
+	public NaAdjective getNaAdjective() {
+		return naAdjective;
+	}
+
+	public void setNaAdjective(NaAdjective naAdjective) {
+		this.naAdjective = naAdjective;
 	}
 	
 	public Integer getPronunciationNumber() {
@@ -65,7 +78,7 @@ public class NaAdjectivePronunciation implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " NaAdjectiveMeaning : { NaAdjective id : " + this.naAdjectiveId + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
+		return " NaAdjectiveMeaning : {Id : " + this.id + " NaAdjective : " + this.naAdjective + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -74,7 +87,7 @@ public class NaAdjectivePronunciation implements Serializable {
 		int result = 1;
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((naAdjectiveId == null) ? 0 : naAdjectiveId.hashCode());
+		result = prime * result + ((naAdjective == null) ? 0 : naAdjective.hashCode());
 		return result;
 	}
 
@@ -97,10 +110,10 @@ public class NaAdjectivePronunciation implements Serializable {
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
 			return false;
-		if (naAdjectiveId == null) {
-			if (other.naAdjectiveId != null)
+		if (naAdjective == null) {
+			if (other.naAdjective != null)
 				return false;
-		} else if (!naAdjectiveId.equals(other.naAdjectiveId))
+		} else if (!naAdjective.equals(other.naAdjective))
 			return false;
 		return true;
 	}

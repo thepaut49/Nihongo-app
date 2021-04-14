@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.thepaut49.nihongo.model.suffix.Suffix;
 
-public interface SuffixRepository extends JpaRepository<Suffix, Integer> {
+public interface SuffixRepository extends JpaRepository<Suffix, Long> {
 
 	boolean existsByKanjis(String kanjis);
 

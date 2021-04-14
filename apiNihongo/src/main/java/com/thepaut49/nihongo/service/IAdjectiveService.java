@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thepaut49.nihongo.dto.iadjective.IAdjectiveCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
 import com.thepaut49.nihongo.model.iadjective.IAdjective;
-import com.thepaut49.nihongo.repository.IAdjectiveRepository;
+import com.thepaut49.nihongo.repository.iadjective.IAdjectiveRepository;
 
 @Service
 @Transactional
@@ -23,6 +23,8 @@ public class IAdjectiveService {
 	public IAdjective createIAdjective(IAdjective newIAdjective) {
 		if (!iAdjectiveRepository.existsByKanjis(newIAdjective.getKanjis())) {
 			newIAdjective.setNumberOfUse(1);
+			newIAdjective.getMeanings().stream().forEach(meaning -> meaning.setIAdjective(newIAdjective));
+			newIAdjective.getPronunciations().stream().forEach(pronunciation -> pronunciation.setIAdjective(newIAdjective));
 			return iAdjectiveRepository.save(newIAdjective);
 		}
 		else {
@@ -32,6 +34,8 @@ public class IAdjectiveService {
 	
 	public IAdjective updateIAdjective(IAdjective iAdjective) {
 		if (iAdjective != null) {
+			iAdjective.getMeanings().stream().forEach(meaning -> meaning.setIAdjective(iAdjective));
+			iAdjective.getPronunciations().stream().forEach(pronunciation -> pronunciation.setIAdjective(iAdjective));
 			return iAdjectiveRepository.save(iAdjective);
 		}
 		else {
@@ -39,7 +43,7 @@ public class IAdjectiveService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<IAdjective> iAdjective = iAdjectiveRepository.findById(id);
 		if (!iAdjective.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the IAdjective with id : " + id );
@@ -47,7 +51,7 @@ public class IAdjectiveService {
 		iAdjectiveRepository.deleteById(id);
 	}
 
-	public IAdjective findById(Integer id) {
+	public IAdjective findById(Long id) {
 		Optional<IAdjective> iAdjective = iAdjectiveRepository.findById(id);
 		if (!iAdjective.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the IAdjective with id : " + id );
@@ -66,7 +70,7 @@ public class IAdjectiveService {
 		return iAdjectiveRepository.findWithCriteria(kanjis, pronunciation, meaning);
 	}
 	
-	public IAdjective updateIAdjectiveNumberOfUse(Integer id) {
+	public IAdjective updateIAdjectiveNumberOfUse(Long id) {
 		IAdjective iAdjective = iAdjectiveRepository.findById(id).get();
 		iAdjective.setNumberOfUse(iAdjective.getNumberOfUse() + 1);
 		return iAdjectiveRepository.save(iAdjective);

@@ -4,21 +4,27 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
 @Entity
-@IdClass(NamePronunciationId.class)
 public class NamePronunciation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    private Integer nameId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 	
-	@Id
+	@ManyToOne
+    private Name name;
+	
+	@Column(nullable = false)
 	private Integer pronunciationNumber;
 	
 	
@@ -29,13 +35,20 @@ public class NamePronunciation implements Serializable {
 	private int version;
 	
 	/*** getter / setter ***/
-
-	public Integer getNameId() {
-		return nameId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setNameId(Integer nameId) {
-		this.nameId = nameId;
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public Name getName() {
+		return name;
+	}
+
+	public void setName(Name name) {
+		this.name = name;
 	}
 	
 	public Integer getPronunciationNumber() {
@@ -65,7 +78,7 @@ public class NamePronunciation implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " NameMeaning : { Name id : " + this.nameId + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
+		return " NameMeaning : { Id : " + this.id + " , Name : " + this.name + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -74,7 +87,7 @@ public class NamePronunciation implements Serializable {
 		int result = 1;
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((nameId == null) ? 0 : nameId.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -97,10 +110,10 @@ public class NamePronunciation implements Serializable {
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
 			return false;
-		if (nameId == null) {
-			if (other.nameId != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!nameId.equals(other.nameId))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}

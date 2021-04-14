@@ -8,7 +8,7 @@ public class CounterPronunciationToDTOMapper {
 	
 	public static CounterPronunciationDTO map(CounterPronunciation counterPronunciation) {
 		CounterPronunciationDTO counterPronunciationDTO = new CounterPronunciationDTO();
-		counterPronunciationDTO.setCounterId(counterPronunciation.getCounterId());
+		counterPronunciationDTO.setId(counterPronunciation.getId());
 		counterPronunciationDTO.setPronunciationNumber(counterPronunciation.getPronunciationNumber());
 		counterPronunciationDTO.setVersion(counterPronunciation.getVersion());
 		counterPronunciationDTO.setPronunciation(counterPronunciation.getPronunciation());
@@ -17,7 +17,7 @@ public class CounterPronunciationToDTOMapper {
 	
 	public static CounterPronunciation map(CounterPronunciationDTO counterPronunciationDTO) {
 		CounterPronunciation counterPronunciation = new CounterPronunciation();
-		counterPronunciation.setCounterId(counterPronunciationDTO.getCounterId());
+		counterPronunciation.setId(counterPronunciationDTO.getId());
 		counterPronunciation.setPronunciationNumber(counterPronunciationDTO.getPronunciationNumber());
 		counterPronunciation.setVersion(counterPronunciationDTO.getVersion());
 		counterPronunciation.setPronunciation(counterPronunciationDTO.getPronunciation());

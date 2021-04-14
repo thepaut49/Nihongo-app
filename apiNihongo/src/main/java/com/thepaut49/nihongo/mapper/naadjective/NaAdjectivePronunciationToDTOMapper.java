@@ -8,7 +8,7 @@ public class NaAdjectivePronunciationToDTOMapper {
 	
 	public static NaAdjectivePronunciationDTO map(NaAdjectivePronunciation naAdjectivePronunciation) {
 		NaAdjectivePronunciationDTO naAdjectivePronunciationDTO = new NaAdjectivePronunciationDTO();
-		naAdjectivePronunciationDTO.setNaAdjectiveId(naAdjectivePronunciation.getNaAdjectiveId());
+		naAdjectivePronunciationDTO.setId(naAdjectivePronunciation.getId());
 		naAdjectivePronunciationDTO.setPronunciationNumber(naAdjectivePronunciation.getPronunciationNumber());
 		naAdjectivePronunciationDTO.setVersion(naAdjectivePronunciation.getVersion());
 		naAdjectivePronunciationDTO.setPronunciation(naAdjectivePronunciation.getPronunciation());
@@ -17,7 +17,7 @@ public class NaAdjectivePronunciationToDTOMapper {
 	
 	public static NaAdjectivePronunciation map(NaAdjectivePronunciationDTO naAdjectivePronunciationDTO) {
 		NaAdjectivePronunciation naAdjectivePronunciation = new NaAdjectivePronunciation();
-		naAdjectivePronunciation.setNaAdjectiveId(naAdjectivePronunciationDTO.getNaAdjectiveId());
+		naAdjectivePronunciation.setId(naAdjectivePronunciationDTO.getId());
 		naAdjectivePronunciation.setPronunciationNumber(naAdjectivePronunciationDTO.getPronunciationNumber());
 		naAdjectivePronunciation.setVersion(naAdjectivePronunciationDTO.getVersion());
 		naAdjectivePronunciation.setPronunciation(naAdjectivePronunciationDTO.getPronunciation());

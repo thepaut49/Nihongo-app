@@ -8,7 +8,7 @@ public class NaAdjectiveMeaningToDTOMapper {
 	
 	public static NaAdjectiveMeaningDTO map(NaAdjectiveMeaning naAdjectiveMeaning) {
 		NaAdjectiveMeaningDTO naAdjectiveMeaningDTO = new NaAdjectiveMeaningDTO();
-		naAdjectiveMeaningDTO.setNaAdjectiveId(naAdjectiveMeaning.getNaAdjectiveId());
+		naAdjectiveMeaningDTO.setId(naAdjectiveMeaning.getId());
 		naAdjectiveMeaningDTO.setMeaningNumber(naAdjectiveMeaning.getMeaningNumber());
 		naAdjectiveMeaningDTO.setVersion(naAdjectiveMeaning.getVersion());
 		naAdjectiveMeaningDTO.setMeaning(naAdjectiveMeaning.getMeaning());
@@ -17,7 +17,7 @@ public class NaAdjectiveMeaningToDTOMapper {
 	
 	public static NaAdjectiveMeaning map(NaAdjectiveMeaningDTO naAdjectiveMeaningDTO) {
 		NaAdjectiveMeaning naAdjectiveMeaning = new NaAdjectiveMeaning();
-		naAdjectiveMeaning.setNaAdjectiveId(naAdjectiveMeaningDTO.getNaAdjectiveId());
+		naAdjectiveMeaning.setId(naAdjectiveMeaningDTO.getId());
 		naAdjectiveMeaning.setMeaningNumber(naAdjectiveMeaningDTO.getMeaningNumber());
 		naAdjectiveMeaning.setVersion(naAdjectiveMeaningDTO.getVersion());
 		naAdjectiveMeaning.setMeaning(naAdjectiveMeaningDTO.getMeaning());

@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.repository;
+package com.thepaut49.nihongo.repository.naadjective;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.thepaut49.nihongo.model.naadjective.NaAdjective;
 
-public interface NaAdjectiveRepository extends JpaRepository<NaAdjective, Integer> {
+public interface NaAdjectiveRepository extends JpaRepository<NaAdjective, Long> {
 
 	boolean existsByKanjis(String kanjis);
 

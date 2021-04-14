@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.repository;
+package com.thepaut49.nihongo.repository.word;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.thepaut49.nihongo.model.word.Word;
 
-public interface WordRepository extends JpaRepository<Word, Integer> {
+public interface WordRepository extends JpaRepository<Word, Long> {
 
 	boolean existsByKanjis(String kanjis);
 

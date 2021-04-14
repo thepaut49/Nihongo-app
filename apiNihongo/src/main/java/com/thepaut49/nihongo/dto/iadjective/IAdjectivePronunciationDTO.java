@@ -2,19 +2,19 @@ package com.thepaut49.nihongo.dto.iadjective;
 
 public class IAdjectivePronunciationDTO {
 
-	private Integer iiAdjectiveId;
+	private Long id;
     private Integer pronunciationNumber;
     private String pronunciation;
 	private int version;
 
 	   
     /*** getter /setter ***/
-    public Integer getIiAdjectiveId() {
-		return iiAdjectiveId;
+    public Long getId() {
+		return id;
 	}
 
-	public void setIiAdjectiveId(Integer iAdjectiveId) {
-		this.iiAdjectiveId = iAdjectiveId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getPronunciationNumber() {

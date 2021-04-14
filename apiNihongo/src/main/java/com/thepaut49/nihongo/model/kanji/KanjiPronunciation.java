@@ -4,21 +4,27 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
 @Entity
-@IdClass(KanjiPronunciationId.class)
 public class KanjiPronunciation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    private Integer kanjiId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 	
-	@Id
+	@ManyToOne
+    private Kanji kanji;
+	
+	@Column(nullable = false)
 	private Integer pronunciationNumber;
 	
 	
@@ -29,13 +35,20 @@ public class KanjiPronunciation implements Serializable {
 	private int version;
 	
 	/*** getter / setter ***/
-
-	public Integer getKanjiId() {
-		return kanjiId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setKanjiId(Integer kanjiId) {
-		this.kanjiId = kanjiId;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Kanji getKanji() {
+		return kanji;
+	}
+
+	public void setKanji(Kanji kanji) {
+		this.kanji = kanji;
 	}
 	
 	public Integer getPronunciationNumber() {
@@ -65,7 +78,7 @@ public class KanjiPronunciation implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " KanjiMeaning : { Kanji id : " + this.kanjiId + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
+		return " KanjiMeaning : { Id: " + this.id + " Kanji : " + this.kanji + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -74,7 +87,7 @@ public class KanjiPronunciation implements Serializable {
 		int result = 1;
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((kanjiId == null) ? 0 : kanjiId.hashCode());
+		result = prime * result + ((kanji == null) ? 0 : kanji.hashCode());
 		return result;
 	}
 
@@ -97,10 +110,10 @@ public class KanjiPronunciation implements Serializable {
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
 			return false;
-		if (kanjiId == null) {
-			if (other.kanjiId != null)
+		if (kanji == null) {
+			if (other.kanji != null)
 				return false;
-		} else if (!kanjiId.equals(other.kanjiId))
+		} else if (!kanji.equals(other.kanji))
 			return false;
 		return true;
 	}

@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.repository;
+package com.thepaut49.nihongo.repository.name;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.thepaut49.nihongo.model.name.Name;
 
-public interface NameRepository extends JpaRepository<Name, Integer> {
+public interface NameRepository extends JpaRepository<Name, Long> {
 
 	boolean existsByKanjis(String kanjis);
 

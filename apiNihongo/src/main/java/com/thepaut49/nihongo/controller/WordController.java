@@ -40,26 +40,26 @@ public class WordController {
 	}
 
 	@PutMapping("/{id}")
-	public WordDTO updateWord( @RequestBody WordDTO wordDTO, @PathVariable Integer id) {
+	public WordDTO updateWord( @RequestBody WordDTO wordDTO, @PathVariable Long id) {
 		Word updatedWord = WordToDTOMapper.map(wordDTO);  
 		updatedWord.setId(id);
 		return WordToDTOMapper.map(wordService.updateWord(updatedWord));
 	}
 	
 	@PatchMapping("/{id}")
-	public WordDTO updateWordNumberOfUse( @PathVariable Integer id) {
+	public WordDTO updateWordNumberOfUse( @PathVariable Long id) {
 		return WordToDTOMapper.map(wordService.updateWordNumberOfUse(id));
 	}
 
 
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		wordService.delete(id);
 		return "Word deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public WordDTO findById( @PathVariable Integer id) {
+	public WordDTO findById( @PathVariable Long id) {
 		return WordToDTOMapper.map(wordService.findById(id));
 	}
 	

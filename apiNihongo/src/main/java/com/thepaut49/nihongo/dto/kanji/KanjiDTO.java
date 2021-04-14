@@ -6,7 +6,7 @@ import javax.persistence.Version;
 
 public class KanjiDTO  {
 
-	private Integer id;
+	private Long id;
 
 	private char kanji;
 
@@ -25,11 +25,11 @@ public class KanjiDTO  {
 	
 	/*** getter / setter ***/
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

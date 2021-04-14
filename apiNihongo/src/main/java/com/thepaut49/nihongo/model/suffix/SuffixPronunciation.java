@@ -4,21 +4,27 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 
 @Entity
-@IdClass(SuffixPronunciationId.class)
 public class SuffixPronunciation implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    private Integer suffixId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 	
-	@Id
+	@ManyToOne
+    private Suffix suffix;
+	
+	@Column(nullable = false)
 	private Integer pronunciationNumber;
 	
 	
@@ -29,13 +35,20 @@ public class SuffixPronunciation implements Serializable {
 	private int version;
 	
 	/*** getter / setter ***/
-
-	public Integer getSuffixId() {
-		return suffixId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setSuffixId(Integer suffixId) {
-		this.suffixId = suffixId;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Suffix getSuffix() {
+		return suffix;
+	}
+
+	public void setSuffix(Suffix suffix) {
+		this.suffix = suffix;
 	}
 	
 	public Integer getPronunciationNumber() {
@@ -65,7 +78,7 @@ public class SuffixPronunciation implements Serializable {
 	/*** override methods ***/
 	@Override
 	public String toString() {
-		return " SuffixcPronunciation : { Counter id : " + this.suffixId + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
+		return " SuffixcPronunciation : { Id : " + this.id + ", Suffux : " + this.suffix + ", Pronunciation number : " + this.pronunciationNumber + " , Pronunciation : " + this.pronunciation + " , version : " + this.version + " }" ;
 	}
 
 	@Override
@@ -74,7 +87,7 @@ public class SuffixPronunciation implements Serializable {
 		int result = 1;
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((suffixId == null) ? 0 : suffixId.hashCode());
+		result = prime * result + ((suffix == null) ? 0 : suffix.hashCode());
 		return result;
 	}
 
@@ -97,10 +110,10 @@ public class SuffixPronunciation implements Serializable {
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
 			return false;
-		if (suffixId == null) {
-			if (other.suffixId != null)
+		if (suffix == null) {
+			if (other.suffix != null)
 				return false;
-		} else if (!suffixId.equals(other.suffixId))
+		} else if (!suffix.equals(other.suffix))
 			return false;
 		return true;
 	}

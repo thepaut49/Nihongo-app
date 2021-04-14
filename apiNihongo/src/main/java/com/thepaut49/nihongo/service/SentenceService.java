@@ -38,7 +38,7 @@ public class SentenceService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<Sentence> sentence = sentenceRepository.findById(id);
 		if (!sentence.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Sentence with id : " + id );
@@ -46,7 +46,7 @@ public class SentenceService {
 		sentenceRepository.deleteById(id);
 	}
 
-	public Sentence findById(Integer id) {
+	public Sentence findById(Long id) {
 		Optional<Sentence> sentence = sentenceRepository.findById(id);
 		if (!sentence.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Sentence with id : " + id );

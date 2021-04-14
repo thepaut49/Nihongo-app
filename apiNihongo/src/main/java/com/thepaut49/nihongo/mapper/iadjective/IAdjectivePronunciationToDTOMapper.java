@@ -8,7 +8,7 @@ public class IAdjectivePronunciationToDTOMapper {
 	
 	public static IAdjectivePronunciationDTO map(IAdjectivePronunciation iAdjectivePronunciation) {
 		IAdjectivePronunciationDTO iAdjectivePronunciationDTO = new IAdjectivePronunciationDTO();
-		iAdjectivePronunciationDTO.setIiAdjectiveId(iAdjectivePronunciation.getIAdjectiveId());
+		iAdjectivePronunciationDTO.setId(iAdjectivePronunciation.getId());
 		iAdjectivePronunciationDTO.setPronunciationNumber(iAdjectivePronunciation.getPronunciationNumber());
 		iAdjectivePronunciationDTO.setVersion(iAdjectivePronunciation.getVersion());
 		iAdjectivePronunciationDTO.setPronunciation(iAdjectivePronunciation.getPronunciation());
@@ -17,7 +17,7 @@ public class IAdjectivePronunciationToDTOMapper {
 	
 	public static IAdjectivePronunciation map(IAdjectivePronunciationDTO iAdjectivePronunciationDTO) {
 		IAdjectivePronunciation iAdjectivePronunciation = new IAdjectivePronunciation();
-		iAdjectivePronunciation.setIAdjectiveId(iAdjectivePronunciationDTO.getIiAdjectiveId());
+		iAdjectivePronunciation.setId(iAdjectivePronunciationDTO.getId());
 		iAdjectivePronunciation.setPronunciationNumber(iAdjectivePronunciationDTO.getPronunciationNumber());
 		iAdjectivePronunciation.setVersion(iAdjectivePronunciationDTO.getVersion());
 		iAdjectivePronunciation.setPronunciation(iAdjectivePronunciationDTO.getPronunciation());

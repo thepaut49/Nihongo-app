@@ -34,20 +34,20 @@ public class ParticuleController {
 	}
 
 	@PutMapping("/{id}")
-	public ParticuleDTO updateParticule( @RequestBody ParticuleDTO particuleDTO, @PathVariable Integer id) {
+	public ParticuleDTO updateParticule( @RequestBody ParticuleDTO particuleDTO, @PathVariable Long id) {
 		Particule updatedParticule = ParticuleToDTOMapper.map(particuleDTO);  
 		updatedParticule.setId(id);
 		return ParticuleToDTOMapper.map(particuleService.updateParticule(updatedParticule));
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		particuleService.delete(id);
 		return "Particule deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public ParticuleDTO findById( @PathVariable Integer id) {
+	public ParticuleDTO findById( @PathVariable Long id) {
 		return ParticuleToDTOMapper.map(particuleService.findById(id));
 	}
 	

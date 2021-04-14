@@ -37,7 +37,7 @@ public class ParticuleService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<Particule> particule = particuleRepository.findById(id);
 		if (!particule.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Particule with id : " + id );
@@ -45,7 +45,7 @@ public class ParticuleService {
 		particuleRepository.deleteById(id);
 	}
 
-	public Particule findById(Integer id) {
+	public Particule findById(Long id) {
 		Optional<Particule> particule = particuleRepository.findById(id);
 		if (!particule.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Particule with id : " + id );

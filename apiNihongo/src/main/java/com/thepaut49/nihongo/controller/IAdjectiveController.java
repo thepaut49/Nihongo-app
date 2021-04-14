@@ -40,26 +40,26 @@ public class IAdjectiveController {
 	}
 
 	@PutMapping("/{id}")
-	public IAdjectiveDTO updateIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO, @PathVariable Integer id) {
+	public IAdjectiveDTO updateIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO, @PathVariable Long id) {
 		IAdjective updatedIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);  
 		updatedIAdjective.setId(id);
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.updateIAdjective(updatedIAdjective));
 	}
 	
 	@PatchMapping("/{id}")
-	public IAdjectiveDTO updateIAdjectiveNumberOfUse( @PathVariable Integer id) {
+	public IAdjectiveDTO updateIAdjectiveNumberOfUse( @PathVariable Long id) {
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.updateIAdjectiveNumberOfUse(id));
 	}
 
 
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		iAdjectiveService.delete(id);
 		return "IAdjective deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public IAdjectiveDTO findById( @PathVariable Integer id) {
+	public IAdjectiveDTO findById( @PathVariable Long id) {
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.findById(id));
 	}
 	

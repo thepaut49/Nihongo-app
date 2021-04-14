@@ -2,19 +2,19 @@ package com.thepaut49.nihongo.dto.kanji;
 
 public class KanjiMeaningDTO {
 	
-    private Integer kanjiId;
+    private Long id;
     private Integer meaningNumber;
     private String meaning;
 	private int version;
 
 	   
     /*** getter /setter ***/
-    public Integer getKanjiId() {
-		return kanjiId;
+    public Long getId() {
+		return id;
 	}
 
-	public void setKanjiId(Integer kanjiId) {
-		this.kanjiId = kanjiId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getMeaningNumber() {

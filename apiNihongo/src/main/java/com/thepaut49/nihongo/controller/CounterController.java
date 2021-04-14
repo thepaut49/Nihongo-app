@@ -40,26 +40,26 @@ public class CounterController {
 	}
 
 	@PutMapping("/{id}")
-	public CounterDTO updateCounter( @RequestBody CounterDTO counterDTO, @PathVariable Integer id) {
+	public CounterDTO updateCounter( @RequestBody CounterDTO counterDTO, @PathVariable Long id) {
 		Counter updatedCounter = CounterToDTOMapper.map(counterDTO);  
 		updatedCounter.setId(id);
 		return CounterToDTOMapper.map(counterService.updateCounter(updatedCounter));
 	}
 	
 	@PatchMapping("/{id}")
-	public CounterDTO updateCounterNumberOfUse( @PathVariable Integer id) {
+	public CounterDTO updateCounterNumberOfUse( @PathVariable Long id) {
 		return CounterToDTOMapper.map(counterService.updateCounterNumberOfUse(id));
 	}
 
 
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		counterService.delete(id);
 		return "Counter deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public CounterDTO findById( @PathVariable Integer id) {
+	public CounterDTO findById( @PathVariable Long id) {
 		return CounterToDTOMapper.map(counterService.findById(id));
 	}
 	

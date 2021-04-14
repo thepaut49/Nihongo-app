@@ -34,20 +34,20 @@ public class GrammarRuleController {
 	}
 
 	@PutMapping("/{id}")
-	public GrammarRuleDTO updateGrammarRule( @RequestBody GrammarRuleDTO grammarRuleDTO, @PathVariable Integer id) {
+	public GrammarRuleDTO updateGrammarRule( @RequestBody GrammarRuleDTO grammarRuleDTO, @PathVariable Long id) {
 		GrammarRule updatedGrammarRule = GrammarRuleToDTOMapper.map(grammarRuleDTO);  
 		updatedGrammarRule.setId(id);
 		return GrammarRuleToDTOMapper.map(grammarRuleService.updateGrammarRule(updatedGrammarRule));
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Long id) {
 		grammarRuleService.delete(id);
 		return "GrammarRule deleted !";
 	}
 
 	@GetMapping(value = "/{id}")
-	public GrammarRuleDTO findById( @PathVariable Integer id) {
+	public GrammarRuleDTO findById( @PathVariable Long id) {
 		return GrammarRuleToDTOMapper.map(grammarRuleService.findById(id));
 	}
 	

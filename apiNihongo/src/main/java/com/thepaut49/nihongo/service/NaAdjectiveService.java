@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thepaut49.nihongo.dto.naadjective.NaAdjectiveCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
 import com.thepaut49.nihongo.model.naadjective.NaAdjective;
-import com.thepaut49.nihongo.repository.NaAdjectiveRepository;
+import com.thepaut49.nihongo.repository.naadjective.NaAdjectiveRepository;
 
 @Service
 @Transactional
@@ -23,6 +23,8 @@ public class NaAdjectiveService {
 	public NaAdjective createNaAdjective(NaAdjective newNaAdjective) {
 		if (!naAdjectiveRepository.existsByKanjis(newNaAdjective.getKanjis())) {
 			newNaAdjective.setNumberOfUse(1);
+			newNaAdjective.getMeanings().stream().forEach(meaning -> meaning.setNaAdjective(newNaAdjective));
+			newNaAdjective.getPronunciations().stream().forEach(pronunciation -> pronunciation.setNaAdjective(newNaAdjective));
 			return naAdjectiveRepository.save(newNaAdjective);
 		}
 		else {
@@ -32,6 +34,8 @@ public class NaAdjectiveService {
 	
 	public NaAdjective updateNaAdjective(NaAdjective naAdjective) {
 		if (naAdjective != null) {
+			naAdjective.getMeanings().stream().forEach(meaning -> meaning.setNaAdjective(naAdjective));
+			naAdjective.getPronunciations().stream().forEach(pronunciation -> pronunciation.setNaAdjective(naAdjective));
 			return naAdjectiveRepository.save(naAdjective);
 		}
 		else {
@@ -39,7 +43,7 @@ public class NaAdjectiveService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<NaAdjective> naAdjective = naAdjectiveRepository.findById(id);
 		if (!naAdjective.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the NaAdjective with id : " + id );
@@ -47,7 +51,7 @@ public class NaAdjectiveService {
 		naAdjectiveRepository.deleteById(id);
 	}
 
-	public NaAdjective findById(Integer id) {
+	public NaAdjective findById(Long id) {
 		Optional<NaAdjective> naAdjective = naAdjectiveRepository.findById(id);
 		if (!naAdjective.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the NaAdjective with id : " + id );
@@ -66,7 +70,7 @@ public class NaAdjectiveService {
 		return naAdjectiveRepository.findWithCriteria(kanjis, pronunciation, meaning);
 	}
 	
-	public NaAdjective updateNaAdjectiveNumberOfUse(Integer id) {
+	public NaAdjective updateNaAdjectiveNumberOfUse(Long id) {
 		NaAdjective naAdjective = naAdjectiveRepository.findById(id).get();
 		naAdjective.setNumberOfUse(naAdjective.getNumberOfUse() + 1);
 		return naAdjectiveRepository.save(naAdjective);

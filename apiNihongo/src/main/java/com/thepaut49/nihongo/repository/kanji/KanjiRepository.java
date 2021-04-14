@@ -1,4 +1,4 @@
-package com.thepaut49.nihongo.repository;
+package com.thepaut49.nihongo.repository.kanji;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.thepaut49.nihongo.model.kanji.Kanji;
 
-public interface KanjiRepository extends JpaRepository<Kanji, Integer> {
+public interface KanjiRepository extends JpaRepository<Kanji, Long> {
 
 	boolean existsByKanji(char kanji);
 

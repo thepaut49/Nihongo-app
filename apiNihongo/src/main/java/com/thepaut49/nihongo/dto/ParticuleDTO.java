@@ -2,7 +2,7 @@ package com.thepaut49.nihongo.dto;
 
 public class ParticuleDTO {
 	
-	private Integer id;
+	private Long id;
 	private String kanjis;
 	private String summary;
 	private String function;
@@ -12,11 +12,11 @@ public class ParticuleDTO {
 	
 	/*** getter-setter ***/
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thepaut49.nihongo.dto.word.WordCriteriaDTO;
 import com.thepaut49.nihongo.exception.ResourceAlreadyExistException;
 import com.thepaut49.nihongo.model.word.Word;
-import com.thepaut49.nihongo.repository.WordRepository;
+import com.thepaut49.nihongo.repository.word.WordRepository;
 
 @Service
 @Transactional
@@ -23,6 +23,8 @@ public class WordService {
 	public Word createWord(Word newWord) {
 		if (!wordRepository.existsByKanjis(newWord.getKanjis())) {
 			newWord.setNumberOfUse(1);
+			newWord.getMeanings().stream().forEach(meaning -> meaning.setWord(newWord));
+			newWord.getPronunciations().stream().forEach(pronunciation -> pronunciation.setWord(newWord));
 			return wordRepository.save(newWord);
 		}
 		else {
@@ -32,6 +34,8 @@ public class WordService {
 	
 	public Word updateWord(Word word) {
 		if (word != null) {
+			word.getMeanings().stream().forEach(meaning -> meaning.setWord(word));
+			word.getPronunciations().stream().forEach(pronunciation -> pronunciation.setWord(word));
 			return wordRepository.save(word);
 		}
 		else {
@@ -39,7 +43,7 @@ public class WordService {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		Optional<Word> word = wordRepository.findById(id);
 		if (!word.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Word with id : " + id );
@@ -47,7 +51,7 @@ public class WordService {
 		wordRepository.deleteById(id);
 	}
 
-	public Word findById(Integer id) {
+	public Word findById(Long id) {
 		Optional<Word> word = wordRepository.findById(id);
 		if (!word.isPresent()) {
 			throw new ResourceNotFoundException("Could not found the Word with id : " + id );
@@ -66,7 +70,7 @@ public class WordService {
 		return wordRepository.findWithCriteria(kanjis, pronunciation, meaning);
 	}
 	
-	public Word updateWordNumberOfUse(Integer id) {
+	public Word updateWordNumberOfUse(Long id) {
 		Word word = wordRepository.findById(id).get();
 		word.setNumberOfUse(word.getNumberOfUse() + 1);
 		return wordRepository.save(word);
