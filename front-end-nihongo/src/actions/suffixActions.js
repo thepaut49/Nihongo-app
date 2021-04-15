@@ -27,7 +27,6 @@ export function deleteSuffix(id) {
 
 export function loadSuffixs() {
   return suffixApi.getSuffixs().then((suffixs) => {
-    debugger;
     dispatcher.dispatch({
       actionType: actionTypes.LOAD_SUFFIXS,
       suffixs: suffixs,

@@ -86,7 +86,6 @@ export const extractListOfKanji = (sentence, kanjis) => {
 };
 
 export const clearTranslation = () => {
-  debugger;
   dispatcher.dispatch({
     actionType: actionTypes.CLEAR_TRANSLATION,
   });

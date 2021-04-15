@@ -8,8 +8,6 @@ const styleLink = {
 };
 
 function SuffixList(props) {
-  const suffixs = props.suffixs;
-  debugger;
   return (
     <table>
       <tbody>
@@ -76,6 +74,7 @@ SuffixList.propTypes = {
       kanjis: PropTypes.string.isRequired,
       pronunciations: PropTypes.arrayOf.isRequired,
       use: PropTypes.string.isRequired,
+      summary: PropTypes.string.isRequired,
       version: PropTypes.number,
     })
   ).isRequired,

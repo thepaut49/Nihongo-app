@@ -62,7 +62,6 @@ const ManageNamePage = (props) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setModified(false);
-    debugger;
     nameActions.saveName(name).then(() => {
       props.history.push("/names");
       toast.success("Name saved.");

@@ -56,7 +56,6 @@ export const extractParts = (
   counters
 ) => {
   let listOfParts = [];
-  debugger;
   let indiceCourant = 0;
   while (indiceCourant < sentence.length) {
     for (let j = 10; j > 0; j--) {
