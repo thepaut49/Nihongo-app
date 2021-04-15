@@ -88,7 +88,6 @@ public class NaAdjectiveMeaning implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((meaning == null) ? 0 : meaning.hashCode());
 		result = prime * result + ((meaningNumber == null) ? 0 : meaningNumber.hashCode());
-		result = prime * result + ((naAdjective == null) ? 0 : naAdjective.hashCode());
 		return result;
 	}
 
@@ -115,11 +114,6 @@ public class NaAdjectiveMeaning implements Serializable {
 			if (other.meaningNumber != null)
 				return false;
 		} else if (!meaningNumber.equals(other.meaningNumber))
-			return false;
-		if (naAdjective == null) {
-			if (other.naAdjective != null)
-				return false;
-		} else if (!naAdjective.equals(other.naAdjective))
 			return false;
 		return true;
 	}

@@ -80,6 +80,7 @@ Dispatcher.register((action) => {
     case actionTypes.CLEAR_TRANSLATION:
       _listOfKanjis = [];
       _listParts = [];
+      store.emitChange();
       break;
     default:
     // nothing to do here

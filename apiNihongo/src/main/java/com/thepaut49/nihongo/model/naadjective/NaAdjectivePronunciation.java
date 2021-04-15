@@ -86,7 +86,6 @@ public class NaAdjectivePronunciation implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((naAdjective == null) ? 0 : naAdjective.hashCode());
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
 		return result;
@@ -105,11 +104,6 @@ public class NaAdjectivePronunciation implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (naAdjective == null) {
-			if (other.naAdjective != null)
-				return false;
-		} else if (!naAdjective.equals(other.naAdjective))
 			return false;
 		if (pronunciation == null) {
 			if (other.pronunciation != null)

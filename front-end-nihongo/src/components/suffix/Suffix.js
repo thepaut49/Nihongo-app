@@ -7,8 +7,8 @@ function Suffix(props) {
   return (
     <div className="grid-container-suffix">
       <h1>The {suffix.kanjis} suffix</h1>
-      <div className="suffixPronunciation">
-        <label>Pronunciations : </label>
+      <div>
+        <h2>Pronunciations</h2>
         <div>
           {suffix.pronunciations.map((pro, index) => {
             return (
@@ -22,7 +22,7 @@ function Suffix(props) {
 
       <h2>Use</h2>
       <div className="use">{suffix.use}</div>
-      <label>Summary : </label>
+      <h2>Summary</h2>
       <div className="use">{suffix.summary}</div>
     </div>
   );

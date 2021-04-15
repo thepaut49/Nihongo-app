@@ -85,7 +85,6 @@ public class KanjiMeaning implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((kanji == null) ? 0 : kanji.hashCode());
 		result = prime * result + ((meaning == null) ? 0 : meaning.hashCode());
 		result = prime * result + ((meaningNumber == null) ? 0 : meaningNumber.hashCode());
 		return result;
@@ -104,11 +103,6 @@ public class KanjiMeaning implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (kanji == null) {
-			if (other.kanji != null)
-				return false;
-		} else if (!kanji.equals(other.kanji))
 			return false;
 		if (meaning == null) {
 			if (other.meaning != null)

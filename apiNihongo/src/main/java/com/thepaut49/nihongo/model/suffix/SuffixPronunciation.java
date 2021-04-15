@@ -88,7 +88,6 @@ public class SuffixPronunciation implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((suffix == null) ? 0 : suffix.hashCode());
 		return result;
 	}
 
@@ -115,11 +114,6 @@ public class SuffixPronunciation implements Serializable {
 			if (other.pronunciationNumber != null)
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
-			return false;
-		if (suffix == null) {
-			if (other.suffix != null)
-				return false;
-		} else if (!suffix.equals(other.suffix))
 			return false;
 		return true;
 	}

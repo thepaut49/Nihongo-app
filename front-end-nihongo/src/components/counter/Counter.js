@@ -7,8 +7,8 @@ function Counter(props) {
   return (
     <div className="grid-container-counter">
       <h1>The {counter.kanjis} counter</h1>
-      <div className="counterPronunciation">
-        <label>Pronunciations : </label>
+      <div>
+        <h2>Pronunciations</h2>
         <div>
           {counter.pronunciations.map((pro, index) => {
             return (
@@ -22,7 +22,7 @@ function Counter(props) {
 
       <h2>Use</h2>
       <div className="use">{counter.use}</div>
-      <label>Summary : </label>
+      <h2>Summary</h2>
       <div className="use">{counter.summary}</div>
     </div>
   );

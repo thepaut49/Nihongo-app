@@ -8,6 +8,8 @@ const styleLink = {
 };
 
 function SuffixList(props) {
+  const suffixs = props.suffixs;
+  debugger;
   return (
     <table>
       <tbody>
@@ -22,8 +24,8 @@ function SuffixList(props) {
                   >
                     The {suffix.kanjis} suffix
                   </Link>
-                  <div className="suffixPronunciation">
-                    <label>Pronunciations : </label>
+                  <div>
+                    <h2>Pronunciations</h2>
                     <div>
                       {suffix.pronunciations.map((pro, index) => {
                         return (
@@ -37,8 +39,8 @@ function SuffixList(props) {
 
                   <h2>Use</h2>
                   <div className="use">{suffix.use}</div>
-                  <label>Summary : </label>
-                  <div className="use">{suffix.summary}</div>
+                  <h2>Summary</h2>
+                  <div>{suffix.summary}</div>
                   <div className="buttonSuffix">
                     <button
                       className="btn btn-outline-danger"

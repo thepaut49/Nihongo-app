@@ -23,7 +23,7 @@ function SuffixsPage(props) {
 
   return (
     <div className="suffixsPage">
-      <h2>I-Adjectives</h2>
+      <h2>Suffixs</h2>
       <Link className="btn btn-primary" to="/suffix/create">
         Add Suffix
       </Link>

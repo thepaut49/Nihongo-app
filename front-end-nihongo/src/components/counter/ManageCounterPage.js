@@ -13,12 +13,14 @@ const ManageCounterPage = (props) => {
   const [counter, setCounter] = useState({
     id: null,
     kanjis: "",
-    pronunciations: {
-      id: null,
-      pronunciation: "",
-      pronunciationNumber: 0,
-      version: 0,
-    },
+    pronunciations: [
+      {
+        id: null,
+        pronunciation: "",
+        pronunciationNumber: 0,
+        version: 0,
+      },
+    ],
     use: "",
     summary: "",
     numberOfUse: null,
@@ -42,8 +44,6 @@ const ManageCounterPage = (props) => {
   function formIsValid() {
     const _errors = {};
     if (!counter.kanjis) _errors.kanjis = "Kanjis of the counter is required";
-    if (!counter.pronunciation)
-      _errors.pronunciation = "Pronunciation is required";
     if (!counter.use) _errors.use = "Use is required";
     if (!counter.summary) _errors.summary = "Summary is required";
     setErrors(_errors);

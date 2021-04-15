@@ -89,7 +89,6 @@ public class WordPronunciation implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((word == null) ? 0 : word.hashCode());
 		return result;
 	}
 
@@ -116,11 +115,6 @@ public class WordPronunciation implements Serializable {
 			if (other.pronunciationNumber != null)
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
-			return false;
-		if (word == null) {
-			if (other.word != null)
-				return false;
-		} else if (!word.equals(other.word))
 			return false;
 		return true;
 	}

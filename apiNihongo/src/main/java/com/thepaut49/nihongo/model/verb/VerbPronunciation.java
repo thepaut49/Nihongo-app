@@ -87,7 +87,6 @@ public class VerbPronunciation implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((pronunciation == null) ? 0 : pronunciation.hashCode());
 		result = prime * result + ((pronunciationNumber == null) ? 0 : pronunciationNumber.hashCode());
-		result = prime * result + ((verb == null) ? 0 : verb.hashCode());
 		return result;
 	}
 
@@ -114,11 +113,6 @@ public class VerbPronunciation implements Serializable {
 			if (other.pronunciationNumber != null)
 				return false;
 		} else if (!pronunciationNumber.equals(other.pronunciationNumber))
-			return false;
-		if (verb == null) {
-			if (other.verb != null)
-				return false;
-		} else if (!verb.equals(other.verb))
 			return false;
 		return true;
 	}

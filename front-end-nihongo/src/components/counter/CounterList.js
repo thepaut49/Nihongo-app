@@ -22,8 +22,8 @@ function CounterList(props) {
                   >
                     The {counter.kanjis} counter
                   </Link>
-                  <div className="counterPronunciation">
-                    <label>Pronunciations : </label>
+                  <div>
+                    <h2>Pronunciations</h2>
                     <div>
                       {counter.pronunciations.map((pro, index) => {
                         return (
@@ -37,8 +37,10 @@ function CounterList(props) {
 
                   <h2>Use</h2>
                   <div className="use">{counter.use}</div>
-                  <label>Summary : </label>
-                  <div className="use">{counter.summary}</div>
+                  <div>
+                    <h2>Summary</h2>
+                    {counter.summary}
+                  </div>
                   <div className="buttonCounter">
                     <button
                       className="btn btn-outline-danger"

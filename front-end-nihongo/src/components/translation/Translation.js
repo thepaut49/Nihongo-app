@@ -16,6 +16,7 @@ import nameStore from "../../stores/nameStore";
 import wordStore from "../../stores/wordStore";
 import particuleStore from "../../stores/particuleStore";
 import counterStore from "../../stores/counterStore";
+import translationStore from "../../stores/translationStore";
 import { loadKanjis } from "../../actions/kanjiActions";
 import { loadVerbs } from "../../actions/verbActions";
 import { loadNaAdjectives } from "../../actions/naAdjectiveActions";
@@ -27,7 +28,6 @@ import { loadCounters } from "../../actions/counterActions";
 import { updateNumberOfUse } from "../../actions/translationActions";
 import { extractParts, findListOfCandidates } from "./translationAction";
 import * as translationActions from "../../actions/translationActions";
-import translationStore from "../../stores/translationStore";
 
 const typeSelectListOfValue = [
   translationConstants.TYPE_KANJI,
@@ -142,6 +142,7 @@ const Translation = () => {
     words.length,
     particules.length,
     counters.length,
+    listParts.length,
   ]);
 
   function onChangeListParts() {
