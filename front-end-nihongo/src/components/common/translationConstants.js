@@ -13,6 +13,7 @@ const translationConstants = {
   TYPE_ALL: "All",
   TYPE_NUMBER: "Number",
   TYPE_COUNTER: "Counter",
+  TYPE_DATE: "Date",
 };
 
 export default translationConstants;

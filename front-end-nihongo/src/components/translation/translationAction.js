@@ -25,6 +25,7 @@ import verbConstants from "../common/verbConstants";
 import translationConstants from "../common/translationConstants";
 import { punctuationListWithoutDoublingkanji } from "../common/japanesePunctuation";
 import { isPartANumber } from "../common/translation/numberRecognition";
+import { isPartADateOrNumberOfDays } from "../common/translation/dateRecognition";
 
 export const extractListOfKanji = (sentence, kanjis) => {
   // je transforme ma chaine de charactère en tableau de type SEt pour que chaque element soit unique
@@ -58,13 +59,17 @@ export const extractParts = (
   let listOfParts = [];
   let indiceCourant = 0;
   while (indiceCourant < sentence.length) {
-    for (let j = 10; j > 0; j--) {
+    for (let j = 12; j > 0; j--) {
       let part = null;
       if (indiceCourant + j <= sentence.length) {
         let sentencePart = sentence.substr(indiceCourant, j);
-        //console.log("sentancePart = " + sentencePart);
+        console.log("sentancePart = " + sentencePart);
 
-        part = isPartANumber(sentencePart, indiceCourant);
+        part = isPartADateOrNumberOfDays(sentencePart, indiceCourant);
+
+        if (!part) {
+          part = isPartANumber(sentencePart, indiceCourant);
+        }
 
         if (j <= 4 && !part) {
           part = partIsACounter(sentencePart, indiceCourant, counters);

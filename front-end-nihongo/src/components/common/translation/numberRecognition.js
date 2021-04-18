@@ -48,14 +48,17 @@ export const isPartANumber = (sentencePart, indiceCourant) => {
   }
 
   if (partIsNumber) {
+    let pronunciation = isNumberInJapanese(sentencePart)
+      ? numberPronunciation(sentencePart)
+      : arabicNumberPronunciation(sentencePart);
     partResult = {
       type: translationConstants.TYPE_NUMBER,
       kanjis: sentencePart,
-      selectedPronunciation: numberPronunciation(sentencePart),
+      selectedPronunciation: pronunciation,
       selectedMeaning: japaneseNumberToArabicNumber(
         sentencePart
       ).toLocaleString("en-US"),
-      pronunciations: [numberPronunciation(sentencePart)],
+      pronunciations: [pronunciation],
       meanings: [
         japaneseNumberToArabicNumber(sentencePart).toLocaleString("en-US"),
       ],
@@ -69,7 +72,7 @@ export const isPartANumber = (sentencePart, indiceCourant) => {
   return partResult;
 };
 
-const patternXTenThousandX = (japaneseNumberString) => {
+export const patternXTenThousandX = (japaneseNumberString) => {
   const tenThousand = 10000;
   if (japaneseNumberString.includes("万")) {
     if (japaneseNumberString === "万") {
@@ -220,12 +223,12 @@ const patternX = (number) => {
       result = 9;
       break;
     default:
-      result = 0;
+      result = number;
   }
   return result;
 };
 
-const japaneseNumberToArabicNumber = (japaneseNumberString) => {
+export const japaneseNumberToArabicNumber = (japaneseNumberString) => {
   const hundredMillion = 100000000;
 
   if (japaneseNumberString.includes("億")) {
@@ -258,7 +261,7 @@ const japaneseNumberToArabicNumber = (japaneseNumberString) => {
   }
 };
 
-const numberPronunciation = (number) => {
+export const numberPronunciation = (number) => {
   let numberTemp = number;
   // on commence par remplacer les prononciation particulières de 1000
   numberTemp = numberTemp.replace("三千", "さんぜん");
@@ -315,4 +318,352 @@ const numberPronunciation = (number) => {
     }
   }
   return pronunciation;
+};
+
+export const arabicNumberPronunciation = (numberString) => {
+  let pronunciation = "";
+  const number = parseInt(numberString);
+  if (isNaN(number)) {
+    return numberString;
+  } else {
+    let currentLength = numberString.length;
+    for (let index = 0; index < numberString.length; index++) {
+      if (currentLength === 10) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "じゅう";
+            break;
+          case "2":
+            pronunciation = pronunciation + "にじゅう";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さんじゅう";
+            break;
+          case "4":
+            pronunciation = pronunciation + "よんじゅう";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ごじゅう";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろくじゅう";
+            break;
+          case "7":
+            pronunciation = pronunciation + "ななじゅう";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はちじゅう";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅうじゅう";
+            break;
+          case "0":
+            pronunciation = pronunciation + "おく";
+            break;
+          default:
+        }
+      } else if (currentLength === 9) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "いちおく";
+            break;
+          case "2":
+            pronunciation = pronunciation + "におく";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さんおく";
+            break;
+          case "4":
+            pronunciation = pronunciation + "よんおく";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ごおく";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろくおく";
+            break;
+          case "7":
+            pronunciation = pronunciation + "ななおく";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はちおく";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅうおく";
+            break;
+          case "0":
+            if (numberString.length > 9) {
+              pronunciation = pronunciation + "おく";
+            }
+            break;
+          default:
+        }
+      } else if (currentLength === 8) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "いっせん";
+            break;
+          case "2":
+            pronunciation = pronunciation + "にせん";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さんぜん";
+            break;
+          case "4":
+            pronunciation = pronunciation + "よんせん";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ごせん";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろくせん";
+            break;
+          case "7":
+            pronunciation = pronunciation + "ななせん";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はっせん";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅうせん";
+            break;
+          default:
+        }
+      } else if (currentLength === 7) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "ひゃく";
+            break;
+          case "2":
+            pronunciation = pronunciation + "にひゃく";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さんびゃく";
+            break;
+          case "4":
+            pronunciation = pronunciation + "よんひゃく";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ごひゃく";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろっぴゃく";
+            break;
+          case "7":
+            pronunciation = pronunciation + "ななひゃく";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はっぴゃく";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅうひゃく";
+            break;
+          default:
+        }
+      } else if (currentLength === 6) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "じゅう";
+            break;
+          case "2":
+            pronunciation = pronunciation + "にじゅう";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さんじゅう";
+            break;
+          case "4":
+            pronunciation = pronunciation + "よんじゅう";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ごじゅう";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろくじゅう";
+            break;
+          case "7":
+            pronunciation = pronunciation + "ななじゅう";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はちじゅう";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅうじゅう";
+            break;
+          default:
+        }
+      } else if (currentLength === 5) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "いちまん";
+            break;
+          case "2":
+            pronunciation = pronunciation + "にまん";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さんまん";
+            break;
+          case "4":
+            pronunciation = pronunciation + "よんまん";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ごまん";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろくまん";
+            break;
+          case "7":
+            pronunciation = pronunciation + "ななまん";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はちまん";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅうまん";
+            break;
+          case "0":
+            if (numberString.length > 5) {
+              pronunciation = pronunciation + "まん";
+            }
+            break;
+          default:
+        }
+      } else if (currentLength === 4) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "いっせん";
+            break;
+          case "2":
+            pronunciation = pronunciation + "にせん";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さんぜん";
+            break;
+          case "4":
+            pronunciation = pronunciation + "よんせん";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ごせん";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろくせん";
+            break;
+          case "7":
+            pronunciation = pronunciation + "ななせん";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はっせん";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅうせん";
+            break;
+          default:
+        }
+      } else if (currentLength === 3) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "ひゃく";
+            break;
+          case "2":
+            pronunciation = pronunciation + "にひゃく";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さんびゃく";
+            break;
+          case "4":
+            pronunciation = pronunciation + "よんひゃく";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ごひゃく";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろっぴゃく";
+            break;
+          case "7":
+            pronunciation = pronunciation + "ななひゃく";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はっぴゃく";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅうひゃく";
+            break;
+          default:
+        }
+      } else if (currentLength === 2) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "じゅう";
+            break;
+          case "2":
+            pronunciation = pronunciation + "にじゅう";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さんじゅう";
+            break;
+          case "4":
+            pronunciation = pronunciation + "よんじゅう";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ごじゅう";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろくじゅう";
+            break;
+          case "7":
+            pronunciation = pronunciation + "ななじゅう";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はちじゅう";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅうじゅう";
+            break;
+          default:
+        }
+      } else if (currentLength === 1) {
+        switch (numberString[index]) {
+          case "1":
+            pronunciation = pronunciation + "いち";
+            break;
+          case "2":
+            pronunciation = pronunciation + "に";
+            break;
+          case "3":
+            pronunciation = pronunciation + "さん";
+            break;
+          case "4":
+            pronunciation = pronunciation + "し";
+            break;
+          case "5":
+            pronunciation = pronunciation + "ご";
+            break;
+          case "6":
+            pronunciation = pronunciation + "ろく";
+            break;
+          case "7":
+            pronunciation = pronunciation + "なな";
+            break;
+          case "8":
+            pronunciation = pronunciation + "はち";
+            break;
+          case "9":
+            pronunciation = pronunciation + "きゅう";
+            break;
+          default:
+        }
+      }
+      currentLength--;
+    }
+    return pronunciation;
+  }
+};
+
+export const isNumberInJapanese = (numberString) => {
+  let isNumberInJapanese = true;
+  for (let index = 0; index < numberString.length; index++) {
+    if (!japaneseNumberCharacters.includes(numberString[index])) {
+      isNumberInJapanese = false;
+    }
+  }
+  return isNumberInJapanese;
 };
