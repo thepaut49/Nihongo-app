@@ -14,6 +14,7 @@ const translationConstants = {
   TYPE_NUMBER: "Number",
   TYPE_COUNTER: "Counter",
   TYPE_DATE: "Date",
+  TYPE_SUFFIX: "Suffix",
 };
 
 export default translationConstants;

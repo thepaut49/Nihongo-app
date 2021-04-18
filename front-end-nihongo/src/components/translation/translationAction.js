@@ -54,7 +54,8 @@ export const extractParts = (
   names,
   words,
   particules,
-  counters
+  counters,
+  suffixs
 ) => {
   let listOfParts = [];
   let indiceCourant = 0;
@@ -73,6 +74,15 @@ export const extractParts = (
 
         if (j <= 4 && !part) {
           part = partIsACounter(sentencePart, indiceCourant, counters);
+        }
+
+        if (
+          !part &&
+          listOfParts.length > 0 &&
+          listOfParts[listOfParts.length - 1].type ===
+            translationConstants.TYPE_NAME
+        ) {
+          part = partIsASuffix(sentencePart, indiceCourant, suffixs);
         }
 
         if (!part) {
@@ -671,6 +681,34 @@ const partIsACounter = (sentencePart, currentIndex, counters) => {
           (item) => item.pronunciation
         ),
         meanings: [counter.summary],
+        unknown: false,
+        length: sentencePart.length,
+        currentIndex: currentIndex,
+        listOfValues: [],
+      };
+      return part;
+    }
+  }
+};
+
+const partIsASuffix = (sentencePart, currentIndex, suffixs) => {
+  let part = null;
+  for (let index = 0; index < suffixs.length; index++) {
+    let suffix = suffixs[index];
+    debugger;
+    if (
+      suffix.kanjis === sentencePart ||
+      suffix.pronunciations.find(
+        (element) => element.pronunciation === sentencePart
+      )
+    ) {
+      part = {
+        type: translationConstants.TYPE_SUFFIX,
+        kanjis: sentencePart,
+        selectedPronunciation: suffix.pronunciations[0].pronunciation,
+        selectedMeaning: suffix.summary,
+        pronunciations: suffix.pronunciations.map((item) => item.pronunciation),
+        meanings: [suffix.summary],
         unknown: false,
         length: sentencePart.length,
         currentIndex: currentIndex,

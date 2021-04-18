@@ -17,6 +17,7 @@ import wordStore from "../../stores/wordStore";
 import particuleStore from "../../stores/particuleStore";
 import counterStore from "../../stores/counterStore";
 import translationStore from "../../stores/translationStore";
+import suffixStore from "../../stores/suffixStore";
 import { loadKanjis } from "../../actions/kanjiActions";
 import { loadVerbs } from "../../actions/verbActions";
 import { loadNaAdjectives } from "../../actions/naAdjectiveActions";
@@ -25,6 +26,7 @@ import { loadNames } from "../../actions/nameActions";
 import { loadWords } from "../../actions/wordActions";
 import { loadParticules } from "../../actions/particuleActions";
 import { loadCounters } from "../../actions/counterActions";
+import { loadSuffixs } from "../../actions/suffixActions";
 import { updateNumberOfUse } from "../../actions/translationActions";
 import { extractParts, findListOfCandidates } from "./translationAction";
 import * as translationActions from "../../actions/translationActions";
@@ -74,6 +76,7 @@ const Translation = () => {
   const [words, setWords] = useState(wordStore.getWords());
   const [particules, setParticules] = useState(particuleStore.getParticules());
   const [counters, setCounters] = useState(counterStore.getCounters());
+  const [suffixs, setSuffixs] = useState(suffixStore.getSuffixs());
 
   // variables locales
   const [sentence, setSentence] = useState(translationStore.getSentence());
@@ -108,6 +111,7 @@ const Translation = () => {
     translationStore.addChangeListener(onChangeTypeSelect);
     translationStore.addChangeListener(onChangeListOfKanjis);
     translationStore.addChangeListener(onChangeListParts);
+    suffixStore.addChangeListener(onChangeSuffixs);
 
     if (kanjiStore.getKanjis().length === 0) loadKanjis();
     if (verbStore.getVerbs().length === 0) loadVerbs();
@@ -117,6 +121,7 @@ const Translation = () => {
     if (wordStore.getWords().length === 0) loadWords();
     if (particuleStore.getParticules().length === 0) loadParticules();
     if (counterStore.getCounters().length === 0) loadCounters();
+    if (suffixStore.getSuffixs().length === 0) loadSuffixs();
 
     return function () {
       kanjiStore.removeChangeListener(onChangeKanjis); //cleanup on unmount
@@ -132,6 +137,7 @@ const Translation = () => {
       translationStore.removeChangeListener(onChangeTypeSelect);
       translationStore.removeChangeListener(onChangeListOfKanjis);
       translationStore.removeChangeListener(onChangeListParts);
+      suffixStore.removeChangeListener(onChangeSuffixs);
     };
   }, [
     kanjis.length,
@@ -143,7 +149,12 @@ const Translation = () => {
     particules.length,
     counters.length,
     listParts.length,
+    suffixs.length,
   ]);
+
+  function onChangeSuffixs() {
+    setSuffixs(suffixStore.getSuffixs());
+  }
 
   function onChangeListParts() {
     setListParts(translationStore.getListParts());
@@ -229,7 +240,8 @@ const Translation = () => {
       names,
       words,
       particules,
-      counters
+      counters,
+      suffixs
     );
     translationActions.loadParts(_listOfParts);
   };
