@@ -43,7 +43,7 @@ function VerbList(props) {
                     <label>Group :</label>
                     {verb.groupe}
                   </div>
-                  <div className="delete">
+                  <div>
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
@@ -76,8 +76,8 @@ VerbList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       neutralForm: PropTypes.string.isRequired,
-      pronunciation: PropTypes.arrayOf.isRequired,
-      meaning: PropTypes.arrayOf.isRequired,
+      pronunciations: PropTypes.arrayOf.isRequired,
+      meanings: PropTypes.arrayOf.isRequired,
       groupe: PropTypes.string.isRequired,
     })
   ).isRequired,

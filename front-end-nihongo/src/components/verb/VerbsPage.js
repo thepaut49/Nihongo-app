@@ -37,7 +37,6 @@ function VerbsPage(props) {
   }
 
   // fonction for criteria form
-
   function handleChange(event) {
     let newValue = event.target.value;
     if (event.target.name === "pronunciationCriteria") {
@@ -51,6 +50,7 @@ function VerbsPage(props) {
     });
   }
 
+  // reset of search criteria
   function handleReset(event) {
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -66,6 +66,7 @@ function VerbsPage(props) {
     });
   }
 
+  // onclick function near pronunciation criteria
   function handleClick(event) {
     let input = document.getElementById("pronunciationCriteria");
     input.value = input.value + event.target.innerText;
@@ -76,6 +77,7 @@ function VerbsPage(props) {
     });
   }
 
+  // submit function of criteria form
   function handleSubmit(event) {
     event.preventDefault();
     const _verb = {
