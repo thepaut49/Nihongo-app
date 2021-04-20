@@ -44,13 +44,15 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import ScrollToTop from "./common/ScrollToTop";
+import ButtonScrollToTop from "./common/ButtonScrollToTop";
 
 function App() {
   return (
     <>
       <ToastContainer autoClose={3000} hideProgressBar />
+      <ScrollToTop />
+      <ButtonScrollToTop />
       <div className="app-container">
-        <ScrollToTop />
         <Header />
         <Switch>
           <Route path="/" exact component={HomePage} />

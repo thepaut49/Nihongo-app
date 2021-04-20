@@ -122,15 +122,15 @@ function KanjiCriteriaForm(props) {
         </div>
 
         <div style={gridListStyle}>
-          {radicals.map((radical) => {
+          {radicals.map((radical, index) => {
             return (
               <>
                 {nbrOfStrokesString.includes(radical) ? (
-                  <button key={radical.toString()} style={numberStyle}>
+                  <button key={index} style={numberStyle}>
                     {radical}
                   </button>
                 ) : (
-                  <button key={radical.toString()} onClick={props.onClick}>
+                  <button key={index} onClick={props.onClick}>
                     {radical}
                   </button>
                 )}
