@@ -105,6 +105,16 @@ const Part = (props) => {
           )}
         </>
       )}
+      {part && translationConstants.TYPE_UNKNOWN !== part.type && (
+        <>
+          <button
+            className="btn btn-primary"
+            onClick={(event) => props.onUnknownTransform(event, part)}
+          >
+            Unknown
+          </button>
+        </>
+      )}
     </div>
   );
 };
@@ -113,6 +123,7 @@ Part.prototypes = {
   part: PropTypes.object.isRequired,
   onPartChange: PropTypes.func.isRequired,
   onPronunciationChange: PropTypes.func.isRequired,
+  onUnknownTransform: PropTypes.func.isRequired,
 };
 
 export default Part;

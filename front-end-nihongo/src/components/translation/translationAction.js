@@ -64,7 +64,7 @@ export const extractParts = (
       let part = null;
       if (indiceCourant + j <= sentence.length) {
         let sentencePart = sentence.substr(indiceCourant, j);
-        console.log("sentancePart = " + sentencePart);
+        //console.log("sentancePart = " + sentencePart);
 
         part = isPartADateOrNumberOfDays(sentencePart, indiceCourant);
 
@@ -74,15 +74,6 @@ export const extractParts = (
 
         if (j <= 4 && !part) {
           part = partIsACounter(sentencePart, indiceCourant, counters);
-        }
-
-        if (
-          !part &&
-          listOfParts.length > 0 &&
-          listOfParts[listOfParts.length - 1].type ===
-            translationConstants.TYPE_NAME
-        ) {
-          part = partIsASuffix(sentencePart, indiceCourant, suffixs);
         }
 
         if (!part) {
@@ -127,7 +118,9 @@ export const extractParts = (
     naAdjectives,
     iAdjectives,
     names,
-    words
+    words,
+    counters,
+    suffixs
   );
 
   return listOfParts;
@@ -141,7 +134,9 @@ const addOfUnknownParts = (
   naAdjectives,
   iAdjectives,
   names,
-  words
+  words,
+  counters,
+  suffixs
 ) => {
   // add of unknown parts
   let listOfPartsWithUnknownParts = [];
@@ -154,7 +149,10 @@ const addOfUnknownParts = (
       naAdjectives,
       iAdjectives,
       names,
-      words
+      words,
+      counters,
+      suffixs,
+      listOfPartsWithUnknownParts
     );
     listOfPartsWithUnknownParts.push(unknownPart);
   } else {
@@ -175,7 +173,13 @@ const addOfUnknownParts = (
             naAdjectives,
             iAdjectives,
             names,
-            words
+            words,
+            counters,
+            suffixs,
+            listOfPartsWithUnknownParts,
+            counters,
+            suffixs,
+            listOfPartsWithUnknownParts
           );
           listOfPartsWithUnknownParts.push(unknownPart);
           listOfPartsWithUnknownParts.push(currentPart);
@@ -198,7 +202,10 @@ const addOfUnknownParts = (
                   naAdjectives,
                   iAdjectives,
                   names,
-                  words
+                  words,
+                  counters,
+                  suffixs,
+                  listOfPartsWithUnknownParts
                 );
                 listOfPartsWithUnknownParts.push(unknownPart);
               }
@@ -222,7 +229,10 @@ const addOfUnknownParts = (
                 naAdjectives,
                 iAdjectives,
                 names,
-                words
+                words,
+                counters,
+                suffixs,
+                listOfPartsWithUnknownParts
               );
               listOfPartsWithUnknownParts.push(unknownPart);
             }
@@ -250,7 +260,10 @@ const addOfUnknownParts = (
                   naAdjectives,
                   iAdjectives,
                   names,
-                  words
+                  words,
+                  counters,
+                  suffixs,
+                  listOfPartsWithUnknownParts
                 );
                 listOfPartsWithUnknownParts.push(unknownPart);
               }
@@ -274,7 +287,10 @@ const addOfUnknownParts = (
                 naAdjectives,
                 iAdjectives,
                 names,
-                words
+                words,
+                counters,
+                suffixs,
+                listOfPartsWithUnknownParts
               );
               listOfPartsWithUnknownParts.push(unknownPart);
             }
@@ -298,7 +314,10 @@ const addOfUnknownParts = (
                 naAdjectives,
                 iAdjectives,
                 names,
-                words
+                words,
+                counters,
+                suffixs,
+                listOfPartsWithUnknownParts
               );
               listOfPartsWithUnknownParts.push(unknownPart);
             }
@@ -322,7 +341,10 @@ const addOfUnknownParts = (
               naAdjectives,
               iAdjectives,
               names,
-              words
+              words,
+              counters,
+              suffixs,
+              listOfPartsWithUnknownParts
             );
             listOfPartsWithUnknownParts.push(unknownPart);
           }
@@ -1037,8 +1059,12 @@ const partIsAParticule = (
   naAdjectives,
   iAdjectives,
   names,
-  words
+  words,
+  counters,
+  suffixs,
+  listOfParts
 ) => {
+  debugger;
   let part = null;
   for (let index = 0; index < particules.length; index++) {
     let particule = particules[index];
@@ -1058,6 +1084,20 @@ const partIsAParticule = (
       return part;
     }
   }
+
+  // petite vérification pour savoir si la partie inconnu peut être un suffix de nom
+  if (listOfParts && listOfParts.length > 0) {
+    if (
+      listOfParts[listOfParts.length - 1].type ===
+      translationConstants.TYPE_NAME
+    ) {
+      part = partIsASuffix(sentencePart, currentIndex, suffixs);
+      if (part) {
+        return part;
+      }
+    }
+  }
+
   // the unknown part is not a particule so it is unknown
   let listOfCandidates = findListOfCandidates(
     sentencePart,

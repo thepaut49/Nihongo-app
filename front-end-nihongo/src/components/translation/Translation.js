@@ -306,6 +306,119 @@ const Translation = () => {
     translationActions.loadParts(newPartsList);
   };
 
+  const handleUnknownTransform = (event, part) => {
+    event.preventDefault();
+    debugger;
+    let indexToTransform = 0;
+    for (let i = 0; i < listParts.length; i++) {
+      if (listParts[i] === part) indexToTransform = i;
+    }
+    let newPartsList = [];
+    const partToTransform = listParts[indexToTransform];
+    const beforePart =
+      indexToTransform > 0 ? listParts[indexToTransform - 1] : null;
+    const afterPart =
+      indexToTransform < listParts.length - 1
+        ? listParts[indexToTransform + 1]
+        : null;
+    const fusionBeforeAndAfterPart =
+      beforePart &&
+      afterPart &&
+      beforePart.type === translationConstants.TYPE_UNKNOWN &&
+      afterPart.type === translationConstants.TYPE_UNKNOWN;
+    const fusionBeforePart =
+      beforePart && beforePart.type === translationConstants.TYPE_UNKNOWN;
+    const fusionAfterPart =
+      afterPart && afterPart.type === translationConstants.TYPE_UNKNOWN;
+    let newFusionPart = {};
+
+    if (fusionBeforeAndAfterPart) {
+      newFusionPart = {
+        type: translationConstants.TYPE_UNKNOWN,
+        kanjis: beforePart.kanjis + partToTransform.kanjis + afterPart.kanjis,
+        selectedPronunciation: "?",
+        selectedMeaning: "?",
+        pronunciations: ["?"],
+        meanings: ["?"],
+        unknown: true,
+        length: beforePart.length + partToTransform.length + afterPart.length,
+        currentIndex: beforePart.currentIndex,
+        listOfValues: [],
+      };
+      listParts.forEach((item, index) => {
+        if (index === indexToTransform - 1) {
+          newPartsList.push(newFusionPart);
+        } else if (
+          index < indexToTransform - 1 ||
+          index > indexToTransform + 1
+        ) {
+          newPartsList.push(item);
+        }
+      });
+    } else if (fusionBeforePart) {
+      newFusionPart = {
+        type: translationConstants.TYPE_UNKNOWN,
+        kanjis: beforePart.kanjis + partToTransform.kanjis,
+        selectedPronunciation: "?",
+        selectedMeaning: "?",
+        pronunciations: ["?"],
+        meanings: ["?"],
+        unknown: true,
+        length: beforePart.length + partToTransform.length,
+        currentIndex: beforePart.currentIndex,
+        listOfValues: [],
+      };
+      listParts.forEach((item, index) => {
+        if (index === indexToTransform - 1) {
+          newPartsList.push(newFusionPart);
+        } else if (index < indexToTransform - 1 || index > indexToTransform) {
+          newPartsList.push(item);
+        }
+      });
+    } else if (fusionAfterPart) {
+      newFusionPart = {
+        type: translationConstants.TYPE_UNKNOWN,
+        kanjis: partToTransform.kanjis + afterPart.kanjis,
+        selectedPronunciation: "?",
+        selectedMeaning: "?",
+        pronunciations: ["?"],
+        meanings: ["?"],
+        unknown: true,
+        length: partToTransform.length + afterPart.length,
+        currentIndex: partToTransform.currentIndex,
+        listOfValues: [],
+      };
+      listParts.forEach((item, index) => {
+        if (index === indexToTransform) {
+          newPartsList.push(newFusionPart);
+        } else if (index < indexToTransform || index > indexToTransform + 1) {
+          newPartsList.push(item);
+        }
+      });
+    } else {
+      newFusionPart = {
+        type: translationConstants.TYPE_UNKNOWN,
+        kanjis: partToTransform.kanjis,
+        selectedPronunciation: "?",
+        selectedMeaning: "?",
+        pronunciations: ["?"],
+        meanings: ["?"],
+        unknown: true,
+        length: partToTransform.length,
+        currentIndex: partToTransform.currentIndex,
+        listOfValues: [],
+      };
+      listParts.forEach((item, index) => {
+        if (index < indexToTransform || index > indexToTransform) {
+          newPartsList.push(item);
+        } else {
+          newPartsList.push(newFusionPart);
+        }
+      });
+    }
+    translationActions.loadParts(newPartsList);
+  };
+
   return (
     <>
       <h2>Translation</h2>
@@ -347,6 +460,7 @@ const Translation = () => {
           list={listParts}
           listOfKanjis={listOfKanjis}
           onSplitPart={handleSplitPart}
+          onUnknownTransform={handleUnknownTransform}
         />
       </div>
     </>

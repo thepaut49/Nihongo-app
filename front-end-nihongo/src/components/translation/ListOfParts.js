@@ -110,6 +110,7 @@ const ListOfParts = (props) => {
                 key={index}
                 onPartChange={handlePartChange}
                 onSplitPart={handleSplitPart}
+                onUnknownTransform={props.onUnknownTransform}
               />
             );
           })}
@@ -130,6 +131,7 @@ ListOfParts.prototypes = {
   list: PropTypes.arrayOf(Object).isRequired,
   listOfKanjis: PropTypes.arrayOf(Object).isRequired,
   onSplitPart: PropTypes.func.isRequired,
+  onUnknownTransform: PropTypes.func.isRequired,
 };
 
 export default ListOfParts;
