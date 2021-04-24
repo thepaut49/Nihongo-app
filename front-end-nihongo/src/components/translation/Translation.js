@@ -281,10 +281,7 @@ const Translation = () => {
   const handleSplitPart = (newList) => {
     let newPartsList = [];
     newList.forEach((part) => {
-      if (
-        part.type === translationConstants.TYPE_UNKNOWN &&
-        part.listOfValues.length === 0
-      ) {
+      if (part.type === translationConstants.TYPE_UNKNOWN) {
         let partWithCandidates = {
           ...part,
           listOfValues: findListOfCandidates(
@@ -295,7 +292,9 @@ const Translation = () => {
             iAdjectives,
             names,
             words,
-            particules
+            particules,
+            counters,
+            suffixs
           ),
         };
         newPartsList.push(partWithCandidates);

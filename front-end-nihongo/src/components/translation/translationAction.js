@@ -123,6 +123,73 @@ export const extractParts = (
     suffixs
   );
 
+  listOfParts = lastPassWithParticulesAndSuffix(
+    listOfParts,
+    particules,
+    suffixs
+  );
+
+  return listOfParts;
+};
+
+/**
+ * Faire une dernière passe après l'extractions de la ponctuation pour savoir si les éléments inconnu sont des particules ou des suffixs
+ * @param {liste des différents éléments de la phrase} listOfParts
+ * @param {liste de toutes les particules} particules
+ * @param {liste de toutes les suffixs} suffixs
+ * @returns
+ */
+const lastPassWithParticulesAndSuffix = (listOfParts, particules, suffixs) => {
+  debugger;
+  for (let index = 0; index < listOfParts.length; index++) {
+    let part = listOfParts[index];
+    if (part.type === translationConstants.TYPE_UNKNOWN) {
+      let partIdentified = false;
+      for (let indexP = 0; indexP < particules.length; indexP++) {
+        let particule = particules[indexP];
+        if (particule.kanjis === part.kanjis) {
+          listOfParts[index] = {
+            ...part,
+            type: translationConstants.TYPE_PARTICULE,
+            selectedPronunciation: particule.kanjis,
+            selectedMeaning: particule.summary,
+            pronunciations: [particule.kanjis],
+            meanings: [particule.summary],
+            unknown: false,
+            listOfValues: [],
+          };
+          partIdentified = true;
+          break;
+        }
+      }
+
+      if (
+        !partIdentified &&
+        index > 0 &&
+        listOfParts[index - 1].type === translationConstants.TYPE_NAME
+      ) {
+        for (let indexS = 0; indexS < suffixs.length; indexS++) {
+          let suffix = suffixs[indexS];
+          if (suffix.kanjis === part.kanjis) {
+            listOfParts[index] = {
+              ...part,
+              type: translationConstants.TYPE_SUFFIX,
+              selectedPronunciation: suffix.pronunciations[0].pronunciation,
+              selectedMeaning: suffix.summary,
+              pronunciations: suffix.pronunciations.map(
+                (item) => item.pronunciation
+              ),
+              meanings: [suffix.summary],
+              unknown: false,
+              listOfValues: [],
+            };
+            partIdentified = true;
+            break;
+          }
+        }
+      }
+    }
+  }
   return listOfParts;
 };
 
@@ -975,6 +1042,7 @@ const wordCandidate = (sentencePart, currentIndex, words) => {
 
 const particuleCandidate = (sentencePart, currentIndex, particules) => {
   let part = null;
+  debugger;
   let candidateList = [];
   if (!particules) return candidateList;
   for (let index = 0; index < particules.length; index++) {
@@ -998,6 +1066,66 @@ const particuleCandidate = (sentencePart, currentIndex, particules) => {
   return candidateList;
 };
 
+const counterCandidate = (sentencePart, currentIndex, counters) => {
+  let part = null;
+  let candidateList = [];
+  if (!counters) return candidateList;
+  for (let index = 0; index < counters.length; index++) {
+    let counter = counters[index];
+    let listOfCounterPro = [];
+    counter.pronunciations.forEach((pro) => {
+      const pronunciation = pro.pronunciation;
+      listOfCounterPro.push(pronunciation.substr(0, pronunciation.length));
+    });
+    if (listOfCounterPro.includes(sentencePart)) {
+      part = {
+        type: translationConstants.TYPE_COUNTER,
+        kanjis: sentencePart,
+        selectedPronunciation: sentencePart,
+        selectedMeaning: counter.summary,
+        pronunciations: [sentencePart],
+        meanings: [counter.summary],
+        unknown: false,
+        length: sentencePart.length,
+        currentIndex: currentIndex,
+        listOfValues: [],
+      };
+      candidateList.push(part);
+    }
+  }
+  return candidateList;
+};
+
+const suffixCandidate = (sentencePart, currentIndex, suffixs) => {
+  let part = null;
+  let candidateList = [];
+  if (!suffixs) return candidateList;
+  for (let index = 0; index < suffixs.length; index++) {
+    let suffix = suffixs[index];
+    let listOfSuffixPro = [];
+    suffix.pronunciations.forEach((pro) => {
+      const pronunciation = pro.pronunciation;
+      listOfSuffixPro.push(pronunciation.substr(0, pronunciation.length));
+    });
+    if (listOfSuffixPro.includes(sentencePart)) {
+      part = {
+        type: translationConstants.TYPE_SUFFIX,
+        kanjis: sentencePart,
+        selectedPronunciation: sentencePart,
+        selectedMeaning: suffix.summary,
+        pronunciations: [sentencePart],
+        meanings: [suffix.summary],
+        unknown: false,
+        length: sentencePart.length,
+        currentIndex: currentIndex,
+        listOfValues: [],
+      };
+      candidateList.push(part);
+    }
+  }
+  return candidateList;
+};
+
 export const findListOfCandidates = (
   sentencePart,
   currentIndex,
@@ -1006,7 +1134,9 @@ export const findListOfCandidates = (
   iAdjectives,
   names,
   words,
-  particules
+  particules,
+  counters,
+  suffixs
 ) => {
   let listOfCandidates = [];
   let listOfVerbCandidates = verbCandidate(sentencePart, currentIndex, verbs);
@@ -1026,6 +1156,18 @@ export const findListOfCandidates = (
     sentencePart,
     currentIndex,
     particules
+  );
+
+  let listOfCounterCandidates = counterCandidate(
+    sentencePart,
+    currentIndex,
+    counters
+  );
+
+  let listOfSuffixCandidates = suffixCandidate(
+    sentencePart,
+    currentIndex,
+    suffixs
   );
 
   if (listOfVerbCandidates.length > 0) {
@@ -1048,6 +1190,14 @@ export const findListOfCandidates = (
     listOfCandidates = listOfCandidates.concat(listOfparticuleCandidates);
   }
 
+  if (listOfCounterCandidates.length > 0) {
+    listOfCandidates = listOfCandidates.concat(listOfCounterCandidates);
+  }
+
+  if (listOfSuffixCandidates.length > 0) {
+    listOfCandidates = listOfCandidates.concat(listOfSuffixCandidates);
+  }
+
   return listOfCandidates;
 };
 
@@ -1064,7 +1214,6 @@ const partIsAParticule = (
   suffixs,
   listOfParts
 ) => {
-  debugger;
   let part = null;
   for (let index = 0; index < particules.length; index++) {
     let particule = particules[index];
@@ -1107,7 +1256,9 @@ const partIsAParticule = (
     iAdjectives,
     names,
     words,
-    particules
+    particules,
+    counters,
+    suffixs
   );
   part = {
     type: translationConstants.TYPE_UNKNOWN,

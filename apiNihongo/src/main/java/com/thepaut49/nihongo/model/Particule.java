@@ -20,7 +20,7 @@ public class Particule implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false, unique = true, length = 5)
+	@Column(nullable = false, length = 5)
 	private String kanjis;
 	
 	@Column(nullable = false)

@@ -83,7 +83,7 @@ ParticuleList.propTypes = {
       summary: PropTypes.string.isRequired,
       function: PropTypes.string,
       howToUse: PropTypes.string,
-      examples: PropTypes.arrayOf(Object),
+      examples: PropTypes.string,
       version: PropTypes.number,
     })
   ).isRequired,
