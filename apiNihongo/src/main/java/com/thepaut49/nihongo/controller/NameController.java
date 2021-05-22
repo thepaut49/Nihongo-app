@@ -25,6 +25,8 @@ import com.thepaut49.nihongo.mapper.name.NameToDTOMapper;
 import com.thepaut49.nihongo.model.name.Name;
 import com.thepaut49.nihongo.service.NameService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/names")
@@ -33,12 +35,14 @@ public class NameController {
 	@Autowired
 	private NameService nameService;
 
+	//@RolesAllowed("admin")
 	@PostMapping("/create")
 	public NameDTO createName( @RequestBody NameDTO nameDTO) {
 		Name newName = NameToDTOMapper.map(nameDTO);
 		return NameToDTOMapper.map(nameService.createName(newName));
 	}
 
+	//@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public NameDTO updateName( @RequestBody NameDTO nameDTO, @PathVariable Long id) {
 		Name updatedName = NameToDTOMapper.map(nameDTO);  
@@ -51,7 +55,7 @@ public class NameController {
 		return NameToDTOMapper.map(nameService.updateNameNumberOfUse(id));
 	}
 
-
+	//@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		nameService.delete(id);
@@ -101,6 +105,4 @@ public class NameController {
 				.map(name -> ObjectDTOMapper.map(name))
 				.collect(Collectors.toList());
 	}
-
-
 }

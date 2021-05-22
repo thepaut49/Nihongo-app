@@ -25,6 +25,8 @@ import com.thepaut49.nihongo.mapper.word.WordToDTOMapper;
 import com.thepaut49.nihongo.model.word.Word;
 import com.thepaut49.nihongo.service.WordService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/words")
@@ -33,12 +35,14 @@ public class WordController {
 	@Autowired
 	private WordService wordService;
 
+	//@RolesAllowed("admin")
 	@PostMapping("/create")
 	public WordDTO createWord( @RequestBody WordDTO wordDTO) {
 		Word newWord = WordToDTOMapper.map(wordDTO);
 		return WordToDTOMapper.map(wordService.createWord(newWord));
 	}
 
+	//@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public WordDTO updateWord( @RequestBody WordDTO wordDTO, @PathVariable Long id) {
 		Word updatedWord = WordToDTOMapper.map(wordDTO);  
@@ -51,7 +55,7 @@ public class WordController {
 		return WordToDTOMapper.map(wordService.updateWordNumberOfUse(id));
 	}
 
-
+	//@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		wordService.delete(id);
@@ -91,8 +95,7 @@ public class WordController {
 				.map(lWord -> WordToDTOMapper.map(lWord))
 				.collect(Collectors.toList());
 	}
-	
-	
+
 	@GetMapping("/findMostUsedWords/{quantity}")
 	public List<ObjectDTO> findMostUsedWords(@PathVariable Integer quantity) { 
 		List<Word> words = wordService.findMostUsedWords(quantity);
@@ -101,6 +104,4 @@ public class WordController {
 				.map(word -> ObjectDTOMapper.map(word))
 				.collect(Collectors.toList());
 	}
-
-
 }

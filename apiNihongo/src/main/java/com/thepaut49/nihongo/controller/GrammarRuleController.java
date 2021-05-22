@@ -19,6 +19,8 @@ import com.thepaut49.nihongo.mapper.GrammarRuleToDTOMapper;
 import com.thepaut49.nihongo.model.GrammarRule;
 import com.thepaut49.nihongo.service.GrammarRuleService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/grammarRules")
@@ -27,19 +29,22 @@ public class GrammarRuleController {
 	@Autowired
 	private GrammarRuleService grammarRuleService;
 
+	//@RolesAllowed("admin")
 	@PostMapping("/create")
 	public GrammarRuleDTO createGrammarRule( @RequestBody GrammarRuleDTO grammarRuleDTO) {
 		GrammarRule newGrammarRule = GrammarRuleToDTOMapper.map(grammarRuleDTO);
 		return GrammarRuleToDTOMapper.map(grammarRuleService.createGrammarRule(newGrammarRule));
 	}
 
+	//@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public GrammarRuleDTO updateGrammarRule( @RequestBody GrammarRuleDTO grammarRuleDTO, @PathVariable Long id) {
 		GrammarRule updatedGrammarRule = GrammarRuleToDTOMapper.map(grammarRuleDTO);  
 		updatedGrammarRule.setId(id);
 		return GrammarRuleToDTOMapper.map(grammarRuleService.updateGrammarRule(updatedGrammarRule));
 	}
-	
+
+	//@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		grammarRuleService.delete(id);
@@ -64,5 +69,4 @@ public class GrammarRuleController {
 				.map(grammarRule -> GrammarRuleToDTOMapper.map(grammarRule))
 				.collect(Collectors.toList());
 	}
-	
 }

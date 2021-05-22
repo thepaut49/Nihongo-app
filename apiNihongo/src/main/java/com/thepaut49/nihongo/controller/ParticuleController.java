@@ -19,6 +19,8 @@ import com.thepaut49.nihongo.mapper.ParticuleToDTOMapper;
 import com.thepaut49.nihongo.model.Particule;
 import com.thepaut49.nihongo.service.ParticuleService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/particules")
@@ -27,19 +29,22 @@ public class ParticuleController {
 	@Autowired
 	private ParticuleService particuleService;
 
+	//@RolesAllowed("admin")
 	@PostMapping("/create")
 	public ParticuleDTO createParticule( @RequestBody ParticuleDTO particuleDTO) {
 		Particule newParticule = ParticuleToDTOMapper.map(particuleDTO);
 		return ParticuleToDTOMapper.map(particuleService.createParticule(newParticule));
 	}
 
+	//@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public ParticuleDTO updateParticule( @RequestBody ParticuleDTO particuleDTO, @PathVariable Long id) {
 		Particule updatedParticule = ParticuleToDTOMapper.map(particuleDTO);  
 		updatedParticule.setId(id);
 		return ParticuleToDTOMapper.map(particuleService.updateParticule(updatedParticule));
 	}
-	
+
+	//@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		particuleService.delete(id);

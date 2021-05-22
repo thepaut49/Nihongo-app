@@ -25,6 +25,8 @@ import com.thepaut49.nihongo.mapper.counter.CounterToDTOMapper;
 import com.thepaut49.nihongo.model.counter.Counter;
 import com.thepaut49.nihongo.service.CounterService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/counters")
@@ -33,12 +35,14 @@ public class CounterController {
 	@Autowired
 	private CounterService counterService;
 
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public CounterDTO createCounter( @RequestBody CounterDTO counterDTO) {
 		Counter newCounter = CounterToDTOMapper.map(counterDTO);
 		return CounterToDTOMapper.map(counterService.createCounter(newCounter));
 	}
 
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public CounterDTO updateCounter( @RequestBody CounterDTO counterDTO, @PathVariable Long id) {
 		Counter updatedCounter = CounterToDTOMapper.map(counterDTO);  
@@ -51,7 +55,7 @@ public class CounterController {
 		return CounterToDTOMapper.map(counterService.updateCounterNumberOfUse(id));
 	}
 
-
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		counterService.delete(id);
@@ -62,7 +66,8 @@ public class CounterController {
 	public CounterDTO findById( @PathVariable Long id) {
 		return CounterToDTOMapper.map(counterService.findById(id));
 	}
-	
+
+
 	@GetMapping(value = "/findByKanjis/{kanjis}")
 	public CounterDTO findByNeutralForm( @PathVariable String kanjis) {
 		return CounterToDTOMapper.map(counterService.findByKanjis(kanjis));
@@ -101,6 +106,4 @@ public class CounterController {
 				.map(counter -> ObjectDTOMapper.map(counter))
 				.collect(Collectors.toList());
 	}
-
-
 }

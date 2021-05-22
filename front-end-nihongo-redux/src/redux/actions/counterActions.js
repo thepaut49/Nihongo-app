@@ -1,0 +1,94 @@
+import * as counterApi from "../../api/counterApi";
+import * as types from "./actionTypes";
+import { beginApiCall, apiCallError } from "./apiStatusActions";
+
+export function filterCounterSuccess(counters) {
+  return { type: types.FILTER_COUNTERS_SUCCESS, counters };
+}
+
+export function loadCounterSuccess(counters) {
+  return { type: types.LOAD_COUNTERS_SUCCESS, counters };
+}
+
+export function createCounterSuccess(counter) {
+  return { type: types.CREATE_COUNTER_SUCCESS, counter };
+}
+
+export function updateCounterSuccess(counter) {
+  return { type: types.UPDATE_COUNTER_SUCCESS, counter };
+}
+
+export function deleteCounterOptimistic(counter) {
+  return { type: types.DELETE_COUNTER_OPTIMISTIC, counter };
+}
+
+export function loadCounters() {
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return counterApi
+      .getCounters()
+      .then((counters) => {
+        dispatch(loadCounterSuccess(counters));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function saveCounter(counter) {
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return counterApi
+      .saveCounter(counter)
+      .then((savedCounter) => {
+        counter.id
+          ? dispatch(updateCounterSuccess(savedCounter))
+          : dispatch(createCounterSuccess(savedCounter));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function deleteCounter(counter) {
+  return function (dispatch) {
+    // Doing optimistic delete, so not dispatching begin/end api call
+    // actions, or apiCallError action since we're not showing the loading status for this.
+    dispatch(deleteCounterOptimistic(counter));
+    return counterApi.deleteCounter(counter.id);
+  };
+}
+
+export function filterCounters(counterCriteria) {
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return counterApi
+      .filterCounters(counterCriteria)
+      .then((counters) => {
+        dispatch(filterCounterSuccess(counters));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function updateNumberOfUse(id) {
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return counterApi
+      .updateNumberOfUse(id)
+      .then((savedCounter) => dispatch(updateCounterSuccess(savedCounter)))
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}

@@ -22,6 +22,8 @@ import com.thepaut49.nihongo.mapper.SentenceToDTOMapper;
 import com.thepaut49.nihongo.model.Sentence;
 import com.thepaut49.nihongo.service.SentenceService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/sentences")
@@ -30,20 +32,22 @@ public class SentenceController {
 	@Autowired
 	private SentenceService sentenceService;
 
+	//@RolesAllowed("admin")
 	@PostMapping("/create")
 	public SentenceDTO createSentence( @RequestBody SentenceDTO sentenceDTO) {
 		Sentence newSentence = SentenceToDTOMapper.map(sentenceDTO);
 		return SentenceToDTOMapper.map(sentenceService.createSentence(newSentence));
 	}
 
+	//@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public SentenceDTO updateSentence( @RequestBody SentenceDTO sentenceDTO, @PathVariable Long id) {
 		Sentence updatedSentence = SentenceToDTOMapper.map(sentenceDTO);  
 		updatedSentence.setId(id);
 		return SentenceToDTOMapper.map(sentenceService.updateSentence(updatedSentence));
 	}
-	
 
+	//@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		sentenceService.delete(id);
@@ -84,5 +88,4 @@ public class SentenceController {
 				.map(lSentence -> SentenceToDTOMapper.map(lSentence))
 				.collect(Collectors.toList());
 	}
-	
 }

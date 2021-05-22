@@ -25,6 +25,8 @@ import com.thepaut49.nihongo.mapper.verb.VerbToDTOMapper;
 import com.thepaut49.nihongo.model.verb.Verb;
 import com.thepaut49.nihongo.service.VerbService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/verbs")
@@ -33,12 +35,14 @@ public class VerbController {
 	@Autowired
 	private VerbService verbService;
 
+	//@RolesAllowed("admin")
 	@PostMapping("/create")
 	public VerbDTO createVerb( @RequestBody VerbDTO verbDTO) {
 		Verb newVerb = VerbToDTOMapper.map(verbDTO);
 		return VerbToDTOMapper.map(verbService.createVerb(newVerb));
 	}
 
+	//@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public VerbDTO updateVerb( @RequestBody VerbDTO verbDTO, @PathVariable Long id) {
 		Verb updatedVerb = VerbToDTOMapper.map(verbDTO);  
@@ -51,7 +55,7 @@ public class VerbController {
 		return VerbToDTOMapper.map(verbService.updateVerbNumberOfUse(id));
 	}
 
-
+	//@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		verbService.delete(id);
@@ -103,6 +107,4 @@ public class VerbController {
 				.map(verb -> ObjectDTOMapper.map(verb))
 				.collect(Collectors.toList());
 	}
-
-
 }

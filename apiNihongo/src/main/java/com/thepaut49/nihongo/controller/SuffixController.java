@@ -19,6 +19,8 @@ import com.thepaut49.nihongo.mapper.suffix.SuffixToDTOMapper;
 import com.thepaut49.nihongo.model.suffix.Suffix;
 import com.thepaut49.nihongo.service.SuffixService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/suffixs")
@@ -27,12 +29,14 @@ public class SuffixController {
 	@Autowired
 	private SuffixService suffixService;
 
+	//@RolesAllowed("admin")
 	@PostMapping("/create")
 	public SuffixDTO createSuffix( @RequestBody SuffixDTO suffixDTO) {
 		Suffix newSuffix = SuffixToDTOMapper.map(suffixDTO);
 		return SuffixToDTOMapper.map(suffixService.createSuffix(newSuffix));
 	}
 
+	//@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public SuffixDTO updateSuffix( @RequestBody SuffixDTO suffixDTO, @PathVariable Long id) {
 		Suffix updatedSuffix = SuffixToDTOMapper.map(suffixDTO);  
@@ -40,7 +44,7 @@ public class SuffixController {
 		return SuffixToDTOMapper.map(suffixService.updateSuffix(updatedSuffix));
 	}
 
-
+	//@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		suffixService.delete(id);
@@ -65,6 +69,4 @@ public class SuffixController {
 				.map(suffix -> SuffixToDTOMapper.map(suffix))
 				.collect(Collectors.toList());
 	}
-	
-
 }

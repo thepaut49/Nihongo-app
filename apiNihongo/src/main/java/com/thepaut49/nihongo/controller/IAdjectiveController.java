@@ -25,6 +25,8 @@ import com.thepaut49.nihongo.mapper.iadjective.IAdjectiveToDTOMapper;
 import com.thepaut49.nihongo.model.iadjective.IAdjective;
 import com.thepaut49.nihongo.service.IAdjectiveService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/iAdjectives")
@@ -33,12 +35,14 @@ public class IAdjectiveController {
 	@Autowired
 	private IAdjectiveService iAdjectiveService;
 
+	//@RolesAllowed("admin")
 	@PostMapping("/create")
 	public IAdjectiveDTO createIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO) {
 		IAdjective newIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.createIAdjective(newIAdjective));
 	}
 
+	//@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public IAdjectiveDTO updateIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO, @PathVariable Long id) {
 		IAdjective updatedIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);  
@@ -51,7 +55,7 @@ public class IAdjectiveController {
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.updateIAdjectiveNumberOfUse(id));
 	}
 
-
+	//@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		iAdjectiveService.delete(id);
@@ -101,6 +105,4 @@ public class IAdjectiveController {
 				.map(iAdjective -> ObjectDTOMapper.map(iAdjective))
 				.collect(Collectors.toList());
 	}
-
-
 }

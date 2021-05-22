@@ -19,7 +19,7 @@ class AboutPage extends React.Component {
           The back-end uses Java 11 with the frameworks Spring Boot and
           hibernate.
         </p>
-        <a href="http://localhost:8080/swagger-ui.html">API Documentation</a>
+        <a href="http://localhost:9090/swagger-ui.html">API Documentation</a>
         <h4>List of dependencies :</h4>
         <ul>
           <li>spring-boot-starter-parent: 2.4.2</li>

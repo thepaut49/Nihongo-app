@@ -25,6 +25,8 @@ import com.thepaut49.nihongo.mapper.kanji.KanjiToDTOMapper;
 import com.thepaut49.nihongo.model.kanji.Kanji;
 import com.thepaut49.nihongo.service.KanjiService;
 
+import javax.annotation.security.RolesAllowed;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/kanjis")
@@ -33,25 +35,28 @@ public class KanjiController {
 	@Autowired
 	private KanjiService kanjiService;
 
+	//@RolesAllowed("admin")
 	@PostMapping("/create")
 	public KanjiDTO createKanji( @RequestBody KanjiDTO kanjiDTO) {
 		Kanji newKanji = KanjiToDTOMapper.map(kanjiDTO);
 		return KanjiToDTOMapper.map(kanjiService.createKanji(newKanji));
 	}
 
+	//@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public KanjiDTO updateKanji( @RequestBody KanjiDTO kanjiDTO, @PathVariable Long id) {
 		Kanji updatedKanji = KanjiToDTOMapper.map(kanjiDTO);  
 		updatedKanji.setId(id);
 		return KanjiToDTOMapper.map(kanjiService.updateKanji(updatedKanji));
 	}
-	
+
 	@PatchMapping("/{id}")
 	public KanjiDTO updateKanjiNumberOfUse( @PathVariable Long id) {
 		return KanjiToDTOMapper.map(kanjiService.updateKanjiNumberOfUse(id));
 	}
 
 
+	//@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		kanjiService.delete(id);
@@ -114,6 +119,4 @@ public class KanjiController {
 				.map(kanji -> ObjectDTOMapper.map(kanji))
 				.collect(Collectors.toList());
 	}
-
-
 }

@@ -1,0 +1,101 @@
+{
+  "name": "front-end-nihongo-redux",
+  "version": "1.0.0",
+  "description": "Changement de framework pour le front en react de flux vers redux",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --config webpack.config.dev.js --port 3000",
+    "test": "test"
+  },
+  "author": "Antoine Thépaut",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.0.1",
+    "immer": "^9.0.2",
+    "keycloak-js": "^13.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-toastify": "^7.0.4",
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.2",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "babel-preset-react-app": "^10.0.0",
+    "css-loader": "^5.2.4",
+    "cssnano": "^5.0.2",
+    "enzyme": "^3.11.0",
+    "eslint": "^7.26.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.23.1",
+    "eslint-plugin-react": "^7.23.2",
+    "fetch-mock": "^9.11.0",
+    "html-webpack-plugin": "^5.3.1",
+    "http-server": "^0.12.3",
+    "jest": "^26.6.3",
+    "json-server": "^0.16.3",
+    "mini-css-extract-plugin": "^1.6.0",
+    "node-fetch": "^2.6.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-loader": "^5.3.0",
+    "react-test-renderer": "^17.0.2",
+    "react-testing-library": "^8.0.1",
+    "redux-immutable-state-invariant": "^2.1.0",
+    "redux-mock-store": "^1.5.4",
+    "rimraf": "^3.0.2",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.37.0",
+    "webpack-bundle-analyzer": "^4.4.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "babel": {
+    "presets": [
+      "babel-preset-react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+    "rules": {
+      "no-debugger": "off",
+      "no-console": "off",
+      "no-unused-vars": "warn",
+      "react/prop-types": "warn"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "root": true
+  }
+}
