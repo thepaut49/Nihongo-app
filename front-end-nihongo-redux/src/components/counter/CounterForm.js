@@ -20,9 +20,9 @@ function CounterForm({
   return (
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{counter.id ? "Edit" : "Add"} Counter</h2>
-      {errors.onSave && (
+      {errors.onSubmit && (
         <div className="alert alert-danger" role="alert">
-          {errors.onSave}
+          {errors.onSubmit}
         </div>
       )}
 

@@ -4,10 +4,11 @@ import AboutPage from "./about/AboutPage";
 import { Route, Switch } from "react-router-dom";
 import Header from "./common/Header";
 /*
-import NotFoundPage from "./common/NotFoundPage";
+import NotFoundPage from "./common/NotFoundPage";*/
 import ManageKanjiPage from "./kanji/ManageKanjiPage";
 import VisualizeKanjiPage from "./kanji/VisualizeKanjiPage";
 import KanjisPage from "./kanji/KanjisPage";
+/*
 import ManageVerbPage from "./verb/ManageVerbPage";
 import VisualizeVerbPage from "./verb/VisualizeVerbPage";
 import VerbsPage from "./verb/VerbsPage";
@@ -42,10 +43,9 @@ import SuffixsPage from "./suffix/SuffixsPage";
 import HiraganasPage from "./hiragana/HiraganasPage";
 import KatakanasPage from "./katakana/KatakanasPage";
 import Translation from "./translation/Translation";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+*/
 import ScrollToTop from "./common/ScrollToTop";
-import ButtonScrollToTop from "./common/ButtonScrollToTop";*/
+import ButtonScrollToTop from "./common/ButtonScrollToTop";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -55,8 +55,17 @@ function App() {
     <>
       <div className="app-container">
         <Header />
+        <ScrollToTop />
+        <ButtonScrollToTop />
         <Switch>
           <Route path="/" exact component={HomePage} />
+          <Route path="/kanjis" component={KanjisPage} />
+          <Route
+            path="/kanji/visualize/:kanji"
+            component={VisualizeKanjiPage}
+          />
+          <Route path="/kanji/modify/:kanji" component={ManageKanjiPage} />
+          <Route path="/kanji/create" component={ManageKanjiPage} />
           <Route path="/counters" component={CountersPage} />
           <Route
             path="/counter/visualize/:kanjis"

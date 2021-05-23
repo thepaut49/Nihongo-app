@@ -1,54 +1,94 @@
-import dispatcher from "../appDispatcher";
-import * as kanjiApi from "../api/kanjiApi";
-import actionTypes from "./actionTypes";
-import { toast } from "react-toastify";
+import * as kanjiApi from "../../api/kanjiApi";
+import * as types from "./actionTypes";
+import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-export function saveKanji(kanji) {
-  return kanjiApi.saveKanji(kanji).then((savedKanji) => {
-    // Hey dispatcher go tell all the stores that a kanji was created.
-    dispatcher.dispatch({
-      actionType: kanji.id
-        ? actionTypes.UPDATE_KANJI
-        : actionTypes.CREATE_KANJI,
-      kanji: savedKanji,
-    });
-  });
+export function filterKanjiSuccess(kanjis) {
+  return { type: types.FILTER_KANJIS_SUCCESS, kanjis };
 }
 
-export function deleteKanji(id) {
-  return kanjiApi.deleteKanji(id).then(() => {
-    dispatcher.dispatch({
-      actionType: actionTypes.DELETE_KANJI,
-      id: id,
-    });
-    toast.success("Kanji deleted.");
-  });
+export function loadKanjiSuccess(kanjis) {
+  return { type: types.LOAD_KANJIS_SUCCESS, kanjis };
+}
+
+export function createKanjiSuccess(kanji) {
+  return { type: types.CREATE_KANJI_SUCCESS, kanji };
+}
+
+export function updateKanjiSuccess(kanji) {
+  return { type: types.UPDATE_KANJI_SUCCESS, kanji };
+}
+
+export function deleteKanjiOptimistic(kanji) {
+  return { type: types.DELETE_KANJI_OPTIMISTIC, kanji };
 }
 
 export function loadKanjis() {
-  return kanjiApi.getKanjis().then((kanjis) => {
-    dispatcher.dispatch({
-      actionType: actionTypes.LOAD_KANJIS,
-      kanjis: kanjis,
-    });
-  });
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return kanjiApi
+      .getKanjis()
+      .then((kanjis) => {
+        dispatch(loadKanjiSuccess(kanjis));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function saveKanji(kanji) {
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return kanjiApi
+      .saveKanji(kanji)
+      .then((savedKanji) => {
+        kanji.id
+          ? dispatch(updateKanjiSuccess(savedKanji))
+          : dispatch(createKanjiSuccess(savedKanji));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function deleteKanji(kanji) {
+  return function (dispatch) {
+    // Doing optimistic delete, so not dispatching begin/end api call
+    // actions, or apiCallError action since we're not showing the loading status for this.
+    dispatch(deleteKanjiOptimistic(kanji));
+    return kanjiApi.deleteKanji(kanji.id);
+  };
 }
 
 export function filterKanjis(kanjiCriteria) {
-  return kanjiApi.filterKanjis(kanjiCriteria).then((kanjis) => {
-    dispatcher.dispatch({
-      actionType: actionTypes.FILTER_KANJIS,
-      kanjis: kanjis,
-    });
-  });
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return kanjiApi
+      .filterKanjis(kanjiCriteria)
+      .then((kanjis) => {
+        dispatch(filterKanjiSuccess(kanjis));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
 }
 
 export function updateNumberOfUse(id) {
-  return kanjiApi.updateNumberOfUse(id).then((updatedKanji) => {
-    // Hey dispatcher go tell all the stores that a kanji was created.
-    dispatcher.dispatch({
-      actionType: actionTypes.UPDATE_KANJI,
-      kanji: updatedKanji,
-    });
-  });
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return kanjiApi
+      .updateNumberOfUse(id)
+      .then((savedKanji) => dispatch(updateKanjiSuccess(savedKanji)))
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
 }

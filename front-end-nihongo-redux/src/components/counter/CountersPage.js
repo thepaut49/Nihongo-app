@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as counterActions from "../../redux/actions/counterActions";
 import "./CountersPage.css";
 import CounterList from "./CounterList";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CounterCriteriaForm from "./CounterCriteriaForm";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import PropTypes from "prop-types";
@@ -17,8 +17,6 @@ function CountersPage(props) {
     pronunciationCriteria: "",
     useCriteria: "",
   });
-  const [redirectToAddCounterPage, setRedirectToAddCounterPage] =
-    useState(false);
 
   useEffect(() => {
     const { counters, actions } = props;
@@ -78,7 +76,9 @@ function CountersPage(props) {
       pronunciation: counterCriteria.pronunciationCriteria,
       use: counterCriteria.useCriteria,
     };
-    props.actions.filterCounters(_counter);
+    props.actions.filterCounters(_counter).catch((error) => {
+      alert("Filtering counter failed" + error);
+    });
   }
 
   const handleDeleteCounter = async (counter) => {
@@ -91,36 +91,29 @@ function CountersPage(props) {
   };
 
   return (
-    <>
-      {redirectToAddCounterPage && <Redirect to="/counter/create" />}
-      <div className="countersPage">
-        <h2>Counters</h2>
-        {props.loading ? (
-          <Spinner />
-        ) : (
-          <>
-            <CounterCriteriaForm
-              counterCriteria={counterCriteria}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-              onClick={handleClick}
-              onReset={handleReset}
-            />
-            <button
-              style={{ marginBottom: 20 }}
-              className="btn btn-primary"
-              onClick={() => setRedirectToAddCounterPage(true)}
-            >
-              Add Counter
-            </button>
-            <CounterList
-              counters={props.counters}
-              deleteCounter={handleDeleteCounter}
-            />
-          </>
-        )}
-      </div>
-    </>
+    <div className="countersPage">
+      <h2>Counters</h2>
+      {props.loading ? (
+        <Spinner />
+      ) : (
+        <div>
+          <CounterCriteriaForm
+            counterCriteria={counterCriteria}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            onClick={handleClick}
+            onReset={handleReset}
+          />
+          <Link className="btn btn-primary" to="/counter/create">
+            Add Kanji
+          </Link>
+          <CounterList
+            counters={props.counters}
+            deleteCounter={handleDeleteCounter}
+          />
+        </>
+      )}
+    </div>
   );
 }
 
@@ -146,6 +139,10 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadCounters: bindActionCreators(counterActions.loadCounters, dispatch),
       deleteCounter: bindActionCreators(counterActions.deleteCounter, dispatch),
+      filterCounters: bindActionCreators(
+        counterActions.filterCounters,
+        dispatch
+      ),
     },
   };
 }

@@ -79,7 +79,7 @@ const ManageCounterPage = ({
       })
       .catch((error) => {
         setSaving(false);
-        setErrors({ onSave: error.message });
+        setErrors({ onSubmit: error.message });
       });
   }
 

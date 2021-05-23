@@ -45,7 +45,7 @@ function CounterList(props) {
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
-                        props.deleteCounter(counter.id);
+                        props.deleteCounter(counter);
                       }}
                     >
                       Delete
