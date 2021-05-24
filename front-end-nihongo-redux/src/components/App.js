@@ -29,10 +29,10 @@ import VisualizeSentencePage from "./sentence/VisualizeSentencePage";
 import SentencesPage from "./sentence/SentencesPage";
 import ManageParticulePage from "./particule/ManageParticulePage";
 import VisualizeParticulePage from "./particule/VisualizeParticulePage";
-import ParticulesPage from "./particule/ParticulesPage";
+import ParticulesPage from "./particule/ParticulesPage";*/
 import ManageGrammarRulePage from "./grammarrule/ManageGrammarRulePage";
 import VisualizeGrammarRulePage from "./grammarrule/VisualizeGrammarRulePage";
-import GrammarRulesPage from "./grammarrule/GrammarRulesPage";*/
+import GrammarRulesPage from "./grammarrule/GrammarRulesPage";
 import VisualizeCounterPage from "./counter/VisualizeCounterPage";
 import ManageCounterPage from "./counter/ManageCounterPage";
 import CountersPage from "./counter/CountersPage";
@@ -73,6 +73,17 @@ function App() {
           />
           <Route path="/counter/modify/:kanjis" component={ManageCounterPage} />
           <Route path="/counter/create" component={ManageCounterPage} />
+          <Route path="/grammarRules" component={GrammarRulesPage} />
+          <Route
+            path="/grammarRule/modify/:title"
+            component={ManageGrammarRulePage}
+          />
+          <Route path="/grammarRule/create" component={ManageGrammarRulePage} />
+          <Route
+            path="/grammarRule/visualize/:title"
+            component={VisualizeGrammarRulePage}
+          />
+          <Route path="/grammarRule" component={ManageGrammarRulePage} />
           <Route path="/about" component={AboutPage} />
         </Switch>
         <ToastContainer autoClose={3000} hideProgressBar />

@@ -20,7 +20,6 @@ function CountersPage(props) {
 
   useEffect(() => {
     const { counters, actions } = props;
-    debugger;
     if (counters.length === 0) {
       actions.loadCounters().catch((error) => {
         alert("Loading counters failed" + error);
@@ -111,7 +110,7 @@ function CountersPage(props) {
             counters={props.counters}
             deleteCounter={handleDeleteCounter}
           />
-        </>
+        </div>
       )}
     </div>
   );
