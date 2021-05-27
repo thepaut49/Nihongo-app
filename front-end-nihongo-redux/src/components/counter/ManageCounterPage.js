@@ -85,32 +85,55 @@ const ManageCounterPage = ({
 
   function handleAddPronunciation(event) {
     event.preventDefault();
-    let pronunciations = counter.pronunciations;
-    pronunciations.push({
+    const newPronunciation = {
       id: null,
       pronunciationNumber: newPronunciationNumber(counter.pronunciations),
       pronunciation: "",
       version: 0,
-    });
+    };
     setCounter({
       ...counter,
-      pronunciations: pronunciations,
+      pronunciations: [...counter.pronunciations, newPronunciation],
     });
   }
 
   function handlePronunciationChange(event, index) {
     event.preventDefault();
-    let newPronunciations = counter.pronunciations;
-    newPronunciations[index].pronunciation = event.target.value;
-    setCounter({ ...counter, pronunciations: newPronunciations });
+    const newPronunciation = {
+      id: counter.pronunciations[index].id,
+      pronunciationNumber: counter.pronunciations[index].pronunciationNumber,
+      pronunciation: event.target.value,
+      version: counter.pronunciations[index].version,
+    };
+    setCounter({
+      ...counter,
+      pronunciations: counter.pronunciations.map((pronunciation) => {
+        if (
+          pronunciation.pronunciationNumber ===
+          newPronunciation.pronunciationNumber
+        ) {
+          return newPronunciation;
+        } else {
+          return pronunciation;
+        }
+      }),
+    });
     setModified(true);
   }
 
   function handleDeletePronunciation(event, index) {
     event.preventDefault();
-    let newPronunciations = counter.pronunciations;
-    newPronunciations.splice(index, 1);
-    setCounter({ ...counter, pronunciations: newPronunciations });
+    const proToDelete = counter.pronunciations[index];
+    setCounter({
+      ...counter,
+      pronunciations: counter.pronunciations.filter((pronunciation) => {
+        if (pronunciation === proToDelete) {
+          return false;
+        } else {
+          return true;
+        }
+      }),
+    });
     setModified(true);
   }
 
@@ -118,13 +141,26 @@ const ManageCounterPage = ({
     event.preventDefault();
     let input = document.getElementById("pronunciation" + index);
     input.value = input.value + event.target.innerText;
-    let newPronunciations = counter.pronunciations;
-    newPronunciations[index].pronunciation =
-      newPronunciations[index].pronunciation + event.target.innerText;
+    const newPronunciation = {
+      id: counter.pronunciations[index].id,
+      pronunciationNumber: counter.pronunciations[index].pronunciationNumber,
+      pronunciation: input.value,
+      version: counter.pronunciations[index].version,
+    };
     setCounter({
       ...counter,
-      pronunciations: newPronunciations,
+      pronunciations: counter.pronunciations.map((pronunciation) => {
+        if (
+          pronunciation.pronunciationNumber ===
+          newPronunciation.pronunciationNumber
+        ) {
+          return newPronunciation;
+        } else {
+          return pronunciation;
+        }
+      }),
     });
+    setModified(true);
   };
 
   const handleTranslateClick = (event, index) => {
@@ -132,12 +168,26 @@ const ManageCounterPage = ({
     let input = document.getElementById("pronunciation" + index);
     const newValue = translateRomajiToKana(input.value);
     input.value = newValue;
-    let newPronunciations = counter.pronunciations;
-    newPronunciations[index].pronunciation = newValue;
+    const newPronunciation = {
+      id: counter.pronunciations[index].id,
+      pronunciationNumber: counter.pronunciations[index].pronunciationNumber,
+      pronunciation: input.value,
+      version: counter.pronunciations[index].version,
+    };
     setCounter({
       ...counter,
-      pronunciations: newPronunciations,
+      pronunciations: counter.pronunciations.map((pronunciation) => {
+        if (
+          pronunciation.pronunciationNumber ===
+          newPronunciation.pronunciationNumber
+        ) {
+          return newPronunciation;
+        } else {
+          return pronunciation;
+        }
+      }),
     });
+    setModified(true);
   };
 
   return (

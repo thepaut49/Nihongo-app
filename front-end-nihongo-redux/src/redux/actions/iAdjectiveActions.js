@@ -1,56 +1,96 @@
-import dispatcher from "../appDispatcher";
-import * as iAdjectiveApi from "../api/iAdjectiveApi";
-import actionTypes from "./actionTypes";
-import { toast } from "react-toastify";
+import * as iAdjectiveApi from "../../api/iAdjectiveApi";
+import * as types from "./actionTypes";
+import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-export function saveIAdjective(iAdjective) {
-  return iAdjectiveApi.saveIAdjective(iAdjective).then((savedIAdjective) => {
-    // Hey dispatcher go tell all the stores that a iAdjective was created.
-    dispatcher.dispatch({
-      actionType: iAdjective.id
-        ? actionTypes.UPDATE_I_ADJECTIVE
-        : actionTypes.CREATE_I_ADJECTIVE,
-      iAdjective: savedIAdjective,
-    });
-  });
+export function filterIAdjectiveSuccess(iAdjectives) {
+  return { type: types.FILTER_I_ADJECTIVES_SUCCESS, iAdjectives };
 }
 
-export function deleteIAdjective(id) {
-  return iAdjectiveApi.deleteIAdjective(id).then(() => {
-    dispatcher.dispatch({
-      actionType: actionTypes.DELETE_I_ADJECTIVE,
-      id: id,
-    });
-    toast.success("IAdjective deleted.");
-  });
+export function loadIAdjectiveSuccess(iAdjectives) {
+  return { type: types.LOAD_I_ADJECTIVES_SUCCESS, iAdjectives };
+}
+
+export function createIAdjectiveSuccess(iAdjective) {
+  return { type: types.CREATE_I_ADJECTIVE_SUCCESS, iAdjective };
+}
+
+export function updateIAdjectiveSuccess(iAdjective) {
+  return { type: types.UPDATE_I_ADJECTIVE_SUCCESS, iAdjective };
+}
+
+export function deleteIAdjectiveOptimistic(iAdjective) {
+  return { type: types.DELETE_I_ADJECTIVE_OPTIMISTIC, iAdjective };
 }
 
 export function loadIAdjectives() {
-  return iAdjectiveApi.getIAdjectives().then((iAdjectives) => {
-    dispatcher.dispatch({
-      actionType: actionTypes.LOAD_I_ADJECTIVES,
-      iAdjectives: iAdjectives,
-    });
-  });
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return iAdjectiveApi
+      .getIAdjectives()
+      .then((iAdjectives) => {
+        dispatch(loadIAdjectiveSuccess(iAdjectives));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function saveIAdjective(iAdjective) {
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return iAdjectiveApi
+      .saveIAdjective(iAdjective)
+      .then((savediAdjective) => {
+        iAdjective.id
+          ? dispatch(updateIAdjectiveSuccess(savediAdjective))
+          : dispatch(createIAdjectiveSuccess(savediAdjective));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function deleteIAdjective(iAdjective) {
+  return function (dispatch) {
+    // Doing optimistic delete, so not dispatching begin/end api call
+    // actions, or apiCallError action since we're not showing the loading status for this.
+    dispatch(deleteIAdjectiveOptimistic(iAdjective));
+    return iAdjectiveApi.deleteIAdjective(iAdjective.id);
+  };
 }
 
 export function filterIAdjectives(iAdjectiveCriteria) {
-  return iAdjectiveApi
-    .filterIAdjectives(iAdjectiveCriteria)
-    .then((iAdjectives) => {
-      dispatcher.dispatch({
-        actionType: actionTypes.FILTER_I_ADJECTIVES,
-        iAdjectives: iAdjectives,
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return iAdjectiveApi
+      .filterIAdjectives(iAdjectiveCriteria)
+      .then((iAdjectives) => {
+        dispatch(filterIAdjectiveSuccess(iAdjectives));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
       });
-    });
+  };
 }
 
 export function updateNumberOfUse(id) {
-  return iAdjectiveApi.updateNumberOfUse(id).then((updatedIAdj) => {
-    // Hey dispatcher go tell all the stores that a kanji was created.
-    dispatcher.dispatch({
-      actionType: actionTypes.UPDATE_I_ADJECTIVE,
-      iAdjective: updatedIAdj,
-    });
-  });
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return iAdjectiveApi
+      .updateNumberOfUse(id)
+      .then((savediAdjective) =>
+        dispatch(updateIAdjectiveSuccess(savediAdjective))
+      )
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
 }

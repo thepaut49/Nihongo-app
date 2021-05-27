@@ -1,6 +1,7 @@
 export default {
-  kanjis: [],
   counters: [],
+  iAdjectives: [],
+  kanjis: [],
   grammarRules: [],
   apiCallsInProgress: 0,
 };

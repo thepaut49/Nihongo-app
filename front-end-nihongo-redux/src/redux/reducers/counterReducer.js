@@ -18,7 +18,7 @@ export default function counterReducer(state = initialState.counters, action) {
     case types.DELETE_COUNTER_OPTIMISTIC:
       return state.filter((counter) => counter.id !== action.counter.id);
     case types.FILTER_COUNTERS_SUCCESS:
-      return action.courses;
+      return action.counters;
     default:
       return state;
   }

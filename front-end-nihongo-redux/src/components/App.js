@@ -14,10 +14,11 @@ import VisualizeVerbPage from "./verb/VisualizeVerbPage";
 import VerbsPage from "./verb/VerbsPage";
 import ManageNaAdjectivePage from "./naAdjective/ManageNaAdjectivePage";
 import VisualizeNaAdjectivePage from "./naAdjective/VisualizeNaAdjectivePage";
-import NaAdjectivesPage from "./naAdjective/NaAdjectivesPage";
+import NaAdjectivesPage from "./naAdjective/NaAdjectivesPage";*/
 import VisualizeIAdjectivePage from "./iAdjective/VisualizeIAdjectivePage";
 import ManageIAdjectivePage from "./iAdjective/ManageIAdjectivePage";
 import IAdjectivesPage from "./iAdjective/IAdjectivesPage";
+/*
 import ManageNamePage from "./name/ManageNamePage";
 import VisualizeNamePage from "./name/VisualizeNamePage";
 import NamesPage from "./name/NamesPage";
@@ -40,8 +41,10 @@ import CountersPage from "./counter/CountersPage";
 import VisualizeSuffixPage from "./suffix/VisualizeSuffixPage";
 import ManageSuffixPage from "./suffix/ManageSuffixPage";
 import SuffixsPage from "./suffix/SuffixsPage";
+*/
 import HiraganasPage from "./hiragana/HiraganasPage";
 import KatakanasPage from "./katakana/KatakanasPage";
+/*
 import Translation from "./translation/Translation";
 */
 import ScrollToTop from "./common/ScrollToTop";
@@ -59,13 +62,6 @@ function App() {
         <ButtonScrollToTop />
         <Switch>
           <Route path="/" exact component={HomePage} />
-          <Route path="/kanjis" component={KanjisPage} />
-          <Route
-            path="/kanji/visualize/:kanji"
-            component={VisualizeKanjiPage}
-          />
-          <Route path="/kanji/modify/:kanji" component={ManageKanjiPage} />
-          <Route path="/kanji/create" component={ManageKanjiPage} />
           <Route path="/counters" component={CountersPage} />
           <Route
             path="/counter/visualize/:kanjis"
@@ -84,6 +80,26 @@ function App() {
             component={VisualizeGrammarRulePage}
           />
           <Route path="/grammarRule" component={ManageGrammarRulePage} />
+          <Route path="/iAdjectives" component={IAdjectivesPage} />
+          <Route
+            path="/iAdjective/visualize/:kanjis"
+            component={VisualizeIAdjectivePage}
+          />
+          <Route
+            path="/iAdjective/modify/:kanjis"
+            component={ManageIAdjectivePage}
+          />
+          <Route path="/iAdjective/create" component={ManageIAdjectivePage} />
+          <Route path="/kanjis" component={KanjisPage} />
+          <Route
+            path="/kanji/visualize/:kanji"
+            component={VisualizeKanjiPage}
+          />
+          <Route path="/kanji/modify/:kanji" component={ManageKanjiPage} />
+          <Route path="/kanji/create" component={ManageKanjiPage} />
+
+          <Route path="/hiraganas" component={HiraganasPage} />
+          <Route path="/katakanas" component={KatakanasPage} />
           <Route path="/about" component={AboutPage} />
         </Switch>
         <ToastContainer autoClose={3000} hideProgressBar />

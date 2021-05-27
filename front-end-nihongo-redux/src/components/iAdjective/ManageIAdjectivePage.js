@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from "react";
-import KanjiForm from "./KanjiForm";
+import { connect } from "react-redux";
+import {
+  loadIAdjectives,
+  saveIAdjective,
+} from "../../redux/actions/iAdjectiveActions";
+import PropTypes from "prop-types";
+import Spinner from "../common/spinner/Spinner";
+import IAdjectiveForm from "./IAdjectiveForm";
 import { toast } from "react-toastify";
-import { radicals as radicalsList } from "../common/Radicals";
 import { Prompt } from "react-router-dom";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import {
   newMeaningNumber,
   newPronunciationNumber,
 } from "../common/meaningUtils";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import Spinner from "../common/spinner/Spinner";
-import { loadKanjis, saveKanji } from "../../redux/actions/kanjiActions";
 
-const newKanji = {
+const newIAdjective = {
   id: null,
-  kanji: "",
+  kanjis: "",
   pronunciations: [
     {
       id: null,
       pronunciationNumber: 0,
       pronunciation: "",
-      version: 0,
+      version: null,
     },
   ],
   meanings: [
@@ -29,58 +31,48 @@ const newKanji = {
       id: null,
       meaningNumber: 0,
       meaning: "",
-      version: 0,
+      version: null,
     },
   ],
-  radicals: "",
-  strokeNumber: 0,
   numberOfUse: null,
   version: null,
 };
 
-const ManageKanjiPage = ({
-  kanjis,
-  loadKanjis,
-  saveKanji,
+const ManageIAdjectivePage = ({
+  iAdjectives,
+  loadIAdjectives,
+  saveIAdjective,
   history,
   ...props
 }) => {
   const [modified, setModified] = useState(false);
   const [errors, setErrors] = useState({});
-  const [kanji, setKanji] = useState({ ...props.kanji });
+  const [iAdjective, setIAdjective] = useState({ ...props.iAdjective });
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (kanjis.length === 0) {
-      loadKanjis().catch((error) => {
-        alert("Loading kanjis failed" + error);
+    if (iAdjectives.length === 0) {
+      loadIAdjectives().catch((error) => {
+        alert("Loading iAdjectives failed" + error);
       });
     } else {
-      setKanji({ ...props.kanji });
+      setIAdjective({ ...props.iAdjective });
     }
-  }, [props.kanji]);
+  }, [props.iAdjective]);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setKanji((prevKanji) => ({
-      ...prevKanji,
-      [name]: name === "strokeNumber" ? parseInt(value, 10) : value,
+    setIAdjective((prevIAdjective) => ({
+      ...prevIAdjective,
+      [name]: value,
     }));
     setModified(true);
   }
 
   function formIsValid() {
     const _errors = {};
-    if (!kanji.kanji) _errors.kanji = "Kanji is required";
-    if (kanji.radicals.length > 0) {
-      for (let i = 0; i < kanji.radicals.length; i++) {
-        if (radicalsList.indexOf(kanji.radicals[i]) === -1) {
-          _errors.radicals = "Some of the characters are not radicals.";
-          break;
-        }
-      }
-    }
-
+    if (!iAdjective.kanjis)
+      _errors.kanjis = "Kanjis of the iAdjective is required";
     setErrors(_errors);
     // form is valid if the erros object has no properties
     return Object.keys(_errors).length === 0;
@@ -91,10 +83,10 @@ const ManageKanjiPage = ({
     if (!formIsValid()) return;
     setModified(false);
     setSaving(true);
-    saveKanji(kanji)
+    saveIAdjective(iAdjective)
       .then(() => {
-        toast.success("Kanji saved.");
-        history.push("/kanjis");
+        toast.success("I-Adjective saved.");
+        history.push("/iAdjectives");
       })
       .catch((error) => {
         setSaving(false);
@@ -102,32 +94,17 @@ const ManageKanjiPage = ({
       });
   }
 
-  function handleClick(event) {
-    event.preventDefault();
-    if (kanji.radicals.indexOf(event.target.innerText) > -1)
-      setKanji({
-        ...kanji,
-        radicals: kanji.radicals.replace(event.target.innerText, ""),
-      });
-    else {
-      setKanji({
-        ...kanji,
-        radicals: kanji.radicals + event.target.innerText,
-      });
-    }
-  }
-
   function handleAddMeaning(event) {
     event.preventDefault();
     const newMeaning = {
       id: null,
-      meaningNumber: newMeaningNumber(kanji.meanings),
+      meaningNumber: newMeaningNumber(iAdjective.meanings),
       meaning: "",
       version: 0,
     };
-    setKanji({
-      ...kanji,
-      meanings: [...kanji.meanings, newMeaning],
+    setIAdjective({
+      ...iAdjective,
+      meanings: [...iAdjective.meanings, newMeaning],
     });
     setModified(true);
   }
@@ -135,14 +112,14 @@ const ManageKanjiPage = ({
   function handleMeaningChange(event, index) {
     event.preventDefault();
     const newMeaning = {
-      id: kanji.meanings[index].id,
-      meaningNumber: kanji.meanings[index].meaningNumber,
+      id: iAdjective.meanings[index].id,
+      meaningNumber: iAdjective.meanings[index].meaningNumber,
       meaning: event.target.value,
-      version: kanji.meanings[index].version,
+      version: iAdjective.meanings[index].version,
     };
-    setKanji({
-      ...kanji,
-      meanings: kanji.meanings.map((meaning) => {
+    setIAdjective({
+      ...iAdjective,
+      meanings: iAdjective.meanings.map((meaning) => {
         if (meaning.meaningNumber === newMeaning.meaningNumber) {
           return newMeaning;
         } else {
@@ -155,10 +132,10 @@ const ManageKanjiPage = ({
 
   function handleDeleteMeaning(event, index) {
     event.preventDefault();
-    const meanToDelete = kanji.meanings[index];
-    setKanji({
-      ...kanji,
-      meanings: kanji.meanings.filter((meaning) => {
+    const meanToDelete = iAdjective.meanings[index];
+    setIAdjective({
+      ...iAdjective,
+      meanings: iAdjective.meanings.filter((meaning) => {
         if (meaning === meanToDelete) {
           return false;
         } else {
@@ -173,13 +150,13 @@ const ManageKanjiPage = ({
     event.preventDefault();
     const newPronunciation = {
       id: null,
-      pronunciationNumber: newPronunciationNumber(kanji.pronunciations),
+      pronunciationNumber: newPronunciationNumber(iAdjective.pronunciations),
       pronunciation: "",
       version: 0,
     };
-    setKanji({
-      ...kanji,
-      pronunciations: [...kanji.pronunciations, newPronunciation],
+    setIAdjective({
+      ...iAdjective,
+      pronunciations: [...iAdjective.pronunciations, newPronunciation],
     });
     setModified(true);
   }
@@ -187,14 +164,14 @@ const ManageKanjiPage = ({
   function handlePronunciationChange(event, index) {
     event.preventDefault();
     const newPronunciation = {
-      id: kanji.pronunciations[index].id,
-      pronunciationNumber: kanji.pronunciations[index].pronunciationNumber,
+      id: iAdjective.pronunciations[index].id,
+      pronunciationNumber: iAdjective.pronunciations[index].pronunciationNumber,
       pronunciation: event.target.value,
-      version: kanji.pronunciations[index].version,
+      version: iAdjective.pronunciations[index].version,
     };
-    setKanji({
-      ...kanji,
-      pronunciations: kanji.pronunciations.map((pronunciation) => {
+    setIAdjective({
+      ...iAdjective,
+      pronunciations: iAdjective.pronunciations.map((pronunciation) => {
         if (
           pronunciation.pronunciationNumber ===
           newPronunciation.pronunciationNumber
@@ -210,10 +187,10 @@ const ManageKanjiPage = ({
 
   function handleDeletePronunciation(event, index) {
     event.preventDefault();
-    const proToDelete = kanji.pronunciations[index];
-    setKanji({
-      ...kanji,
-      pronunciations: kanji.pronunciations.filter((pronunciation) => {
+    const proToDelete = iAdjective.pronunciations[index];
+    setIAdjective({
+      ...iAdjective,
+      pronunciations: iAdjective.pronunciations.filter((pronunciation) => {
         if (pronunciation === proToDelete) {
           return false;
         } else {
@@ -229,14 +206,14 @@ const ManageKanjiPage = ({
     let input = document.getElementById("pronunciation" + index);
     input.value = input.value + event.target.innerText;
     const newPronunciation = {
-      id: kanji.pronunciations[index].id,
-      pronunciationNumber: kanji.pronunciations[index].pronunciationNumber,
+      id: iAdjective.pronunciations[index].id,
+      pronunciationNumber: iAdjective.pronunciations[index].pronunciationNumber,
       pronunciation: input.value,
-      version: kanji.pronunciations[index].version,
+      version: iAdjective.pronunciations[index].version,
     };
-    setKanji({
-      ...kanji,
-      pronunciations: kanji.pronunciations.map((pronunciation) => {
+    setIAdjective({
+      ...iAdjective,
+      pronunciations: iAdjective.pronunciations.map((pronunciation) => {
         if (
           pronunciation.pronunciationNumber ===
           newPronunciation.pronunciationNumber
@@ -256,14 +233,14 @@ const ManageKanjiPage = ({
     const newValue = translateRomajiToKana(input.value);
     input.value = newValue;
     const newPronunciation = {
-      id: kanji.pronunciations[index].id,
-      pronunciationNumber: kanji.pronunciations[index].pronunciationNumber,
+      id: iAdjective.pronunciations[index].id,
+      pronunciationNumber: iAdjective.pronunciations[index].pronunciationNumber,
       pronunciation: input.value,
-      version: kanji.pronunciations[index].version,
+      version: iAdjective.pronunciations[index].version,
     };
-    setKanji({
-      ...kanji,
-      pronunciations: kanji.pronunciations.map((pronunciation) => {
+    setIAdjective({
+      ...iAdjective,
+      pronunciations: iAdjective.pronunciations.map((pronunciation) => {
         if (
           pronunciation.pronunciationNumber ===
           newPronunciation.pronunciationNumber
@@ -279,17 +256,16 @@ const ManageKanjiPage = ({
 
   return (
     <>
-      {kanjis.length === 0 ? (
+      {iAdjectives.length === 0 ? (
         <Spinner />
       ) : (
         <>
           <Prompt when={modified} message="Are you sure you want to leave ?" />
-          <KanjiForm
+          <IAdjectiveForm
             errors={errors}
-            kanji={kanji}
+            iAdjective={iAdjective}
             onChange={handleChange}
             onSubmit={handleSubmit}
-            onClick={handleClick}
             onMiddlePointClick={onMiddlePointClick}
             onTranslateClick={handleTranslateClick}
             addMeaning={handleAddMeaning}
@@ -306,33 +282,36 @@ const ManageKanjiPage = ({
   );
 };
 
-ManageKanjiPage.propTypes = {
-  kanji: PropTypes.object.isRequired,
-  kanjis: PropTypes.array.isRequired,
-  loadKanjis: PropTypes.func.isRequired,
-  saveKanji: PropTypes.func.isRequired,
+ManageIAdjectivePage.propTypes = {
+  iAdjective: PropTypes.object.isRequired,
+  iAdjectives: PropTypes.array.isRequired,
+  loadIAdjectives: PropTypes.func.isRequired,
+  saveIAdjective: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
-export function getKanjiByKanji(kanjis, char) {
-  return kanjis.find((kanji) => kanji.kanji === char) || null;
+export function getIAdjectiveByKanjis(iAdjectives, kanjis) {
+  return iAdjectives.find((iAdjective) => iAdjective.kanjis === kanjis) || null;
 }
 
 function mapStateToProps(state, ownProps) {
-  const char = ownProps.match.params.kanji;
-  const kanji =
-    char && state.kanjis.length > 0
-      ? getKanjiByKanji(state.kanjis, char)
-      : newKanji;
+  const kanjis = ownProps.match.params.kanjis;
+  const iAdjective =
+    kanjis && state.iAdjectives.length > 0
+      ? getIAdjectiveByKanjis(state.iAdjectives, kanjis)
+      : newIAdjective;
   return {
-    kanji,
-    kanjis: state.kanjis,
+    iAdjective,
+    iAdjectives: state.iAdjectives,
   };
 }
 
 const mapDispatchToProps = {
-  loadKanjis,
-  saveKanji,
+  loadIAdjectives,
+  saveIAdjective,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageKanjiPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ManageIAdjectivePage);
