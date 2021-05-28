@@ -11,10 +11,10 @@ import KanjisPage from "./kanji/KanjisPage";
 /*
 import ManageVerbPage from "./verb/ManageVerbPage";
 import VisualizeVerbPage from "./verb/VisualizeVerbPage";
-import VerbsPage from "./verb/VerbsPage";
+import VerbsPage from "./verb/VerbsPage";*/
 import ManageNaAdjectivePage from "./naAdjective/ManageNaAdjectivePage";
 import VisualizeNaAdjectivePage from "./naAdjective/VisualizeNaAdjectivePage";
-import NaAdjectivesPage from "./naAdjective/NaAdjectivesPage";*/
+import NaAdjectivesPage from "./naAdjective/NaAdjectivesPage";
 import VisualizeIAdjectivePage from "./iAdjective/VisualizeIAdjectivePage";
 import ManageIAdjectivePage from "./iAdjective/ManageIAdjectivePage";
 import IAdjectivesPage from "./iAdjective/IAdjectivesPage";
@@ -97,7 +97,16 @@ function App() {
           />
           <Route path="/kanji/modify/:kanji" component={ManageKanjiPage} />
           <Route path="/kanji/create" component={ManageKanjiPage} />
-
+          <Route path="/naAdjectives" component={NaAdjectivesPage} />
+          <Route
+            path="/naAdjective/modify/:kanjis"
+            component={ManageNaAdjectivePage}
+          />
+          <Route
+            path="/naAdjective/visualize/:kanjis"
+            component={VisualizeNaAdjectivePage}
+          />
+          <Route path="/naAdjective/create" component={ManageNaAdjectivePage} />
           <Route path="/hiraganas" component={HiraganasPage} />
           <Route path="/katakanas" component={KatakanasPage} />
           <Route path="/about" component={AboutPage} />

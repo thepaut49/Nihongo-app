@@ -1,7 +1,8 @@
 export default {
   counters: [],
+  grammarRules: [],
   iAdjectives: [],
   kanjis: [],
-  grammarRules: [],
+  naAdjectives: [],
   apiCallsInProgress: 0,
 };
