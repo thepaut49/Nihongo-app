@@ -12,16 +12,8 @@ public class SentenceToDTOMapper {
 		sentenceDTO.setId(sentence.getId());
 		sentenceDTO.setKanjis(sentence.getKanjis());
 		sentenceDTO.setVersion(sentence.getVersion());
-		sentenceDTO.setPronunciation(new HashSet<String>());
-		String[] pronunciations = sentence.getPronunciation().split(";");
-		for(int index = 0; index < pronunciations.length; index++) {
-			sentenceDTO.getPronunciation().add(pronunciations[index].replace(";", ""));	
-		}
-		sentenceDTO.setMeaning(new HashSet<String>());
-		String[] meanings = sentence.getMeaning().split(";");
-		for(int index = 0; index < meanings.length; index++) {
-			sentenceDTO.getMeaning().add(meanings[index].replace(";", ""));	
-		}
+		sentenceDTO.setPronunciation(sentence.getPronunciation());
+		sentenceDTO.setMeaning(sentence.getMeaning());
 		sentenceDTO.setTopic(sentence.getTopic());
 		return sentenceDTO;
 	}
@@ -31,16 +23,8 @@ public class SentenceToDTOMapper {
 		sentence.setId(sentenceDTO.getId());
 		sentence.setKanjis(sentenceDTO.getKanjis());
 		sentence.setVersion(sentenceDTO.getVersion());
-		String pronunciationTemp = "";
-		for(String pronunciation : sentenceDTO.getPronunciation()) {
-			pronunciationTemp += pronunciation + ";";	
-		}
-		sentence.setPronunciation(pronunciationTemp);
-		String meaningTemp = "";
-		for(String meaning : sentenceDTO.getMeaning()) {
-			meaningTemp += meaning + ";";	
-		}
-		sentence.setMeaning(meaningTemp);	
+		sentence.setPronunciation(sentenceDTO.getPronunciation());
+		sentence.setMeaning(sentenceDTO.getMeaning());
 		sentence.setTopic(sentenceDTO.getTopic());
 		return sentence;
 	}

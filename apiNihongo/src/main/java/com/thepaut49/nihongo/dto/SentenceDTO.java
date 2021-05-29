@@ -8,9 +8,9 @@ public class SentenceDTO {
 	
 	private String kanjis;
 	
-	private Set<String> pronunciation;
+	private String pronunciation;
 	
-	private Set<String> meaning;
+	private String meaning;
 	
 	private String topic;
 	
@@ -34,19 +34,19 @@ public class SentenceDTO {
 		this.kanjis = neutralForm;
 	}
 
-	public Set<String> getPronunciation() {
+	public String getPronunciation() {
 		return pronunciation;
 	}
 
-	public void setPronunciation(Set<String> pronunciation) {
+	public void setPronunciation(String pronunciation) {
 		this.pronunciation = pronunciation;
 	}
 
-	public Set<String> getMeaning() {
+	public String getMeaning() {
 		return meaning;
 	}
 
-	public void setMeaning(Set<String> meaning) {
+	public void setMeaning(String meaning) {
 		this.meaning = meaning;
 	}
 

@@ -6,6 +6,7 @@ export default {
   naAdjectives: [],
   names: [],
   particules: [],
+  sentences: [],
   suffixs: [],
   verbs: [],
   words: [],

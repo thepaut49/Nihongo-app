@@ -1,44 +1,80 @@
-import dispatcher from "../appDispatcher";
-import * as sentenceApi from "../api/sentenceApi";
-import actionTypes from "./actionTypes";
-import { toast } from "react-toastify";
+import * as sentenceApi from "../../api/sentenceApi";
+import * as types from "./actionTypes";
+import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-export function saveSentence(sentence) {
-  return sentenceApi.saveSentence(sentence).then((savedSentence) => {
-    // Hey dispatcher go tell all the stores that a sentence was created.
-    dispatcher.dispatch({
-      actionType: sentence.id
-        ? actionTypes.UPDATE_SENTENCE
-        : actionTypes.CREATE_SENTENCE,
-      sentence: savedSentence,
-    });
-  });
+export function filterSentenceSuccess(sentences) {
+  return { type: types.FILTER_SENTENCES_SUCCESS, sentences };
 }
 
-export function deleteSentence(id) {
-  return sentenceApi.deleteSentence(id).then(() => {
-    dispatcher.dispatch({
-      actionType: actionTypes.DELETE_SENTENCE,
-      id: id,
-    });
-    toast.success("Sentence deleted.");
-  });
+export function loadSentenceSuccess(sentences) {
+  return { type: types.LOAD_SENTENCES_SUCCESS, sentences };
+}
+
+export function createSentenceSuccess(sentence) {
+  return { type: types.CREATE_SENTENCE_SUCCESS, sentence };
+}
+
+export function updateSentenceSuccess(sentence) {
+  return { type: types.UPDATE_SENTENCE_SUCCESS, sentence };
+}
+
+export function deleteSentenceOptimistic(sentence) {
+  return { type: types.DELETE_SENTENCE_OPTIMISTIC, sentence };
 }
 
 export function loadSentences() {
-  return sentenceApi.getSentences().then((sentences) => {
-    dispatcher.dispatch({
-      actionType: actionTypes.LOAD_SENTENCES,
-      sentences: sentences,
-    });
-  });
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return sentenceApi
+      .getSentences()
+      .then((sentences) => {
+        dispatch(loadSentenceSuccess(sentences));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function saveSentence(sentence) {
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return sentenceApi
+      .saveSentence(sentence)
+      .then((savedsentence) => {
+        sentence.id
+          ? dispatch(updateSentenceSuccess(savedsentence))
+          : dispatch(createSentenceSuccess(savedsentence));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function deleteSentence(sentence) {
+  return function (dispatch) {
+    // Doing optimistic delete, so not dispatching begin/end api call
+    // actions, or apiCallError action since we're not showing the loading status for this.
+    dispatch(deleteSentenceOptimistic(sentence));
+    return sentenceApi.deleteSentence(sentence.id);
+  };
 }
 
 export function filterSentences(sentenceCriteria) {
-  return sentenceApi.filterSentences(sentenceCriteria).then((sentences) => {
-    dispatcher.dispatch({
-      actionType: actionTypes.FILTER_SENTENCES,
-      sentences: sentences,
-    });
-  });
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return sentenceApi
+      .filterSentences(sentenceCriteria)
+      .then((sentences) => {
+        dispatch(filterSentenceSuccess(sentences));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
 }

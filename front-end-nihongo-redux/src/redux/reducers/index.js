@@ -6,6 +6,7 @@ import grammarRules from "./grammarRuleReducer";
 import naAdjectives from "./naAdjectiveReducer";
 import names from "./nameReducer";
 import particules from "./particuleReducer";
+import sentences from "./sentenceReducer";
 import suffixs from "./suffixReducer";
 import verbs from "./verbReducer";
 import words from "./wordReducer";
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   naAdjectives,
   names,
   particules,
+  sentences,
   suffixs,
   verbs,
   words,

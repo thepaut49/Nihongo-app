@@ -23,10 +23,9 @@ import NamesPage from "./name/NamesPage";
 import ManageWordPage from "./word/ManageWordPage";
 import VisualizeWordPage from "./word/VisualizeWordPage";
 import WordsPage from "./word/WordsPage";
-/*
 import ManageSentencePage from "./sentence/ManageSentencePage";
 import VisualizeSentencePage from "./sentence/VisualizeSentencePage";
-import SentencesPage from "./sentence/SentencesPage";*/
+import SentencesPage from "./sentence/SentencesPage";
 import ManageParticulePage from "./particule/ManageParticulePage";
 import VisualizeParticulePage from "./particule/VisualizeParticulePage";
 import ParticulesPage from "./particule/ParticulesPage";
@@ -118,6 +117,16 @@ function App() {
             component={VisualizeParticulePage}
           />
           <Route path="/particule/create" component={ManageParticulePage} />
+          <Route path="/sentences" component={SentencesPage} />
+          <Route
+            path="/sentence/modify/:kanjis"
+            component={ManageSentencePage}
+          />
+          <Route
+            path="/sentence/visualize/:kanjis"
+            component={VisualizeSentencePage}
+          />
+          <Route path="/sentence/create" component={ManageSentencePage} />
           <Route path="/suffixs" component={SuffixsPage} />
           <Route
             path="/suffix/visualize/:kanjis"

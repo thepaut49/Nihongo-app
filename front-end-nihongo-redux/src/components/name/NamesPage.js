@@ -79,7 +79,7 @@ function NamesPage(props) {
   const handleDeleteName = async (name) => {
     toast.success("Name deleted");
     try {
-      await this.props.actions.deleteName(name);
+      await props.actions.deleteName(name);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }

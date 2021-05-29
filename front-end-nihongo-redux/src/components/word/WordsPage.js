@@ -73,7 +73,7 @@ function WordsPage(props) {
       meaning: wordCriteria.meaningCriteria,
     };
     props.actions.filterWords(_word).catch((error) => {
-      alert("Filtering iadjective failed" + error);
+      alert("Filtering words failed" + error);
     });
   }
 

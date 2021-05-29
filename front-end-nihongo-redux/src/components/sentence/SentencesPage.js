@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import * as naAdjectiveActions from "../../redux/actions/naAdjectiveActions";
-import "./NaAdjectivesPage.css";
-import NaAdjectiveList from "./NaAdjectiveList";
+import "./SentencesPage.css";
+import SentenceList from "./SentenceList";
 import { Link } from "react-router-dom";
-import NaAdjectiveCriteriaForm from "./NaAdjectiveCriteriaForm";
+import SentenceCriteriaForm from "./SentenceCriteriaForm";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { connect } from "react-redux";
+import * as sentenceActions from "../../redux/actions/sentenceActions";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 
-function NaAdjectivesPage(props) {
-  const [naAdjectiveCriteria, setNaAdjectiveCriteria] = useState({
+function SentencesPage(props) {
+  const [sentenceCriteria, setSentenceCriteria] = useState({
     kanjisCriteria: "",
     pronunciationCriteria: "",
     meaningCriteria: "",
+    topicCriteria: "",
   });
 
   useEffect(() => {
-    const { naAdjectives, actions } = props;
-    if (naAdjectives.length === 0) {
-      actions.loadNaAdjectives().catch((error) => {
-        alert("Loading na-adjectives failed" + error);
+    const { sentences, actions } = props;
+    if (sentences.length === 0) {
+      actions.loadSentences().catch((error) => {
+        alert("Loading iadjectives failed" + error);
       });
     }
   }, []);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
-
   // fonction for criteria form
 
   function handleChange(event) {
@@ -37,8 +37,8 @@ function NaAdjectivesPage(props) {
       let input = document.getElementById("pronunciationCriteria");
       input.value = newValue;
     }
-    setNaAdjectiveCriteria({
-      ...naAdjectiveCriteria,
+    setSentenceCriteria({
+      ...sentenceCriteria,
       [event.target.name]: newValue,
     });
   }
@@ -47,82 +47,87 @@ function NaAdjectivesPage(props) {
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
-    setNaAdjectiveCriteria({
+
+    Array.from(document.querySelectorAll("select")).forEach(
+      (select) => (select.value = "")
+    );
+    setSentenceCriteria({
       kanjisCriteria: "",
       pronunciationCriteria: "",
       meaningCriteria: "",
+      topicCriteria: "",
     });
   }
 
   function handleClick(event) {
     let input = document.getElementById("pronunciationCriteria");
     input.value = input.value + event.target.innerText;
-    setNaAdjectiveCriteria({
-      ...naAdjectiveCriteria,
+    setSentenceCriteria({
+      ...sentenceCriteria,
       pronunciationCriteria:
-        naAdjectiveCriteria.pronunciationCriteria + event.target.innerText,
+        sentenceCriteria.pronunciationCriteria + event.target.innerText,
     });
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    const _naAdjective = {
-      kanjis: naAdjectiveCriteria.kanjisCriteria,
-      pronunciation: naAdjectiveCriteria.pronunciationCriteria,
-      meaning: naAdjectiveCriteria.meaningCriteria,
+    const _sentence = {
+      kanjis: sentenceCriteria.kanjisCriteria,
+      pronunciation: sentenceCriteria.pronunciationCriteria,
+      meaning: sentenceCriteria.meaningCriteria,
+      topic: sentenceCriteria.topicCriteria,
     };
-    props.actions.filterNaAdjectives(_naAdjective).catch((error) => {
-      alert("Filtering na-adjective failed" + error);
+    props.actions.filterSentences(_sentence).catch((error) => {
+      alert("Filtering iadjective failed" + error);
     });
   }
 
-  const handleDeleteNaAdjective = async (naAdjective) => {
-    toast.success("NaAdjective deleted");
+  const handleDeleteSentence = async (sentence) => {
+    toast.success("Sentence deleted");
     try {
-      await props.actions.deleteNaAdjective(naAdjective);
+      await props.actions.deleteSentence(sentence);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }
   };
 
   return (
-    <div className="naAdjectivesPage">
-      <h2>Na-Adjectives</h2>
+    <div className="sentencesPage">
+      <h2>Sentences</h2>
       {props.loading ? (
         <Spinner />
       ) : (
         <>
-          <NaAdjectiveCriteriaForm
-            naAdjectiveCriteria={naAdjectiveCriteria}
+          <SentenceCriteriaForm
+            sentenceCriteria={sentenceCriteria}
             onChange={handleChange}
             onSubmit={handleSubmit}
             onClick={handleClick}
             onReset={handleReset}
           />
-          <Link className="btn btn-primary" to="/naAdjective/create">
-            Add NaAdjective
+          <Link className="btn btn-primary" to="/sentence/create">
+            Add Sentence
           </Link>
-          <NaAdjectiveList
-            naAdjectives={props.naAdjectives}
-            deleteNaAdjective={handleDeleteNaAdjective}
+          <SentenceList
+            sentences={props.sentences}
+            deleteSentence={handleDeleteSentence}
           />
         </>
       )}
     </div>
   );
 }
-
-NaAdjectivesPage.propTypes = {
-  naAdjectives: PropTypes.array.isRequired,
+SentencesPage.propTypes = {
+  sentences: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    naAdjectives: state.naAdjectives.map((naAdjective) => {
+    sentences: state.sentences.map((sentence) => {
       return {
-        ...naAdjective,
+        ...sentence,
       };
     }),
     loading: state.apiCallsInProgress > 0,
@@ -132,20 +137,20 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      loadNaAdjectives: bindActionCreators(
-        naAdjectiveActions.loadNaAdjectives,
+      loadSentences: bindActionCreators(
+        sentenceActions.loadSentences,
         dispatch
       ),
-      deleteNaAdjective: bindActionCreators(
-        naAdjectiveActions.deleteNaAdjective,
+      deleteSentence: bindActionCreators(
+        sentenceActions.deleteSentence,
         dispatch
       ),
-      filterNaAdjectives: bindActionCreators(
-        naAdjectiveActions.filterNaAdjectives,
+      filterSentences: bindActionCreators(
+        sentenceActions.filterSentences,
         dispatch
       ),
     },
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NaAdjectivesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SentencesPage);
