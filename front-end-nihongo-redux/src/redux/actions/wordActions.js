@@ -1,52 +1,94 @@
-import dispatcher from "../appDispatcher";
-import * as wordApi from "../api/wordApi";
-import actionTypes from "./actionTypes";
-import { toast } from "react-toastify";
+import * as wordApi from "../../api/wordApi";
+import * as types from "./actionTypes";
+import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-export function saveWord(word) {
-  return wordApi.saveWord(word).then((savedWord) => {
-    // Hey dispatcher go tell all the stores that a word was created.
-    dispatcher.dispatch({
-      actionType: word.id ? actionTypes.UPDATE_WORD : actionTypes.CREATE_WORD,
-      word: savedWord,
-    });
-  });
+export function filterWordSuccess(words) {
+  return { type: types.FILTER_WORDS_SUCCESS, words };
 }
 
-export function deleteWord(id) {
-  return wordApi.deleteWord(id).then(() => {
-    dispatcher.dispatch({
-      actionType: actionTypes.DELETE_WORD,
-      id: id,
-    });
-    toast.success("Word deleted.");
-  });
+export function loadWordSuccess(words) {
+  return { type: types.LOAD_WORDS_SUCCESS, words };
+}
+
+export function createWordSuccess(word) {
+  return { type: types.CREATE_WORD_SUCCESS, word };
+}
+
+export function updateWordSuccess(word) {
+  return { type: types.UPDATE_WORD_SUCCESS, word };
+}
+
+export function deleteWordOptimistic(word) {
+  return { type: types.DELETE_WORD_OPTIMISTIC, word };
 }
 
 export function loadWords() {
-  return wordApi.getWords().then((words) => {
-    dispatcher.dispatch({
-      actionType: actionTypes.LOAD_WORDS,
-      words: words,
-    });
-  });
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return wordApi
+      .getWords()
+      .then((words) => {
+        dispatch(loadWordSuccess(words));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function saveWord(word) {
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return wordApi
+      .saveWord(word)
+      .then((savedword) => {
+        word.id
+          ? dispatch(updateWordSuccess(savedword))
+          : dispatch(createWordSuccess(savedword));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function deleteWord(word) {
+  return function (dispatch) {
+    // Doing optimistic delete, so not dispatching begin/end api call
+    // actions, or apiCallError action since we're not showing the loading status for this.
+    dispatch(deleteWordOptimistic(word));
+    return wordApi.deleteWord(word.id);
+  };
 }
 
 export function filterWords(wordCriteria) {
-  return wordApi.filterWords(wordCriteria).then((words) => {
-    dispatcher.dispatch({
-      actionType: actionTypes.FILTER_WORDS,
-      words: words,
-    });
-  });
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return wordApi
+      .filterWords(wordCriteria)
+      .then((words) => {
+        dispatch(filterWordSuccess(words));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
 }
 
 export function updateNumberOfUse(id) {
-  return wordApi.updateNumberOfUse(id).then((updatedWord) => {
-    // Hey dispatcher go tell all the stores that a kanji was created.
-    dispatcher.dispatch({
-      actionType: actionTypes.UPDATE_WORD,
-      word: updatedWord,
-    });
-  });
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return wordApi
+      .updateNumberOfUse(id)
+      .then((savedword) => dispatch(updateWordSuccess(savedword)))
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
 }

@@ -43,7 +43,7 @@ function IAdjectiveList(props) {
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
-                        props.deleteIAdjective(iAdjective.id);
+                        props.deleteIAdjective(iAdjective);
                       }}
                     >
                       Delete

@@ -1,5 +1,5 @@
 import React from "react";
-import "./NaAdjectivesPage.css";
+import "./WordsPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -7,31 +7,31 @@ const styleLink = {
   margin: "0.5em",
 };
 
-function NaAdjectiveList(props) {
+function WordList(props) {
   return (
     <table>
       <tbody>
-        {props.naAdjectives.map((naAdjective) => {
+        {props.words.map((word) => {
           return (
-            <tr key={naAdjective.id}>
+            <tr key={word.id}>
               <td>
-                <div className="grid-container-naAdjective">
-                  <div className="naAdjective">
-                    <Link to={"/naAdjective/visualize/" + naAdjective.kanjis}>
-                      {naAdjective.kanjis}
+                <div className="grid-container-word">
+                  <div className="word">
+                    <Link to={"/word/visualize/" + word.kanjis}>
+                      {word.kanjis}
                     </Link>
                   </div>
-                  <div className="pronunciation">
-                    {naAdjective.pronunciations.map((pro, index) => {
+                  <div className="pronunciationWord">
+                    {word.pronunciations.map((pronunciation, index) => {
                       return (
                         <span key={index} className="onemeaning">
-                          {pro.pronunciation}
+                          {pronunciation.pronunciation}
                         </span>
                       );
                     })}
                   </div>
-                  <div className="meaning">
-                    {naAdjective.meanings.map((mean, index) => {
+                  <div className="meaningWord">
+                    {word.meanings.map((mean, index) => {
                       return (
                         <span key={index} className="onemeaning">
                           {mean.meaning}
@@ -39,17 +39,17 @@ function NaAdjectiveList(props) {
                       );
                     })}
                   </div>
-                  <div className="delete">
+                  <div className="wordButtons">
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
-                        props.deleteNaAdjective(naAdjective);
+                        props.deleteWord(word);
                       }}
                     >
                       Delete
                     </button>
                     <Link
-                      to={"/naAdjective/modify/" + naAdjective.kanjis}
+                      to={"/word/modify/" + word.kanjis}
                       style={styleLink}
                       className="btn btn-primary"
                     >
@@ -66,18 +66,18 @@ function NaAdjectiveList(props) {
   );
 }
 
-NaAdjectiveList.propTypes = {
-  deleteNaAdjective: PropTypes.func.isRequired,
-  naAdjectives: PropTypes.arrayOf(
+WordList.propTypes = {
+  deleteWord: PropTypes.func.isRequired,
+  words: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       kanjis: PropTypes.string.isRequired,
-      pronunciations: PropTypes.arrayOf.isRequired,
-      meaning: PropTypes.arrayOf.isRequired,
+      pronunciation: PropTypes.arrayOf.isRequired,
+      meanings: PropTypes.arrayOf.isRequired,
       numberOfUse: PropTypes.number,
       version: PropTypes.number,
     })
   ).isRequired,
 };
 
-export default NaAdjectiveList;
+export default WordList;

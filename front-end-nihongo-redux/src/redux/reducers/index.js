@@ -4,6 +4,7 @@ import iAdjectives from "./iAdjectiveReducer";
 import kanjis from "./kanjiReducer";
 import grammarRules from "./grammarRuleReducer";
 import naAdjectives from "./naAdjectiveReducer";
+import words from "./wordReducer";
 import apiCallsInProgress from "./apiStatusReducer";
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   iAdjectives,
   kanjis,
   naAdjectives,
+  words,
   apiCallsInProgress,
 });
 
