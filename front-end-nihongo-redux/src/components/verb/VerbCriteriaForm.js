@@ -31,7 +31,7 @@ const hideFilters = (event) => {
   }
 };
 
-function VerbCriteriaForm(props) {
+function VerbCriteriaForm({ verbCriteria, onChange, onReset, onSubmit }) {
   return (
     <div style={filterStyle}>
       <button
@@ -41,44 +41,44 @@ function VerbCriteriaForm(props) {
       >
         Filters
       </button>
-      <form onSubmit={props.onSubmit} id="formFiltersVerb">
+      <form onSubmit={onSubmit} id="formFiltersVerb">
         <div className="grid-container-form-criteria-verb">
           <CustomInput
             id="neutralFormCriteria"
             label="Neutral form"
-            onChange={props.onChange}
+            onChange={onChange}
             name="neutralFormCriteria"
-            value={props.verbCriteria.neutralForm}
+            value={verbCriteria.neutralForm}
           />
 
           <CustomInput
             id="pronunciationCriteria"
             label="PronunciationCriteria"
-            onChange={props.onChange}
+            onChange={onChange}
             name="pronunciationCriteria"
-            value={props.verbCriteria.pronunciation}
+            value={verbCriteria.pronunciation}
           />
 
           <CustomInput
             id="meaningCriteria"
             label="MeaningCriteria"
-            onChange={props.onChange}
+            onChange={onChange}
             name="meaningCriteria"
-            value={props.verbCriteria.meaning}
+            value={verbCriteria.meaning}
           />
 
           <CustomSelect
             id="groupeCriteria"
             label="Group"
-            onChange={props.onChange}
+            onChange={onChange}
             name="groupeCriteria"
-            value={props.verbCriteria.groupe}
+            value={verbCriteria.groupe}
             listOfValues={verbConstants.verbGroupList}
           />
         </div>
         <div style={buttonSearchClearStyle}>
           <input type="submit" value="Search" className="btn btn-primary" />
-          <button onClick={props.onReset} className="btn btn-primary">
+          <button onClick={onReset} className="btn btn-primary">
             Clear
           </button>
         </div>

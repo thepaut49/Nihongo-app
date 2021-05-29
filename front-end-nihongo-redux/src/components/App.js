@@ -8,10 +8,9 @@ import NotFoundPage from "./common/NotFoundPage";*/
 import ManageKanjiPage from "./kanji/ManageKanjiPage";
 import VisualizeKanjiPage from "./kanji/VisualizeKanjiPage";
 import KanjisPage from "./kanji/KanjisPage";
-/*
 import ManageVerbPage from "./verb/ManageVerbPage";
 import VisualizeVerbPage from "./verb/VisualizeVerbPage";
-import VerbsPage from "./verb/VerbsPage";*/
+import VerbsPage from "./verb/VerbsPage";
 import ManageNaAdjectivePage from "./naAdjective/ManageNaAdjectivePage";
 import VisualizeNaAdjectivePage from "./naAdjective/VisualizeNaAdjectivePage";
 import NaAdjectivesPage from "./naAdjective/NaAdjectivesPage";
@@ -121,6 +120,13 @@ function App() {
             component={VisualizeParticulePage}
           />
           <Route path="/particule/create" component={ManageParticulePage} />
+          <Route path="/verbs" component={VerbsPage} />
+          <Route path="/verb/modify/:neutralForm" component={ManageVerbPage} />
+          <Route
+            path="/verb/visualize/:neutralForm"
+            component={VisualizeVerbPage}
+          />
+          <Route path="/verb/create" component={ManageVerbPage} />
           <Route path="/words" component={WordsPage} />
           <Route path="/word/modify/:kanjis" component={ManageWordPage} />
           <Route path="/word/visualize/:kanjis" component={VisualizeWordPage} />

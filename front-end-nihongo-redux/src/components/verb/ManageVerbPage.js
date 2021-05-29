@@ -1,53 +1,63 @@
 import React, { useState, useEffect } from "react";
 import VerbForm from "./VerbForm";
 import { toast } from "react-toastify";
-import verbStore from "../../stores/verbStore";
 import { Prompt } from "react-router-dom";
-import * as verbActions from "../../actions/verbActions";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import {
   newMeaningNumber,
   newPronunciationNumber,
 } from "../common/meaningUtils";
+import { connect } from "react-redux";
+import { loadVerbs, saveVerb } from "../../redux/actions/verbActions";
+import PropTypes from "prop-types";
+import Spinner from "../common/spinner/Spinner";
 
-const ManageVerbPage = (props) => {
+const newVerb = {
+  id: null,
+  neutralForm: "",
+  pronunciations: [
+    {
+      id: null,
+      pronunciationNumber: 0,
+      pronunciation: "",
+      version: 0,
+    },
+  ],
+  meanings: [
+    {
+      id: null,
+      meaningNumber: 0,
+      meaning: "",
+      version: 0,
+    },
+  ],
+  groupe: "",
+  numberOfUse: null,
+  version: null,
+};
+
+const ManageVerbPage = ({ verbs, loadVerbs, saveVerb, history, ...props }) => {
   const [modified, setModified] = useState(false);
   const [errors, setErrors] = useState({});
-  const [verb, setVerb] = useState({
-    id: null,
-    neutralForm: "",
-    pronunciations: [
-      {
-        id: null,
-        pronunciationNumber: 0,
-        pronunciation: "",
-        version: 0,
-      },
-    ],
-    meanings: [
-      {
-        id: null,
-        meaningNumber: 0,
-        meaning: "",
-        version: 0,
-      },
-    ],
-    groupe: "",
-    numberOfUse: null,
-    version: null,
-  });
+  const [verb, setVerb] = useState({ ...props.verb });
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    const neutralForm = props.match.params.neutralForm; // from the path /verbs/:verb
-    if (neutralForm) {
-      // on récupère le verb du store et on le transforme pour qu'il corresponde au formulaire
-      const verbForm = verbStore.getVerbByNeutralForm(neutralForm);
-      setVerb(verbForm);
+    if (verbs.length === 0) {
+      loadVerbs().catch((error) => {
+        alert("Loading verbs failed" + error);
+      });
+    } else {
+      setVerb({ ...props.verb });
     }
-  }, [props.match.params.neutralForm]);
+  }, [props.verb]);
 
   function handleChange(event) {
-    setVerb({ ...verb, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    setVerb((prevVerb) => ({
+      ...prevVerb,
+      [name]: value,
+    }));
     setModified(true);
   }
 
@@ -66,71 +76,122 @@ const ManageVerbPage = (props) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setModified(false);
-    verbActions.saveVerb(verb).then(() => {
-      props.history.push("/verbs");
-      toast.success("Verb saved.");
-    });
+    setSaving(true);
+    saveVerb(verb)
+      .then(() => {
+        toast.success("Verb saved.");
+        history.push("/verbs");
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSubmit: error.message });
+      });
   }
 
   function handleAddMeaning(event) {
     event.preventDefault();
-    let newMeanings = verb.meanings;
-    newMeanings.push({
+    const newMeaning = {
       id: null,
       meaningNumber: newMeaningNumber(verb.meanings),
       meaning: "",
       version: 0,
-    });
+    };
     setVerb({
       ...verb,
-      meanings: newMeanings,
+      meanings: [...verb.meanings, newMeaning],
     });
+    setModified(true);
   }
 
   function handleMeaningChange(event, index) {
     event.preventDefault();
-    let newMeanings = verb.meanings;
-    newMeanings[index].meaning = event.target.value;
-    setVerb({ ...verb, meanings: newMeanings });
+    const newMeaning = {
+      id: verb.meanings[index].id,
+      meaningNumber: verb.meanings[index].meaningNumber,
+      meaning: event.target.value,
+      version: verb.meanings[index].version,
+    };
+    setVerb({
+      ...verb,
+      meanings: verb.meanings.map((meaning) => {
+        if (meaning.meaningNumber === newMeaning.meaningNumber) {
+          return newMeaning;
+        } else {
+          return meaning;
+        }
+      }),
+    });
     setModified(true);
   }
 
   function handleDeleteMeaning(event, index) {
     event.preventDefault();
-    let newMeanings = verb.meanings;
-    newMeanings.splice(index, 1);
-    setVerb({ ...verb, meanings: newMeanings });
+    const meanToDelete = verb.meanings[index];
+    setVerb({
+      ...verb,
+      meanings: verb.meanings.filter((meaning) => {
+        if (meaning === meanToDelete) {
+          return false;
+        } else {
+          return true;
+        }
+      }),
+    });
     setModified(true);
   }
 
   function handleAddPronunciation(event) {
     event.preventDefault();
-    let pronunciations = verb.pronunciations;
-    pronunciations.push({
+    const newPronunciation = {
       id: null,
       pronunciationNumber: newPronunciationNumber(verb.pronunciations),
       pronunciation: "",
       version: 0,
-    });
+    };
     setVerb({
       ...verb,
-      pronunciations: pronunciations,
+      pronunciations: [...verb.pronunciations, newPronunciation],
     });
+    setModified(true);
   }
 
   function handlePronunciationChange(event, index) {
     event.preventDefault();
-    let newPronunciations = verb.pronunciations;
-    newPronunciations[index].pronunciation = event.target.value;
-    setVerb({ ...verb, pronunciations: newPronunciations });
+    const newPronunciation = {
+      id: verb.pronunciations[index].id,
+      pronunciationNumber: verb.pronunciations[index].pronunciationNumber,
+      pronunciation: event.target.value,
+      version: verb.pronunciations[index].version,
+    };
+    setVerb({
+      ...verb,
+      pronunciations: verb.pronunciations.map((pronunciation) => {
+        if (
+          pronunciation.pronunciationNumber ===
+          newPronunciation.pronunciationNumber
+        ) {
+          return newPronunciation;
+        } else {
+          return pronunciation;
+        }
+      }),
+    });
     setModified(true);
   }
 
   function handleDeletePronunciation(event, index) {
     event.preventDefault();
-    let newPronunciations = verb.pronunciations;
-    newPronunciations.splice(index, 1);
-    setVerb({ ...verb, pronunciations: newPronunciations });
+    const proToDelete = verb.pronunciations[index];
+    setVerb({
+      ...verb,
+      pronunciations: verb.pronunciations.filter((pronunciation) => {
+        if (pronunciation === proToDelete) {
+          return false;
+        } else {
+          return true;
+        }
+      }),
+    });
     setModified(true);
   }
 
@@ -138,13 +199,26 @@ const ManageVerbPage = (props) => {
     event.preventDefault();
     let input = document.getElementById("pronunciation" + index);
     input.value = input.value + event.target.innerText;
-    let newPronunciations = verb.pronunciations;
-    newPronunciations[index].pronunciation =
-      newPronunciations[index].pronunciation + event.target.innerText;
+    const newPronunciation = {
+      id: verb.pronunciations[index].id,
+      pronunciationNumber: verb.pronunciations[index].pronunciationNumber,
+      pronunciation: input.value,
+      version: verb.pronunciations[index].version,
+    };
     setVerb({
       ...verb,
-      pronunciations: newPronunciations,
+      pronunciations: verb.pronunciations.map((pronunciation) => {
+        if (
+          pronunciation.pronunciationNumber ===
+          newPronunciation.pronunciationNumber
+        ) {
+          return newPronunciation;
+        } else {
+          return pronunciation;
+        }
+      }),
     });
+    setModified(true);
   };
 
   const handleTranslateClick = (event, index) => {
@@ -152,34 +226,83 @@ const ManageVerbPage = (props) => {
     let input = document.getElementById("pronunciation" + index);
     const newValue = translateRomajiToKana(input.value);
     input.value = newValue;
-    let newPronunciations = verb.pronunciations;
-    newPronunciations[index].pronunciation = newValue;
+    const newPronunciation = {
+      id: verb.pronunciations[index].id,
+      pronunciationNumber: verb.pronunciations[index].pronunciationNumber,
+      pronunciation: input.value,
+      version: verb.pronunciations[index].version,
+    };
     setVerb({
       ...verb,
-      pronunciations: newPronunciations,
+      pronunciations: verb.pronunciations.map((pronunciation) => {
+        if (
+          pronunciation.pronunciationNumber ===
+          newPronunciation.pronunciationNumber
+        ) {
+          return newPronunciation;
+        } else {
+          return pronunciation;
+        }
+      }),
     });
+    setModified(true);
   };
 
   return (
     <>
-      <h2>Manage Verb</h2>
-      <Prompt when={modified} message="Are you sure you want to leave ?" />
-      <VerbForm
-        errors={errors}
-        verb={verb}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        onMiddlePointClick={onMiddlePointClick}
-        onTranslateClick={handleTranslateClick}
-        addMeaning={handleAddMeaning}
-        onMeaningChange={handleMeaningChange}
-        deleteMeaning={handleDeleteMeaning}
-        addPronunciation={handleAddPronunciation}
-        onPronunciationChange={handlePronunciationChange}
-        deletePronunciation={handleDeletePronunciation}
-      />
+      {verbs.length === 0 ? (
+        <Spinner />
+      ) : (
+        <>
+          <Prompt when={modified} message="Are you sure you want to leave ?" />
+          <VerbForm
+            errors={errors}
+            verb={verb}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            onMiddlePointClick={onMiddlePointClick}
+            onTranslateClick={handleTranslateClick}
+            addMeaning={handleAddMeaning}
+            onMeaningChange={handleMeaningChange}
+            deleteMeaning={handleDeleteMeaning}
+            addPronunciation={handleAddPronunciation}
+            onPronunciationChange={handlePronunciationChange}
+            deletePronunciation={handleDeletePronunciation}
+            saving={saving}
+          />
+        </>
+      )}
     </>
   );
 };
 
-export default ManageVerbPage;
+ManageVerbPage.propTypes = {
+  verb: PropTypes.object.isRequired,
+  verbs: PropTypes.array.isRequired,
+  loadVerbs: PropTypes.func.isRequired,
+  saveVerb: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+};
+
+export function getVerbByNeutralForm(verbs, neutralForm) {
+  return verbs.find((verb) => verb.neutralForm === neutralForm) || null;
+}
+
+function mapStateToProps(state, ownProps) {
+  const neutralForm = ownProps.match.params.neutralForm;
+  const verb =
+    neutralForm && state.verbs.length > 0
+      ? getVerbByNeutralForm(state.verbs, neutralForm)
+      : newVerb;
+  return {
+    verb,
+    verbs: state.verbs,
+  };
+}
+
+const mapDispatchToProps = {
+  loadVerbs,
+  saveVerb,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageVerbPage);
