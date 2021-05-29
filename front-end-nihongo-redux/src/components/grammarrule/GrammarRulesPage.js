@@ -22,7 +22,7 @@ const GrammarRulesPage = (props) => {
   const handleDeleteGrammarRule = async (grammarRule) => {
     toast.success("Grammar rule deleted");
     try {
-      await this.props.actions.deleteGrammarRule(grammarRule);
+      await props.actions.deleteGrammarRule(grammarRule);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }

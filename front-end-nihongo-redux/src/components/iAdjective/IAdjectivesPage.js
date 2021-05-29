@@ -80,7 +80,7 @@ function IAdjectivesPage(props) {
   const handleDeleteIAdjective = async (iAdjective) => {
     toast.success("IAdjective deleted");
     try {
-      await this.props.actions.deleteIAdjective(iAdjective);
+      await props.actions.deleteIAdjective(iAdjective);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }

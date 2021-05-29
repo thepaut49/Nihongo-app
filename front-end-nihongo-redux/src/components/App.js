@@ -36,11 +36,9 @@ import GrammarRulesPage from "./grammarrule/GrammarRulesPage";
 import VisualizeCounterPage from "./counter/VisualizeCounterPage";
 import ManageCounterPage from "./counter/ManageCounterPage";
 import CountersPage from "./counter/CountersPage";
-/*
 import VisualizeSuffixPage from "./suffix/VisualizeSuffixPage";
 import ManageSuffixPage from "./suffix/ManageSuffixPage";
 import SuffixsPage from "./suffix/SuffixsPage";
-*/
 import HiraganasPage from "./hiragana/HiraganasPage";
 import KatakanasPage from "./katakana/KatakanasPage";
 /*
@@ -120,6 +118,13 @@ function App() {
             component={VisualizeParticulePage}
           />
           <Route path="/particule/create" component={ManageParticulePage} />
+          <Route path="/suffixs" component={SuffixsPage} />
+          <Route
+            path="/suffix/visualize/:kanjis"
+            component={VisualizeSuffixPage}
+          />
+          <Route path="/suffix/modify/:kanjis" component={ManageSuffixPage} />
+          <Route path="/suffix/create" component={ManageSuffixPage} />
           <Route path="/verbs" component={VerbsPage} />
           <Route path="/verb/modify/:neutralForm" component={ManageVerbPage} />
           <Route

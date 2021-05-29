@@ -87,7 +87,7 @@ function VerbsPage(props) {
   const handleDeleteVerb = async (verb) => {
     toast.success("Verb deleted");
     try {
-      await this.props.actions.deleteVerb(verb);
+      await props.actions.deleteVerb(verb);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }

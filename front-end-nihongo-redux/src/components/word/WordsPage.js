@@ -80,7 +80,7 @@ function WordsPage(props) {
   const handleDeleteWord = async (word) => {
     toast.success("Word deleted");
     try {
-      await this.props.actions.deleteWord(word);
+      await props.actions.deleteWord(word);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }

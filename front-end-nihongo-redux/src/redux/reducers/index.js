@@ -6,6 +6,7 @@ import grammarRules from "./grammarRuleReducer";
 import naAdjectives from "./naAdjectiveReducer";
 import names from "./nameReducer";
 import particules from "./particuleReducer";
+import suffixs from "./suffixReducer";
 import verbs from "./verbReducer";
 import words from "./wordReducer";
 import apiCallsInProgress from "./apiStatusReducer";
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   naAdjectives,
   names,
   particules,
+  suffixs,
   verbs,
   words,
   apiCallsInProgress,

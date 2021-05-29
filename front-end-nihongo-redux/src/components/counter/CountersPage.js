@@ -83,7 +83,7 @@ function CountersPage(props) {
   const handleDeleteCounter = async (counter) => {
     toast.success("Counter deleted");
     try {
-      await this.props.actions.deleteCounter(counter);
+      await props.actions.deleteCounter(counter);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }

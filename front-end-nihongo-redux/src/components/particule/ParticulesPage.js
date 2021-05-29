@@ -22,7 +22,7 @@ const ParticulesPage = (props) => {
   const handleDeleteParticule = async (particule) => {
     toast.success("Particule deleted");
     try {
-      await this.props.actions.deleteParticule(particule);
+      await props.actions.deleteParticule(particule);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }

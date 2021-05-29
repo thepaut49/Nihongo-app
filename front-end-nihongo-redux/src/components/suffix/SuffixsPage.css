@@ -1,0 +1,20 @@
+.suffixsPage {
+  display: grid;
+  grid-template-rows: min-content min-content auto;
+  gap: 1em 1em;
+}
+
+.grid-container-suffix {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em 1em;
+  border-radius: 10px;
+  background-color: rgba(38, 113, 22, 0.48);
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+.suffix {
+  font-weight: bold;
+  font-size: xxx-large;
+}
