@@ -18,10 +18,9 @@ import NaAdjectivesPage from "./naAdjective/NaAdjectivesPage";
 import VisualizeIAdjectivePage from "./iAdjective/VisualizeIAdjectivePage";
 import ManageIAdjectivePage from "./iAdjective/ManageIAdjectivePage";
 import IAdjectivesPage from "./iAdjective/IAdjectivesPage";
-/*
 import ManageNamePage from "./name/ManageNamePage";
 import VisualizeNamePage from "./name/VisualizeNamePage";
-import NamesPage from "./name/NamesPage";*/
+import NamesPage from "./name/NamesPage";
 import ManageWordPage from "./word/ManageWordPage";
 import VisualizeWordPage from "./word/VisualizeWordPage";
 import WordsPage from "./word/WordsPage";
@@ -108,6 +107,10 @@ function App() {
             component={VisualizeNaAdjectivePage}
           />
           <Route path="/naAdjective/create" component={ManageNaAdjectivePage} />
+          <Route path="/names" component={NamesPage} />
+          <Route path="/name/modify/:kanjis" component={ManageNamePage} />
+          <Route path="/name/visualize/:kanjis" component={VisualizeNamePage} />
+          <Route path="/name/create" component={ManageNamePage} />
           <Route path="/words" component={WordsPage} />
           <Route path="/word/modify/:kanjis" component={ManageWordPage} />
           <Route path="/word/visualize/:kanjis" component={VisualizeWordPage} />

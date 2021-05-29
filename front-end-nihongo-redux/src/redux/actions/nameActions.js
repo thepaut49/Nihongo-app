@@ -1,52 +1,94 @@
-import dispatcher from "../appDispatcher";
-import * as nameApi from "../api/nameApi";
-import actionTypes from "./actionTypes";
-import { toast } from "react-toastify";
+import * as nameApi from "../../api/nameApi";
+import * as types from "./actionTypes";
+import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-export function saveName(name) {
-  return nameApi.saveName(name).then((savedName) => {
-    // Hey dispatcher go tell all the stores that a name was created.
-    dispatcher.dispatch({
-      actionType: name.id ? actionTypes.UPDATE_NAME : actionTypes.CREATE_NAME,
-      name: savedName,
-    });
-  });
+export function filterNameSuccess(names) {
+  return { type: types.FILTER_NAMES_SUCCESS, names };
 }
 
-export function deleteName(id) {
-  return nameApi.deleteName(id).then(() => {
-    dispatcher.dispatch({
-      actionType: actionTypes.DELETE_NAME,
-      id: id,
-    });
-    toast.success("Name deleted.");
-  });
+export function loadNameSuccess(names) {
+  return { type: types.LOAD_NAMES_SUCCESS, names };
+}
+
+export function createNameSuccess(name) {
+  return { type: types.CREATE_NAME_SUCCESS, name };
+}
+
+export function updateNameSuccess(name) {
+  return { type: types.UPDATE_NAME_SUCCESS, name };
+}
+
+export function deleteNameOptimistic(name) {
+  return { type: types.DELETE_NAME_OPTIMISTIC, name };
 }
 
 export function loadNames() {
-  return nameApi.getNames().then((names) => {
-    dispatcher.dispatch({
-      actionType: actionTypes.LOAD_NAMES,
-      names: names,
-    });
-  });
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return nameApi
+      .getNames()
+      .then((names) => {
+        dispatch(loadNameSuccess(names));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function saveName(name) {
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return nameApi
+      .saveName(name)
+      .then((savedname) => {
+        name.id
+          ? dispatch(updateNameSuccess(savedname))
+          : dispatch(createNameSuccess(savedname));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
+
+export function deleteName(name) {
+  return function (dispatch) {
+    // Doing optimistic delete, so not dispatching begin/end api call
+    // actions, or apiCallError action since we're not showing the loading status for this.
+    dispatch(deleteNameOptimistic(name));
+    return nameApi.deleteName(name.id);
+  };
 }
 
 export function filterNames(nameCriteria) {
-  return nameApi.filterNames(nameCriteria).then((names) => {
-    dispatcher.dispatch({
-      actionType: actionTypes.FILTER_NAMES,
-      names: names,
-    });
-  });
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return nameApi
+      .filterNames(nameCriteria)
+      .then((names) => {
+        dispatch(filterNameSuccess(names));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
 }
 
 export function updateNumberOfUse(id) {
-  return nameApi.updateNumberOfUse(id).then((updatedName) => {
-    // Hey dispatcher go tell all the stores that a kanji was created.
-    dispatcher.dispatch({
-      actionType: actionTypes.UPDATE_NAME,
-      name: updatedName,
-    });
-  });
+  //eslint-disable-next-line no-unused-vars
+  return function (dispatch, getState) {
+    dispatch(beginApiCall());
+    return nameApi
+      .updateNumberOfUse(id)
+      .then((savedname) => dispatch(updateNameSuccess(savedname)))
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
 }

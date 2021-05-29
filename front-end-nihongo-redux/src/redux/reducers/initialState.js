@@ -4,6 +4,7 @@ export default {
   iAdjectives: [],
   kanjis: [],
   naAdjectives: [],
+  names: [],
   words: [],
   apiCallsInProgress: 0,
 };
