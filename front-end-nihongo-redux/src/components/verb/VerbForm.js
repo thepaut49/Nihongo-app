@@ -2,10 +2,12 @@ import React from "react";
 import CustomInput from "../common/CustomInput";
 import CustomInputMeaning from "../common/CustomInputMeaning";
 import CustomInputPronunciations from "../common/CustomInputPronunciations";
+import CustomSelect from "../common/CustomSelect";
+import verbConstants from "../common/verbConstants";
 import PropTypes from "prop-types";
 
-function WordForm({
-  word,
+function VerbForm({
+  verb,
   onSubmit,
   onChange,
   saving = false,
@@ -21,7 +23,7 @@ function WordForm({
 }) {
   return (
     <form onSubmit={onSubmit} className="modificationForm">
-      <h2>{word.id ? "Edit" : "Add"} Word</h2>
+      <h2>{verb.id ? "Edit" : "Add"} Verb</h2>
       {errors.onSubmit && (
         <div className="alert alert-danger" role="alert">
           {errors.onSubmit}
@@ -29,17 +31,17 @@ function WordForm({
       )}
 
       <CustomInput
-        id="kanjis"
-        label="Kanjis"
+        id="neutralForm"
+        label="Neutral form"
         onChange={onChange}
-        name="kanjis"
-        value={word.kanjis}
-        error={errors.kanjis}
+        name="neutralForm"
+        value={verb.neutralForm}
+        error={errors.neutralForm}
       />
 
-      {word.pronunciations &&
-        word.pronunciations.length > 0 &&
-        word.pronunciations.map((pro, index) => {
+      {verb.pronunciations &&
+        verb.pronunciations.length > 0 &&
+        verb.pronunciations.map((pro, index) => {
           return (
             <CustomInputPronunciations
               key={index}
@@ -48,7 +50,7 @@ function WordForm({
               typeInput="text"
               onChange={onPronunciationChange}
               name={"pronunciation" + index}
-              value={word.pronunciations[index].pronunciation}
+              value={verb.pronunciations[index].pronunciation}
               index={index}
               deletePronunciation={deletePronunciation}
               onMiddlePointClick={onMiddlePointClick}
@@ -61,9 +63,9 @@ function WordForm({
         Add pronunciation
       </button>
 
-      {word.meanings &&
-        word.meanings.length > 0 &&
-        word.meanings.map((_meaning, index) => {
+      {verb.meanings &&
+        verb.meanings.length > 0 &&
+        verb.meanings.map((_meaning, index) => {
           return (
             <CustomInputMeaning
               key={index}
@@ -72,7 +74,7 @@ function WordForm({
               typeInput="text"
               onChange={(event) => onMeaningChange(event, index)}
               name={"meaning" + index}
-              value={word.meanings[index].meaning}
+              value={verb.meanings[index].meaning}
               index={index}
               deleteMeaning={deleteMeaning}
             />
@@ -83,6 +85,16 @@ function WordForm({
         Add meaning
       </button>
 
+      <CustomSelect
+        id="groupe"
+        label="Group"
+        onChange={onChange}
+        step="1"
+        name="groupe"
+        value={verb.groupe}
+        listOfValues={verbConstants.verbGroupList}
+      />
+
       <button type="submit" disabled={saving} className="btn btn-success">
         {saving ? "Saving..." : "Save"}
       </button>
@@ -90,13 +102,13 @@ function WordForm({
   );
 }
 
-WordForm.propTypes = {
-  word: PropTypes.object.isRequired,
+VerbForm.propTypes = {
+  verb: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
   onMiddlePointClick: PropTypes.func.isRequired,
   onTranslateClick: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
   addMeaning: PropTypes.func.isRequired,
   onMeaningChange: PropTypes.func.isRequired,
   deleteMeaning: PropTypes.func.isRequired,
@@ -106,4 +118,4 @@ WordForm.propTypes = {
   saving: PropTypes.bool,
 };
 
-export default WordForm;
+export default VerbForm;

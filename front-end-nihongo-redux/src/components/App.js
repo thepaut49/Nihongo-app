@@ -27,10 +27,10 @@ import WordsPage from "./word/WordsPage";
 /*
 import ManageSentencePage from "./sentence/ManageSentencePage";
 import VisualizeSentencePage from "./sentence/VisualizeSentencePage";
-import SentencesPage from "./sentence/SentencesPage";
+import SentencesPage from "./sentence/SentencesPage";*/
 import ManageParticulePage from "./particule/ManageParticulePage";
 import VisualizeParticulePage from "./particule/VisualizeParticulePage";
-import ParticulesPage from "./particule/ParticulesPage";*/
+import ParticulesPage from "./particule/ParticulesPage";
 import ManageGrammarRulePage from "./grammarrule/ManageGrammarRulePage";
 import VisualizeGrammarRulePage from "./grammarrule/VisualizeGrammarRulePage";
 import GrammarRulesPage from "./grammarrule/GrammarRulesPage";
@@ -111,6 +111,16 @@ function App() {
           <Route path="/name/modify/:kanjis" component={ManageNamePage} />
           <Route path="/name/visualize/:kanjis" component={VisualizeNamePage} />
           <Route path="/name/create" component={ManageNamePage} />
+          <Route path="/particules" component={ParticulesPage} />
+          <Route
+            path="/particule/modify/:kanjis"
+            component={ManageParticulePage}
+          />
+          <Route
+            path="/particule/visualize/:kanjis"
+            component={VisualizeParticulePage}
+          />
+          <Route path="/particule/create" component={ManageParticulePage} />
           <Route path="/words" component={WordsPage} />
           <Route path="/word/modify/:kanjis" component={ManageWordPage} />
           <Route path="/word/visualize/:kanjis" component={VisualizeWordPage} />

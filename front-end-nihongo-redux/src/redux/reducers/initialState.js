@@ -5,6 +5,8 @@ export default {
   kanjis: [],
   naAdjectives: [],
   names: [],
+  particules: [],
+  verbs: [],
   words: [],
   apiCallsInProgress: 0,
 };
