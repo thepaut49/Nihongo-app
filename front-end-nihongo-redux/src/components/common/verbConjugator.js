@@ -377,7 +377,6 @@ export function presumptiveVolitional(verb, form, sign) {
             return "ないでしょう";
           }
         }
-      } else {
       }
   }
 }

@@ -7,6 +7,7 @@ import * as wordApi from "./wordApi";
 import translationConstants from "../components/common/translationConstants";
 
 export function getMostUsedObject(typeSelect, quantity) {
+  debugger;
   switch (typeSelect) {
     case translationConstants.TYPE_KANJI:
       return kanjiApi.getMostUsedKanjis(quantity);

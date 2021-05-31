@@ -4,63 +4,109 @@ import * as naAdjectiveActions from "./naAdjectiveActions";
 import * as iAdjectiveActions from "./iAdjectiveActions";
 import * as nameActions from "./nameActions";
 import * as wordActions from "./wordActions";
-import dispatcher from "../appDispatcher";
-import actionTypes from "./actionTypes";
+import * as types from "./actionTypes";
+import * as translationApi from "../../api/translationApi";
+import { beginApiCall, apiCallError } from "./apiStatusActions";
+import translationConstants from "../../components/common/translationConstants";
 
-import translationConstants from "../components/common/translationConstants";
+export function updateSentenceSucces(sentence) {
+  return { type: types.UPDATE_SENTENCE_SUCCESS, sentence };
+}
+
+export function updateQuantitySucces(quantity) {
+  return { type: types.UPDATE_QUANTITY_SUCCESS, quantity };
+}
+
+export function updateTypeSelectSucces(typeSelect) {
+  return { type: types.UPDATE_TYPE_OF_OBJECT_SUCCESS, typeSelect };
+}
+
+export function clearTranslationSucces() {
+  return { type: types.CLEAR_TRANSLATION_SUCCESS };
+}
+
+export function extractListOfKanjiSucces(listOfKanjis) {
+  return { type: types.EXTRACT_KANJI_FROM_SENTENCE_SUCCESS, listOfKanjis };
+}
+
+export function loadPartsSucces(listParts) {
+  return { type: types.LOAD_COUNTERS_SUCCESS, listParts };
+}
+
+export function loadListObjectsSucces(listObjects) {
+  return { type: types.LOAD_LIST_OBJECT_SUCCESS, listObjects };
+}
+
+export function loadListObjects(typeSelect, quantity) {
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    debugger;
+    return translationApi
+      .getMostUsedObject(typeSelect, quantity)
+      .then((listObjects) => {
+        dispatch(loadListObjectsSucces(listObjects));
+      })
+      .catch((error) => {
+        dispatch(apiCallError(error));
+        throw error;
+      });
+  };
+}
 
 export function updateNumberOfUse(typeSelect, id) {
-  switch (typeSelect) {
-    case translationConstants.TYPE_KANJI:
-      kanjiActions
-        .updateNumberOfUse(id)
-        .then((updatedKanji) => {
-          console.log("Kanji updated");
-        })
-        .catch((error) => console.log(error));
-      break;
-    case translationConstants.TYPE_VERB:
-      verbActions
-        .updateNumberOfUse(id)
-        .then((updatedVerb) => {
-          console.log("Verb updated");
-        })
-        .catch((error) => console.log(error));
-      break;
-    case translationConstants.TYPE_NA_ADJECTIVE:
-      naAdjectiveActions
-        .updateNumberOfUse(id)
-        .then((updatedNaAdj) => {
-          console.log("Na-Adjective updated");
-        })
-        .catch((error) => console.log(error));
-      break;
-    case translationConstants.TYPE_I_ADJECTIVE:
-      iAdjectiveActions
-        .updateNumberOfUse(id)
-        .then((updatedIAdj) => {
-          console.log("I-Adjective updated");
-        })
-        .catch((error) => console.log(error));
-      break;
-    case translationConstants.TYPE_NAME:
-      nameActions
-        .updateNumberOfUse(id)
-        .then((updatedName) => {
-          console.log("Name updated");
-        })
-        .catch((error) => console.log(error));
-      break;
-    case translationConstants.TYPE_WORD:
-      wordActions
-        .updateNumberOfUse(id)
-        .then((updatedWord) => {
-          console.log("Word updated");
-        })
-        .catch((error) => console.log(error));
-      break;
-    default:
-  }
+  return function () {
+    switch (typeSelect) {
+      case translationConstants.TYPE_KANJI:
+        kanjiActions
+          .updateNumberOfUse(id)
+          .then((updatedKanji) => {
+            console.log("Kanji " + updatedKanji.kanji + " updated");
+          })
+          .catch((error) => console.log(error));
+        break;
+      case translationConstants.TYPE_VERB:
+        verbActions
+          .updateNumberOfUse(id)
+          .then((updatedVerb) => {
+            console.log("Verb " + updatedVerb.neutralForm + " updated");
+          })
+          .catch((error) => console.log(error));
+        break;
+      case translationConstants.TYPE_NA_ADJECTIVE:
+        naAdjectiveActions
+          .updateNumberOfUse(id)
+          .then((updatedNaAdj) => {
+            console.log("Na-Adjective " + updatedNaAdj.kanjis + " updated");
+          })
+          .catch((error) => console.log(error));
+        break;
+      case translationConstants.TYPE_I_ADJECTIVE:
+        iAdjectiveActions
+          .updateNumberOfUse(id)
+          .then((updatedIAdj) => {
+            console.log("I-Adjective " + updatedIAdj.kanjis + " updated");
+          })
+          .catch((error) => console.log(error));
+        break;
+      case translationConstants.TYPE_NAME:
+        nameActions
+          .updateNumberOfUse(id)
+          .then((updatedName) => {
+            console.log("Name " + updatedName.kanjis + " updated");
+          })
+          .catch((error) => console.log(error));
+        break;
+      case translationConstants.TYPE_WORD:
+        wordActions
+          .updateNumberOfUse(id)
+          .then((updatedWord) => {
+            console.log("Word " + updatedWord.kanjis + " updated");
+          })
+          .catch((error) => console.log(error));
+        break;
+      default:
+    }
+  };
 }
 
 export const extractListOfKanji = (sentence, kanjis) => {
@@ -79,42 +125,39 @@ export const extractListOfKanji = (sentence, kanjis) => {
     }
     index++;
   }
-  dispatcher.dispatch({
-    actionType: actionTypes.EXTRACT_KANJI_FROM_SENTENCE,
-    listOfKanjis: listOfKanjisInSentence,
-  });
-};
-
-export const clearTranslation = () => {
-  dispatcher.dispatch({
-    actionType: actionTypes.CLEAR_TRANSLATION,
-  });
+  return function (dispatch) {
+    dispatch(extractListOfKanjiSucces(listOfKanjisInSentence));
+  };
 };
 
 export const updateQuantity = (newQuantity) => {
-  dispatcher.dispatch({
-    actionType: actionTypes.UPDATE_QUANTITY,
-    quantity: newQuantity,
-  });
+  return function (dispatch) {
+    dispatch(updateQuantitySucces(newQuantity));
+  };
 };
 
 export const updateTypeSelect = (newType) => {
-  dispatcher.dispatch({
-    actionType: actionTypes.UPDATE_TYPE_OF_OBJECT,
-    typeSelect: newType,
-  });
+  return function (dispatch) {
+    dispatch(updateTypeSelectSucces(newType));
+  };
 };
 
 export const updateSentence = (newSentence) => {
-  dispatcher.dispatch({
-    actionType: actionTypes.UPDATE_SENTENCE,
-    sentence: newSentence,
-  });
+  debugger;
+  return function (dispatch) {
+    debugger;
+    dispatch(updateSentenceSucces(newSentence));
+  };
+};
+
+export const clearTranslation = () => {
+  return function (dispatch) {
+    dispatch(clearTranslationSucces());
+  };
 };
 
 export const loadParts = (parts) => {
-  dispatcher.dispatch({
-    actionType: actionTypes.LOAD_PARTS,
-    listParts: parts,
-  });
+  return function (dispatch) {
+    dispatch(loadPartsSucces(parts));
+  };
 };

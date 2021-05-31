@@ -40,9 +40,7 @@ import ManageSuffixPage from "./suffix/ManageSuffixPage";
 import SuffixsPage from "./suffix/SuffixsPage";
 import HiraganasPage from "./hiragana/HiraganasPage";
 import KatakanasPage from "./katakana/KatakanasPage";
-/*
 import Translation from "./translation/Translation";
-*/
 import ScrollToTop from "./common/ScrollToTop";
 import ButtonScrollToTop from "./common/ButtonScrollToTop";
 import "./App.css";
@@ -134,6 +132,7 @@ function App() {
           />
           <Route path="/suffix/modify/:kanjis" component={ManageSuffixPage} />
           <Route path="/suffix/create" component={ManageSuffixPage} />
+          <Route path="/translation" component={Translation} />
           <Route path="/verbs" component={VerbsPage} />
           <Route path="/verb/modify/:neutralForm" component={ManageVerbPage} />
           <Route
