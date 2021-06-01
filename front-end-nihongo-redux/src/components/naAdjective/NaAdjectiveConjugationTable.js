@@ -3,6 +3,7 @@ import {
   presentIndicative,
   pastIndicative,
 } from "../common/naAdjectiveConjugator";
+import PropTypes from "prop-types";
 
 const PLAIN_FORM = "Plain";
 const POLITE_FORM = "Polite";
@@ -44,7 +45,7 @@ function NaAdjectiveConjugationTable(props) {
 
   return (
     <>
-      <h2>{naAdjective.kanjis}'s Conjugation</h2>
+      <h2>{naAdjective.kanjis} Conjugation</h2>
       <p>
         Because na-adjectives take the auxiliary verb we already know their
         conjugation: we just need to conjugate the auxiliary verb to get the
@@ -119,5 +120,9 @@ function NaAdjectiveConjugationTable(props) {
     </>
   );
 }
+
+NaAdjectiveConjugationTable.propTypes = {
+  naAdjective: PropTypes.object.isRequired,
+};
 
 export default NaAdjectiveConjugationTable;
