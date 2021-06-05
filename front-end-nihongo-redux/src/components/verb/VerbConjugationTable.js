@@ -21,7 +21,7 @@ function VerbConjugationTable(props) {
 
   return (
     <>
-      <h2>{props.verb.neutralForm}'s Conjugation</h2>
+      <h2>{props.verb.neutralForm} Conjugation</h2>
       <div className="grid-container-mainGrid">
         <Tense
           verb={verb}

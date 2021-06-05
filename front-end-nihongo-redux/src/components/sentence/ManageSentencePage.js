@@ -110,6 +110,7 @@ const ManageSentencePage = ({
             onSubmit={handleSubmit}
             onMiddlePointClick={onMiddlePointClick}
             onTranslateClick={handleTranslateClick}
+            saving={saving}
           />
         </>
       )}
