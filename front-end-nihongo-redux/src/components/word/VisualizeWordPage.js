@@ -76,9 +76,15 @@ const VisualizeWordPage = ({
     }
   }, [props.word]);
 
+  const allEntitiesLoaded = () => {
+    if (words.length === 0) return false;
+    if (kanjis.length === 0) return false;
+    return true;
+  };
+
   return (
     <>
-      {words.length === 0 ? (
+      {allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

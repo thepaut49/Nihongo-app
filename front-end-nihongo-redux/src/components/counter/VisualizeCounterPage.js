@@ -72,9 +72,15 @@ const VisualizeCounterPage = ({
     }
   }, [props.counter]);
 
+  const allEntitiesLoaded = () => {
+    if (kanjis.length === 0) return false;
+    if (counters.length === 0) return false;
+    return true;
+  };
+
   return (
     <>
-      {counters.length === 0 ? (
+      {!allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

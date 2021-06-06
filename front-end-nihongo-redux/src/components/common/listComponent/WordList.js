@@ -10,16 +10,16 @@ function WordList(props) {
         return (
           <div key={word.id} className="grid-container-word">
             <div className="word">{word.kanjis}</div>
-            <div className="pronunciation">
-              {word.pronunciations.map((pronunciation, index) => {
+            <div className="pronunciationWord">
+              {word.pronunciations.map((pro, index) => {
                 return (
                   <span key={index + 90000} className="onemeaning">
-                    {pronunciation.pronunciation}
+                    {pro.pronunciation}
                   </span>
                 );
               })}
             </div>
-            <div className="meaning">
+            <div className="meaningWord">
               {word.meanings.map((mean, index) => {
                 return (
                   <span key={index + 100000} className="onemeaning">

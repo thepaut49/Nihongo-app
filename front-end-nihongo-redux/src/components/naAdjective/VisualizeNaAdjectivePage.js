@@ -78,9 +78,15 @@ const VisualizeNaAdjectivePage = ({
       );
   }, [props.naAdjective]);
 
+  const allEntitiesLoaded = () => {
+    if (naAdjectives.length === 0) return false;
+    if (kanjis.length === 0) return false;
+    return true;
+  };
+
   return (
     <>
-      {naAdjectives.length === 0 ? (
+      {!allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

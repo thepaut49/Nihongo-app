@@ -30,7 +30,6 @@ const VisualizeParticulePage = ({ particules, loadParticules, ...props }) => {
 
   return (
     <>
-      {" "}
       {particules.length === 0 ? (
         <Spinner />
       ) : (

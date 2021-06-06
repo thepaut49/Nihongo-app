@@ -66,9 +66,15 @@ const VisualizeSentencePage = ({
     }
   }, [props.sentence]);
 
+  const allEntitiesLoaded = () => {
+    if (sentences.length === 0) return false;
+    if (kanjis.length === 0) return false;
+    return true;
+  };
+
   return (
     <>
-      {sentences.length === 0 ? (
+      {!allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

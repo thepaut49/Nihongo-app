@@ -83,9 +83,15 @@ const VisualizeIAdjectivePage = ({
     }
   }, [props.iAdjective]);
 
+  const allEntitiesLoaded = () => {
+    if (iAdjectives.length === 0) return false;
+    if (kanjis.length === 0) return false;
+    return true;
+  };
+
   return (
     <>
-      {iAdjectives.length === 0 ? (
+      {!allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

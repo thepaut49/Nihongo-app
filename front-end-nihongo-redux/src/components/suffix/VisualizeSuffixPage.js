@@ -71,9 +71,15 @@ const VisualizeSuffixPage = ({
     }
   }, [props.suffix]);
 
+  const allEntitiesLoaded = () => {
+    if (suffixs.length === 0) return false;
+    if (kanjis.length === 0) return false;
+    return true;
+  };
+
   return (
     <>
-      {suffixs.length === 0 ? (
+      {!allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

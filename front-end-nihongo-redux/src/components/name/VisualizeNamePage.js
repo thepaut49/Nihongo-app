@@ -76,9 +76,15 @@ const VisualizeNamePage = ({
     }
   }, [props.name]);
 
+  const allEntitiesLoaded = () => {
+    if (names.length === 0) return false;
+    if (kanjis.length === 0) return false;
+    return true;
+  };
+
   return (
     <>
-      {names.length === 0 ? (
+      {!allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

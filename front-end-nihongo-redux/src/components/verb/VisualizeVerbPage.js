@@ -78,9 +78,15 @@ const VisualizeVerbPage = ({
     }
   }, [props.verb]);
 
+  const allEntitiesLoaded = () => {
+    if (verbs.length === 0) return false;
+    if (kanjis.length === 0) return false;
+    return true;
+  };
+
   return (
     <>
-      {verbs.length === 0 ? (
+      {allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

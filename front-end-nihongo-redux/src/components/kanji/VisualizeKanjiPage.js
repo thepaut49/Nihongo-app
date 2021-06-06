@@ -172,9 +172,19 @@ const VisualizeKanjiPage = ({
       );
   }, [props.kanji]);
 
+  const allEntitiesLoaded = () => {
+    if (iAdjectives.length === 0) return false;
+    if (naAdjectives.length === 0) return false;
+    if (kanjis.length === 0) return false;
+    if (verbs.length === 0) return false;
+    if (words.length === 0) return false;
+    if (names.length === 0) return false;
+    return true;
+  };
+
   return (
     <>
-      {kanjis.length === 0 ? (
+      {!allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>
