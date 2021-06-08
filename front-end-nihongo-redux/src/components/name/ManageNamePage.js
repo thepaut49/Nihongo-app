@@ -6,11 +6,7 @@ import Spinner from "../common/spinner/Spinner";
 import NameForm from "./NameForm";
 import { toast } from "react-toastify";
 import { Prompt } from "react-router-dom";
-import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import {
-  newMeaningNumber,
-  newPronunciationNumber,
-} from "../common/meaningUtils";
+import * as manageEntityUtils from "../common/manageEntityUtils";
 
 const newName = {
   id: null,
@@ -84,165 +80,73 @@ const ManageNamePage = ({ names, loadNames, saveName, history, ...props }) => {
       });
   }
 
-  function handleAddMeaning(event) {
-    event.preventDefault();
-    const newMeaning = {
-      id: null,
-      meaningNumber: newMeaningNumber(name.meanings),
-      meaning: "",
-      version: 0,
-    };
-    setName({
-      ...name,
-      meanings: [...name.meanings, newMeaning],
-    });
-    setModified(true);
-  }
-
-  function handleMeaningChange(event, index) {
-    event.preventDefault();
-    const newMeaning = {
-      id: name.meanings[index].id,
-      meaningNumber: name.meanings[index].meaningNumber,
-      meaning: event.target.value,
-      version: name.meanings[index].version,
-    };
-    setName({
-      ...name,
-      meanings: name.meanings.map((meaning) => {
-        if (meaning.meaningNumber === newMeaning.meaningNumber) {
-          return newMeaning;
-        } else {
-          return meaning;
-        }
-      }),
-    });
-    setModified(true);
-  }
-
-  function handleDeleteMeaning(event, index) {
-    event.preventDefault();
-    const meanToDelete = name.meanings[index];
-    setName({
-      ...name,
-      meanings: name.meanings.filter((meaning) => {
-        if (meaning === meanToDelete) {
-          return false;
-        } else {
-          return true;
-        }
-      }),
-    });
-    setModified(true);
-  }
-
   function handleAddPronunciation(event) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: null,
-      pronunciationNumber: newPronunciationNumber(name.pronunciations),
-      pronunciation: "",
-      version: 0,
-    };
-    setName({
-      ...name,
-      pronunciations: [...name.pronunciations, newPronunciation],
-    });
-    setModified(true);
+    manageEntityUtils.handleAddPronunciation(event, name, setName, setModified);
   }
 
   function handlePronunciationChange(event, index) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: name.pronunciations[index].id,
-      pronunciationNumber: name.pronunciations[index].pronunciationNumber,
-      pronunciation: event.target.value,
-      version: name.pronunciations[index].version,
-    };
-    setName({
-      ...name,
-      pronunciations: name.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handlePronunciationChange(
+      event,
+      index,
+      name,
+      setName,
+      setModified
+    );
   }
 
   function handleDeletePronunciation(event, index) {
-    event.preventDefault();
-    const proToDelete = name.pronunciations[index];
-    setName({
-      ...name,
-      pronunciations: name.pronunciations.filter((pronunciation) => {
-        if (pronunciation === proToDelete) {
-          return false;
-        } else {
-          return true;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleDeletePronunciation(
+      event,
+      index,
+      name,
+      setName,
+      setModified
+    );
   }
 
   const onMiddlePointClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    input.value = input.value + event.target.innerText;
-    const newPronunciation = {
-      id: name.pronunciations[index].id,
-      pronunciationNumber: name.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: name.pronunciations[index].version,
-    };
-    setName({
-      ...name,
-      pronunciations: name.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.onMiddlePointClick(
+      event,
+      index,
+      name,
+      setName,
+      setModified
+    );
   };
 
   const handleTranslateClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    const newPronunciation = {
-      id: name.pronunciations[index].id,
-      pronunciationNumber: name.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: name.pronunciations[index].version,
-    };
-    setName({
-      ...name,
-      pronunciations: name.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleTranslateClick(
+      event,
+      index,
+      name,
+      setName,
+      setModified
+    );
   };
+
+  function handleAddMeaning(event) {
+    manageEntityUtils.handleAddMeaning(event, name, setName, setModified);
+  }
+
+  function handleMeaningChange(event, index) {
+    manageEntityUtils.handleMeaningChange(
+      event,
+      index,
+      name,
+      setName,
+      setModified
+    );
+  }
+
+  function handleDeleteMeaning(event, index) {
+    manageEntityUtils.handleDeleteMeaning(
+      event,
+      index,
+      name,
+      setName,
+      setModified
+    );
+  }
 
   return (
     <>

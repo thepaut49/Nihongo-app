@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import SuffixForm from "./SuffixForm";
 import { toast } from "react-toastify";
 import { Prompt } from "react-router-dom";
-import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import { newPronunciationNumber } from "../common/meaningUtils";
 import { connect } from "react-redux";
 import { loadSuffixs, saveSuffix } from "../../redux/actions/suffixActions";
 import PropTypes from "prop-types";
 import Spinner from "../common/spinner/Spinner";
+import * as manageEntityUtils from "../common/manageEntityUtils";
 
 const newSuffix = {
   id: null,
@@ -85,111 +84,52 @@ const ManageSuffixPage = ({
   }
 
   function handleAddPronunciation(event) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: null,
-      pronunciationNumber: newPronunciationNumber(suffix.pronunciations),
-      pronunciation: "",
-      version: 0,
-    };
-    setSuffix({
-      ...suffix,
-      pronunciations: [...suffix.pronunciations, newPronunciation],
-    });
-    setModified(true);
+    manageEntityUtils.handleAddPronunciation(
+      event,
+      suffix,
+      setSuffix,
+      setModified
+    );
   }
 
   function handlePronunciationChange(event, index) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: suffix.pronunciations[index].id,
-      pronunciationNumber: suffix.pronunciations[index].pronunciationNumber,
-      pronunciation: event.target.value,
-      version: suffix.pronunciations[index].version,
-    };
-    setSuffix({
-      ...suffix,
-      pronunciations: suffix.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handlePronunciationChange(
+      event,
+      index,
+      suffix,
+      setSuffix,
+      setModified
+    );
   }
 
   function handleDeletePronunciation(event, index) {
-    event.preventDefault();
-    const proToDelete = suffix.pronunciations[index];
-    setSuffix({
-      ...suffix,
-      pronunciations: suffix.pronunciations.filter((pronunciation) => {
-        if (pronunciation === proToDelete) {
-          return false;
-        } else {
-          return true;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleDeletePronunciation(
+      event,
+      index,
+      suffix,
+      setSuffix,
+      setModified
+    );
   }
 
   const onMiddlePointClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    input.value = input.value + event.target.innerText;
-    const newPronunciation = {
-      id: suffix.pronunciations[index].id,
-      pronunciationNumber: suffix.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: suffix.pronunciations[index].version,
-    };
-    setSuffix({
-      ...suffix,
-      pronunciations: suffix.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.onMiddlePointClick(
+      event,
+      index,
+      suffix,
+      setSuffix,
+      setModified
+    );
   };
 
   const handleTranslateClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    const newPronunciation = {
-      id: suffix.pronunciations[index].id,
-      pronunciationNumber: suffix.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: suffix.pronunciations[index].version,
-    };
-    setSuffix({
-      ...suffix,
-      pronunciations: suffix.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleTranslateClick(
+      event,
+      index,
+      suffix,
+      setSuffix,
+      setModified
+    );
   };
 
   return (

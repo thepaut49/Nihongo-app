@@ -86,7 +86,7 @@ const VisualizeVerbPage = ({
 
   return (
     <>
-      {allEntitiesLoaded() ? (
+      {!allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

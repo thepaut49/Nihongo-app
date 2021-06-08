@@ -7,15 +7,15 @@ import CustomIntegerSelect from "../common/CustomIntegerSelect";
 import TranslationArea from "./TranslationArea";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import translationConstants from "../common/translationConstants";
-import { loadKanjis } from "../../redux/actions/kanjiActions";
-import { loadVerbs } from "../../redux/actions/verbActions";
-import { loadNaAdjectives } from "../../redux/actions/naAdjectiveActions";
-import { loadIAdjectives } from "../../redux/actions/iAdjectiveActions";
-import { loadNames } from "../../redux/actions/nameActions";
-import { loadWords } from "../../redux/actions/wordActions";
-import { loadParticules } from "../../redux/actions/particuleActions";
-import { loadCounters } from "../../redux/actions/counterActions";
-import { loadSuffixs } from "../../redux/actions/suffixActions";
+import * as kanjiActions from "../../redux/actions/kanjiActions";
+import * as verbActions from "../../redux/actions/verbActions";
+import * as naAdjectiveActions from "../../redux/actions/naAdjectiveActions";
+import * as iAdjectiveActions from "../../redux/actions/iAdjectiveActions";
+import * as nameActions from "../../redux/actions/nameActions";
+import * as wordActions from "../../redux/actions/wordActions";
+import * as particuleActions from "../../redux/actions/particuleActions";
+import * as counterActions from "../../redux/actions/counterActions";
+import * as suffixActions from "../../redux/actions/suffixActions";
 import * as translationActions from "../../redux/actions/translationActions";
 import { extractParts, findListOfCandidates } from "./translationUtils";
 import { connect } from "react-redux";
@@ -62,21 +62,30 @@ const Translation = (props) => {
   );
 
   useEffect(() => {
-    if (props.kanjis.length === 0) loadKanjis();
-    if (props.verbs.length === 0) loadVerbs();
-    if (props.naAdjectives.length === 0) loadNaAdjectives();
-    if (props.iAdjectives.length === 0) loadIAdjectives();
-    if (props.names.length === 0) loadNames();
-    if (props.words.length === 0) loadWords();
-    if (props.particules.length === 0) loadParticules();
-    if (props.counters.length === 0) loadCounters();
-    if (props.suffixs.length === 0) loadSuffixs();
-    if (props.translation.listObjects.length === 0) {
-      debugger;
-      props.actions.loadListObjects(
-        props.translation.typeSelect,
-        props.translation.quantity
-      );
+    const {
+      translation,
+      counters,
+      kanjis,
+      iAdjectives,
+      naAdjectives,
+      names,
+      particules,
+      suffixs,
+      words,
+      verbs,
+      actions,
+    } = props;
+    if (kanjis.length === 0) actions.loadKanjis();
+    if (verbs.length === 0) actions.loadVerbs();
+    if (naAdjectives.length === 0) actions.loadNaAdjectives();
+    if (iAdjectives.length === 0) actions.loadIAdjectives();
+    if (names.length === 0) actions.loadNames();
+    if (words.length === 0) actions.loadWords();
+    if (particules.length === 0) actions.loadParticules();
+    if (counters.length === 0) actions.loadCounters();
+    if (suffixs.length === 0) actions.loadSuffixs();
+    if (translation.listObjects.length === 0) {
+      actions.loadListObjects(translation.typeSelect, translation.quantity);
     }
   }, []);
 
@@ -143,7 +152,6 @@ const Translation = (props) => {
 
   const handleSentenceChange = (event) => {
     event.preventDefault();
-    debugger;
     let newValue = event.target.value;
     newValue = translateRomajiToKana(newValue);
     let textArea = document.getElementById("textToTranslate");
@@ -187,7 +195,6 @@ const Translation = (props) => {
 
   const handleUnknownTransform = (event, part) => {
     event.preventDefault();
-    debugger;
     let indexToTransform = 0;
     for (let i = 0; i < props.translation.listParts.length; i++) {
       if (props.translation.listParts[i] === part) indexToTransform = i;
@@ -393,15 +400,24 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      loadCounters: bindActionCreators(loadCounters, dispatch),
-      loadIAdjectives: bindActionCreators(loadIAdjectives, dispatch),
-      loadKanjis: bindActionCreators(loadKanjis, dispatch),
-      loadNaAdjectives: bindActionCreators(loadNaAdjectives, dispatch),
-      loadNames: bindActionCreators(loadNames, dispatch),
-      loadParticules: bindActionCreators(loadParticules, dispatch),
-      loadSuffixs: bindActionCreators(loadSuffixs, dispatch),
-      loadVerbs: bindActionCreators(loadVerbs, dispatch),
-      loadWords: bindActionCreators(loadWords, dispatch),
+      loadCounters: bindActionCreators(counterActions.loadCounters, dispatch),
+      loadIAdjectives: bindActionCreators(
+        iAdjectiveActions.loadIAdjectives,
+        dispatch
+      ),
+      loadKanjis: bindActionCreators(kanjiActions.loadKanjis, dispatch),
+      loadNaAdjectives: bindActionCreators(
+        naAdjectiveActions.loadNaAdjectives,
+        dispatch
+      ),
+      loadNames: bindActionCreators(nameActions.loadNames, dispatch),
+      loadParticules: bindActionCreators(
+        particuleActions.loadParticules,
+        dispatch
+      ),
+      loadSuffixs: bindActionCreators(suffixActions.loadSuffixs, dispatch),
+      loadVerbs: bindActionCreators(verbActions.loadVerbs, dispatch),
+      loadWords: bindActionCreators(wordActions.loadWords, dispatch),
       updateSentence: bindActionCreators(
         translationActions.updateSentence,
         dispatch

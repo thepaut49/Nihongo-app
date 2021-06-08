@@ -6,8 +6,7 @@ import CounterForm from "./CounterForm";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { Prompt } from "react-router-dom";
-import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import { newPronunciationNumber } from "../common/meaningUtils";
+import * as manageEntityUtils from "../common/manageEntityUtils";
 
 const newCounter = {
   id: null,
@@ -84,110 +83,52 @@ const ManageCounterPage = ({
   }
 
   function handleAddPronunciation(event) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: null,
-      pronunciationNumber: newPronunciationNumber(counter.pronunciations),
-      pronunciation: "",
-      version: 0,
-    };
-    setCounter({
-      ...counter,
-      pronunciations: [...counter.pronunciations, newPronunciation],
-    });
+    manageEntityUtils.handleAddPronunciation(
+      event,
+      counter,
+      setCounter,
+      setModified
+    );
   }
 
   function handlePronunciationChange(event, index) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: counter.pronunciations[index].id,
-      pronunciationNumber: counter.pronunciations[index].pronunciationNumber,
-      pronunciation: event.target.value,
-      version: counter.pronunciations[index].version,
-    };
-    setCounter({
-      ...counter,
-      pronunciations: counter.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handlePronunciationChange(
+      event,
+      index,
+      counter,
+      setCounter,
+      setModified
+    );
   }
 
   function handleDeletePronunciation(event, index) {
-    event.preventDefault();
-    const proToDelete = counter.pronunciations[index];
-    setCounter({
-      ...counter,
-      pronunciations: counter.pronunciations.filter((pronunciation) => {
-        if (pronunciation === proToDelete) {
-          return false;
-        } else {
-          return true;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleDeletePronunciation(
+      event,
+      index,
+      counter,
+      setCounter,
+      setModified
+    );
   }
 
   const onMiddlePointClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    input.value = input.value + event.target.innerText;
-    const newPronunciation = {
-      id: counter.pronunciations[index].id,
-      pronunciationNumber: counter.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: counter.pronunciations[index].version,
-    };
-    setCounter({
-      ...counter,
-      pronunciations: counter.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.onMiddlePointClick(
+      event,
+      index,
+      counter,
+      setCounter,
+      setModified
+    );
   };
 
   const handleTranslateClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    const newPronunciation = {
-      id: counter.pronunciations[index].id,
-      pronunciationNumber: counter.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: counter.pronunciations[index].version,
-    };
-    setCounter({
-      ...counter,
-      pronunciations: counter.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleTranslateClick(
+      event,
+      index,
+      counter,
+      setCounter,
+      setModified
+    );
   };
 
   return (

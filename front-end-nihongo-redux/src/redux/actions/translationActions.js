@@ -30,7 +30,7 @@ export function extractListOfKanjiSucces(listOfKanjis) {
 }
 
 export function loadPartsSucces(listParts) {
-  return { type: types.LOAD_COUNTERS_SUCCESS, listParts };
+  return { type: types.LOAD_PARTS_SUCCESS, listParts };
 }
 
 export function loadListObjectsSucces(listObjects) {
@@ -40,7 +40,6 @@ export function loadListObjectsSucces(listObjects) {
 export function loadListObjects(typeSelect, quantity) {
   return function (dispatch) {
     dispatch(beginApiCall());
-    debugger;
     return translationApi
       .getMostUsedObject(typeSelect, quantity)
       .then((listObjects) => {
@@ -57,52 +56,22 @@ export function updateNumberOfUse(typeSelect, id) {
   return function () {
     switch (typeSelect) {
       case translationConstants.TYPE_KANJI:
-        kanjiActions
-          .updateNumberOfUse(id)
-          .then((updatedKanji) => {
-            console.log("Kanji " + updatedKanji.kanji + " updated");
-          })
-          .catch((error) => console.log(error));
+        kanjiActions.updateNumberOfUse(id);
         break;
       case translationConstants.TYPE_VERB:
-        verbActions
-          .updateNumberOfUse(id)
-          .then((updatedVerb) => {
-            console.log("Verb " + updatedVerb.neutralForm + " updated");
-          })
-          .catch((error) => console.log(error));
+        verbActions.updateNumberOfUse(id);
         break;
       case translationConstants.TYPE_NA_ADJECTIVE:
-        naAdjectiveActions
-          .updateNumberOfUse(id)
-          .then((updatedNaAdj) => {
-            console.log("Na-Adjective " + updatedNaAdj.kanjis + " updated");
-          })
-          .catch((error) => console.log(error));
+        naAdjectiveActions.updateNumberOfUse(id);
         break;
       case translationConstants.TYPE_I_ADJECTIVE:
-        iAdjectiveActions
-          .updateNumberOfUse(id)
-          .then((updatedIAdj) => {
-            console.log("I-Adjective " + updatedIAdj.kanjis + " updated");
-          })
-          .catch((error) => console.log(error));
+        iAdjectiveActions.updateNumberOfUse(id);
         break;
       case translationConstants.TYPE_NAME:
-        nameActions
-          .updateNumberOfUse(id)
-          .then((updatedName) => {
-            console.log("Name " + updatedName.kanjis + " updated");
-          })
-          .catch((error) => console.log(error));
+        nameActions.updateNumberOfUse(id);
         break;
       case translationConstants.TYPE_WORD:
-        wordActions
-          .updateNumberOfUse(id)
-          .then((updatedWord) => {
-            console.log("Word " + updatedWord.kanjis + " updated");
-          })
-          .catch((error) => console.log(error));
+        wordActions.updateNumberOfUse(id);
         break;
       default:
     }
@@ -143,9 +112,7 @@ export const updateTypeSelect = (newType) => {
 };
 
 export const updateSentence = (newSentence) => {
-  debugger;
   return function (dispatch) {
-    debugger;
     dispatch(updateSentenceSucces(newSentence));
   };
 };

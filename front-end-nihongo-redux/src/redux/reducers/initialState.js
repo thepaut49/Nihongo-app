@@ -21,5 +21,11 @@ export default {
     listParts: [],
     listOfKanjis: [],
   },
+  user: {
+    username: "",
+    mail: "",
+    roles: [],
+    token: "",
+  },
   apiCallsInProgress: 0,
 };

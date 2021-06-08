@@ -9,11 +9,7 @@ import Spinner from "../common/spinner/Spinner";
 import IAdjectiveForm from "./IAdjectiveForm";
 import { toast } from "react-toastify";
 import { Prompt } from "react-router-dom";
-import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import {
-  newMeaningNumber,
-  newPronunciationNumber,
-} from "../common/meaningUtils";
+import * as manageEntityUtils from "../common/manageEntityUtils";
 
 const newIAdjective = {
   id: null,
@@ -94,165 +90,83 @@ const ManageIAdjectivePage = ({
       });
   }
 
-  function handleAddMeaning(event) {
-    event.preventDefault();
-    const newMeaning = {
-      id: null,
-      meaningNumber: newMeaningNumber(iAdjective.meanings),
-      meaning: "",
-      version: 0,
-    };
-    setIAdjective({
-      ...iAdjective,
-      meanings: [...iAdjective.meanings, newMeaning],
-    });
-    setModified(true);
-  }
-
-  function handleMeaningChange(event, index) {
-    event.preventDefault();
-    const newMeaning = {
-      id: iAdjective.meanings[index].id,
-      meaningNumber: iAdjective.meanings[index].meaningNumber,
-      meaning: event.target.value,
-      version: iAdjective.meanings[index].version,
-    };
-    setIAdjective({
-      ...iAdjective,
-      meanings: iAdjective.meanings.map((meaning) => {
-        if (meaning.meaningNumber === newMeaning.meaningNumber) {
-          return newMeaning;
-        } else {
-          return meaning;
-        }
-      }),
-    });
-    setModified(true);
-  }
-
-  function handleDeleteMeaning(event, index) {
-    event.preventDefault();
-    const meanToDelete = iAdjective.meanings[index];
-    setIAdjective({
-      ...iAdjective,
-      meanings: iAdjective.meanings.filter((meaning) => {
-        if (meaning === meanToDelete) {
-          return false;
-        } else {
-          return true;
-        }
-      }),
-    });
-    setModified(true);
-  }
-
   function handleAddPronunciation(event) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: null,
-      pronunciationNumber: newPronunciationNumber(iAdjective.pronunciations),
-      pronunciation: "",
-      version: 0,
-    };
-    setIAdjective({
-      ...iAdjective,
-      pronunciations: [...iAdjective.pronunciations, newPronunciation],
-    });
-    setModified(true);
+    manageEntityUtils.handleAddPronunciation(
+      event,
+      iAdjective,
+      setIAdjective,
+      setModified
+    );
   }
 
   function handlePronunciationChange(event, index) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: iAdjective.pronunciations[index].id,
-      pronunciationNumber: iAdjective.pronunciations[index].pronunciationNumber,
-      pronunciation: event.target.value,
-      version: iAdjective.pronunciations[index].version,
-    };
-    setIAdjective({
-      ...iAdjective,
-      pronunciations: iAdjective.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handlePronunciationChange(
+      event,
+      index,
+      iAdjective,
+      setIAdjective,
+      setModified
+    );
   }
 
   function handleDeletePronunciation(event, index) {
-    event.preventDefault();
-    const proToDelete = iAdjective.pronunciations[index];
-    setIAdjective({
-      ...iAdjective,
-      pronunciations: iAdjective.pronunciations.filter((pronunciation) => {
-        if (pronunciation === proToDelete) {
-          return false;
-        } else {
-          return true;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleDeletePronunciation(
+      event,
+      index,
+      iAdjective,
+      setIAdjective,
+      setModified
+    );
   }
 
   const onMiddlePointClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    input.value = input.value + event.target.innerText;
-    const newPronunciation = {
-      id: iAdjective.pronunciations[index].id,
-      pronunciationNumber: iAdjective.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: iAdjective.pronunciations[index].version,
-    };
-    setIAdjective({
-      ...iAdjective,
-      pronunciations: iAdjective.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.onMiddlePointClick(
+      event,
+      index,
+      iAdjective,
+      setIAdjective,
+      setModified
+    );
   };
 
   const handleTranslateClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    const newPronunciation = {
-      id: iAdjective.pronunciations[index].id,
-      pronunciationNumber: iAdjective.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: iAdjective.pronunciations[index].version,
-    };
-    setIAdjective({
-      ...iAdjective,
-      pronunciations: iAdjective.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleTranslateClick(
+      event,
+      index,
+      iAdjective,
+      setIAdjective,
+      setModified
+    );
   };
+
+  function handleAddMeaning(event) {
+    manageEntityUtils.handleAddMeaning(
+      event,
+      iAdjective,
+      setIAdjective,
+      setModified
+    );
+  }
+
+  function handleMeaningChange(event, index) {
+    manageEntityUtils.handleMeaningChange(
+      event,
+      index,
+      iAdjective,
+      setIAdjective,
+      setModified
+    );
+  }
+
+  function handleDeleteMeaning(event, index) {
+    manageEntityUtils.handleDeleteMeaning(
+      event,
+      index,
+      iAdjective,
+      setIAdjective,
+      setModified
+    );
+  }
 
   return (
     <>

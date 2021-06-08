@@ -3,15 +3,11 @@ import KanjiForm from "./KanjiForm";
 import { toast } from "react-toastify";
 import { radicals as radicalsList } from "../common/Radicals";
 import { Prompt } from "react-router-dom";
-import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
-import {
-  newMeaningNumber,
-  newPronunciationNumber,
-} from "../common/meaningUtils";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/spinner/Spinner";
 import { loadKanjis, saveKanji } from "../../redux/actions/kanjiActions";
+import * as manageEntityUtils from "../common/manageEntityUtils";
 
 const newKanji = {
   id: null,
@@ -117,165 +113,78 @@ const ManageKanjiPage = ({
     }
   }
 
-  function handleAddMeaning(event) {
-    event.preventDefault();
-    const newMeaning = {
-      id: null,
-      meaningNumber: newMeaningNumber(kanji.meanings),
-      meaning: "",
-      version: 0,
-    };
-    setKanji({
-      ...kanji,
-      meanings: [...kanji.meanings, newMeaning],
-    });
-    setModified(true);
-  }
-
-  function handleMeaningChange(event, index) {
-    event.preventDefault();
-    const newMeaning = {
-      id: kanji.meanings[index].id,
-      meaningNumber: kanji.meanings[index].meaningNumber,
-      meaning: event.target.value,
-      version: kanji.meanings[index].version,
-    };
-    setKanji({
-      ...kanji,
-      meanings: kanji.meanings.map((meaning) => {
-        if (meaning.meaningNumber === newMeaning.meaningNumber) {
-          return newMeaning;
-        } else {
-          return meaning;
-        }
-      }),
-    });
-    setModified(true);
-  }
-
-  function handleDeleteMeaning(event, index) {
-    event.preventDefault();
-    const meanToDelete = kanji.meanings[index];
-    setKanji({
-      ...kanji,
-      meanings: kanji.meanings.filter((meaning) => {
-        if (meaning === meanToDelete) {
-          return false;
-        } else {
-          return true;
-        }
-      }),
-    });
-    setModified(true);
-  }
-
   function handleAddPronunciation(event) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: null,
-      pronunciationNumber: newPronunciationNumber(kanji.pronunciations),
-      pronunciation: "",
-      version: 0,
-    };
-    setKanji({
-      ...kanji,
-      pronunciations: [...kanji.pronunciations, newPronunciation],
-    });
-    setModified(true);
+    manageEntityUtils.handleAddPronunciation(
+      event,
+      kanji,
+      setKanji,
+      setModified
+    );
   }
 
   function handlePronunciationChange(event, index) {
-    event.preventDefault();
-    const newPronunciation = {
-      id: kanji.pronunciations[index].id,
-      pronunciationNumber: kanji.pronunciations[index].pronunciationNumber,
-      pronunciation: event.target.value,
-      version: kanji.pronunciations[index].version,
-    };
-    setKanji({
-      ...kanji,
-      pronunciations: kanji.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handlePronunciationChange(
+      event,
+      index,
+      kanji,
+      setKanji,
+      setModified
+    );
   }
 
   function handleDeletePronunciation(event, index) {
-    event.preventDefault();
-    const proToDelete = kanji.pronunciations[index];
-    setKanji({
-      ...kanji,
-      pronunciations: kanji.pronunciations.filter((pronunciation) => {
-        if (pronunciation === proToDelete) {
-          return false;
-        } else {
-          return true;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleDeletePronunciation(
+      event,
+      index,
+      kanji,
+      setKanji,
+      setModified
+    );
   }
 
   const onMiddlePointClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    input.value = input.value + event.target.innerText;
-    const newPronunciation = {
-      id: kanji.pronunciations[index].id,
-      pronunciationNumber: kanji.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: kanji.pronunciations[index].version,
-    };
-    setKanji({
-      ...kanji,
-      pronunciations: kanji.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.onMiddlePointClick(
+      event,
+      index,
+      kanji,
+      setKanji,
+      setModified
+    );
   };
 
   const handleTranslateClick = (event, index) => {
-    event.preventDefault();
-    let input = document.getElementById("pronunciation" + index);
-    const newValue = translateRomajiToKana(input.value);
-    input.value = newValue;
-    const newPronunciation = {
-      id: kanji.pronunciations[index].id,
-      pronunciationNumber: kanji.pronunciations[index].pronunciationNumber,
-      pronunciation: input.value,
-      version: kanji.pronunciations[index].version,
-    };
-    setKanji({
-      ...kanji,
-      pronunciations: kanji.pronunciations.map((pronunciation) => {
-        if (
-          pronunciation.pronunciationNumber ===
-          newPronunciation.pronunciationNumber
-        ) {
-          return newPronunciation;
-        } else {
-          return pronunciation;
-        }
-      }),
-    });
-    setModified(true);
+    manageEntityUtils.handleTranslateClick(
+      event,
+      index,
+      kanji,
+      setKanji,
+      setModified
+    );
   };
+
+  function handleAddMeaning(event) {
+    manageEntityUtils.handleAddMeaning(event, kanji, setKanji, setModified);
+  }
+
+  function handleMeaningChange(event, index) {
+    manageEntityUtils.handleMeaningChange(
+      event,
+      index,
+      kanji,
+      setKanji,
+      setModified
+    );
+  }
+
+  function handleDeleteMeaning(event, index) {
+    manageEntityUtils.handleDeleteMeaning(
+      event,
+      index,
+      kanji,
+      setKanji,
+      setModified
+    );
+  }
 
   return (
     <>

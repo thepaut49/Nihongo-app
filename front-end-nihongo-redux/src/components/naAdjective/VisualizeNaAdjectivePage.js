@@ -90,7 +90,7 @@ const VisualizeNaAdjectivePage = ({
         <Spinner />
       ) : (
         <>
-          <h2>I-Adjective</h2>
+          <h2>Na-Adjective</h2>
           {naAdjective && (
             <div>
               <NaAdjective naAdjective={naAdjective} />

@@ -11,7 +11,6 @@ export default function translationReducer(
 ) {
   switch (action.type) {
     case types.UPDATE_SENTENCE_SUCCESS:
-      debugger;
       return { ...state, sentence: action.sentence };
     case types.UPDATE_QUANTITY_SUCCESS:
       return { ...state, quantity: action.quantity };

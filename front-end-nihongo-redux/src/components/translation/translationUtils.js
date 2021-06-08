@@ -140,7 +140,6 @@ export const extractParts = (
  * @returns
  */
 const lastPassWithParticulesAndSuffix = (listOfParts, particules, suffixs) => {
-  debugger;
   for (let index = 0; index < listOfParts.length; index++) {
     let part = listOfParts[index];
     if (part.type === translationConstants.TYPE_UNKNOWN) {
@@ -784,7 +783,6 @@ const partIsASuffix = (sentencePart, currentIndex, suffixs) => {
   let part = null;
   for (let index = 0; index < suffixs.length; index++) {
     let suffix = suffixs[index];
-    debugger;
     if (
       suffix.kanjis === sentencePart ||
       suffix.pronunciations.find(
@@ -1042,7 +1040,6 @@ const wordCandidate = (sentencePart, currentIndex, words) => {
 
 const particuleCandidate = (sentencePart, currentIndex, particules) => {
   let part = null;
-  debugger;
   let candidateList = [];
   if (!particules) return candidateList;
   for (let index = 0; index < particules.length; index++) {
