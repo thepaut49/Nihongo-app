@@ -36,6 +36,12 @@ nav a {
   margin: 0.1em;
 }
 
+nav button {
+  background-color: #22a952;
+  border-radius: 10px;
+  margin: 0.1em;
+}
+
 label {
   margin: 0.4em;
 }

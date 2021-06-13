@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Login from "./Login/Login";
 
 function Header() {
   const activeStyle = { color: "orange" };
@@ -69,6 +70,8 @@ function Header() {
       <NavLink activeStyle={activeStyle} to="/about">
         About
       </NavLink>
+
+      <Login />
     </nav>
   );
 }
