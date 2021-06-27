@@ -27,6 +27,9 @@ module.exports = {
       "process.env.REACT_APP_API_BASE_URL": JSON.stringify(
         "http://localhost:9090"
       ),
+      "process.env.KEYCLOAK_URL": JSON.stringify(
+        "http://localhost:9999/auth/realms/Nihongo"
+      ),
     }),
     new HtmlWebpackPlugin({
       template: "src/index.html",

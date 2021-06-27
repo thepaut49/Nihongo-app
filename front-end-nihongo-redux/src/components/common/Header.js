@@ -1,9 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Login from "./Login/Login";
+import Login from "../Login/Login";
 
 function Header() {
   const activeStyle = { color: "orange" };
+
+  const token = sessionStorage.getItem("token");
 
   return (
     <nav>
@@ -71,7 +73,7 @@ function Header() {
         About
       </NavLink>
 
-      <Login />
+      {!token && <Login />}
     </nav>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import HomePage from "./home/HomePage";
 import AboutPage from "./about/AboutPage";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Header from "./common/Header";
 /*
 import NotFoundPage from "./common/NotFoundPage";*/
@@ -46,110 +46,141 @@ import ButtonScrollToTop from "./common/ButtonScrollToTop";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import configureStore from "../redux/configureStore";
+const store = configureStore();
+import { Provider as ReduxProvider } from "react-redux";
 
 function App() {
   return (
     <>
-      <div className="app-container">
-        <Header />
-        <ScrollToTop />
-        <ButtonScrollToTop />
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/counters" component={CountersPage} />
-          <Route
-            path="/counter/visualize/:kanjis"
-            component={VisualizeCounterPage}
-          />
-          <Route path="/counter/modify/:kanjis" component={ManageCounterPage} />
-          <Route path="/counter/create" component={ManageCounterPage} />
-          <Route path="/grammarRules" component={GrammarRulesPage} />
-          <Route
-            path="/grammarRule/modify/:title"
-            component={ManageGrammarRulePage}
-          />
-          <Route path="/grammarRule/create" component={ManageGrammarRulePage} />
-          <Route
-            path="/grammarRule/visualize/:title"
-            component={VisualizeGrammarRulePage}
-          />
-          <Route path="/grammarRule" component={ManageGrammarRulePage} />
-          <Route path="/iAdjectives" component={IAdjectivesPage} />
-          <Route
-            path="/iAdjective/visualize/:kanjis"
-            component={VisualizeIAdjectivePage}
-          />
-          <Route
-            path="/iAdjective/modify/:kanjis"
-            component={ManageIAdjectivePage}
-          />
-          <Route path="/iAdjective/create" component={ManageIAdjectivePage} />
-          <Route path="/kanjis" component={KanjisPage} />
-          <Route
-            path="/kanji/visualize/:kanji"
-            component={VisualizeKanjiPage}
-          />
-          <Route path="/kanji/modify/:kanji" component={ManageKanjiPage} />
-          <Route path="/kanji/create" component={ManageKanjiPage} />
-          <Route path="/naAdjectives" component={NaAdjectivesPage} />
-          <Route
-            path="/naAdjective/modify/:kanjis"
-            component={ManageNaAdjectivePage}
-          />
-          <Route
-            path="/naAdjective/visualize/:kanjis"
-            component={VisualizeNaAdjectivePage}
-          />
-          <Route path="/naAdjective/create" component={ManageNaAdjectivePage} />
-          <Route path="/names" component={NamesPage} />
-          <Route path="/name/modify/:kanjis" component={ManageNamePage} />
-          <Route path="/name/visualize/:kanjis" component={VisualizeNamePage} />
-          <Route path="/name/create" component={ManageNamePage} />
-          <Route path="/particules" component={ParticulesPage} />
-          <Route
-            path="/particule/modify/:kanjis"
-            component={ManageParticulePage}
-          />
-          <Route
-            path="/particule/visualize/:kanjis"
-            component={VisualizeParticulePage}
-          />
-          <Route path="/particule/create" component={ManageParticulePage} />
-          <Route path="/sentences" component={SentencesPage} />
-          <Route
-            path="/sentence/modify/:kanjis"
-            component={ManageSentencePage}
-          />
-          <Route
-            path="/sentence/visualize/:kanjis"
-            component={VisualizeSentencePage}
-          />
-          <Route path="/sentence/create" component={ManageSentencePage} />
-          <Route path="/suffixs" component={SuffixsPage} />
-          <Route
-            path="/suffix/visualize/:kanjis"
-            component={VisualizeSuffixPage}
-          />
-          <Route path="/suffix/modify/:kanjis" component={ManageSuffixPage} />
-          <Route path="/suffix/create" component={ManageSuffixPage} />
-          <Route path="/translation" component={Translation} />
-          <Route path="/verbs" component={VerbsPage} />
-          <Route path="/verb/modify/:neutralForm" component={ManageVerbPage} />
-          <Route
-            path="/verb/visualize/:neutralForm"
-            component={VisualizeVerbPage}
-          />
-          <Route path="/verb/create" component={ManageVerbPage} />
-          <Route path="/words" component={WordsPage} />
-          <Route path="/word/modify/:kanjis" component={ManageWordPage} />
-          <Route path="/word/visualize/:kanjis" component={VisualizeWordPage} />
-          <Route path="/word/create" component={ManageWordPage} />
-          <Route path="/hiraganas" component={HiraganasPage} />
-          <Route path="/katakanas" component={KatakanasPage} />
-          <Route path="/about" component={AboutPage} />
-        </Switch>
-        <ToastContainer autoClose={3000} hideProgressBar />
-      </div>
+      <ReduxProvider store={store}>
+        <BrowserRouter>
+          <div className="app-container">
+            <Header />
+            <ScrollToTop />
+            <ButtonScrollToTop />
+            <Switch>
+              <Route path="/" exact component={HomePage} />
+              <Route path="/counters" component={CountersPage} />
+              <Route
+                path="/counter/visualize/:kanjis"
+                component={VisualizeCounterPage}
+              />
+              <Route
+                path="/counter/modify/:kanjis"
+                component={ManageCounterPage}
+              />
+              <Route path="/counter/create" component={ManageCounterPage} />
+              <Route path="/grammarRules" component={GrammarRulesPage} />
+              <Route
+                path="/grammarRule/modify/:title"
+                component={ManageGrammarRulePage}
+              />
+              <Route
+                path="/grammarRule/create"
+                component={ManageGrammarRulePage}
+              />
+              <Route
+                path="/grammarRule/visualize/:title"
+                component={VisualizeGrammarRulePage}
+              />
+              <Route path="/grammarRule" component={ManageGrammarRulePage} />
+              <Route path="/iAdjectives" component={IAdjectivesPage} />
+              <Route
+                path="/iAdjective/visualize/:kanjis"
+                component={VisualizeIAdjectivePage}
+              />
+              <Route
+                path="/iAdjective/modify/:kanjis"
+                component={ManageIAdjectivePage}
+              />
+              <Route
+                path="/iAdjective/create"
+                component={ManageIAdjectivePage}
+              />
+              <Route path="/kanjis" component={KanjisPage} />
+              <Route
+                path="/kanji/visualize/:kanji"
+                component={VisualizeKanjiPage}
+              />
+              <Route path="/kanji/modify/:kanji" component={ManageKanjiPage} />
+              <Route path="/kanji/create" component={ManageKanjiPage} />
+              <Route path="/naAdjectives" component={NaAdjectivesPage} />
+              <Route
+                path="/naAdjective/modify/:kanjis"
+                component={ManageNaAdjectivePage}
+              />
+              <Route
+                path="/naAdjective/visualize/:kanjis"
+                component={VisualizeNaAdjectivePage}
+              />
+              <Route
+                path="/naAdjective/create"
+                component={ManageNaAdjectivePage}
+              />
+              <Route path="/names" component={NamesPage} />
+              <Route path="/name/modify/:kanjis" component={ManageNamePage} />
+              <Route
+                path="/name/visualize/:kanjis"
+                component={VisualizeNamePage}
+              />
+              <Route path="/name/create" component={ManageNamePage} />
+              <Route path="/particules" component={ParticulesPage} />
+              <Route
+                path="/particule/modify/:kanjis"
+                component={ManageParticulePage}
+              />
+              <Route
+                path="/particule/visualize/:kanjis"
+                component={VisualizeParticulePage}
+              />
+              <Route path="/particule/create" component={ManageParticulePage} />
+              <Route path="/sentences" component={SentencesPage} />
+              <Route
+                path="/sentence/modify/:kanjis"
+                component={ManageSentencePage}
+              />
+              <Route
+                path="/sentence/visualize/:kanjis"
+                component={VisualizeSentencePage}
+              />
+              <Route path="/sentence/create" component={ManageSentencePage} />
+              <Route path="/suffixs" component={SuffixsPage} />
+              <Route
+                path="/suffix/visualize/:kanjis"
+                component={VisualizeSuffixPage}
+              />
+              <Route
+                path="/suffix/modify/:kanjis"
+                component={ManageSuffixPage}
+              />
+              <Route path="/suffix/create" component={ManageSuffixPage} />
+              <Route path="/translation" component={Translation} />
+              <Route path="/verbs" component={VerbsPage} />
+              <Route
+                path="/verb/modify/:neutralForm"
+                component={ManageVerbPage}
+              />
+              <Route
+                path="/verb/visualize/:neutralForm"
+                component={VisualizeVerbPage}
+              />
+              <Route path="/verb/create" component={ManageVerbPage} />
+              <Route path="/words" component={WordsPage} />
+              <Route path="/word/modify/:kanjis" component={ManageWordPage} />
+              <Route
+                path="/word/visualize/:kanjis"
+                component={VisualizeWordPage}
+              />
+              <Route path="/word/create" component={ManageWordPage} />
+              <Route path="/hiraganas" component={HiraganasPage} />
+              <Route path="/katakanas" component={KatakanasPage} />
+              <Route path="/about" component={AboutPage} />
+            </Switch>
+            <ToastContainer autoClose={3000} hideProgressBar />
+          </div>
+        </BrowserRouter>
+      </ReduxProvider>
     </>
   );
 }

@@ -89,13 +89,15 @@ function CountersPage(props) {
     }
   };
 
+  const token = sessionStorage.getItem("token");
+
   return (
     <div className="countersPage">
       <h2>Counters</h2>
       {props.loading ? (
         <Spinner />
       ) : (
-        <div>
+        <>
           <CounterCriteriaForm
             counterCriteria={counterCriteria}
             onChange={handleChange}
@@ -103,14 +105,18 @@ function CountersPage(props) {
             onClick={handleClick}
             onReset={handleReset}
           />
-          <Link className="btn btn-primary" to="/counter/create">
-            Add Kanji
-          </Link>
+
+          {token && token !== "undefined" && (
+            <Link className="btn btn-primary" to="/counter/create">
+              Add Kanji
+            </Link>
+          )}
+
           <CounterList
             counters={props.counters}
             deleteCounter={handleDeleteCounter}
           />
-        </div>
+        </>
       )}
     </div>
   );
@@ -120,6 +126,7 @@ CountersPage.propTypes = {
   counters: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -129,6 +136,7 @@ function mapStateToProps(state) {
         ...counter,
       };
     }),
+    user: state.user,
     loading: state.apiCallsInProgress > 0,
   };
 }
