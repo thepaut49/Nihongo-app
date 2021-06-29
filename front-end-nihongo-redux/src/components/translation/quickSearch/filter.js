@@ -35,8 +35,8 @@ export async function filterObjects(criteria) {
   naAdjectives.forEach((element) => {
     results.push({
       kanjis: element.kanjis,
-      pronunciation: element.pronunciation,
-      meaning: element.meaning,
+      pronunciations: element.pronunciations,
+      meanings: element.meanings,
       typeWord: translationConstants.TYPE_NA_ADJECTIVE,
     });
   });
@@ -45,8 +45,8 @@ export async function filterObjects(criteria) {
     results.push(
       (element = {
         kanjis: element.kanjis,
-        pronunciation: element.pronunciation,
-        meaning: element.meaning,
+        pronunciations: element.pronunciations,
+        meanings: element.meanings,
         typeWord: translationConstants.TYPE_I_ADJECTIVE,
       })
     );
@@ -55,8 +55,8 @@ export async function filterObjects(criteria) {
   verbs.forEach((element) => {
     results.push({
       neutralForm: element.neutralForm,
-      pronunciation: element.pronunciation,
-      meaning: element.meaning,
+      pronunciations: element.pronunciations,
+      meanings: element.meanings,
       typeWord: translationConstants.TYPE_VERB,
     });
   });
@@ -64,8 +64,8 @@ export async function filterObjects(criteria) {
   names.forEach((element) => {
     results.push({
       kanjis: element.kanjis,
-      pronunciation: element.pronunciation,
-      meaning: element.meaning,
+      pronunciations: element.pronunciations,
+      meanings: element.meanings,
       typeWord: translationConstants.TYPE_NAME,
     });
   });
@@ -73,8 +73,8 @@ export async function filterObjects(criteria) {
   words.forEach((element) => {
     results.push({
       kanjis: element.kanjis,
-      pronunciation: element.pronunciation,
-      meaning: element.meaning,
+      pronunciations: element.pronunciations,
+      meanings: element.meanings,
       typeWord: translationConstants.TYPE_WORD,
     });
   });

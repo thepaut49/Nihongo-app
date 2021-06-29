@@ -42,7 +42,7 @@ class ButtonScrollToTop extends React.Component {
 
 ButtonScrollToTop.propTypes = {
   scrollStepInPx: PropTypes.number,
-  delayInMs: PropTypes.number.isRequired,
+  delayInMs: PropTypes.number,
 };
 
 export default ButtonScrollToTop;

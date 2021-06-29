@@ -40,48 +40,51 @@ const ResultList = (props) => {
     props.close();
   };
 
+  const hasResult = props.results && props.results.length > 0;
+
   /*************/
   /*   render  */
   /*************/
   return (
     <div>
-      {props.results.map((result, index) => {
-        return (
-          <div style={objectStyle} key={index}>
-            <div style={kanjisStyle}>
-              <button
-                onClick={(event) => handleClick(event, result)}
-                className="btn btn-success"
-                style={resultButtonStyle}
-              >
-                {typeSelectSearch === translationConstants.TYPE_KANJI
-                  ? result.kanji
-                  : result.typeWord === translationConstants.TYPE_VERB
-                  ? result.neutralForm
-                  : result.kanjis}
-              </button>
+      {hasResult &&
+        props.results.map((result, index) => {
+          return (
+            <div style={objectStyle} key={index + 3000}>
+              <div style={kanjisStyle}>
+                <button
+                  onClick={(event) => handleClick(event, result)}
+                  className="btn btn-success"
+                  style={resultButtonStyle}
+                >
+                  {typeSelectSearch === translationConstants.TYPE_KANJI
+                    ? result.kanji
+                    : result.typeWord === translationConstants.TYPE_VERB
+                    ? result.neutralForm
+                    : result.kanjis}
+                </button>
+              </div>
+              <div style={pronunciationStyle}>
+                {result.pronunciations.map((pro, index) => {
+                  return (
+                    <span key={index + 5000} className="onemeaning">
+                      {pro.pronunciation}
+                    </span>
+                  );
+                })}
+              </div>
+              <div style={pronunciationStyle}>
+                {result.meanings.map((mean, index) => {
+                  return (
+                    <span key={index + 10000} className="onemeaning">
+                      {mean.meaning}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
-            <div style={pronunciationStyle}>
-              {result.pronunciation.map((pro, index) => {
-                return (
-                  <span key={index} className="onemeaning">
-                    {pro}
-                  </span>
-                );
-              })}
-            </div>
-            <div style={pronunciationStyle}>
-              {result.meaning.map((mean, index) => {
-                return (
-                  <span key={index} className="onemeaning">
-                    {mean.meaning}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };

@@ -154,18 +154,16 @@ function CriteriaForm(props) {
                 <div style={gridListStyle}>
                   {radicals.map((radical, index) => {
                     return (
-                      <>
-                        <button
-                          key={index}
-                          style={
-                            nbrOfStrokesString.includes(radical)
-                              ? numberStyle
-                              : {}
-                          }
-                        >
-                          {radical}
-                        </button>
-                      </>
+                      <button
+                        key={index + 20000}
+                        style={
+                          nbrOfStrokesString.includes(radical)
+                            ? numberStyle
+                            : {}
+                        }
+                      >
+                        {radical}
+                      </button>
                     );
                   })}
                 </div>
