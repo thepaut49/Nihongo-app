@@ -8,6 +8,7 @@ import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import * as suffixActions from "../../redux/actions/suffixActions";
 import { connect } from "react-redux";
+import { isConnected } from "../../utils/userUtils";
 
 function SuffixsPage(props) {
   useEffect(() => {
@@ -36,9 +37,12 @@ function SuffixsPage(props) {
         <Spinner />
       ) : (
         <>
-          <Link className="btn btn-primary" to="/suffix/create">
-            Add Suffix
-          </Link>
+          {isConnected() && (
+            <Link className="btn btn-primary" to="/suffix/create">
+              Add Suffix
+            </Link>
+          )}
+
           <SuffixList
             suffixs={props.suffixs}
             deleteSuffix={handleDeleteSuffix}

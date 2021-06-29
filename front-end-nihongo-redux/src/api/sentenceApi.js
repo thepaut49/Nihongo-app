@@ -24,7 +24,10 @@ export function saveSentence(sentence) {
   }
   return fetch(url, {
     method: method, // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      Authorization: "bearer " + sessionStorage.getItem("token"),
+    },
     body: JSON.stringify({
       ...sentence,
     }),
@@ -34,7 +37,12 @@ export function saveSentence(sentence) {
 }
 
 export function deleteSentence(sentenceId) {
-  return fetch(baseUrl + sentenceId, { method: "DELETE" })
+  return fetch(baseUrl + sentenceId, {
+    method: "DELETE",
+    headers: {
+      Authorization: "bearer " + sessionStorage.getItem("token"),
+    },
+  })
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok.");
       return response.text;

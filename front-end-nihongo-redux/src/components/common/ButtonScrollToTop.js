@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class ButtonScrollToTop extends React.Component {
   constructor() {
@@ -38,5 +39,10 @@ class ButtonScrollToTop extends React.Component {
     );
   }
 }
+
+ButtonScrollToTop.propTypes = {
+  scrollStepInPx: PropTypes.number,
+  delayInMs: PropTypes.number.isRequired,
+};
 
 export default ButtonScrollToTop;

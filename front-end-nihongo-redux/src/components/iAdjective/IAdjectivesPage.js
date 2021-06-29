@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
+import { isConnected } from "../../utils/userUtils";
 
 function IAdjectivesPage(props) {
   const [iAdjectiveCriteria, setIAdjectiveCriteria] = useState({
@@ -43,7 +44,7 @@ function IAdjectivesPage(props) {
     });
   }
 
-  function handleReset(event) {
+  function handleReset() {
     // ne marche pas
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -100,9 +101,12 @@ function IAdjectivesPage(props) {
             onClick={handleClick}
             onReset={handleReset}
           />
-          <Link className="btn btn-primary" to="/iAdjective/create">
-            Add IAdjective
-          </Link>
+          {isConnected() && (
+            <Link className="btn btn-primary" to="/iAdjective/create">
+              Add IAdjective
+            </Link>
+          )}
+
           <IAdjectiveList
             iAdjectives={props.iAdjectives}
             deleteIAdjective={handleDeleteIAdjective}

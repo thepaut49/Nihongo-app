@@ -1,7 +1,7 @@
 import React from "react";
 import CustomInput from "../common/CustomInput";
 import CustomSelect from "../common/CustomSelect";
-import verbConstants from "../common/verbConstants";
+import { verbConstants } from "../common/verbConstants";
 import PropTypes from "prop-types";
 import "./verbCriteriaForm.css";
 

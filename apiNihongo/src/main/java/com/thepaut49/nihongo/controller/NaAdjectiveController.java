@@ -35,14 +35,14 @@ public class NaAdjectiveController {
 	@Autowired
 	private NaAdjectiveService naAdjectiveService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public NaAdjectiveDTO createNaAdjective( @RequestBody NaAdjectiveDTO naAdjectiveDTO) {
 		NaAdjective newNaAdjective = NaAdjectiveToDTOMapper.map(naAdjectiveDTO);
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.createNaAdjective(newNaAdjective));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public NaAdjectiveDTO updateNaAdjective( @RequestBody NaAdjectiveDTO naAdjectiveDTO, @PathVariable Long id) {
 		NaAdjective updatedNaAdjective = NaAdjectiveToDTOMapper.map(naAdjectiveDTO);  
@@ -55,7 +55,7 @@ public class NaAdjectiveController {
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.updateNaAdjectiveNumberOfUse(id));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		naAdjectiveService.delete(id);

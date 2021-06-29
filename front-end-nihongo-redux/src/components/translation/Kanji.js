@@ -38,7 +38,7 @@ const Kanji = (props) => {
   );
 };
 
-Kanji.prototypes = {
+Kanji.propTypes = {
   kanji: PropTypes.object.isRequired,
 };
 

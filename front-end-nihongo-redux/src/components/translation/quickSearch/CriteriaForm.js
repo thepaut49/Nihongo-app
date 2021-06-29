@@ -184,6 +184,8 @@ CriteriaForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  typeSelectSearch: PropTypes.string.isRequired,
+  onReset: PropTypes.func.isRequired,
 };
 
 export default CriteriaForm;

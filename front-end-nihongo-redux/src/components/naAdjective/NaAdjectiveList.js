@@ -2,6 +2,7 @@ import React from "react";
 import "./NaAdjectivesPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { isConnected } from "../../utils/userUtils";
 
 const styleLink = {
   margin: "0.5em",
@@ -39,23 +40,25 @@ function NaAdjectiveList(props) {
                       );
                     })}
                   </div>
-                  <div className="delete">
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => {
-                        props.deleteNaAdjective(naAdjective);
-                      }}
-                    >
-                      Delete
-                    </button>
-                    <Link
-                      to={"/naAdjective/modify/" + naAdjective.kanjis}
-                      style={styleLink}
-                      className="btn btn-primary"
-                    >
-                      Modify
-                    </Link>
-                  </div>
+                  {isConnected() && (
+                    <div className="delete">
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() => {
+                          props.deleteNaAdjective(naAdjective);
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <Link
+                        to={"/naAdjective/modify/" + naAdjective.kanjis}
+                        style={styleLink}
+                        className="btn btn-primary"
+                      >
+                        Modify
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>

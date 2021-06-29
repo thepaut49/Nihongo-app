@@ -1,4 +1,4 @@
-import verbConstants from "./verbConstants";
+import { verbConstants } from "./verbConstants";
 
 export function presentIndicative(adjective, form, sign) {
   if (form === verbConstants.PLAIN_FORM) {

@@ -35,14 +35,14 @@ public class VerbController {
 	@Autowired
 	private VerbService verbService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public VerbDTO createVerb( @RequestBody VerbDTO verbDTO) {
 		Verb newVerb = VerbToDTOMapper.map(verbDTO);
 		return VerbToDTOMapper.map(verbService.createVerb(newVerb));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public VerbDTO updateVerb( @RequestBody VerbDTO verbDTO, @PathVariable Long id) {
 		Verb updatedVerb = VerbToDTOMapper.map(verbDTO);  
@@ -55,7 +55,7 @@ public class VerbController {
 		return VerbToDTOMapper.map(verbService.updateVerbNumberOfUse(id));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		verbService.delete(id);

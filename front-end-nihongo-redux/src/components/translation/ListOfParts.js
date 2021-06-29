@@ -127,7 +127,7 @@ const ListOfParts = (props) => {
   );
 };
 
-ListOfParts.prototypes = {
+ListOfParts.propTypes = {
   list: PropTypes.arrayOf(Object).isRequired,
   listOfKanjis: PropTypes.arrayOf(Object).isRequired,
   onSplitPart: PropTypes.func.isRequired,

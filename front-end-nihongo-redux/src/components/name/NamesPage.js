@@ -10,6 +10,7 @@ import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import NameCriteriaForm from "./NameCriteriaForm";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { isConnected } from "../../utils/userUtils";
 
 function NamesPage(props) {
   const [nameCriteria, setNameCriteria] = useState({
@@ -43,7 +44,7 @@ function NamesPage(props) {
     });
   }
 
-  function handleReset(event) {
+  function handleReset() {
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -99,9 +100,13 @@ function NamesPage(props) {
             onClick={handleClick}
             onReset={handleReset}
           />
-          <Link className="btn btn-primary" to="/name/create">
-            Add Name
-          </Link>
+
+          {isConnected() && (
+            <Link className="btn btn-primary" to="/name/create">
+              Add Name
+            </Link>
+          )}
+
           <NameList names={props.names} deleteName={handleDeleteName} />
         </>
       )}

@@ -8,6 +8,7 @@ import CriteriaForm from "./CriteriaForm";
 import { filterObjects } from "./filter";
 import ResultList from "./ResultList";
 import { filterKanjis } from "../../../api/kanjiApi";
+import PropTypes from "prop-types";
 
 const styleTriggerButton = {
   display: "grid",
@@ -220,6 +221,10 @@ const QuickSearchPopUp = (props) => {
       )}
     </Popup>
   );
+};
+
+QuickSearchPopUp.propTypes = {
+  onQuickSearchClick: PropTypes.func.isRequired,
 };
 
 export default QuickSearchPopUp;

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { isConnected } from "../../utils/userUtils";
 
 const grammarRuleListStyle = {
   borderRadius: "10px",
@@ -60,23 +61,25 @@ function GrammarRuleList(props) {
               </ul>
             </div>
 
-            <div className="delete">
-              <button
-                className="btn btn-outline-danger"
-                onClick={() => {
-                  props.deleteGrammarRule(grammarRule);
-                }}
-              >
-                Delete
-              </button>
-              <Link
-                to={"/grammarRule/modify/" + grammarRule.title}
-                style={styleLink}
-                className="btn btn-primary"
-              >
-                Modify
-              </Link>
-            </div>
+            {isConnected() && (
+              <div className="delete">
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    props.deleteGrammarRule(grammarRule);
+                  }}
+                >
+                  Delete
+                </button>
+                <Link
+                  to={"/grammarRule/modify/" + grammarRule.title}
+                  style={styleLink}
+                  className="btn btn-primary"
+                >
+                  Modify
+                </Link>
+              </div>
+            )}
           </div>
         );
       })}

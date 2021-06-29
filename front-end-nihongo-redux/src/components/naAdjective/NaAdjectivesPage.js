@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
+import { isConnected } from "../../utils/userUtils";
 
 function NaAdjectivesPage(props) {
   const [naAdjectiveCriteria, setNaAdjectiveCriteria] = useState({
@@ -43,7 +44,7 @@ function NaAdjectivesPage(props) {
     });
   }
 
-  function handleReset(event) {
+  function handleReset() {
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -99,9 +100,13 @@ function NaAdjectivesPage(props) {
             onClick={handleClick}
             onReset={handleReset}
           />
-          <Link className="btn btn-primary" to="/naAdjective/create">
-            Add NaAdjective
-          </Link>
+
+          {isConnected() && (
+            <Link className="btn btn-primary" to="/naAdjective/create">
+              Add NaAdjective
+            </Link>
+          )}
+
           <NaAdjectiveList
             naAdjectives={props.naAdjectives}
             deleteNaAdjective={handleDeleteNaAdjective}

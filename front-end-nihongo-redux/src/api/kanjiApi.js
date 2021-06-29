@@ -43,7 +43,10 @@ export function saveKanji(kanji) {
   }
   return fetch(url, {
     method: method, // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      Authorization: "bearer " + sessionStorage.getItem("token"),
+    },
     body: JSON.stringify({
       ...kanji,
     }),
@@ -53,7 +56,12 @@ export function saveKanji(kanji) {
 }
 
 export function deleteKanji(kanjiId) {
-  return fetch(baseUrl + kanjiId, { method: "DELETE" })
+  return fetch(baseUrl + kanjiId, {
+    method: "DELETE",
+    headers: {
+      Authorization: "bearer " + sessionStorage.getItem("token"),
+    },
+  })
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok.");
       return response.text;

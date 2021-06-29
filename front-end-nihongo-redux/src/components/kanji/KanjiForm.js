@@ -59,7 +59,7 @@ function KanjiForm({
         kanji.pronunciations.map((pro, index) => {
           return (
             <CustomInputPronunciations
-              key={index}
+              key={index + 1000}
               id={"pronunciation" + index}
               label={"Pronunciation " + (index + 1) + " :"}
               typeInput="text"
@@ -83,7 +83,7 @@ function KanjiForm({
         kanji.meanings.map((_meaning, index) => {
           return (
             <CustomInputMeaning
-              key={index + 1000}
+              key={index + 2000}
               id={"meaning" + index}
               label={"Meaning " + (index + 1) + " :"}
               typeInput="text"
@@ -128,11 +128,11 @@ function KanjiForm({
           return (
             <>
               {nbrOfStrokesString.includes(radical) ? (
-                <button key={index} style={numberStyle}>
+                <button key={index + 3000} style={numberStyle}>
                   {radical}
                 </button>
               ) : (
-                <button key={index} onClick={onClick}>
+                <button key={index + 4000} onClick={onClick}>
                   {radical}
                 </button>
               )}

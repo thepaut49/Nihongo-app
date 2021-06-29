@@ -3,7 +3,7 @@ import CustomInput from "../common/CustomInput";
 import CustomInputMeaning from "../common/CustomInputMeaning";
 import CustomInputPronunciations from "../common/CustomInputPronunciations";
 import CustomSelect from "../common/CustomSelect";
-import verbConstants from "../common/verbConstants";
+import { verbConstants } from "../common/verbConstants";
 import PropTypes from "prop-types";
 
 function VerbForm({

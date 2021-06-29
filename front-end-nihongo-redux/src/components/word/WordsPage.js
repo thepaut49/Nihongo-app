@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
+import { isConnected } from "../../utils/userUtils";
 
 function WordsPage(props) {
   const [wordCriteria, setWordCriteria] = useState({
@@ -43,7 +44,7 @@ function WordsPage(props) {
     });
   }
 
-  function handleReset(event) {
+  function handleReset() {
     // ne marche pas
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -100,9 +101,12 @@ function WordsPage(props) {
             onClick={handleClick}
             onReset={handleReset}
           />
-          <Link className="btn btn-primary" to="/word/create">
-            Add Word
-          </Link>
+          {isConnected() && (
+            <Link className="btn btn-primary" to="/word/create">
+              Add Word
+            </Link>
+          )}
+
           <WordList words={props.words} deleteWord={handleDeleteWord} />
         </>
       )}

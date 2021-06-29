@@ -2,6 +2,7 @@ import React from "react";
 import "./SentencesPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { isConnected } from "../../utils/userUtils";
 
 const styleLink = {
   margin: "0.5em",
@@ -31,23 +32,25 @@ function SentenceList(props) {
                     <label>Topic :</label>
                     {sentence.topic}
                   </div>
-                  <div className="delete">
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => {
-                        props.deleteSentence(sentence);
-                      }}
-                    >
-                      Delete
-                    </button>
-                    <Link
-                      to={"/sentence/modify/" + sentence.kanjis}
-                      style={styleLink}
-                      className="btn btn-primary"
-                    >
-                      Modify
-                    </Link>
-                  </div>
+                  {isConnected() && (
+                    <div className="delete">
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() => {
+                          props.deleteSentence(sentence);
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <Link
+                        to={"/sentence/modify/" + sentence.kanjis}
+                        style={styleLink}
+                        className="btn btn-primary"
+                      >
+                        Modify
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>

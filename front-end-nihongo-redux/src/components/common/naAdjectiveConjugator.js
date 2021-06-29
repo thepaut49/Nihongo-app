@@ -1,4 +1,4 @@
-import verbConstants from "./verbConstants";
+import { verbConstants } from "./verbConstants";
 
 export function naForm(adjective) {
   return adjective + "な";

@@ -21,7 +21,7 @@ const hiraganaStyle = {
 const HiraganasPage = () => {
   const listOfHiraganaKeys = [];
   const listOfHiraganaValues = [];
-  hiraganaMapToDisplay.forEach((values, keys) => {
+  hiraganaMapToDisplay.forEach((values) => {
     listOfHiraganaKeys.push(values[0]);
     listOfHiraganaValues.push(values[1]);
   });

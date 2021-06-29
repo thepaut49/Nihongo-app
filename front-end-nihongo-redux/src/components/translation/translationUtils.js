@@ -21,7 +21,7 @@ import {
   presentIndicative as presentIndicativeIAdjective,
   pastIndicative as pastIndicativeIAdjective,
 } from "../common/iAdjectiveConjugator";
-import verbConstants from "../common/verbConstants";
+import { verbConstants } from "../common/verbConstants";
 import translationConstants from "../common/translationConstants";
 import { punctuationListWithoutDoublingkanji } from "../common/japanesePunctuation";
 import { isPartANumber } from "../common/translation/numberRecognition";

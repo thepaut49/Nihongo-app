@@ -2,6 +2,7 @@ import React from "react";
 import "./WordsPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { isConnected } from "../../utils/userUtils";
 
 const styleLink = {
   margin: "0.5em",
@@ -39,23 +40,25 @@ function WordList(props) {
                       );
                     })}
                   </div>
-                  <div className="wordButtons">
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => {
-                        props.deleteWord(word);
-                      }}
-                    >
-                      Delete
-                    </button>
-                    <Link
-                      to={"/word/modify/" + word.kanjis}
-                      style={styleLink}
-                      className="btn btn-primary"
-                    >
-                      Modify
-                    </Link>
-                  </div>
+                  {isConnected() && (
+                    <div className="wordButtons">
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() => {
+                          props.deleteWord(word);
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <Link
+                        to={"/word/modify/" + word.kanjis}
+                        style={styleLink}
+                        className="btn btn-primary"
+                      >
+                        Modify
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>

@@ -2,6 +2,7 @@ import React from "react";
 import "./VerbsPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { isConnected } from "../../utils/userUtils";
 
 const styleLink = {
   margin: "0.5em",
@@ -43,23 +44,25 @@ function VerbList(props) {
                     <label>Group :</label>
                     {verb.groupe}
                   </div>
-                  <div>
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => {
-                        props.deleteVerb(verb);
-                      }}
-                    >
-                      Delete
-                    </button>
-                    <Link
-                      to={"/verb/modify/" + verb.neutralForm}
-                      style={styleLink}
-                      className="btn btn-primary"
-                    >
-                      Modify
-                    </Link>
-                  </div>
+                  {isConnected() && (
+                    <div>
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() => {
+                          props.deleteVerb(verb);
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <Link
+                        to={"/verb/modify/" + verb.neutralForm}
+                        style={styleLink}
+                        className="btn btn-primary"
+                      >
+                        Modify
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>

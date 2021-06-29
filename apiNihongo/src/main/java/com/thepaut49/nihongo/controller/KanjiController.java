@@ -35,14 +35,14 @@ public class KanjiController {
 	@Autowired
 	private KanjiService kanjiService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public KanjiDTO createKanji( @RequestBody KanjiDTO kanjiDTO) {
 		Kanji newKanji = KanjiToDTOMapper.map(kanjiDTO);
 		return KanjiToDTOMapper.map(kanjiService.createKanji(newKanji));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public KanjiDTO updateKanji( @RequestBody KanjiDTO kanjiDTO, @PathVariable Long id) {
 		Kanji updatedKanji = KanjiToDTOMapper.map(kanjiDTO);  
@@ -56,7 +56,7 @@ public class KanjiController {
 	}
 
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		kanjiService.delete(id);

@@ -66,9 +66,10 @@ const Candidate = (props) => {
   );
 };
 
-Candidate.prototypes = {
+Candidate.propTypes = {
   part: PropTypes.object.isRequired,
   onPronunciationChange: PropTypes.func.isRequired,
+  onCandidateClick: PropTypes.func.isRequired,
 };
 
 export default Candidate;

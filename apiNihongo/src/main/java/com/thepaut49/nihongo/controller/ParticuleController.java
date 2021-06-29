@@ -29,14 +29,14 @@ public class ParticuleController {
 	@Autowired
 	private ParticuleService particuleService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public ParticuleDTO createParticule( @RequestBody ParticuleDTO particuleDTO) {
 		Particule newParticule = ParticuleToDTOMapper.map(particuleDTO);
 		return ParticuleToDTOMapper.map(particuleService.createParticule(newParticule));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public ParticuleDTO updateParticule( @RequestBody ParticuleDTO particuleDTO, @PathVariable Long id) {
 		Particule updatedParticule = ParticuleToDTOMapper.map(particuleDTO);  
@@ -44,7 +44,7 @@ public class ParticuleController {
 		return ParticuleToDTOMapper.map(particuleService.updateParticule(updatedParticule));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		particuleService.delete(id);

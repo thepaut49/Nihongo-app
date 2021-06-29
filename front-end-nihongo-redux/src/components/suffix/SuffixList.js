@@ -2,6 +2,7 @@ import React from "react";
 import "./SuffixsPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { isConnected } from "../../utils/userUtils";
 
 const styleLink = {
   margin: "0.5em",
@@ -39,21 +40,23 @@ function SuffixList(props) {
                   <div className="use">{suffix.use}</div>
                   <h2>Summary</h2>
                   <div>{suffix.summary}</div>
-                  <div className="buttonSuffix">
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => props.deleteSuffix(suffix)}
-                    >
-                      Delete
-                    </button>
-                    <Link
-                      to={"/suffix/modify/" + suffix.kanjis}
-                      style={styleLink}
-                      className="btn btn-primary"
-                    >
-                      Modify
-                    </Link>
-                  </div>
+                  {isConnected() && (
+                    <div className="buttonSuffix">
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() => props.deleteSuffix(suffix)}
+                      >
+                        Delete
+                      </button>
+                      <Link
+                        to={"/suffix/modify/" + suffix.kanjis}
+                        style={styleLink}
+                        className="btn btn-primary"
+                      >
+                        Modify
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>

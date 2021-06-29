@@ -29,14 +29,14 @@ public class SuffixController {
 	@Autowired
 	private SuffixService suffixService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public SuffixDTO createSuffix( @RequestBody SuffixDTO suffixDTO) {
 		Suffix newSuffix = SuffixToDTOMapper.map(suffixDTO);
 		return SuffixToDTOMapper.map(suffixService.createSuffix(newSuffix));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public SuffixDTO updateSuffix( @RequestBody SuffixDTO suffixDTO, @PathVariable Long id) {
 		Suffix updatedSuffix = SuffixToDTOMapper.map(suffixDTO);  
@@ -44,7 +44,7 @@ public class SuffixController {
 		return SuffixToDTOMapper.map(suffixService.updateSuffix(updatedSuffix));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		suffixService.delete(id);

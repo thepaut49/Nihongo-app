@@ -35,14 +35,14 @@ public class IAdjectiveController {
 	@Autowired
 	private IAdjectiveService iAdjectiveService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public IAdjectiveDTO createIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO) {
 		IAdjective newIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.createIAdjective(newIAdjective));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public IAdjectiveDTO updateIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO, @PathVariable Long id) {
 		IAdjective updatedIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);  
@@ -55,7 +55,7 @@ public class IAdjectiveController {
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.updateIAdjectiveNumberOfUse(id));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		iAdjectiveService.delete(id);

@@ -2,6 +2,7 @@ import React from "react";
 import "./NamesPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { isConnected } from "../../utils/userUtils";
 
 const styleLink = {
   margin: "0.5em",
@@ -39,23 +40,25 @@ function NameList(props) {
                       );
                     })}
                   </div>
-                  <div>
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => {
-                        props.deleteName(name);
-                      }}
-                    >
-                      Delete
-                    </button>
-                    <Link
-                      to={"/name/modify/" + name.kanjis}
-                      style={styleLink}
-                      className="btn btn-primary"
-                    >
-                      Modify
-                    </Link>
-                  </div>
+                  {isConnected() && (
+                    <div>
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() => {
+                          props.deleteName(name);
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <Link
+                        to={"/name/modify/" + name.kanjis}
+                        style={styleLink}
+                        className="btn btn-primary"
+                      >
+                        Modify
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>

@@ -42,7 +42,7 @@ const ListOfCandidates = (props) => {
   );
 };
 
-ListOfCandidates.prototype = {
+ListOfCandidates.propTypes = {
   candidatesList: PropTypes.arrayOf(Object).isRequired,
   onCandidateClick: PropTypes.func.isRequired,
 };

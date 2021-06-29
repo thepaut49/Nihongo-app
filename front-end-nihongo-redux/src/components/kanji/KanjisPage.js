@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import KanjiCriteriaForm from "./KanjiCriteriaForm";
 import { radicals as radicalsList } from "../common/Radicals";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { isConnected } from "../../utils/userUtils";
 
 function KanjisPage(props) {
   const [kanjiCriteria, setKanjiCriteria] = useState({
@@ -111,7 +112,7 @@ function KanjisPage(props) {
     }
   }
 
-  function handleReset(event) {
+  function handleReset() {
     // ne marche pas
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -152,9 +153,11 @@ function KanjisPage(props) {
         <Spinner />
       ) : (
         <>
-          <Link className="btn btn-primary" to="/kanji/create">
-            Add Kanji
-          </Link>
+          {isConnected() && (
+            <Link className="btn btn-primary" to="/kanji/create">
+              Add Kanji
+            </Link>
+          )}
           <KanjiList kanjis={props.kanjis} deleteKanji={handleDeleteKanji} />
         </>
       )}

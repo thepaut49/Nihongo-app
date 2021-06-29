@@ -29,14 +29,14 @@ public class GrammarRuleController {
 	@Autowired
 	private GrammarRuleService grammarRuleService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public GrammarRuleDTO createGrammarRule( @RequestBody GrammarRuleDTO grammarRuleDTO) {
 		GrammarRule newGrammarRule = GrammarRuleToDTOMapper.map(grammarRuleDTO);
 		return GrammarRuleToDTOMapper.map(grammarRuleService.createGrammarRule(newGrammarRule));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public GrammarRuleDTO updateGrammarRule( @RequestBody GrammarRuleDTO grammarRuleDTO, @PathVariable Long id) {
 		GrammarRule updatedGrammarRule = GrammarRuleToDTOMapper.map(grammarRuleDTO);  
@@ -44,7 +44,7 @@ public class GrammarRuleController {
 		return GrammarRuleToDTOMapper.map(grammarRuleService.updateGrammarRule(updatedGrammarRule));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		grammarRuleService.delete(id);

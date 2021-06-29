@@ -24,7 +24,10 @@ export function saveSuffix(suffix) {
   }
   return fetch(url, {
     method: method, // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      Authorization: "bearer " + sessionStorage.getItem("token"),
+    },
     body: JSON.stringify({
       ...suffix,
     }),
@@ -34,7 +37,12 @@ export function saveSuffix(suffix) {
 }
 
 export function deleteSuffix(suffixId) {
-  return fetch(baseUrl + suffixId, { method: "DELETE" })
+  return fetch(baseUrl + suffixId, {
+    method: "DELETE",
+    headers: {
+      Authorization: "bearer " + sessionStorage.getItem("token"),
+    },
+  })
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok.");
       return response.text;

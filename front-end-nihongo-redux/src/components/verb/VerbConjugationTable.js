@@ -15,6 +15,7 @@ import {
   passive,
 } from "../common/verbConjugator";
 import Tense from "./Tense";
+import PropTypes from "prop-types";
 
 function VerbConjugationTable(props) {
   const verb = props.verb;
@@ -71,5 +72,9 @@ function VerbConjugationTable(props) {
     </>
   );
 }
+
+VerbConjugationTable.propTypes = {
+  verb: PropTypes.object.isRequired,
+};
 
 export default VerbConjugationTable;

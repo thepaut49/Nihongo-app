@@ -2,6 +2,7 @@ import React from "react";
 import "./CountersPage.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { isConnected } from "../../utils/userUtils";
 
 const styleLink = {
   margin: "0.5em",
@@ -41,23 +42,25 @@ function CounterList(props) {
                     <h2>Summary</h2>
                     {counter.summary}
                   </div>
-                  <div className="buttonCounter">
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => {
-                        props.deleteCounter(counter);
-                      }}
-                    >
-                      Delete
-                    </button>
-                    <Link
-                      to={"/counter/modify/" + counter.kanjis}
-                      style={styleLink}
-                      className="btn btn-primary"
-                    >
-                      Modify
-                    </Link>
-                  </div>
+                  {isConnected() && (
+                    <div className="buttonCounter">
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() => {
+                          props.deleteCounter(counter);
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <Link
+                        to={"/counter/modify/" + counter.kanjis}
+                        style={styleLink}
+                        className="btn btn-primary"
+                      >
+                        Modify
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>

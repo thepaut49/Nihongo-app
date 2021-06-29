@@ -119,11 +119,12 @@ const Part = (props) => {
   );
 };
 
-Part.prototypes = {
+Part.propTypes = {
   part: PropTypes.object.isRequired,
   onPartChange: PropTypes.func.isRequired,
   onPronunciationChange: PropTypes.func.isRequired,
   onUnknownTransform: PropTypes.func.isRequired,
+  onSplitPart: PropTypes.func.isRequired,
 };
 
 export default Part;

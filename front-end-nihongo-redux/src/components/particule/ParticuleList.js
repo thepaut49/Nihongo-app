@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { isConnected } from "../../utils/userUtils";
 
 const particuleListStyle = {
   borderRadius: "10px",
@@ -49,24 +50,25 @@ function ParticuleList(props) {
                 }}
               />
             </div>
-
-            <div className="delete">
-              <button
-                className="btn btn-outline-danger"
-                onClick={() => {
-                  props.deleteParticule(particule);
-                }}
-              >
-                Delete
-              </button>
-              <Link
-                to={"/particule/modify/" + particule.kanjis}
-                style={styleLink}
-                className="btn btn-primary"
-              >
-                Modify
-              </Link>
-            </div>
+            {isConnected() && (
+              <div className="delete">
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => {
+                    props.deleteParticule(particule);
+                  }}
+                >
+                  Delete
+                </button>
+                <Link
+                  to={"/particule/modify/" + particule.kanjis}
+                  style={styleLink}
+                  className="btn btn-primary"
+                >
+                  Modify
+                </Link>
+              </div>
+            )}
           </div>
         );
       })}

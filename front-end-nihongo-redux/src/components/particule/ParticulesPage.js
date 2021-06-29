@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
+import { isConnected } from "../../utils/userUtils";
 
 const ParticulesPage = (props) => {
   useEffect(() => {
@@ -35,9 +36,12 @@ const ParticulesPage = (props) => {
         <Spinner />
       ) : (
         <>
-          <Link className="btn btn-primary" to="/particule/create">
-            Add Particule
-          </Link>
+          {isConnected() && (
+            <Link className="btn btn-primary" to="/particule/create">
+              Add Particule
+            </Link>
+          )}
+
           {props.particules && props.particules.length > 0 && (
             <ParticuleList
               particules={props.particules}

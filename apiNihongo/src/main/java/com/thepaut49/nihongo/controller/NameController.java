@@ -35,14 +35,14 @@ public class NameController {
 	@Autowired
 	private NameService nameService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public NameDTO createName( @RequestBody NameDTO nameDTO) {
 		Name newName = NameToDTOMapper.map(nameDTO);
 		return NameToDTOMapper.map(nameService.createName(newName));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public NameDTO updateName( @RequestBody NameDTO nameDTO, @PathVariable Long id) {
 		Name updatedName = NameToDTOMapper.map(nameDTO);  
@@ -55,7 +55,7 @@ public class NameController {
 		return NameToDTOMapper.map(nameService.updateNameNumberOfUse(id));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		nameService.delete(id);

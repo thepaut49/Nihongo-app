@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import GrammarRuleList from "./GrammarRuleList";
 import * as grammarRuleActions from "../../redux/actions/grammarRuleActions";
 import { bindActionCreators } from "redux";
+import { isConnected } from "../../utils/userUtils";
 
 const GrammarRulesPage = (props) => {
   useEffect(() => {
@@ -35,9 +36,11 @@ const GrammarRulesPage = (props) => {
         <Spinner />
       ) : (
         <>
-          <Link className="btn btn-primary" to="/grammarRule/create">
-            Add Grammar rule
-          </Link>
+          {isConnected() && (
+            <Link className="btn btn-primary" to="/grammarRule/create">
+              Add Grammar rule
+            </Link>
+          )}
 
           <GrammarRuleList
             grammarRules={props.grammarRules}

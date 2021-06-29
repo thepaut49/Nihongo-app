@@ -35,14 +35,14 @@ public class CounterController {
 	@Autowired
 	private CounterService counterService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public CounterDTO createCounter( @RequestBody CounterDTO counterDTO) {
 		Counter newCounter = CounterToDTOMapper.map(counterDTO);
 		return CounterToDTOMapper.map(counterService.createCounter(newCounter));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public CounterDTO updateCounter( @RequestBody CounterDTO counterDTO, @PathVariable Long id) {
 		Counter updatedCounter = CounterToDTOMapper.map(counterDTO);  
@@ -55,7 +55,7 @@ public class CounterController {
 		return CounterToDTOMapper.map(counterService.updateCounterNumberOfUse(id));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		counterService.delete(id);

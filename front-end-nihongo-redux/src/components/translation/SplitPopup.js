@@ -178,9 +178,22 @@ const SplitPopup = (props) => {
   );
 };
 
-SplitPopup.prototypes = {
+SplitPopup.propTypes = {
   onSplitPart: PropTypes.func.isRequired,
-  oldPart: PropTypes.object.isRequired,
+  oldPart: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      kanjis: PropTypes.string.isRequired,
+      selectedPronunciation: PropTypes.string.isRequired,
+      selectedMeaning: PropTypes.string.isRequired,
+      pronunciations: PropTypes.array.isRequired,
+      meanings: PropTypes.array.isRequired,
+      unknown: PropTypes.bool.isRequired,
+      length: PropTypes.number.isRequired,
+      currentIndex: PropTypes.number.isRequired,
+      listOfValues: PropTypes.array.isRequired,
+    })
+  ).isRequired,
 };
 
 export default SplitPopup;

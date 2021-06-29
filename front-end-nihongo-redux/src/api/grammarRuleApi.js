@@ -24,7 +24,10 @@ export function saveGrammarRule(grammarRule) {
   }
   return fetch(url, {
     method: method, // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      Authorization: "bearer " + sessionStorage.getItem("token"),
+    },
     body: JSON.stringify({
       ...grammarRule,
     }),
@@ -34,7 +37,12 @@ export function saveGrammarRule(grammarRule) {
 }
 
 export function deleteGrammarRule(grammarRuleId) {
-  return fetch(baseUrl + grammarRuleId, { method: "DELETE" })
+  return fetch(baseUrl + grammarRuleId, {
+    method: "DELETE",
+    headers: {
+      Authorization: "bearer " + sessionStorage.getItem("token"),
+    },
+  })
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok.");
       return response.text;

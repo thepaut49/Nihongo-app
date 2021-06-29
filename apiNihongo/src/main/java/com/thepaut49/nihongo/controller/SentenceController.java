@@ -32,14 +32,14 @@ public class SentenceController {
 	@Autowired
 	private SentenceService sentenceService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public SentenceDTO createSentence( @RequestBody SentenceDTO sentenceDTO) {
 		Sentence newSentence = SentenceToDTOMapper.map(sentenceDTO);
 		return SentenceToDTOMapper.map(sentenceService.createSentence(newSentence));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public SentenceDTO updateSentence( @RequestBody SentenceDTO sentenceDTO, @PathVariable Long id) {
 		Sentence updatedSentence = SentenceToDTOMapper.map(sentenceDTO);  
@@ -47,7 +47,7 @@ public class SentenceController {
 		return SentenceToDTOMapper.map(sentenceService.updateSentence(updatedSentence));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		sentenceService.delete(id);

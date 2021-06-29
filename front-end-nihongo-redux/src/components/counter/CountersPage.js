@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
+import { isConnected } from "../../utils/userUtils";
 
 function CountersPage(props) {
   const [counterCriteria, setCounterCriteria] = useState({
@@ -43,7 +44,7 @@ function CountersPage(props) {
     });
   }
 
-  function handleReset(event) {
+  function handleReset() {
     // ne marche pas
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -89,8 +90,6 @@ function CountersPage(props) {
     }
   };
 
-  const token = sessionStorage.getItem("token");
-
   return (
     <div className="countersPage">
       <h2>Counters</h2>
@@ -106,7 +105,7 @@ function CountersPage(props) {
             onReset={handleReset}
           />
 
-          {token && token !== "undefined" && (
+          {isConnected() && (
             <Link className="btn btn-primary" to="/counter/create">
               Add Kanji
             </Link>

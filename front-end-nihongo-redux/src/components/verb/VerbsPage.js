@@ -10,6 +10,7 @@ import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import VerbCriteriaForm from "./VerbCriteriaForm";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
+import { isConnected } from "../../utils/userUtils";
 
 function VerbsPage(props) {
   const [verbCriteria, setVerbCriteria] = useState({
@@ -44,7 +45,7 @@ function VerbsPage(props) {
   }
 
   // reset of search criteria
-  function handleReset(event) {
+  function handleReset() {
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -107,9 +108,12 @@ function VerbsPage(props) {
             onClick={handleClick}
             onReset={handleReset}
           />
-          <Link className="btn btn-primary" to="/verb/create">
-            Add Verb
-          </Link>
+          {isConnected() && (
+            <Link className="btn btn-primary" to="/verb/create">
+              Add Verb
+            </Link>
+          )}
+
           <VerbList verbs={props.verbs} deleteVerb={handleDeleteVerb} />
         </>
       )}
