@@ -1,10 +1,7 @@
 import * as naAdjectiveApi from "../../api/naAdjectiveApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-
-export function filterNaAdjectiveSuccess(naAdjectives) {
-  return { type: types.FILTER_NA_ADJECTIVES_SUCCESS, naAdjectives };
-}
+import * as naAdjectiveListActions from "./naAdjectiveListActions";
 
 export function loadNaAdjectiveSuccess(naAdjectives) {
   return { type: types.LOAD_NA_ADJECTIVES_SUCCESS, naAdjectives };
@@ -29,6 +26,7 @@ export function loadNaAdjectives() {
       .getNaAdjectives()
       .then((naAdjectives) => {
         dispatch(loadNaAdjectiveSuccess(naAdjectives));
+        dispatch(naAdjectiveListActions.loadNaAdjectiveSuccess(naAdjectives));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,9 +42,17 @@ export function saveNaAdjective(naAdjective) {
     return naAdjectiveApi
       .saveNaAdjective(naAdjective)
       .then((savednaAdjective) => {
-        naAdjective.id
-          ? dispatch(updateNaAdjectiveSuccess(savednaAdjective))
-          : dispatch(createNaAdjectiveSuccess(savednaAdjective));
+        if (naAdjective.id) {
+          dispatch(updateNaAdjectiveSuccess(savednaAdjective));
+          dispatch(
+            naAdjectiveListActions.updateNaAdjectiveSuccess(savednaAdjective)
+          );
+        } else {
+          dispatch(createNaAdjectiveSuccess(savednaAdjective));
+          dispatch(
+            naAdjectiveListActions.createNaAdjectiveSuccess(savednaAdjective)
+          );
+        }
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -60,22 +66,8 @@ export function deleteNaAdjective(naAdjective) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteNaAdjectiveOptimistic(naAdjective));
+    dispatch(naAdjectiveListActions.deleteNaAdjectiveOptimistic(naAdjective));
     return naAdjectiveApi.deleteNaAdjective(naAdjective.id);
-  };
-}
-
-export function filterNaAdjectives(naAdjectiveCriteria) {
-  return function (dispatch) {
-    dispatch(beginApiCall());
-    return naAdjectiveApi
-      .filterNaAdjectives(naAdjectiveCriteria)
-      .then((naAdjectives) => {
-        dispatch(filterNaAdjectiveSuccess(naAdjectives));
-      })
-      .catch((error) => {
-        dispatch(apiCallError(error));
-        throw error;
-      });
   };
 }
 
@@ -85,9 +77,12 @@ export function updateNumberOfUse(id) {
     dispatch(beginApiCall());
     return naAdjectiveApi
       .updateNumberOfUse(id)
-      .then((savednaAdjective) =>
-        dispatch(updateNaAdjectiveSuccess(savednaAdjective))
-      )
+      .then((savednaAdjective) => {
+        dispatch(updateNaAdjectiveSuccess(savednaAdjective));
+        dispatch(
+          naAdjectiveListActions.updateNaAdjectiveSuccess(savednaAdjective)
+        );
+      })
       .catch((error) => {
         dispatch(apiCallError(error));
         throw error;

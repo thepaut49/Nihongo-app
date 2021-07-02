@@ -12,6 +12,14 @@ export default {
   suffixs: [],
   verbs: [],
   words: [],
+  //Liste pour filtrage
+  iAdjectivesList: [],
+  kanjisList: [],
+  naAdjectivesList: [],
+  namesList: [],
+  sentencesList: [],
+  verbsList: [],
+  wordsList: [],
   //partie translation
   translation: {
     sentence: "",

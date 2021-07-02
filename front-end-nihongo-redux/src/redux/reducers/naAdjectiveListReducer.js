@@ -6,7 +6,7 @@ import initialState from "./initialState";
 // souhaite
 
 export default function naAdjectiveReducer(
-  state = initialState.naAdjectives,
+  state = initialState.naAdjectivesList,
   action
 ) {
   switch (action.type) {
@@ -24,6 +24,8 @@ export default function naAdjectiveReducer(
       return state.filter(
         (naAdjective) => naAdjective.id !== action.naAdjective.id
       );
+    case types.FILTER_NA_ADJECTIVES_SUCCESS:
+      return action.naAdjectives;
     default:
       return state;
   }

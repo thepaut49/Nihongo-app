@@ -11,6 +11,7 @@ import suffixs from "./suffixReducer";
 import verbs from "./verbReducer";
 import words from "./wordReducer";
 import translation from "./translationReducer";
+import naAdjectivesList from "./naAdjectiveListReducer";
 import apiCallsInProgress from "./apiStatusReducer";
 
 const rootReducer = combineReducers({
@@ -26,6 +27,8 @@ const rootReducer = combineReducers({
   translation,
   verbs,
   words,
+  // reducer for list
+  naAdjectivesList,
   apiCallsInProgress,
 });
 

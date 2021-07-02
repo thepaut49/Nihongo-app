@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as naAdjectiveActions from "../../redux/actions/naAdjectiveActions";
+import * as naAdjectiveListActions from "../../redux/actions/naAdjectiveListActions";
 import "./NaAdjectivesPage.css";
 import NaAdjectiveList from "./NaAdjectiveList";
 import { Link } from "react-router-dom";
@@ -44,7 +45,8 @@ function NaAdjectivesPage(props) {
     });
   }
 
-  function handleReset() {
+  function handleReset(event) {
+    event.preventDefault();
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -52,6 +54,9 @@ function NaAdjectivesPage(props) {
       kanjisCriteria: "",
       pronunciationCriteria: "",
       meaningCriteria: "",
+    });
+    props.actions.loadNaAdjectives().catch((error) => {
+      alert("Loading na-adjectives failed" + error);
     });
   }
 
@@ -108,7 +113,7 @@ function NaAdjectivesPage(props) {
           )}
 
           <NaAdjectiveList
-            naAdjectives={props.naAdjectives}
+            naAdjectives={props.naAdjectivesList}
             deleteNaAdjective={handleDeleteNaAdjective}
           />
         </>
@@ -119,6 +124,7 @@ function NaAdjectivesPage(props) {
 
 NaAdjectivesPage.propTypes = {
   naAdjectives: PropTypes.array.isRequired,
+  naAdjectivesList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -126,6 +132,11 @@ NaAdjectivesPage.propTypes = {
 function mapStateToProps(state) {
   return {
     naAdjectives: state.naAdjectives.map((naAdjective) => {
+      return {
+        ...naAdjective,
+      };
+    }),
+    naAdjectivesList: state.naAdjectivesList.map((naAdjective) => {
       return {
         ...naAdjective,
       };
@@ -146,7 +157,7 @@ function mapDispatchToProps(dispatch) {
         dispatch
       ),
       filterNaAdjectives: bindActionCreators(
-        naAdjectiveActions.filterNaAdjectives,
+        naAdjectiveListActions.filterNaAdjectives,
         dispatch
       ),
     },

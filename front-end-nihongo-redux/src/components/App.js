@@ -49,6 +49,7 @@ import "react-toastify/dist/ReactToastify.css";
 import configureStore from "../redux/configureStore";
 const store = configureStore();
 import { Provider as ReduxProvider } from "react-redux";
+import Gestion from "./gestion/Gestion";
 
 function App() {
   return (
@@ -175,6 +176,7 @@ function App() {
               <Route path="/word/create" component={ManageWordPage} />
               <Route path="/hiraganas" component={HiraganasPage} />
               <Route path="/katakanas" component={KatakanasPage} />
+              <Route path="/gestion" component={Gestion} />
               <Route path="/about" component={AboutPage} />
             </Switch>
             <ToastContainer autoClose={3000} hideProgressBar />

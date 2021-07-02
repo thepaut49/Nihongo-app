@@ -1,16 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Login from "../Login/Login";
 
 function Header() {
   const activeStyle = { color: "orange" };
-
-  const token = sessionStorage.getItem("token");
 
   return (
     <nav>
       <NavLink activeStyle={activeStyle} to="/" exact>
         Home
+      </NavLink>
+
+      <NavLink activeStyle={activeStyle} to="/Translation">
+        Translation
       </NavLink>
 
       <NavLink activeStyle={activeStyle} to="/kanjis">
@@ -45,10 +46,6 @@ function Header() {
         Sentences
       </NavLink>
 
-      <NavLink activeStyle={activeStyle} to="/Translation">
-        Translation
-      </NavLink>
-
       <NavLink activeStyle={activeStyle} to="/grammarRules">
         Grammar Rules
       </NavLink>
@@ -72,8 +69,6 @@ function Header() {
       <NavLink activeStyle={activeStyle} to="/about">
         About
       </NavLink>
-
-      {!token && <Login />}
     </nav>
   );
 }
