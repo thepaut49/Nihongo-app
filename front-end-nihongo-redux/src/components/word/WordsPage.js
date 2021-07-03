@@ -11,6 +11,7 @@ import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { isConnected } from "../../utils/userUtils";
+import * as wordListActions from "../../redux/actions/wordListActions";
 
 function WordsPage(props) {
   const [wordCriteria, setWordCriteria] = useState({
@@ -44,7 +45,8 @@ function WordsPage(props) {
     });
   }
 
-  function handleReset() {
+  function handleReset(event) {
+    event.preventDefault();
     // ne marche pas
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -53,6 +55,9 @@ function WordsPage(props) {
       kanjisCriteria: "",
       pronunciationCriteria: "",
       meaningCriteria: "",
+    });
+    props.actions.loadWords().catch((error) => {
+      alert("Loading words failed" + error);
     });
   }
 
@@ -107,7 +112,7 @@ function WordsPage(props) {
             </Link>
           )}
 
-          <WordList words={props.words} deleteWord={handleDeleteWord} />
+          <WordList words={props.wordsList} deleteWord={handleDeleteWord} />
         </>
       )}
     </div>
@@ -116,6 +121,7 @@ function WordsPage(props) {
 
 WordsPage.propTypes = {
   words: PropTypes.array.isRequired,
+  wordsList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -123,6 +129,11 @@ WordsPage.propTypes = {
 function mapStateToProps(state) {
   return {
     words: state.words.map((word) => {
+      return {
+        ...word,
+      };
+    }),
+    wordsList: state.wordsList.map((word) => {
       return {
         ...word,
       };
@@ -136,7 +147,7 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadWords: bindActionCreators(wordActions.loadWords, dispatch),
       deleteWord: bindActionCreators(wordActions.deleteWord, dispatch),
-      filterWords: bindActionCreators(wordActions.filterWords, dispatch),
+      filterWords: bindActionCreators(wordListActions.filterWords, dispatch),
     },
   };
 }

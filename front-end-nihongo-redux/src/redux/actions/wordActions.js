@@ -1,10 +1,7 @@
 import * as wordApi from "../../api/wordApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-
-export function filterWordSuccess(words) {
-  return { type: types.FILTER_WORDS_SUCCESS, words };
-}
+import * as wordListActions from "./wordListActions";
 
 export function loadWordSuccess(words) {
   return { type: types.LOAD_WORDS_SUCCESS, words };
@@ -29,6 +26,7 @@ export function loadWords() {
       .getWords()
       .then((words) => {
         dispatch(loadWordSuccess(words));
+        dispatch(wordListActions.loadWordSuccess(words));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,9 +42,13 @@ export function saveWord(word) {
     return wordApi
       .saveWord(word)
       .then((savedword) => {
-        word.id
-          ? dispatch(updateWordSuccess(savedword))
-          : dispatch(createWordSuccess(savedword));
+        if (word.id) {
+          dispatch(updateWordSuccess(savedword));
+          dispatch(wordListActions.updateWordSuccess(savedword));
+        } else {
+          dispatch(createWordSuccess(savedword));
+          dispatch(wordListActions.createWordSuccess(savedword));
+        }
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -60,22 +62,8 @@ export function deleteWord(word) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteWordOptimistic(word));
+    dispatch(wordListActions.deleteWordOptimistic(word));
     return wordApi.deleteWord(word.id);
-  };
-}
-
-export function filterWords(wordCriteria) {
-  return function (dispatch) {
-    dispatch(beginApiCall());
-    return wordApi
-      .filterWords(wordCriteria)
-      .then((words) => {
-        dispatch(filterWordSuccess(words));
-      })
-      .catch((error) => {
-        dispatch(apiCallError(error));
-        throw error;
-      });
   };
 }
 
@@ -85,7 +73,10 @@ export function updateNumberOfUse(id) {
     dispatch(beginApiCall());
     return wordApi
       .updateNumberOfUse(id)
-      .then((savedword) => dispatch(updateWordSuccess(savedword)))
+      .then((savedword) => {
+        dispatch(updateWordSuccess(savedword));
+        dispatch(wordListActions.updateWordSuccess(savedword));
+      })
       .catch((error) => {
         dispatch(apiCallError(error));
         throw error;

@@ -1,10 +1,7 @@
 import * as nameApi from "../../api/nameApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-
-export function filterNameSuccess(names) {
-  return { type: types.FILTER_NAMES_SUCCESS, names };
-}
+import * as nameListActions from "./nameListActions";
 
 export function loadNameSuccess(names) {
   return { type: types.LOAD_NAMES_SUCCESS, names };
@@ -29,6 +26,7 @@ export function loadNames() {
       .getNames()
       .then((names) => {
         dispatch(loadNameSuccess(names));
+        dispatch(nameListActions.loadNameSuccess(names));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,9 +42,13 @@ export function saveName(name) {
     return nameApi
       .saveName(name)
       .then((savedname) => {
-        name.id
-          ? dispatch(updateNameSuccess(savedname))
-          : dispatch(createNameSuccess(savedname));
+        if (name.id) {
+          dispatch(updateNameSuccess(savedname));
+          dispatch(nameListActions.updateNameSuccess(savedname));
+        } else {
+          dispatch(createNameSuccess(savedname));
+          dispatch(nameListActions.createNameSuccess(savedname));
+        }
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -60,22 +62,8 @@ export function deleteName(name) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteNameOptimistic(name));
+    dispatch(nameListActions.deleteNameOptimistic(name));
     return nameApi.deleteName(name.id);
-  };
-}
-
-export function filterNames(nameCriteria) {
-  return function (dispatch) {
-    dispatch(beginApiCall());
-    return nameApi
-      .filterNames(nameCriteria)
-      .then((names) => {
-        dispatch(filterNameSuccess(names));
-      })
-      .catch((error) => {
-        dispatch(apiCallError(error));
-        throw error;
-      });
   };
 }
 
@@ -85,7 +73,10 @@ export function updateNumberOfUse(id) {
     dispatch(beginApiCall());
     return nameApi
       .updateNumberOfUse(id)
-      .then((savedname) => dispatch(updateNameSuccess(savedname)))
+      .then((savedname) => {
+        dispatch(updateNameSuccess(savedname));
+        dispatch(nameListActions.updateNameSuccess(savedname));
+      })
       .catch((error) => {
         dispatch(apiCallError(error));
         throw error;

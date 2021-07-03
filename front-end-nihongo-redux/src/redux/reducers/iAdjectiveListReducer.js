@@ -6,7 +6,7 @@ import initialState from "./initialState";
 // souhaite
 
 export default function iAdjectiveReducer(
-  state = initialState.iAdjectives,
+  state = initialState.iAdjectivesList,
   action
 ) {
   switch (action.type) {
@@ -22,6 +22,8 @@ export default function iAdjectiveReducer(
       return state.filter(
         (iAdjective) => iAdjective.id !== action.iAdjective.id
       );
+    case types.FILTER_I_ADJECTIVES_SUCCESS:
+      return action.iAdjectives;
     default:
       return state;
   }

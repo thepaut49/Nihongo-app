@@ -11,6 +11,7 @@ import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { isConnected } from "../../utils/userUtils";
+import * as counterListActions from "../../redux/actions/counterListActions";
 
 function CountersPage(props) {
   const [counterCriteria, setCounterCriteria] = useState({
@@ -44,7 +45,8 @@ function CountersPage(props) {
     });
   }
 
-  function handleReset() {
+  function handleReset(event) {
+    event.preventDefault();
     // ne marche pas
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -56,6 +58,9 @@ function CountersPage(props) {
       kanjisCriteria: "",
       pronunciationCriteria: "",
       useCriteria: "",
+    });
+    props.actions.loadCounters().catch((error) => {
+      alert("Loading counters failed" + error);
     });
   }
 
@@ -112,7 +117,7 @@ function CountersPage(props) {
           )}
 
           <CounterList
-            counters={props.counters}
+            counters={props.countersList}
             deleteCounter={handleDeleteCounter}
           />
         </>
@@ -123,9 +128,9 @@ function CountersPage(props) {
 
 CountersPage.propTypes = {
   counters: PropTypes.array.isRequired,
+  countersList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -135,7 +140,11 @@ function mapStateToProps(state) {
         ...counter,
       };
     }),
-    user: state.user,
+    countersList: state.countersList.map((counter) => {
+      return {
+        ...counter,
+      };
+    }),
     loading: state.apiCallsInProgress > 0,
   };
 }
@@ -146,7 +155,7 @@ function mapDispatchToProps(dispatch) {
       loadCounters: bindActionCreators(counterActions.loadCounters, dispatch),
       deleteCounter: bindActionCreators(counterActions.deleteCounter, dispatch),
       filterCounters: bindActionCreators(
-        counterActions.filterCounters,
+        counterListActions.filterCounters,
         dispatch
       ),
     },

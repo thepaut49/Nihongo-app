@@ -5,7 +5,7 @@ import initialState from "./initialState";
 // dans un autre fichier on peut lui donner le nom que l'on
 // souhaite
 
-export default function kanjiReducer(state = initialState.kanjis, action) {
+export default function kanjiReducer(state = initialState.kanjisList, action) {
   switch (action.type) {
     case types.CREATE_KANJI_SUCCESS:
       return [...state, { ...action.kanji }];
@@ -17,6 +17,8 @@ export default function kanjiReducer(state = initialState.kanjis, action) {
       return action.kanjis;
     case types.DELETE_KANJI_OPTIMISTIC:
       return state.filter((kanji) => kanji.id !== action.kanji.id);
+    case types.FILTER_KANJIS_SUCCESS:
+      return action.kanjis;
     default:
       return state;
   }

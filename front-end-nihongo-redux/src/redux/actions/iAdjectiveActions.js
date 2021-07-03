@@ -1,10 +1,7 @@
 import * as iAdjectiveApi from "../../api/iAdjectiveApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-
-export function filterIAdjectiveSuccess(iAdjectives) {
-  return { type: types.FILTER_I_ADJECTIVES_SUCCESS, iAdjectives };
-}
+import * as iAdjectiveListActions from "./iAdjectiveListActions";
 
 export function loadIAdjectiveSuccess(iAdjectives) {
   return { type: types.LOAD_I_ADJECTIVES_SUCCESS, iAdjectives };
@@ -29,6 +26,7 @@ export function loadIAdjectives() {
       .getIAdjectives()
       .then((iAdjectives) => {
         dispatch(loadIAdjectiveSuccess(iAdjectives));
+        dispatch(iAdjectiveListActions.loadIAdjectiveSuccess(iAdjectives));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,9 +42,17 @@ export function saveIAdjective(iAdjective) {
     return iAdjectiveApi
       .saveIAdjective(iAdjective)
       .then((savediAdjective) => {
-        iAdjective.id
-          ? dispatch(updateIAdjectiveSuccess(savediAdjective))
-          : dispatch(createIAdjectiveSuccess(savediAdjective));
+        if (iAdjective.id) {
+          dispatch(updateIAdjectiveSuccess(savediAdjective));
+          dispatch(
+            iAdjectiveListActions.updateIAdjectiveSuccess(savediAdjective)
+          );
+        } else {
+          dispatch(createIAdjectiveSuccess(savediAdjective));
+          dispatch(
+            iAdjectiveListActions.createIAdjectiveSuccess(savediAdjective)
+          );
+        }
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -60,22 +66,8 @@ export function deleteIAdjective(iAdjective) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteIAdjectiveOptimistic(iAdjective));
+    dispatch(iAdjectiveListActions.deleteIAdjectiveOptimistic(iAdjective));
     return iAdjectiveApi.deleteIAdjective(iAdjective.id);
-  };
-}
-
-export function filterIAdjectives(iAdjectiveCriteria) {
-  return function (dispatch) {
-    dispatch(beginApiCall());
-    return iAdjectiveApi
-      .filterIAdjectives(iAdjectiveCriteria)
-      .then((iAdjectives) => {
-        dispatch(filterIAdjectiveSuccess(iAdjectives));
-      })
-      .catch((error) => {
-        dispatch(apiCallError(error));
-        throw error;
-      });
   };
 }
 
@@ -85,9 +77,12 @@ export function updateNumberOfUse(id) {
     dispatch(beginApiCall());
     return iAdjectiveApi
       .updateNumberOfUse(id)
-      .then((savediAdjective) =>
-        dispatch(updateIAdjectiveSuccess(savediAdjective))
-      )
+      .then((savediAdjective) => {
+        dispatch(updateIAdjectiveSuccess(savediAdjective));
+        dispatch(
+          iAdjectiveListActions.updateIAdjectiveSuccess(savediAdjective)
+        );
+      })
       .catch((error) => {
         dispatch(apiCallError(error));
         throw error;

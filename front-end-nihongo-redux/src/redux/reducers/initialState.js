@@ -13,6 +13,7 @@ export default {
   verbs: [],
   words: [],
   //Liste pour filtrage
+  countersList: [],
   iAdjectivesList: [],
   kanjisList: [],
   naAdjectivesList: [],

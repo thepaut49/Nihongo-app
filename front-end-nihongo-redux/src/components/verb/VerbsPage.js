@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import VerbCriteriaForm from "./VerbCriteriaForm";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import { isConnected } from "../../utils/userUtils";
+import * as verbListActions from "../../redux/actions/verbListActions";
 
 function VerbsPage(props) {
   const [verbCriteria, setVerbCriteria] = useState({
@@ -45,7 +46,8 @@ function VerbsPage(props) {
   }
 
   // reset of search criteria
-  function handleReset() {
+  function handleReset(event) {
+    event.preventDefault();
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -57,6 +59,9 @@ function VerbsPage(props) {
       pronunciationCriteria: "",
       meaningCriteria: "",
       groupeCriteria: "",
+    });
+    props.actions.loadVerbs().catch((error) => {
+      alert("Loading verbs failed" + error);
     });
   }
 
@@ -114,7 +119,7 @@ function VerbsPage(props) {
             </Link>
           )}
 
-          <VerbList verbs={props.verbs} deleteVerb={handleDeleteVerb} />
+          <VerbList verbs={props.verbsList} deleteVerb={handleDeleteVerb} />
         </>
       )}
     </div>
@@ -123,6 +128,7 @@ function VerbsPage(props) {
 
 VerbsPage.propTypes = {
   verbs: PropTypes.array.isRequired,
+  verbsList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -130,6 +136,11 @@ VerbsPage.propTypes = {
 function mapStateToProps(state) {
   return {
     verbs: state.verbs.map((verb) => {
+      return {
+        ...verb,
+      };
+    }),
+    verbsList: state.verbsList.map((verb) => {
       return {
         ...verb,
       };
@@ -143,7 +154,7 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadVerbs: bindActionCreators(verbActions.loadVerbs, dispatch),
       deleteVerb: bindActionCreators(verbActions.deleteVerb, dispatch),
-      filterVerbs: bindActionCreators(verbActions.filterVerbs, dispatch),
+      filterVerbs: bindActionCreators(verbListActions.filterVerbs, dispatch),
     },
   };
 }

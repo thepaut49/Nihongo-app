@@ -11,6 +11,7 @@ import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { isConnected } from "../../utils/userUtils";
+import * as iAdjectiveListActions from "../../redux/actions/iAdjectiveListActions";
 
 function IAdjectivesPage(props) {
   const [iAdjectiveCriteria, setIAdjectiveCriteria] = useState({
@@ -44,7 +45,8 @@ function IAdjectivesPage(props) {
     });
   }
 
-  function handleReset() {
+  function handleReset(event) {
+    event.preventDefault();
     // ne marche pas
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -53,6 +55,9 @@ function IAdjectivesPage(props) {
       kanjisCriteria: "",
       pronunciationCriteria: "",
       meaningCriteria: "",
+    });
+    props.actions.loadIAdjectives().catch((error) => {
+      alert("Loading i-adjectives failed" + error);
     });
   }
 
@@ -108,7 +113,7 @@ function IAdjectivesPage(props) {
           )}
 
           <IAdjectiveList
-            iAdjectives={props.iAdjectives}
+            iAdjectives={props.iAdjectivesList}
             deleteIAdjective={handleDeleteIAdjective}
           />
         </>
@@ -119,6 +124,7 @@ function IAdjectivesPage(props) {
 
 IAdjectivesPage.propTypes = {
   iAdjectives: PropTypes.array.isRequired,
+  iAdjectivesList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -126,6 +132,11 @@ IAdjectivesPage.propTypes = {
 function mapStateToProps(state) {
   return {
     iAdjectives: state.iAdjectives.map((iAdjective) => {
+      return {
+        ...iAdjective,
+      };
+    }),
+    iAdjectivesList: state.iAdjectivesList.map((iAdjective) => {
       return {
         ...iAdjective,
       };
@@ -146,7 +157,7 @@ function mapDispatchToProps(dispatch) {
         dispatch
       ),
       filterIAdjectives: bindActionCreators(
-        iAdjectiveActions.filterIAdjectives,
+        iAdjectiveListActions.filterIAdjectives,
         dispatch
       ),
     },

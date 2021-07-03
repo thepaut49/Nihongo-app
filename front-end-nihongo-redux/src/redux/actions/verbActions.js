@@ -1,10 +1,7 @@
 import * as verbApi from "../../api/verbApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-
-export function filterVerbSuccess(verbs) {
-  return { type: types.FILTER_VERBS_SUCCESS, verbs };
-}
+import * as verbListActions from "./verbListActions";
 
 export function loadVerbSuccess(verbs) {
   return { type: types.LOAD_VERBS_SUCCESS, verbs };
@@ -29,6 +26,7 @@ export function loadVerbs() {
       .getVerbs()
       .then((verbs) => {
         dispatch(loadVerbSuccess(verbs));
+        dispatch(verbListActions.loadVerbSuccess(verbs));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,9 +42,13 @@ export function saveVerb(verb) {
     return verbApi
       .saveVerb(verb)
       .then((savedverb) => {
-        verb.id
-          ? dispatch(updateVerbSuccess(savedverb))
-          : dispatch(createVerbSuccess(savedverb));
+        if (verb.id) {
+          dispatch(verbListActions.updateVerbSuccess(savedverb));
+          dispatch(verbListActions.updateVerbSuccess(savedverb));
+        } else {
+          dispatch(verbListActions.createVerbSuccess(savedverb));
+          dispatch(verbListActions.createVerbSuccess(savedverb));
+        }
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -60,22 +62,8 @@ export function deleteVerb(verb) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteVerbOptimistic(verb));
+    dispatch(verbListActions.deleteVerbOptimistic(verb));
     return verbApi.deleteVerb(verb.id);
-  };
-}
-
-export function filterVerbs(verbCriteria) {
-  return function (dispatch) {
-    dispatch(beginApiCall());
-    return verbApi
-      .filterVerbs(verbCriteria)
-      .then((verbs) => {
-        dispatch(filterVerbSuccess(verbs));
-      })
-      .catch((error) => {
-        dispatch(apiCallError(error));
-        throw error;
-      });
   };
 }
 
@@ -85,7 +73,10 @@ export function updateNumberOfUse(id) {
     dispatch(beginApiCall());
     return verbApi
       .updateNumberOfUse(id)
-      .then((savedverb) => dispatch(updateVerbSuccess(savedverb)))
+      .then((savedverb) => {
+        dispatch(updateVerbSuccess(savedverb));
+        dispatch(verbListActions.updateVerbSuccess(savedverb));
+      })
       .catch((error) => {
         dispatch(apiCallError(error));
         throw error;

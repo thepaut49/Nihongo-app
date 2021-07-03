@@ -12,6 +12,7 @@ import KanjiCriteriaForm from "./KanjiCriteriaForm";
 import { radicals as radicalsList } from "../common/Radicals";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import { isConnected } from "../../utils/userUtils";
+import * as kanjiListActions from "../../redux/actions/kanjiListActions";
 
 function KanjisPage(props) {
   const [kanjiCriteria, setKanjiCriteria] = useState({
@@ -112,7 +113,8 @@ function KanjisPage(props) {
     }
   }
 
-  function handleReset() {
+  function handleReset(event) {
+    event.preventDefault();
     // ne marche pas
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
@@ -126,6 +128,9 @@ function KanjisPage(props) {
       maxStrokeNumber: null,
       radicalsCriteria: "",
       numberOfUse: null,
+    });
+    props.actions.loadKanjis().catch((error) => {
+      alert("Loading kanjis failed" + error);
     });
   }
 
@@ -158,7 +163,10 @@ function KanjisPage(props) {
               Add Kanji
             </Link>
           )}
-          <KanjiList kanjis={props.kanjis} deleteKanji={handleDeleteKanji} />
+          <KanjiList
+            kanjis={props.kanjisList}
+            deleteKanji={handleDeleteKanji}
+          />
         </>
       )}
     </div>
@@ -167,6 +175,7 @@ function KanjisPage(props) {
 
 KanjisPage.propTypes = {
   kanjis: PropTypes.array.isRequired,
+  kanjisList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -174,6 +183,11 @@ KanjisPage.propTypes = {
 function mapStateToProps(state) {
   return {
     kanjis: state.kanjis.map((kanji) => {
+      return {
+        ...kanji,
+      };
+    }),
+    kanjisList: state.kanjisList.map((kanji) => {
       return {
         ...kanji,
       };
@@ -187,7 +201,7 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadKanjis: bindActionCreators(kanjiActions.loadKanjis, dispatch),
       deleteKanji: bindActionCreators(kanjiActions.deleteKanji, dispatch),
-      filterKanjis: bindActionCreators(kanjiActions.filterKanjis, dispatch),
+      filterKanjis: bindActionCreators(kanjiListActions.filterKanjis, dispatch),
     },
   };
 }

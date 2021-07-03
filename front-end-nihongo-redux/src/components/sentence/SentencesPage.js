@@ -11,6 +11,7 @@ import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { isConnected } from "../../utils/userUtils";
+import * as sentenceListActions from "../../redux/actions/sentenceListActions";
 
 function SentencesPage(props) {
   const [sentenceCriteria, setSentenceCriteria] = useState({
@@ -44,7 +45,8 @@ function SentencesPage(props) {
     });
   }
 
-  function handleReset() {
+  function handleReset(event) {
+    event.preventDefault();
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -57,6 +59,9 @@ function SentencesPage(props) {
       pronunciationCriteria: "",
       meaningCriteria: "",
       topicCriteria: "",
+    });
+    props.actions.loadSentences().catch((error) => {
+      alert("Loading sentences failed" + error);
     });
   }
 
@@ -113,7 +118,7 @@ function SentencesPage(props) {
           )}
 
           <SentenceList
-            sentences={props.sentences}
+            sentences={props.sentencesList}
             deleteSentence={handleDeleteSentence}
           />
         </>
@@ -123,6 +128,7 @@ function SentencesPage(props) {
 }
 SentencesPage.propTypes = {
   sentences: PropTypes.array.isRequired,
+  sentencesList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -130,6 +136,11 @@ SentencesPage.propTypes = {
 function mapStateToProps(state) {
   return {
     sentences: state.sentences.map((sentence) => {
+      return {
+        ...sentence,
+      };
+    }),
+    sentencesList: state.sentencesList.map((sentence) => {
       return {
         ...sentence,
       };
@@ -150,7 +161,7 @@ function mapDispatchToProps(dispatch) {
         dispatch
       ),
       filterSentences: bindActionCreators(
-        sentenceActions.filterSentences,
+        sentenceListActions.filterSentences,
         dispatch
       ),
     },

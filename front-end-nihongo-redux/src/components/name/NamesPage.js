@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import NameCriteriaForm from "./NameCriteriaForm";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import { isConnected } from "../../utils/userUtils";
+import * as nameListActions from "../../redux/actions/nameListActions";
 
 function NamesPage(props) {
   const [nameCriteria, setNameCriteria] = useState({
@@ -44,7 +45,8 @@ function NamesPage(props) {
     });
   }
 
-  function handleReset() {
+  function handleReset(event) {
+    event.preventDefault();
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
@@ -52,6 +54,9 @@ function NamesPage(props) {
       kanjisCriteria: "",
       pronunciationCriteria: "",
       meaningCriteria: "",
+    });
+    props.actions.loadNames().catch((error) => {
+      alert("Loading names failed" + error);
     });
   }
 
@@ -107,7 +112,7 @@ function NamesPage(props) {
             </Link>
           )}
 
-          <NameList names={props.names} deleteName={handleDeleteName} />
+          <NameList names={props.namesList} deleteName={handleDeleteName} />
         </>
       )}
     </div>
@@ -116,6 +121,7 @@ function NamesPage(props) {
 
 NamesPage.propTypes = {
   names: PropTypes.array.isRequired,
+  namesList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -123,6 +129,11 @@ NamesPage.propTypes = {
 function mapStateToProps(state) {
   return {
     names: state.names.map((name) => {
+      return {
+        ...name,
+      };
+    }),
+    namesList: state.namesList.map((name) => {
       return {
         ...name,
       };
@@ -136,7 +147,7 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadNames: bindActionCreators(nameActions.loadNames, dispatch),
       deleteName: bindActionCreators(nameActions.deleteName, dispatch),
-      filterNames: bindActionCreators(nameActions.filterNames, dispatch),
+      filterNames: bindActionCreators(nameListActions.filterNames, dispatch),
     },
   };
 }

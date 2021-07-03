@@ -5,7 +5,7 @@ import initialState from "./initialState";
 // dans un autre fichier on peut lui donner le nom que l'on
 // souhaite
 
-export default function verbReducer(state = initialState.verbs, action) {
+export default function verbReducer(state = initialState.verbsList, action) {
   switch (action.type) {
     case types.CREATE_VERB_SUCCESS:
       return [...state, { ...action.verb }];
@@ -17,6 +17,8 @@ export default function verbReducer(state = initialState.verbs, action) {
       return action.verbs;
     case types.DELETE_VERB_OPTIMISTIC:
       return state.filter((verb) => verb.id !== action.verb.id);
+    case types.FILTER_VERBS_SUCCESS:
+      return action.verbs;
     default:
       return state;
   }

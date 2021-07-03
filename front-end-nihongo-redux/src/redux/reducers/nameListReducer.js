@@ -5,7 +5,7 @@ import initialState from "./initialState";
 // dans un autre fichier on peut lui donner le nom que l'on
 // souhaite
 
-export default function nameReducer(state = initialState.names, action) {
+export default function nameReducer(state = initialState.namesList, action) {
   switch (action.type) {
     case types.CREATE_NAME_SUCCESS:
       return [...state, { ...action.name }];
@@ -17,6 +17,8 @@ export default function nameReducer(state = initialState.names, action) {
       return action.names;
     case types.DELETE_NAME_OPTIMISTIC:
       return state.filter((name) => name.id !== action.name.id);
+    case types.FILTER_NAMES_SUCCESS:
+      return action.names;
     default:
       return state;
   }

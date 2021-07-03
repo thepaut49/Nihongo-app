@@ -5,7 +5,7 @@ import initialState from "./initialState";
 // dans un autre fichier on peut lui donner le nom que l'on
 // souhaite
 
-export default function wordReducer(state = initialState.words, action) {
+export default function wordReducer(state = initialState.wordsList, action) {
   switch (action.type) {
     case types.CREATE_WORD_SUCCESS:
       return [...state, { ...action.word }];
@@ -17,6 +17,8 @@ export default function wordReducer(state = initialState.words, action) {
       return action.words;
     case types.DELETE_WORD_OPTIMISTIC:
       return state.filter((word) => word.id !== action.word.id);
+    case types.FILTER_WORDS_SUCCESS:
+      return action.words;
     default:
       return state;
   }

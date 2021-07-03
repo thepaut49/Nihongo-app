@@ -6,7 +6,7 @@ import initialState from "./initialState";
 // souhaite
 
 export default function sentenceReducer(
-  state = initialState.sentences,
+  state = initialState.sentencesList,
   action
 ) {
   switch (action.type) {
@@ -20,6 +20,8 @@ export default function sentenceReducer(
       return action.sentences;
     case types.DELETE_SENTENCE_OPTIMISTIC:
       return state.filter((sentence) => sentence.id !== action.sentence.id);
+    case types.FILTER_SENTENCES_SUCCESS:
+      return action.sentences;
     default:
       return state;
   }
