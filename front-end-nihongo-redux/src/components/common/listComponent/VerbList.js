@@ -3,6 +3,14 @@ import "../../verb/VerbsPage.css";
 import PropTypes from "prop-types";
 
 function VerbList(props) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <div>
       <h2>List of Verbs</h2>
@@ -11,16 +19,18 @@ function VerbList(props) {
           <div key={verb.id} className="grid-container-verb">
             <div className="verb">{verb.neutralForm}</div>
             <div className="pronunciation">
-              {verb.pronunciations.map((pronunciation, index) => {
-                return (
-                  <span key={index + 70000} className="onemeaning">
-                    {pronunciation.pronunciation}
-                  </span>
-                );
-              })}
+              {verb.pronunciations
+                .sort(orderPronunciation)
+                .map((pronunciation, index) => {
+                  return (
+                    <span key={index + 70000} className="onemeaning">
+                      {pronunciation.pronunciation}
+                    </span>
+                  );
+                })}
             </div>
             <div className="meaning">
-              {verb.meanings.map((mean, index) => {
+              {verb.meanings.sort(orderMeaning).map((mean, index) => {
                 return (
                   <span key={index + 80000} className="onemeaning">
                     {mean.meaning}

@@ -32,20 +32,30 @@ const styleMeaning = {
 function IAdjective(props) {
   const iAdjective = props.iAdjective;
 
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <div style={styleGridContainer}>
       <div style={styleiadjective}>{iAdjective.kanjis}</div>
       <div style={stylePronunciation}>
-        {iAdjective.pronunciations.map((pro, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {pro.pronunciation}
-            </span>
-          );
-        })}
+        {iAdjective.pronunciations
+          .sort(orderPronunciation)
+          .map((pro, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {pro.pronunciation}
+              </span>
+            );
+          })}
       </div>
       <div style={styleMeaning}>
-        {iAdjective.meanings.map((mean, index) => {
+        {iAdjective.meanings.sort(orderMeaning).map((mean, index) => {
           return (
             <span key={index} className="onemeaning">
               {mean.meaning}

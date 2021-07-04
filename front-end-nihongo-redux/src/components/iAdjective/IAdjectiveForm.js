@@ -19,6 +19,14 @@ function IAdjectiveForm({
   addPronunciation,
   addMeaning,
 }) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{iAdjective.id ? "Edit" : "Add"} i-Adjective</h2>
@@ -39,7 +47,7 @@ function IAdjectiveForm({
 
       {iAdjective.pronunciations &&
         iAdjective.pronunciations.length > 0 &&
-        iAdjective.pronunciations.map((pro, index) => {
+        iAdjective.pronunciations.sort(orderPronunciation).map((pro, index) => {
           return (
             <CustomInputPronunciations
               key={index}
@@ -63,7 +71,7 @@ function IAdjectiveForm({
 
       {iAdjective.meanings &&
         iAdjective.meanings.length > 0 &&
-        iAdjective.meanings.map((_meaning, index) => {
+        iAdjective.meanings.sort(orderMeaning).map((_meaning, index) => {
           return (
             <CustomInputMeaning
               key={index}

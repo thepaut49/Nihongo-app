@@ -3,6 +3,14 @@ import "../../name/NamesPage.css";
 import PropTypes from "prop-types";
 
 function NameList(props) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <div>
       <h2>List of Names</h2>
@@ -11,16 +19,18 @@ function NameList(props) {
           <div key={name.id} className="grid-container-name">
             <div className="name">{name.kanjis}</div>
             <div className="pronunciation">
-              {name.pronunciations.map((pronunciation, index) => {
-                return (
-                  <span key={index + 50000} className="onemeaning">
-                    {pronunciation.pronunciation}
-                  </span>
-                );
-              })}
+              {name.pronunciations
+                .sort(orderPronunciation)
+                .map((pronunciation, index) => {
+                  return (
+                    <span key={index + 50000} className="onemeaning">
+                      {pronunciation.pronunciation}
+                    </span>
+                  );
+                })}
             </div>
             <div className="meaning">
-              {name.meanings.map((mean, index) => {
+              {name.meanings.sort(orderMeaning).map((mean, index) => {
                 return (
                   <span key={index + 60000} className="onemeaning">
                     {mean.meaning}

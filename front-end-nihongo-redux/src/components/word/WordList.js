@@ -9,6 +9,14 @@ const styleLink = {
 };
 
 function WordList(props) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <table>
       <tbody>
@@ -23,16 +31,18 @@ function WordList(props) {
                     </Link>
                   </div>
                   <div className="pronunciationWord">
-                    {word.pronunciations.map((pronunciation, index) => {
-                      return (
-                        <span key={index} className="onemeaning">
-                          {pronunciation.pronunciation}
-                        </span>
-                      );
-                    })}
+                    {word.pronunciations
+                      .sort(orderPronunciation)
+                      .map((pronunciation, index) => {
+                        return (
+                          <span key={index} className="onemeaning">
+                            {pronunciation.pronunciation}
+                          </span>
+                        );
+                      })}
                   </div>
                   <div className="meaningWord">
-                    {word.meanings.map((mean, index) => {
+                    {word.meanings.sort(orderMeaning).map((mean, index) => {
                       return (
                         <span key={index} className="onemeaning">
                           {mean.meaning}

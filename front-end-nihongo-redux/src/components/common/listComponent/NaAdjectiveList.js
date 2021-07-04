@@ -3,6 +3,14 @@ import "../../naAdjective/NaAdjectivesPage.css";
 import PropTypes from "prop-types";
 
 function NaAdjectiveList(props) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <div>
       <h2>List Of Na-Adjectives</h2>
@@ -11,16 +19,18 @@ function NaAdjectiveList(props) {
           <div key={naAdjective.id} className="grid-container-naAdjective">
             <div className="naAdjective">{naAdjective.kanjis}</div>
             <div className="pronunciation">
-              {naAdjective.pronunciations.map((pro, index) => {
-                return (
-                  <span key={index + 30000} className="onemeaning">
-                    {pro.pronunciation}
-                  </span>
-                );
-              })}
+              {naAdjective.pronunciations
+                .sort(orderPronunciation)
+                .map((pro, index) => {
+                  return (
+                    <span key={index + 30000} className="onemeaning">
+                      {pro.pronunciation}
+                    </span>
+                  );
+                })}
             </div>
             <div className="meaning">
-              {naAdjective.meanings.map((mean, index) => {
+              {naAdjective.meanings.sort(orderMeaning).map((mean, index) => {
                 return (
                   <span key={index + 40000} className="onemeaning">
                     {mean.meaning}

@@ -19,6 +19,14 @@ function NaAdjectiveForm({
   addPronunciation,
   addMeaning,
 }) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{naAdjective.id ? "Edit" : "Add"} na-Adjective</h2>
@@ -37,29 +45,31 @@ function NaAdjectiveForm({
       />
       {naAdjective.pronunciations &&
         naAdjective.pronunciations.length > 0 &&
-        naAdjective.pronunciations.map((pro, index) => {
-          return (
-            <CustomInputPronunciations
-              key={index}
-              id={"pronunciation" + index}
-              label={"Pronunciation " + (index + 1) + " :"}
-              typeInput="text"
-              onChange={onPronunciationChange}
-              name={"pronunciation" + index}
-              value={naAdjective.pronunciations[index].pronunciation}
-              index={index}
-              deletePronunciation={deletePronunciation}
-              onMiddlePointClick={onMiddlePointClick}
-              onTranslateClick={onTranslateClick}
-            />
-          );
-        })}
+        naAdjective.pronunciations
+          .sort(orderPronunciation)
+          .map((pro, index) => {
+            return (
+              <CustomInputPronunciations
+                key={index}
+                id={"pronunciation" + index}
+                label={"Pronunciation " + (index + 1) + " :"}
+                typeInput="text"
+                onChange={onPronunciationChange}
+                name={"pronunciation" + index}
+                value={naAdjective.pronunciations[index].pronunciation}
+                index={index}
+                deletePronunciation={deletePronunciation}
+                onMiddlePointClick={onMiddlePointClick}
+                onTranslateClick={onTranslateClick}
+              />
+            );
+          })}
       <button className="btn btn-primary" onClick={addPronunciation}>
         Add pronunciation
       </button>
       {naAdjective.meanings &&
         naAdjective.meanings.length > 0 &&
-        naAdjective.meanings.map((_meaning, index) => {
+        naAdjective.meanings.sort(orderMeaning).map((_meaning, index) => {
           return (
             <CustomInputMeaning
               key={index}

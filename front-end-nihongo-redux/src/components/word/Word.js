@@ -32,11 +32,19 @@ const styleMeaning = {
 function Word(props) {
   const word = props.word;
 
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <div style={styleGridContainer}>
       <div style={styleword}>{word.kanjis}</div>
       <div style={stylePronunciation}>
-        {word.pronunciations.map((pro, index) => {
+        {word.pronunciations.sort(orderPronunciation).map((pro, index) => {
           return (
             <span key={index} className="onemeaning">
               {pro.pronunciation}
@@ -45,7 +53,7 @@ function Word(props) {
         })}
       </div>
       <div style={styleMeaning}>
-        {word.meanings.map((mean, index) => {
+        {word.meanings.sort(orderMeaning).map((mean, index) => {
           return (
             <span key={index} className="onemeaning">
               {mean.meaning}

@@ -32,11 +32,19 @@ const styleMeaning = {
 function Verb(props) {
   const verb = props.verb;
 
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <div style={styleGridContainer}>
       <div style={styleverb}>{verb.neutralForm}</div>
       <div style={stylePronunciation}>
-        {verb.pronunciations.map((pro, index) => {
+        {verb.pronunciations.sort(orderPronunciation).map((pro, index) => {
           return (
             <span key={index} className="onemeaning">
               {pro.pronunciation}
@@ -45,7 +53,7 @@ function Verb(props) {
         })}
       </div>
       <div style={styleMeaning}>
-        {verb.meanings.map((mean, index) => {
+        {verb.meanings.sort(orderMeaning).map((mean, index) => {
           return (
             <span key={index} className="onemeaning">
               {mean.meaning}

@@ -3,11 +3,19 @@ import PropTypes from "prop-types";
 
 const Kanji = (props) => {
   const kanji = props.kanji;
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <div className="grid-container">
       <div className="kanji">{kanji.kanji}</div>
       <div className="pronunciation">
-        {kanji.pronunciations.map((pro, index) => {
+        {kanji.pronunciations.sort(orderPronunciation).map((pro, index) => {
           return (
             <span key={index} className="onemeaning">
               {pro.pronunciation}
@@ -16,7 +24,7 @@ const Kanji = (props) => {
         })}
       </div>
       <div className="meaning">
-        {kanji.meanings.map((mean, index) => {
+        {kanji.meanings.sort(orderMeaning).map((mean, index) => {
           return (
             <span key={index} className="onemeaning">
               {mean.meaning}

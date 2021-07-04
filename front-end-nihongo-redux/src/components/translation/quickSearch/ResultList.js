@@ -42,6 +42,14 @@ const ResultList = (props) => {
 
   const hasResult = props.results && props.results.length > 0;
 
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   /*************/
   /*   render  */
   /*************/
@@ -65,16 +73,18 @@ const ResultList = (props) => {
                 </button>
               </div>
               <div style={pronunciationStyle}>
-                {result.pronunciations.map((pro, index) => {
-                  return (
-                    <span key={index + 5000} className="onemeaning">
-                      {pro.pronunciation}
-                    </span>
-                  );
-                })}
+                {result.pronunciations
+                  .sort(orderPronunciation)
+                  .map((pro, index) => {
+                    return (
+                      <span key={index + 5000} className="onemeaning">
+                        {pro.pronunciation}
+                      </span>
+                    );
+                  })}
               </div>
               <div style={pronunciationStyle}>
-                {result.meanings.map((mean, index) => {
+                {result.meanings.sort(orderMeaning).map((mean, index) => {
                   return (
                     <span key={index + 10000} className="onemeaning">
                       {mean.meaning}

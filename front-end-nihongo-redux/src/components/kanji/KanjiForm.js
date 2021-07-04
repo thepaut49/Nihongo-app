@@ -36,6 +36,14 @@ function KanjiForm({
     textAlign: "center",
   };
 
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{kanji.id ? "Edit" : "Add"} Kanji</h2>
@@ -56,7 +64,7 @@ function KanjiForm({
 
       {kanji.pronunciations &&
         kanji.pronunciations.length > 0 &&
-        kanji.pronunciations.map((pro, index) => {
+        kanji.pronunciations.sort(orderPronunciation).map((pro, index) => {
           return (
             <CustomInputPronunciations
               key={index + 1000}
@@ -80,7 +88,7 @@ function KanjiForm({
 
       {kanji.meanings &&
         kanji.meanings.length > 0 &&
-        kanji.meanings.map((_meaning, index) => {
+        kanji.meanings.sort(orderMeaning).map((_meaning, index) => {
           return (
             <CustomInputMeaning
               key={index + 2000}

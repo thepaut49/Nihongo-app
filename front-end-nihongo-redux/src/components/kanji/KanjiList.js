@@ -9,6 +9,14 @@ const styleLink = {
 };
 
 function KanjiList({ kanjis, deleteKanji }) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <table>
       <tbody>
@@ -25,18 +33,20 @@ function KanjiList({ kanjis, deleteKanji }) {
                   <div className="pronunciation">
                     {kanji.pronunciations &&
                       kanji.pronunciations.length > 0 &&
-                      kanji.pronunciations.map((pro, index) => {
-                        return (
-                          <span key={index} className="onemeaning">
-                            {pro.pronunciation}
-                          </span>
-                        );
-                      })}
+                      kanji.pronunciations
+                        .sort(orderPronunciation)
+                        .map((pro, index) => {
+                          return (
+                            <span key={index} className="onemeaning">
+                              {pro.pronunciation}
+                            </span>
+                          );
+                        })}
                   </div>
                   <div className="meaning">
                     {kanji.meanings &&
                       kanji.meanings.length > 0 &&
-                      kanji.meanings.map((mean, index) => {
+                      kanji.meanings.sort(orderMeaning).map((mean, index) => {
                         return (
                           <span key={index} className="onemeaning">
                             {mean.meaning}

@@ -9,6 +9,14 @@ const styleLink = {
 };
 
 function NaAdjectiveList(props) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <table>
       <tbody>
@@ -23,22 +31,26 @@ function NaAdjectiveList(props) {
                     </Link>
                   </div>
                   <div className="pronunciation">
-                    {naAdjective.pronunciations.map((pro, index) => {
-                      return (
-                        <span key={index} className="onemeaning">
-                          {pro.pronunciation}
-                        </span>
-                      );
-                    })}
+                    {naAdjective.pronunciations
+                      .sort(orderPronunciation)
+                      .map((pro, index) => {
+                        return (
+                          <span key={index} className="onemeaning">
+                            {pro.pronunciation}
+                          </span>
+                        );
+                      })}
                   </div>
                   <div className="meaning">
-                    {naAdjective.meanings.map((mean, index) => {
-                      return (
-                        <span key={index} className="onemeaning">
-                          {mean.meaning}
-                        </span>
-                      );
-                    })}
+                    {naAdjective.meanings
+                      .sort(orderMeaning)
+                      .map((mean, index) => {
+                        return (
+                          <span key={index} className="onemeaning">
+                            {mean.meaning}
+                          </span>
+                        );
+                      })}
                   </div>
                   {isConnected() && (
                     <div className="delete">

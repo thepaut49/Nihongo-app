@@ -17,6 +17,10 @@ function CounterForm({
   onTranslateClick,
   addPronunciation,
 }) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
   return (
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{counter.id ? "Edit" : "Add"} Counter</h2>
@@ -37,7 +41,7 @@ function CounterForm({
 
       {counter.pronunciations &&
         counter.pronunciations.length > 0 &&
-        counter.pronunciations.map((pro, index) => {
+        counter.pronunciations.sort(orderPronunciation).map((pro, index) => {
           return (
             <CustomInputPronunciations
               key={index}

@@ -4,13 +4,17 @@ import PropTypes from "prop-types";
 function Suffix(props) {
   const suffix = props.suffix;
 
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
   return (
     <div className="grid-container-suffix">
       <h1>The {suffix.kanjis} suffix</h1>
       <div>
         <h2>Pronunciations</h2>
         <div>
-          {suffix.pronunciations.map((pro, index) => {
+          {suffix.pronunciations.sort(orderPronunciation).map((pro, index) => {
             return (
               <span key={index + 1000} className="onemeaning">
                 {pro.pronunciation}

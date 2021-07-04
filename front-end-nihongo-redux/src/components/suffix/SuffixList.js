@@ -9,6 +9,10 @@ const styleLink = {
 };
 
 function SuffixList(props) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
   return (
     <table>
       <tbody>
@@ -26,13 +30,15 @@ function SuffixList(props) {
                   <div>
                     <h2>Pronunciations</h2>
                     <div>
-                      {suffix.pronunciations.map((pro, index) => {
-                        return (
-                          <span key={index} className="onemeaning">
-                            {pro.pronunciation}
-                          </span>
-                        );
-                      })}
+                      {suffix.pronunciations
+                        .sort(orderPronunciation)
+                        .map((pro, index) => {
+                          return (
+                            <span key={index} className="onemeaning">
+                              {pro.pronunciation}
+                            </span>
+                          );
+                        })}
                     </div>
                   </div>
 

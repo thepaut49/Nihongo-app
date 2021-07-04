@@ -19,6 +19,14 @@ function NameForm({
   addPronunciation,
   addMeaning,
 }) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <form onSubmit={onSubmit} className="modificationForm">
       <CustomInput
@@ -31,7 +39,7 @@ function NameForm({
       />
       {name.pronunciations &&
         name.pronunciations.length > 0 &&
-        name.pronunciations.map((pro, index) => {
+        name.pronunciations.sort(orderPronunciation).map((pro, index) => {
           return (
             <CustomInputPronunciations
               key={index}
@@ -53,7 +61,7 @@ function NameForm({
       </button>
       {name.meanings &&
         name.meanings.length > 0 &&
-        name.meanings.map((_meaning, index) => {
+        name.meanings.sort(orderMeaning).map((_meaning, index) => {
           return (
             <CustomInputMeaning
               key={index}

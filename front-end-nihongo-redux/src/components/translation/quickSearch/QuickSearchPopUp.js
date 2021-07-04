@@ -33,6 +33,8 @@ const headerStyle = {
 const contentStyle = {
   display: "grid",
   grid: "min-content 1fr / 1fr",
+  margin: "0.5em",
+  gap: "0.5em",
 };
 
 const QuickSearchPopUp = (props) => {

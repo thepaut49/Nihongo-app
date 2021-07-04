@@ -31,6 +31,14 @@ const styleMeaning = {
 };
 
 function KanjiList(props) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <div>
       <h2>List of Kanjis</h2>
@@ -39,16 +47,18 @@ function KanjiList(props) {
           <div style={styleGridContainer} key={kanji.id}>
             <div style={stylekanji}>{kanji.kanji}</div>
             <div style={stylePronunciation}>
-              {kanji.pronunciations.map((pro, index) => {
-                return (
-                  <span key={index} className="onemeaning">
-                    {pro.pronunciation}
-                  </span>
-                );
-              })}
+              {kanji.pronunciations
+                .sort(orderPronunciation)
+                .map((pro, index) => {
+                  return (
+                    <span key={index} className="onemeaning">
+                      {pro.pronunciation}
+                    </span>
+                  );
+                })}
             </div>
             <div style={styleMeaning}>
-              {kanji.meanings.map((mean, index) => {
+              {kanji.meanings.sort(orderMeaning).map((mean, index) => {
                 return (
                   <span key={index} className="onemeaning">
                     {mean.meaning}

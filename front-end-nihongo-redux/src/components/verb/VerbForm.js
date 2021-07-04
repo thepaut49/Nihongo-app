@@ -21,6 +21,14 @@ function VerbForm({
   addPronunciation,
   addMeaning,
 }) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{verb.id ? "Edit" : "Add"} Verb</h2>
@@ -41,7 +49,7 @@ function VerbForm({
 
       {verb.pronunciations &&
         verb.pronunciations.length > 0 &&
-        verb.pronunciations.map((pro, index) => {
+        verb.pronunciations.sort(orderPronunciation).map((pro, index) => {
           return (
             <CustomInputPronunciations
               key={index}
@@ -65,7 +73,7 @@ function VerbForm({
 
       {verb.meanings &&
         verb.meanings.length > 0 &&
-        verb.meanings.map((_meaning, index) => {
+        verb.meanings.sort(orderMeaning).map((_meaning, index) => {
           return (
             <CustomInputMeaning
               key={index}

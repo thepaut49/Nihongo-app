@@ -4,13 +4,17 @@ import PropTypes from "prop-types";
 function Counter(props) {
   const counter = props.counter;
 
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
   return (
     <div className="grid-container-counter">
       <h1>The {counter.kanjis} counter</h1>
       <div>
         <h2>Pronunciations</h2>
         <div>
-          {counter.pronunciations.map((pro, index) => {
+          {counter.pronunciations.sort(orderPronunciation).map((pro, index) => {
             return (
               <span key={index + 1000} className="onemeaning">
                 {pro.pronunciation}

@@ -32,20 +32,30 @@ const styleMeaning = {
 function NaAdjective(props) {
   const naAdjective = props.naAdjective;
 
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <div style={styleGridContainer}>
       <div style={stylenaadjective}>{naAdjective.kanjis}</div>
       <div style={stylePronunciation}>
-        {naAdjective.pronunciations.map((pro, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {pro.pronunciation}
-            </span>
-          );
-        })}
+        {naAdjective.pronunciations
+          .sort(orderPronunciation)
+          .map((pro, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {pro.pronunciation}
+              </span>
+            );
+          })}
       </div>
       <div style={styleMeaning}>
-        {naAdjective.meanings.map((mean, index) => {
+        {naAdjective.meanings.sort(orderMeaning).map((mean, index) => {
           return (
             <span key={index} className="onemeaning">
               {mean.meaning}

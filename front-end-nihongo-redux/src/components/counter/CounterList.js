@@ -9,6 +9,10 @@ const styleLink = {
 };
 
 function CounterList(props) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
   return (
     <table>
       <tbody>
@@ -26,13 +30,15 @@ function CounterList(props) {
                   <div>
                     <h2>Pronunciations</h2>
                     <div>
-                      {counter.pronunciations.map((pro, index) => {
-                        return (
-                          <span key={index} className="onemeaning">
-                            {pro.pronunciation}
-                          </span>
-                        );
-                      })}
+                      {counter.pronunciations
+                        .sort(orderPronunciation)
+                        .map((pro, index) => {
+                          return (
+                            <span key={index} className="onemeaning">
+                              {pro.pronunciation}
+                            </span>
+                          );
+                        })}
                     </div>
                   </div>
 

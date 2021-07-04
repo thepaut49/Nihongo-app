@@ -9,6 +9,14 @@ const styleLink = {
 };
 
 function VerbList(props) {
+  const orderPronunciation = (a, b) => {
+    return a.pronunciationNumber - b.pronunciationNumber;
+  };
+
+  const orderMeaning = (a, b) => {
+    return a.meaningNumber - b.meaningNumber;
+  };
+
   return (
     <table>
       <tbody>
@@ -23,16 +31,18 @@ function VerbList(props) {
                     </Link>
                   </div>
                   <div className="pronunciation">
-                    {verb.pronunciations.map((pronunciation, index) => {
-                      return (
-                        <span key={index} className="onemeaning">
-                          {pronunciation.pronunciation}
-                        </span>
-                      );
-                    })}
+                    {verb.pronunciations
+                      .sort(orderPronunciation)
+                      .map((pronunciation, index) => {
+                        return (
+                          <span key={index} className="onemeaning">
+                            {pronunciation.pronunciation}
+                          </span>
+                        );
+                      })}
                   </div>
                   <div className="meaning">
-                    {verb.meanings.map((mean, index) => {
+                    {verb.meanings.sort(orderMeaning).map((mean, index) => {
                       return (
                         <span key={index} className="onemeaning">
                           {mean.meaning}
