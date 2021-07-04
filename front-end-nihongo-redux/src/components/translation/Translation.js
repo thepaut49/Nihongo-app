@@ -332,6 +332,7 @@ const Translation = (props) => {
             list={props.translation.listObjects}
             onClick={handleListClick}
             style={listObjectsStyle}
+            typeSelect={props.translation.typeSelect}
           />
         </div>
         <TranslationArea
