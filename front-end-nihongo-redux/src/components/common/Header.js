@@ -16,10 +16,7 @@ function Header() {
         </NavLink>
 
         <div className="dropdownMenu">
-          <button className="dropbtn">
-            Japanese characters
-            <i className="fa fa-caret-down"></i>
-          </button>
+          <button className="dropbtn">Japanese characters</button>
           <div className="dropdownMenu-content">
             <NavLink activeStyle={activeStyle} to="/kanjis">
               Kanjis

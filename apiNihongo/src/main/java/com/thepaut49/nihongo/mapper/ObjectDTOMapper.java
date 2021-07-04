@@ -18,15 +18,15 @@ public class ObjectDTOMapper {
 		}
 		else if (object instanceof Verb) {
 			Verb verb = (Verb) object;
-			return new ObjectDTO(verb.getId(), verb.getNeutralForm());
+			return new ObjectDTO(verb.getId(), verb.getNeutralForm(), null,verb.getNeutralForm(), verb.getGroupe() );
 		}
 		else if (object instanceof NaAdjective) {
 			NaAdjective naAdjective = (NaAdjective) object;
-			return new ObjectDTO(naAdjective.getId(), naAdjective.getKanjis());
+			return new ObjectDTO(naAdjective.getId(), naAdjective.getKanjis(), naAdjective.getKanjis(), null, null);
 		}
 		else if (object instanceof IAdjective) {
 			IAdjective iAdjective = (IAdjective) object;
-			return new ObjectDTO(iAdjective.getId(), iAdjective.getKanjis());
+			return new ObjectDTO(iAdjective.getId(), iAdjective.getKanjis(), iAdjective.getKanjis(), null,null);
 		}
 		else if (object instanceof Name) {
 			Name name = (Name) object;

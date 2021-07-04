@@ -1,5 +1,49 @@
 import { verbConstants } from "./verbConstants";
 
+function isSuru(verb) {
+  return verb.neutralForm === "する" ? true : false;
+}
+
+export const constructListOfValues = (verb) => {
+  let listOfValues = [];
+  let tenseFunctionList = [
+    presentIndicative,
+    presumptiveVolitional,
+    imperative,
+    pastIndicative,
+    pastPresumptive,
+    presentProgressive,
+    pastProgressive,
+    provisionalConditionalEba,
+    potential,
+    conditionalTara,
+    causative,
+    passive,
+  ];
+  const formList = [verbConstants.PLAIN_FORM, verbConstants.POLITE_FORM];
+  const signList = [verbConstants.POSITIVE_SIGN, verbConstants.NEGATIVE_SIGN];
+  let stem = "";
+  if (!isSuru(verb)) {
+    stem = verb.neutralForm.substr(0, verb.neutralForm.length - 1);
+  }
+
+  for (
+    let indexTense = 0;
+    indexTense < tenseFunctionList.length;
+    indexTense++
+  ) {
+    for (let indexForm = 0; indexForm < formList.length; indexForm++) {
+      for (let indexSign = 0; indexSign < signList.length; indexSign++) {
+        let tense = tenseFunctionList[indexTense];
+        let form = formList[indexForm];
+        let sign = signList[indexSign];
+        listOfValues.push(stem + tense(verb, form, sign));
+      }
+    }
+  }
+  return listOfValues;
+};
+
 export function presentIndicative(verb, form, sign) {
   const lastKana = verb.neutralForm.charAt(verb.neutralForm.length - 1);
   switch (verb.groupe) {

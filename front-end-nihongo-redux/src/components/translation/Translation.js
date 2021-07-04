@@ -89,14 +89,11 @@ const Translation = (props) => {
     }
   }, []);
 
-  const handleListClick = (event) => {
+  const handleListClick = (event, id) => {
     props.actions.updateSentence(
       props.translation.sentence + event.target.innerText
     );
-    props.actions.updateNumberOfUse(
-      props.translation.typeSelect,
-      event.target.id
-    );
+    props.actions.updateNumberOfUse(props.translation.typeSelect, id);
   };
 
   const handleSelectChange = (event) => {
