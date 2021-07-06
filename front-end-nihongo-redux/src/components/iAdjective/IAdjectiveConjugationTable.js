@@ -50,11 +50,11 @@ function IAdjectiveConjugationTable(props) {
 
   return (
     <>
-      <h2>{iAdjective.kanjis} Conjugation</h2>
+      <h4>{iAdjective.kanjis} Conjugation</h4>
 
       <div style={tableStyle}>
         <div style={withBorderStyle}>Tense</div>
-        <div style={withBorderStyle}>Standard</div>
+        <div style={withBorderStyle}>Plain</div>
         <div style={withBorderStyle}>Polite</div>
 
         <div style={tenseStyle}>

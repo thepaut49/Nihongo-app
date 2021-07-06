@@ -63,6 +63,14 @@ function Header() {
               Grammar Rules
             </NavLink>
 
+            <NavLink activeStyle={activeStyle} to="/conjugation">
+              Conjugation
+            </NavLink>
+
+            <NavLink activeStyle={activeStyle} to="/adjectives">
+              Adjectives
+            </NavLink>
+
             <NavLink activeStyle={activeStyle} to="/particules">
               Particles
             </NavLink>

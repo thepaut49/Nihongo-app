@@ -36,6 +36,7 @@ const DropDownButtons = (props) => {
               {listOfValues.map((value, index) => {
                 return (
                   <button
+                    className="choiceButton"
                     key={index + 20000}
                     onClick={(event) => props.onClick(event, object.id)}
                   >

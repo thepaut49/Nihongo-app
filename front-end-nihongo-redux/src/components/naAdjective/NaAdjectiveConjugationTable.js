@@ -45,7 +45,7 @@ function NaAdjectiveConjugationTable(props) {
 
   return (
     <>
-      <h2>{naAdjective.kanjis} Conjugation</h2>
+      <h4>{naAdjective.kanjis} Conjugation</h4>
       <p>
         Because na-adjectives take the auxiliary verb we already know their
         conjugation: we just need to conjugate the auxiliary verb to get the
@@ -54,7 +54,7 @@ function NaAdjectiveConjugationTable(props) {
 
       <div style={tableStyle}>
         <div style={withBorderStyle}>Tense</div>
-        <div style={withBorderStyle}>Standard</div>
+        <div style={withBorderStyle}>Plain</div>
         <div style={withBorderStyle}>Polite</div>
 
         <div style={tenseStyle}>

@@ -50,6 +50,8 @@ import configureStore from "../redux/configureStore";
 const store = configureStore();
 import { Provider as ReduxProvider } from "react-redux";
 import Gestion from "./gestion/Gestion";
+import ConjugationPage from "./conjugation/ConjugationPage";
+import AdjectivesPage from "./adjectives/AdjectivesPage";
 
 function App() {
   return (
@@ -176,6 +178,8 @@ function App() {
               <Route path="/word/create" component={ManageWordPage} />
               <Route path="/hiraganas" component={HiraganasPage} />
               <Route path="/katakanas" component={KatakanasPage} />
+              <Route path="/conjugation" component={ConjugationPage} />
+              <Route path="/adjectives" component={AdjectivesPage} />
               <Route path="/gestion" component={Gestion} />
               <Route path="/about" component={AboutPage} />
             </Switch>

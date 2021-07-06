@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const styleHomePage = {
   height: "100%",
@@ -125,10 +124,6 @@ function HomePage() {
       <ul>
         <li>List the Katakanas with their pronunciation</li>
       </ul>
-
-      <Link to="about" className="btn btn-primary">
-        About
-      </Link>
     </div>
   );
 }
