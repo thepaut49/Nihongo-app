@@ -29,6 +29,13 @@ export function extractListOfKanjiSucces(listOfKanjis) {
   return { type: types.EXTRACT_KANJI_FROM_SENTENCE_SUCCESS, listOfKanjis };
 }
 
+export function extractListOfGrammarRulesSucces(listOfGrammarRules) {
+  return {
+    type: types.EXTRACT_GRAMMAR_RULES_FROM_SENTENCE_SUCCESS,
+    listOfGrammarRules,
+  };
+}
+
 export function loadPartsSucces(listParts) {
   return { type: types.LOAD_PARTS_SUCCESS, listParts };
 }
@@ -97,6 +104,72 @@ export const extractListOfKanji = (sentence, kanjis) => {
   return function (dispatch) {
     dispatch(extractListOfKanjiSucces(listOfKanjisInSentence));
   };
+};
+
+export const extractListOfGrammarRules = (parts, grammarRules) => {
+  let listOfGrammarRulesInSentence = [];
+  let listOfPartsString = parts.map((part) => part.kanjis);
+  for (let i = 0; i < grammarRules.length; i++) {
+    let grammarRule = grammarRules[i];
+
+    if (grammarRule.fourthKeyword) {
+      if (
+        areKeyWordPresents(listOfPartsString, [
+          grammarRule.firstKeyWord,
+          grammarRule.secondKeyWord,
+          grammarRule.thirdKeyword,
+          grammarRule.fourthKeyword,
+        ])
+      ) {
+        listOfGrammarRulesInSentence.push(grammarRule);
+      }
+    } else if (grammarRule.thirdKeyword) {
+      if (
+        areKeyWordPresents(listOfPartsString, [
+          grammarRule.firstKeyWord,
+          grammarRule.secondKeyWord,
+          grammarRule.thirdKeyword,
+        ])
+      ) {
+        listOfGrammarRulesInSentence.push(grammarRule);
+      }
+    } else if (grammarRule.secondKeyword) {
+      if (
+        areKeyWordPresents(listOfPartsString, [
+          grammarRule.firstKeyWord,
+          grammarRule.secondKeyWord,
+        ])
+      ) {
+        listOfGrammarRulesInSentence.push(grammarRule);
+      }
+    } else {
+      if (listOfPartsString.includes(grammarRule.firstKeyWord)) {
+        listOfGrammarRulesInSentence.push(grammarRule);
+      }
+    }
+  }
+  return function (dispatch) {
+    dispatch(extractListOfGrammarRulesSucces(listOfGrammarRulesInSentence));
+  };
+};
+
+const areKeyWordPresents = (listOfPartsString, keyWordsList) => {
+  let index = 0;
+  let countKeyWordPresent = 0;
+  for (let i = 0; i < keyWordsList.length; i++) {
+    let keyWord = keyWordsList[i];
+    while (index < listOfPartsString.length) {
+      if (keyWord === listOfPartsString[index]) {
+        countKeyWordPresent++;
+        index++;
+        break;
+      }
+      index++;
+    }
+  }
+  if (countKeyWordPresent === keyWordsList.length) {
+    return true;
+  }
 };
 
 export const updateQuantity = (newQuantity) => {

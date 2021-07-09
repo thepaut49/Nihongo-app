@@ -1,4 +1,5 @@
 import React from "react";
+import "./HomePage.css";
 
 const styleHomePage = {
   height: "100%",
@@ -12,6 +13,125 @@ function HomePage() {
   return (
     <div style={styleHomePage}>
       <h1>Nihongo tools</h1>
+      <p>
+        With this tool you can:
+        <ul>
+          <li>translate a little text in Japanese in english word by word.</li>
+          <li>search kanjis,names, adjectives, verbs, and others words.</li>
+          <li>
+            read informations about grammar rules, particles, counters for
+            things, and name&apos;s suffix.
+          </li>
+          <li>find examples of sentences grouped by topic.</li>
+        </ul>
+      </p>
+
+      <h2>How to use the translation tool</h2>
+      <div className="howToUse">
+        <img
+          src={"./src/images/berserk.jpg"}
+          alt="Screen shot of the translation page."
+        />
+        <div>
+          <ol>
+            <li>
+              A list of buttons that contains the most used kanjis or words
+              grouped by types.
+            </li>
+            <li>
+              Text to translate with some buttons for adding punctuations, for
+              searching words or kanjis and finally for launching the
+              translation or clearing the area below.
+            </li>
+            <li>List of kanjis and words in the text above</li>
+          </ol>
+        </div>
+      </div>
+
+      <h3>How to use list of most used kanjis and words </h3>
+      <div className="howToUse">
+        <img
+          src={"./src/images/berserk.jpg"}
+          alt="Screen shot of the translation page."
+        />
+        <div>
+          <ol>
+            <li>
+              You can choose the types either kanji or i-adjective,
+              na-adjective, verbs, words.
+            </li>
+            <li>You can choose the number of buttons displayed.</li>
+            <li>
+              When you click on a button the content of the button is added to
+              the text to translate.
+            </li>
+            <li>
+              When the type is an adjective or a verbs all the conjugation
+              possibilities are available.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <h3>How to use the text area with the buttons bellow</h3>
+      <div className="howToUse">
+        <img
+          src={"./src/images/berserk.jpg"}
+          alt="Text to translate + buttons."
+        />
+        <div>
+          <ol>
+            <li>
+              You can type in the text area in romaji it will be automatically
+              translated in hiragana (for lowercase) or katakana (for
+              uppercase).
+            </li>
+            <li>
+              When you click on the buttons bellow the text area it will add the
+              content of the button in the text. The quick search button will
+              open a popup to help you to find words or kanjis.
+            </li>
+            <li>
+              When you click the button search the translation will begin and
+              the words and kanjis identified will appear bellow. The button
+              clear will clear the area bellow.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <h3>How to use the list of kanjis and words identified in the text</h3>
+      <div className="howToUse">
+        <img
+          src={"./src/images/berserk.jpg"}
+          alt="List of kanjis, words and grammar rules identified"
+        />
+        <div>
+          <ol>
+            <li>
+              When you click on list of kanjis it will display the list of
+              kanjis identified in the text. When you click on list of words it
+              will display the list of words identified in the text. When you
+              click on list of grammar rules it will display the list of grammar
+              rules identified in the text.
+            </li>
+            <li>
+              For each part identified, we can see the pronunciation in
+              hiragana, katakana, every possible meanings and pronunciations,
+              and the type of the word.
+            </li>
+            <li>
+              When you click the button search the translation will begin and
+              the words and kanjis identified will appear bellow. The button
+              clear will clear the area bellow.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <h2>How to use the search tool</h2>
+      <div className="howToUse"></div>
+
       <h2>Pronunciation fields</h2>
       <p>
         All the pronunciation criteria fields in filters and in the translation
@@ -27,102 +147,6 @@ function HomePage() {
         <li>ン: -N</li>
         <li>ヂ: DJI</li>
         <li>ヅ: DZU</li>
-      </ul>
-      <h2>Kanjis</h2>
-      <ul>
-        <li>List the kanjis in the database</li>
-        <li>Add and modify a Kanji in the database</li>
-        <li>Delete a Kanji in the database</li>
-        <li>
-          Find kanjis with search criteria (kanji, pronunciation, meaning,
-          strokes)
-        </li>
-      </ul>
-      <h2>Verbs</h2>
-      <ul>
-        <li>List the verbs in the database</li>
-        <li>Add and modify a verb in the database</li>
-        <li>Delete a verb in the database</li>
-        <li>
-          Find verbs with search criteria (neutralForm, pronunciation, meaning)
-        </li>
-      </ul>
-      <h2>Na-Adjectives</h2>
-      <ul>
-        <li>List the Na-Adjectives in the database</li>
-        <li>Add and modify a Na-Adjective in the database</li>
-        <li>Delete a Na-Adjective in the database</li>
-        <li>
-          Find Na-Adjectives with search criteria (kanjis, pronunciation,
-          meaning)
-        </li>
-      </ul>
-      <h2>I-Adjectives</h2>
-      <ul>
-        <li>List the I-Adjectives in the database</li>
-        <li>Add and modify a I-Adjective in the database</li>
-        <li>Delete a I-Adjective in the database</li>
-        <li>
-          Find I-Adjectives with search criteria (kanjis, pronunciation,
-          meaning)
-        </li>
-      </ul>
-      <h2>Names</h2>
-      <ul>
-        <li>List the Names in the database</li>
-        <li>Add and modify a Name in the database</li>
-        <li>Delete a Name in the database</li>
-        <li>
-          Find Names with search criteria (kanjis, pronunciation, meaning)
-        </li>
-      </ul>
-      <h2>Words</h2>
-      <ul>
-        <li>List the Words in the database</li>
-        <li>Add and modify a Word in the database</li>
-        <li>Delete a Word in the database</li>
-        <li>
-          Find Words with search criteria (kanjis, pronunciation, meaning)
-        </li>
-      </ul>
-      <h2>Particles</h2>
-      <ul>
-        <li>List the Particles in the database</li>
-        <li>Add and modify a Particle in the database</li>
-        <li>Delete a Particle in the database</li>
-      </ul>
-      <h2>Grammar rules</h2>
-      <ul>
-        <li>List the Grammar rules in the database</li>
-        <li>Add and modify a Grammar rule in the database</li>
-        <li>Delete a Grammar rule in the database</li>
-      </ul>
-      <h2>Sentences</h2>
-      <ul>
-        <li>List the Sentences in the database</li>
-        <li>Add and modify a Sentence in the database</li>
-        <li>Delete a Sentence in the database</li>
-        <li>
-          Find Sentences with search criteria (kanjis, pronunciation, meaning)
-        </li>
-      </ul>
-      <h2>Translation</h2>
-      <ul>
-        <li>List the kanjis in a sentence</li>
-        <li>Identify each part of the sentence (type,pronunciation,meaning)</li>
-        <li>
-          The meaning and pronunciation can be selected from the list of meaning
-          and pronunciation by the user to adapt the result of the search
-          according to the context
-        </li>
-      </ul>
-      <h2>Hiragana</h2>
-      <ul>
-        <li>List the Hiraganas with their pronunciation</li>
-      </ul>
-      <h2>Katakana</h2>
-      <ul>
-        <li>List the Katakanas with their pronunciation</li>
       </ul>
     </div>
   );

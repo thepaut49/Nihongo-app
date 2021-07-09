@@ -22,6 +22,8 @@ export default function translationReducer(
       return { ...state, listParts: action.listParts };
     case types.EXTRACT_KANJI_FROM_SENTENCE_SUCCESS:
       return { ...state, listOfKanjis: action.listOfKanjis };
+    case types.EXTRACT_GRAMMAR_RULES_FROM_SENTENCE_SUCCESS:
+      return { ...state, listOfGrammarRules: action.listOfGrammarRules };
     case types.CLEAR_TRANSLATION_SUCCESS:
       return { ...state, listOfKanjis: [], listParts: [] };
     default:

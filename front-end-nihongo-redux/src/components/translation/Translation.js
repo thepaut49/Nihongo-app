@@ -16,6 +16,7 @@ import * as wordActions from "../../redux/actions/wordActions";
 import * as particuleActions from "../../redux/actions/particuleActions";
 import * as counterActions from "../../redux/actions/counterActions";
 import * as suffixActions from "../../redux/actions/suffixActions";
+import * as grammarRuleActions from "../../redux/actions/grammarRuleActions";
 import * as translationActions from "../../redux/actions/translationActions";
 import { extractParts, findListOfCandidates } from "./translationUtils";
 import { connect } from "react-redux";
@@ -73,6 +74,7 @@ const Translation = (props) => {
       suffixs,
       words,
       verbs,
+      grammarRules,
       actions,
     } = props;
     if (kanjis.length === 0) actions.loadKanjis();
@@ -84,6 +86,7 @@ const Translation = (props) => {
     if (particules.length === 0) actions.loadParticules();
     if (counters.length === 0) actions.loadCounters();
     if (suffixs.length === 0) actions.loadSuffixs();
+    if (grammarRules.length === 0) actions.loadGrammarRules();
     if (translation.listObjects.length === 0) {
       actions.loadListObjects(translation.typeSelect, translation.quantity);
     }
@@ -127,6 +130,7 @@ const Translation = (props) => {
       props.suffixs
     );
     props.actions.loadParts(_listOfParts);
+    props.actions.extractListOfGrammarRules(_listOfParts, props.grammarRules);
   };
 
   const handleClearClick = (event) => {
@@ -188,6 +192,8 @@ const Translation = (props) => {
       }
     });
     props.actions.loadParts(newPartsList);
+    // reacalculer les gramamr rules
+    props.actions.extractListOfGrammarRules(newPartsList, props.grammarRules);
   };
 
   const handleUnknownTransform = (event, part) => {
@@ -302,6 +308,8 @@ const Translation = (props) => {
       });
     }
     props.actions.loadParts(newPartsList);
+    // reacalculer les gramamr rules
+    props.actions.extractListOfGrammarRules(newPartsList, props.grammarRules);
   };
 
   return (
@@ -346,6 +354,7 @@ const Translation = (props) => {
         <ListOfParts
           list={props.translation.listParts}
           listOfKanjis={props.translation.listOfKanjis}
+          listOfGrammarRules={props.translation.listOfGrammarRules}
           onSplitPart={handleSplitPart}
           onUnknownTransform={handleUnknownTransform}
         />
@@ -367,6 +376,7 @@ Translation.propTypes = {
   translation: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   actions: PropTypes.object.isRequired,
+  grammarRules: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -382,6 +392,7 @@ function mapStateToProps(state) {
     words: state.words,
     translation: state.translation,
     apiCallsInProgress: state.apiCallsInProgress,
+    grammarRules: state.grammarRules,
   };
 }
 
@@ -406,6 +417,10 @@ function mapDispatchToProps(dispatch) {
       loadSuffixs: bindActionCreators(suffixActions.loadSuffixs, dispatch),
       loadVerbs: bindActionCreators(verbActions.loadVerbs, dispatch),
       loadWords: bindActionCreators(wordActions.loadWords, dispatch),
+      loadGrammarRules: bindActionCreators(
+        grammarRuleActions.loadGrammarRules,
+        dispatch
+      ),
       updateSentence: bindActionCreators(
         translationActions.updateSentence,
         dispatch
@@ -433,6 +448,10 @@ function mapDispatchToProps(dispatch) {
       ),
       loadListObjects: bindActionCreators(
         translationActions.loadListObjects,
+        dispatch
+      ),
+      extractListOfGrammarRules: bindActionCreators(
+        translationActions.extractListOfGrammarRules,
         dispatch
       ),
     },

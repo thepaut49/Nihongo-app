@@ -29,6 +29,7 @@ export default {
     listObjects: [],
     listParts: [],
     listOfKanjis: [],
+    listOfGrammarRules: [],
   },
   apiCallsInProgress: 0,
 };
