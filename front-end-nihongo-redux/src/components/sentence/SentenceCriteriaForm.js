@@ -5,12 +5,6 @@ import PropTypes from "prop-types";
 import "./SentenceCriteriaForm.css";
 import { topicList } from "../common/sentenceConstants";
 
-const filterStyle = {
-  backgroundColor: "#4682B4",
-  borderRadius: "10px",
-  padding: "0.3em",
-};
-
 const buttonFiltersStyle = {
   margin: "0.4em",
 };
@@ -38,7 +32,7 @@ function SentenceCriteriaForm({
   onSubmit,
 }) {
   return (
-    <div style={filterStyle}>
+    <div className="filterStyle">
       <button
         onClick={hideFilters}
         className="btn btn-success"

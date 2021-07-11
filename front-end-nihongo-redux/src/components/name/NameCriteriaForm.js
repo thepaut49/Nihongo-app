@@ -3,12 +3,6 @@ import CustomInput from "../common/CustomInput";
 import PropTypes from "prop-types";
 import "./NameCriteriaForm.css";
 
-const filterStyle = {
-  backgroundColor: "#4682B4",
-  borderRadius: "10px",
-  padding: "0.3em",
-};
-
 const buttonFiltersStyle = {
   margin: "0.4em",
 };
@@ -31,7 +25,7 @@ const hideFilters = (event) => {
 
 function NameCriteriaForm({ nameCriteria, onChange, onReset, onSubmit }) {
   return (
-    <div style={filterStyle}>
+    <div className="filterStyle">
       <button
         onClick={hideFilters}
         className="btn btn-success"

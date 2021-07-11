@@ -1,13 +1,29 @@
+/**** variables globales ****/
+:root {
+  --primary-bg-color: #054a29;
+  --secondary-bg-color: #137547;
+  --third-bg-color: #2a9134;
+  --fourth-bg-color: #3fa34d;
+  --fifth-bg-color: #5bba6f;
+
+  --filters-bg-color: var(--secondary-bg-color);
+
+  --primary-txt-color: #white;
+  --secondary-txt-color: #137547;
+  --third-txt-color: ;
+}
+
 /**** global CSS *****/
 body {
-  background-color: #56c1196e;
+  background-color: var(--primary-bg-color);
   color: #ffffff;
   height: minmax(100%, fit-content());
+  font-family: "Open Sans", sans-serif;
 }
 
 h2,
 h3 {
-  background-color: blue;
+  background-color: var(--secondary-bg-color);
   border-radius: 10px;
   padding: 0.1em;
   width: max-content;
@@ -91,11 +107,18 @@ label {
   margin: 0.4em;
 }
 
+/**** CSS for filter form ****/
+.filterStyle {
+  background-color: var(--filters-bg-color);
+  border-radius: 10px;
+  padding: 0.3em;
+}
+
 /**** CSS for creation and modification of entities *****/
 .modificationForm {
   display: grid;
   grid-template-columns: 1fr;
-  background-color: #4682b4;
+  background-color: var(--third-bg-color);
   margin: 1em;
   gap: 1em;
   padding: 0.5em;
@@ -104,7 +127,7 @@ label {
 
 /**** CSS for individual meaning and pronunciation *****/
 .onemeaning {
-  background-color: #4682b4;
+  background-color: var(--third-bg-color);
   border-radius: 10px;
   padding: 0.3em;
   margin: 0.5em;
@@ -112,7 +135,7 @@ label {
 
 .scroll {
   opacity: 0.3;
-  background-color: aqua;
+  background-color: var(--fourth-bg-color);
   width: 40px;
   height: 40px;
   position: fixed;

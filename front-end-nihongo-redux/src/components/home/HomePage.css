@@ -1,3 +1,21 @@
+.howToUseSection {
+  display: grid;
+  grid: min-content 1fr / 1fr;
+  background-color: var(--third-bg-color);
+  border-radius: 10px;
+  gap: 0.5em;
+}
+
+.howToUseSectionTitle {
+  color: var(--primary-txt-color);
+  font-weight: bold;
+  font-size: xx-large;
+  background-color: var(--fourth-bg-color);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 0.1em;
+}
+
 .howToUse {
   display: grid;
   grid: 1fr / min-content 1fr;

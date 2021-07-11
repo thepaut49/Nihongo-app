@@ -5,12 +5,6 @@ import { verbConstants } from "../common/verbConstants";
 import PropTypes from "prop-types";
 import "./verbCriteriaForm.css";
 
-const filterStyle = {
-  backgroundColor: "#4682B4",
-  borderRadius: "10px",
-  padding: "0.3em",
-};
-
 const buttonFiltersStyle = {
   margin: "0.4em",
 };
@@ -33,7 +27,7 @@ const hideFilters = (event) => {
 
 function VerbCriteriaForm({ verbCriteria, onChange, onReset, onSubmit }) {
   return (
-    <div style={filterStyle}>
+    <div className="filterStyle">
       <button
         onClick={hideFilters}
         className="btn btn-success"

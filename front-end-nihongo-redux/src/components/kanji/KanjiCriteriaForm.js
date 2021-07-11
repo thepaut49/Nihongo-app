@@ -20,12 +20,6 @@ function KanjiCriteriaForm(props) {
     textAlign: "center",
   };
 
-  const filterStyle = {
-    backgroundColor: "#4682B4",
-    borderRadius: "10px",
-    padding: "0.4em",
-  };
-
   const buttonFiltersStyle = {
     margin: "0.4em",
   };
@@ -46,7 +40,7 @@ function KanjiCriteriaForm(props) {
   };
 
   return (
-    <div style={filterStyle}>
+    <div className="filterStyle">
       <button
         id="buttonFiltersKanji"
         onClick={hideFilters}

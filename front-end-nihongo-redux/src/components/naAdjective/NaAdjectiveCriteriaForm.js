@@ -3,12 +3,6 @@ import CustomInput from "../common/CustomInput";
 import PropTypes from "prop-types";
 import "./NaAdjectiveCriteriaForm.css";
 
-const filterStyle = {
-  backgroundColor: "#4682B4",
-  borderRadius: "10px",
-  padding: "0.3em",
-};
-
 const buttonFiltersStyle = {
   margin: "0.4em",
 };
@@ -38,7 +32,7 @@ function NaAdjectiveCriteriaForm({
   onSubmit,
 }) {
   return (
-    <div style={filterStyle}>
+    <div className="filterStyle">
       <button
         id="buttonFiltersNaAdjective"
         onClick={hideFilters}
