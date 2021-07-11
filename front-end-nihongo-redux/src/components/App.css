@@ -114,6 +114,32 @@ label {
   padding: 0.3em;
 }
 
+.filtersButtons {
+  background-color: #333;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  outline: none;
+}
+
+.radicalsNumberButtons {
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.radicalsNotNumberButtons {
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.radicalsNotNumberButtons:hover {
+  background-color: var(--primary-bg-color);
+}
+
 /**** CSS for creation and modification of entities *****/
 .modificationForm {
   display: grid;

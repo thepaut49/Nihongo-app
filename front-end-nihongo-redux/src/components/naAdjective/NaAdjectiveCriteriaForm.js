@@ -11,6 +11,7 @@ const buttonSearchClearStyle = {
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   gap: "1em",
+  margin: "0.5em",
 };
 
 const hideFilters = (event) => {
@@ -68,8 +69,8 @@ function NaAdjectiveCriteriaForm({
           />
         </div>
         <div style={buttonSearchClearStyle}>
-          <input type="submit" value="Search" className="btn btn-primary" />
-          <button onClick={onReset} className="btn btn-primary">
+          <input type="submit" value="Search" className="filtersButtons" />
+          <button onClick={onReset} className="filtersButtons">
             Clear
           </button>
         </div>

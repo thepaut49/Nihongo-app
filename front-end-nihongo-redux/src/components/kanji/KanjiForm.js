@@ -29,12 +29,6 @@ function KanjiForm({
     textAlign: "center",
     margin: "0.5em",
   };
-  const numberStyle = {
-    backgroundColor: "blue",
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  };
 
   const orderPronunciation = (a, b) => {
     return a.pronunciationNumber - b.pronunciationNumber;
@@ -134,17 +128,18 @@ function KanjiForm({
       <div style={gridListStyle}>
         {radicals.map((radical, index) => {
           return (
-            <>
-              {nbrOfStrokesString.includes(radical) ? (
-                <button key={index + 3000} style={numberStyle}>
-                  {radical}
-                </button>
-              ) : (
-                <button key={index + 4000} onClick={onClick}>
-                  {radical}
-                </button>
-              )}
-            </>
+            <button
+              key={index + 3000}
+              className={
+                nbrOfStrokesString.includes(radical)
+                  ? "radicalsNumberButtons"
+                  : "radicalsNotNumberButtons"
+              }
+              onClick={onClick}
+              disabled={nbrOfStrokesString.includes(radical)}
+            >
+              {radical}
+            </button>
           );
         })}
       </div>

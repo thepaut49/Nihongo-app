@@ -12,12 +12,6 @@ const gridListStyle = {
   textAlign: "center",
   margin: "0.5em",
 };
-const numberStyle = {
-  backgroundColor: "blue",
-  color: "white",
-  fontWeight: "bold",
-  textAlign: "center",
-};
 
 const filterStyle = {
   backgroundColor: "#4682B4",
@@ -156,10 +150,10 @@ function CriteriaForm(props) {
                     return (
                       <button
                         key={index + 20000}
-                        style={
+                        className={
                           nbrOfStrokesString.includes(radical)
-                            ? numberStyle
-                            : {}
+                            ? "radicalsNumberButtons"
+                            : "radicalsNotNumberButtons"
                         }
                       >
                         {radical}

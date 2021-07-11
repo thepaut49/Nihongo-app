@@ -13,12 +13,6 @@ function KanjiCriteriaForm(props) {
     textAlign: "center",
     margin: "0.5em",
   };
-  const numberStyle = {
-    backgroundColor: "blue",
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  };
 
   const buttonFiltersStyle = {
     margin: "0.4em",
@@ -27,6 +21,8 @@ function KanjiCriteriaForm(props) {
   const buttonSearchClearStyle = {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
+    gap: "1em",
+    margin: "0.5em",
   };
 
   const hideFilters = (event) => {
@@ -120,7 +116,11 @@ function KanjiCriteriaForm(props) {
             return (
               <button
                 key={index + 10000}
-                style={nbrOfStrokesString.includes(radical) ? numberStyle : {}}
+                className={
+                  nbrOfStrokesString.includes(radical)
+                    ? "radicalsNumberButtons"
+                    : "radicalsNotNumberButtons"
+                }
                 onClick={props.onClick}
                 disabled={nbrOfStrokesString.includes(radical)}
               >
@@ -131,8 +131,8 @@ function KanjiCriteriaForm(props) {
         </div>
 
         <div className="buttons" style={buttonSearchClearStyle}>
-          <input type="submit" value="Search" className="btn btn-primary" />
-          <button onClick={props.onReset} className="btn btn-primary">
+          <input type="submit" value="Search" className="filtersButtons" />
+          <button onClick={props.onReset} className="filtersButtons">
             Clear
           </button>
         </div>
