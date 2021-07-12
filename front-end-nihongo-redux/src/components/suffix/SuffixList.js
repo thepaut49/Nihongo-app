@@ -23,7 +23,7 @@ function SuffixList(props) {
                 <div className="grid-container-suffix">
                   <Link
                     to={"/suffix/visualize/" + suffix.kanjis}
-                    className="suffix"
+                    className="suffix visualizationObjectLink"
                   >
                     The {suffix.kanjis} suffix
                   </Link>

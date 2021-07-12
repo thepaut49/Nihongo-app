@@ -26,7 +26,10 @@ function ParticuleList(props) {
         return (
           <div key={particule.id} style={particuleListStyle}>
             <div style={particuleTitleStyle}>
-              <Link to={"/particule/visualize/" + particule.kanjis}>
+              <Link
+                to={"/particule/visualize/" + particule.kanjis}
+                className="visualizationObjectLink"
+              >
                 The Japanese particle {particule.kanjis}
               </Link>
             </div>

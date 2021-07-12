@@ -26,7 +26,10 @@ function NameList(props) {
               <td>
                 <div className="grid-container-name">
                   <div className="name">
-                    <Link to={"/name/visualize/" + name.kanjis}>
+                    <Link
+                      to={"/name/visualize/" + name.kanjis}
+                      className="visualizationObjectLink"
+                    >
                       {name.kanjis}
                     </Link>
                   </div>

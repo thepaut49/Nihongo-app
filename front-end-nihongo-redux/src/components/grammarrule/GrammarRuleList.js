@@ -31,7 +31,10 @@ function GrammarRuleList(props) {
         return (
           <div key={grammarRule.id} style={grammarRuleListStyle}>
             <div style={grammarRuleTitleStyle}>
-              <Link to={"/grammarRule/visualize/" + grammarRule.title}>
+              <Link
+                to={"/grammarRule/visualize/" + grammarRule.title}
+                className="visualizationObjectLink"
+              >
                 {grammarRule.title}
               </Link>
             </div>

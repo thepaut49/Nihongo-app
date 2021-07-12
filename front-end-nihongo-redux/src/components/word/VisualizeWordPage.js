@@ -74,7 +74,7 @@ const VisualizeWordPage = ({
     } else {
       setKanjisLinkedToWord(searchKanjisLinkedToWord(word, kanjis));
     }
-  }, [props.word]);
+  }, [props.word, kanjis]);
 
   const allEntitiesLoaded = () => {
     if (words.length === 0) return false;
@@ -84,7 +84,7 @@ const VisualizeWordPage = ({
 
   return (
     <>
-      {allEntitiesLoaded() ? (
+      {!allEntitiesLoaded() ? (
         <Spinner />
       ) : (
         <>

@@ -23,7 +23,7 @@ function CounterList(props) {
                 <div className="grid-container-counter">
                   <Link
                     to={"/counter/visualize/" + counter.kanjis}
-                    className="counter"
+                    className="counter visualizationObjectLink"
                   >
                     The {counter.kanjis} counter
                   </Link>

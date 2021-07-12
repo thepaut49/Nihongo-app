@@ -26,7 +26,10 @@ function IAdjectiveList(props) {
               <td>
                 <div className="grid-container-iAdjective">
                   <div className="iAdjective">
-                    <Link to={"/iAdjective/visualize/" + iAdjective.kanjis}>
+                    <Link
+                      to={"/iAdjective/visualize/" + iAdjective.kanjis}
+                      className="visualizationObjectLink"
+                    >
                       {iAdjective.kanjis}
                     </Link>
                   </div>

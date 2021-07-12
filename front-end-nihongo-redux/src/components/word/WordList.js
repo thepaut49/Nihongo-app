@@ -17,16 +17,21 @@ function WordList(props) {
     return a.meaningNumber - b.meaningNumber;
   };
 
+  const words = props.words;
+
   return (
     <table>
       <tbody>
-        {props.words.map((word) => {
+        {words.map((word) => {
           return (
             <tr key={word.id}>
               <td>
                 <div className="grid-container-word">
                   <div className="word">
-                    <Link to={"/word/visualize/" + word.kanjis}>
+                    <Link
+                      to={"/word/visualize/" + word.kanjis}
+                      className="visualizationObjectLink"
+                    >
                       {word.kanjis}
                     </Link>
                   </div>

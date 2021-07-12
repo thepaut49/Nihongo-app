@@ -26,7 +26,10 @@ function VerbList(props) {
               <td>
                 <div className="grid-container-verb">
                   <div className="verb">
-                    <Link to={"/verb/visualize/" + verb.neutralForm}>
+                    <Link
+                      to={"/verb/visualize/" + verb.neutralForm}
+                      className="visualizationObjectLink"
+                    >
                       {verb.neutralForm}
                     </Link>
                   </div>

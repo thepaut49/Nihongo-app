@@ -18,7 +18,10 @@ function SentenceList(props) {
               <td>
                 <div className="grid-container-sentence">
                   <div className="sentence">
-                    <Link to={"/sentence/visualize/" + sentence.kanjis}>
+                    <Link
+                      to={"/sentence/visualize/" + sentence.kanjis}
+                      className="visualizationObjectLink"
+                    >
                       {sentence.kanjis}
                     </Link>
                   </div>

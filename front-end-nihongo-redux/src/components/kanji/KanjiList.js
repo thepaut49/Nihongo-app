@@ -26,7 +26,10 @@ function KanjiList({ kanjis, deleteKanji }) {
               <td>
                 <div className="grid-container">
                   <div className="kanji">
-                    <Link to={"/kanji/visualize/" + kanji.kanji}>
+                    <Link
+                      to={"/kanji/visualize/" + kanji.kanji}
+                      className="visualizationObjectLink"
+                    >
                       {kanji.kanji}
                     </Link>
                   </div>

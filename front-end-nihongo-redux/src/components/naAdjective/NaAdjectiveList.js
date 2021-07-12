@@ -26,7 +26,10 @@ function NaAdjectiveList(props) {
               <td>
                 <div className="grid-container-naAdjective">
                   <div className="naAdjective">
-                    <Link to={"/naAdjective/visualize/" + naAdjective.kanjis}>
+                    <Link
+                      to={"/naAdjective/visualize/" + naAdjective.kanjis}
+                      className="visualizationObjectLink"
+                    >
                       {naAdjective.kanjis}
                     </Link>
                   </div>
