@@ -11,10 +11,11 @@ function IAdjectiveList(props) {
     return a.meaningNumber - b.meaningNumber;
   };
 
+  const iAdjectives = props.iAdjectives;
   return (
     <div>
       <h2>List Of I-Adjectives</h2>
-      {props.iAdjectives.map((iAdjective) => {
+      {iAdjectives.map((iAdjective) => {
         return (
           <div key={iAdjective.id} className="grid-container-iAdjective">
             <div className="iAdjective">{iAdjective.kanjis}</div>

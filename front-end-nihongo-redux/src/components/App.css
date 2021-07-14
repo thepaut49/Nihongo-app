@@ -1,16 +1,16 @@
 /**** variables globales ****/
 :root {
-  --primary-bg-color: #054a29;
-  --secondary-bg-color: #137547;
-  --third-bg-color: #2a9134;
-  --fourth-bg-color: #3fa34d;
-  --fifth-bg-color: #5bba6f;
+  --primary-bg-color: #313638;
+  --secondary-bg-color: #a89b9d;
+  --third-bg-color: #f1f8f3;
+  --fourth-bg-color: #3ea1c7;
+  --fifth-bg-color: #5cd1ff;
 
   --filters-bg-color: var(--secondary-bg-color);
 
-  --primary-txt-color: #white;
-  --secondary-txt-color: #137547;
-  --third-txt-color: orange;
+  --primary-txt-color: white;
+  --secondary-txt-color: orange;
+  --third-txt-color: blue;
 }
 
 /**** global CSS *****/
@@ -21,10 +21,15 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-h2,
+h2 {
+  color: var(--secondary-txt-color);
+  padding: 0.1em;
+  width: max-content;
+  margin: 0.1em;
+}
+
 h3 {
-  background-color: var(--secondary-bg-color);
-  border-radius: 10px;
+  color: var(--third-txt-color);
   padding: 0.1em;
   width: max-content;
   margin: 0.1em;
@@ -40,7 +45,7 @@ h3 {
 /* css pour la nav bar*/
 .navbarMenu {
   overflow: hidden;
-  background-color: #333;
+  background-color: black;
   border-radius: 10px;
   font-weight: bold;
 }
@@ -78,7 +83,7 @@ h3 {
 .dropdownMenu-content {
   display: none;
   position: absolute;
-  background-color: #333;
+  background-color: black;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -164,7 +169,7 @@ label {
 
 /**** CSS for individual meaning and pronunciation *****/
 .onemeaning {
-  background-color: var(--third-bg-color);
+  background-color: var(--fifth-bg-color);
   border-radius: 10px;
   padding: 0.3em;
   margin: 0.5em;

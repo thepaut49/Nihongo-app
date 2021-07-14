@@ -3,7 +3,7 @@ import React from "react";
 const styleAboutPage = {
   height: "100%",
   width: "100%",
-  backgroundColor: "rgba(38, 113, 22, 0.48)",
+  backgroundColor: "var(--fourth-bg-color)",
   borderRadius: "30px",
   padding: "1em",
 };

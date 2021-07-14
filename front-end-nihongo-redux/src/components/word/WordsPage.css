@@ -9,7 +9,7 @@
   grid: 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr;
   gap: 1em;
   border-radius: 10px;
-  background-color: rgba(38, 113, 22, 0.48);
+  background-color: var(--fourth-bg-color);
   margin: 0.5em;
   padding: 0.5em;
 }

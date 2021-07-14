@@ -5,7 +5,7 @@ import { isConnected } from "../../utils/userUtils";
 
 const grammarRuleListStyle = {
   borderRadius: "10px",
-  backgroundColor: "rgba(38, 113, 22, 0.48)",
+  backgroundColor: "var(--fourth-bg-color)",
   margin: "0.5em",
   padding: "0.5em",
 };

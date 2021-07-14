@@ -10,7 +10,7 @@ const hiraganaStyle = {
   display: "grid",
   grid: "1fr 1fr / 3.5em",
   fontSize: "xx-large",
-  backgroundColor: "rgba(38, 113, 22, 0.48)",
+  backgroundColor: "var(--fourth-bg-color)",
   margin: "0.5em",
   padding: "0.5em",
   textAlign: "center",
