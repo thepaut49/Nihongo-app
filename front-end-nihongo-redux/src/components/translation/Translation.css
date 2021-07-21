@@ -20,7 +20,7 @@
 }
 
 #ListOfObjects {
-  background-color: #4682b4;
+  background-color: var(--fourth-bg-color);
   grid-column-start: 1;
   grid-column-end: 5;
   grid-row-start: 1;

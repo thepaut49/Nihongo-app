@@ -17,10 +17,12 @@ function NaAdjectiveList(props) {
     return a.meaningNumber - b.meaningNumber;
   };
 
+  const naAdjectives = props.naAdjectives;
+
   return (
     <table>
       <tbody>
-        {props.naAdjectives.map((naAdjective) => {
+        {naAdjectives.map((naAdjective) => {
           return (
             <tr key={naAdjective.id}>
               <td>

@@ -9,10 +9,11 @@ const styleLink = {
 };
 
 function SentenceList(props) {
+  const sentences = props.sentences;
   return (
     <table>
       <tbody>
-        {props.sentences.map((sentence) => {
+        {sentences.map((sentence) => {
           return (
             <tr key={sentence.id}>
               <td>

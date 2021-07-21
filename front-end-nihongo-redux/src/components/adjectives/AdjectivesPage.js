@@ -2,13 +2,6 @@ import React from "react";
 import IAdjectiveConjugationTable from "../iAdjective/IAdjectiveConjugationTable";
 import NaAdjectiveConjugationTable from "../naAdjective/NaAdjectiveConjugationTable";
 
-const divStyle = {
-  backgroundColor: "#4682b4",
-  borderRadius: "10px",
-  margin: "0.1em",
-  padding: "0.5em",
-};
-
 const AdjectivesPage = () => {
   const exampleIAdjective = {
     id: 0,
@@ -57,15 +50,13 @@ const AdjectivesPage = () => {
   };
 
   return (
-    <div style={divStyle}>
+    <>
       <h2>Adjectives</h2>
-      <p>
-        There are two kinds of adjectives in the Japanese language :
-        <ul>
-          <li>I-adjectives</li>
-          <li>Na-adjecvtives</li>
-        </ul>
-      </p>
+      <span>There are two kinds of adjectives in the Japanese language :</span>
+      <ul>
+        <li>I-adjectives</li>
+        <li>Na-adjecvtives</li>
+      </ul>
       <h3>I-adjectives</h3>
       <p>
         Adjectival verbs (形容詞 keiyōshi) end with い i (but never えい ei) in
@@ -90,7 +81,7 @@ const AdjectivesPage = () => {
       </p>
 
       <NaAdjectiveConjugationTable naAdjective={exampleNaAdjective} />
-    </div>
+    </>
   );
 };
 

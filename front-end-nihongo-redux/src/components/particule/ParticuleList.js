@@ -2,30 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { isConnected } from "../../utils/userUtils";
-
-const particuleListStyle = {
-  borderRadius: "10px",
-  backgroundColor: "var(--fourth-bg-color)",
-  margin: "0.5em",
-  padding: "0.5em",
-};
-
-const particuleTitleStyle = {
-  fontWeight: "bold",
-  fontSize: "xxx-large",
-};
+import "./Particule.css";
 
 const styleLink = {
   margin: "0.5em",
 };
 
 function ParticuleList(props) {
+  const particules = props.particules;
+
   return (
     <div>
-      {props.particules.map((particule) => {
+      {particules.map((particule) => {
         return (
-          <div key={particule.id} style={particuleListStyle}>
-            <div style={particuleTitleStyle}>
+          <div key={particule.id} className="particuleListStyle">
+            <div className="particuleTitleStyle">
               <Link
                 to={"/particule/visualize/" + particule.kanjis}
                 className="visualizationObjectLink"

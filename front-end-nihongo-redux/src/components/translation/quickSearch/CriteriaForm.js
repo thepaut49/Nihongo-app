@@ -14,7 +14,7 @@ const gridListStyle = {
 };
 
 const filterStyle = {
-  backgroundColor: "#4682B4",
+  backgroundColor: "var(--secondary-bg-color)",
   borderRadius: "10px",
   padding: "0.4em",
 };
@@ -71,8 +71,8 @@ function CriteriaForm(props) {
         </button>
 
         <div className="buttons" style={buttonSearchClearStyle}>
-          <input type="submit" value="Search" className="btn btn-primary" />
-          <button onClick={props.onReset} className="btn btn-primary">
+          <input type="submit" value="Search" className="filtersButtons" />
+          <button onClick={props.onReset} className="filtersButtons">
             Clear
           </button>
         </div>

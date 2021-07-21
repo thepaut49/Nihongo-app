@@ -1,34 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const styleGridContainer = {
-  display: "grid",
-  grid: "1fr 1fr / 1fr 1fr 1fr 1fr",
-  gap: "1em",
-  borderRadius: "10px",
-  backgroundColor: "var(--fourth-bg-color)",
-  margin: "0.5em",
-  padding: "0.5em",
-};
-
-const styleverb = {
-  gridRowStart: "span 2",
-  textAlign: "left",
-  fontWeight: "bold",
-  fontSize: "xxx-large",
-};
-const stylePronunciation = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
-
-const styleMeaning = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
-
 function Verb(props) {
   const verb = props.verb;
 
@@ -41,18 +13,20 @@ function Verb(props) {
   };
 
   return (
-    <div style={styleGridContainer}>
-      <div style={styleverb}>{verb.neutralForm}</div>
-      <div style={stylePronunciation}>
-        {verb.pronunciations.sort(orderPronunciation).map((pro, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {pro.pronunciation}
-            </span>
-          );
-        })}
+    <div className="grid-container-verb">
+      <div className="verb">{verb.neutralForm}</div>
+      <div className="pronunciation">
+        {verb.pronunciations
+          .sort(orderPronunciation)
+          .map((pronunciation, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {pronunciation.pronunciation}
+              </span>
+            );
+          })}
       </div>
-      <div style={styleMeaning}>
+      <div className="meaning">
         {verb.meanings.sort(orderMeaning).map((mean, index) => {
           return (
             <span key={index} className="onemeaning">
@@ -60,6 +34,10 @@ function Verb(props) {
             </span>
           );
         })}
+      </div>
+      <div className="groupe">
+        <label>Group :</label>
+        {verb.groupe}
       </div>
     </div>
   );

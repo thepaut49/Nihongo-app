@@ -52,6 +52,8 @@ import { Provider as ReduxProvider } from "react-redux";
 import Gestion from "./gestion/Gestion";
 import ConjugationPage from "./conjugation/ConjugationPage";
 import AdjectivesPage from "./adjectives/AdjectivesPage";
+import HelpPage from "./help/HelpPage";
+import ManageContactPage from "./contact/ManageContactPage";
 
 function App() {
   return (
@@ -181,7 +183,9 @@ function App() {
               <Route path="/conjugation" component={ConjugationPage} />
               <Route path="/adjectives" component={AdjectivesPage} />
               <Route path="/gestion" component={Gestion} />
+              <Route path="/help" component={HelpPage} />
               <Route path="/about" component={AboutPage} />
+              <Route path="/contact" component={ManageContactPage} />
             </Switch>
             <ToastContainer autoClose={3000} hideProgressBar />
           </div>

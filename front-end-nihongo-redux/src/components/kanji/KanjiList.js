@@ -24,7 +24,7 @@ function KanjiList({ kanjis, deleteKanji }) {
           return (
             <tr key={kanji.id}>
               <td>
-                <div className="grid-container">
+                <div className="grid-container-kanji">
                   <div className="kanji">
                     <Link
                       to={"/kanji/visualize/" + kanji.kanji}

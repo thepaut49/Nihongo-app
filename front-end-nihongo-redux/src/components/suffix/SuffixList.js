@@ -13,10 +13,11 @@ function SuffixList(props) {
     return a.pronunciationNumber - b.pronunciationNumber;
   };
 
+  const suffixs = props.suffixs;
   return (
     <table>
       <tbody>
-        {props.suffixs.map((suffix) => {
+        {suffixs.map((suffix) => {
           return (
             <tr key={suffix.id}>
               <td>

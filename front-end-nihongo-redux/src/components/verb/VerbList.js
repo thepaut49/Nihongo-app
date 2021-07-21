@@ -17,10 +17,12 @@ function VerbList(props) {
     return a.meaningNumber - b.meaningNumber;
   };
 
+  const verbs = props.verbs;
+
   return (
     <table>
       <tbody>
-        {props.verbs.map((verb) => {
+        {verbs.map((verb) => {
           return (
             <tr key={verb.id}>
               <td>

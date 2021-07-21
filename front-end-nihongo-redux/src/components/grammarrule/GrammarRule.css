@@ -1,0 +1,16 @@
+.grammarRuleListStyle {
+  border-radius: 10px;
+  background-color: var(--fourth-bg-color);
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+.grammarRuleTitleStyle {
+  font-weight: bold;
+  font-size: xxx-large;
+}
+
+.keywordStyle {
+  font-weight: bold;
+  font-size: large;
+}

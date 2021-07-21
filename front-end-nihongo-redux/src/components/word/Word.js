@@ -1,34 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const styleGridContainer = {
-  display: "grid",
-  grid: "1fr 1fr / 1fr 1fr 1fr 1fr",
-  gap: "1em",
-  borderRadius: "10px",
-  backgroundColor: "var(--fourth-bg-color)",
-  margin: "0.5em",
-  padding: "0.5em",
-};
-
-const styleword = {
-  gridRowStart: "span 2",
-  textAlign: "left",
-  fontWeight: "bold",
-  fontSize: "xxx-large",
-};
-const stylePronunciation = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
-
-const styleMeaning = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
-
 function Word(props) {
   const word = props.word;
 
@@ -41,18 +13,20 @@ function Word(props) {
   };
 
   return (
-    <div style={styleGridContainer}>
-      <div style={styleword}>{word.kanjis}</div>
-      <div style={stylePronunciation}>
-        {word.pronunciations.sort(orderPronunciation).map((pro, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {pro.pronunciation}
-            </span>
-          );
-        })}
+    <div className="grid-container-word">
+      <div className="word">{word.kanjis}</div>
+      <div className="pronunciationWord">
+        {word.pronunciations
+          .sort(orderPronunciation)
+          .map((pronunciation, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {pronunciation.pronunciation}
+              </span>
+            );
+          })}
       </div>
-      <div style={styleMeaning}>
+      <div className="meaningWord">
         {word.meanings.sort(orderMeaning).map((mean, index) => {
           return (
             <span key={index} className="onemeaning">

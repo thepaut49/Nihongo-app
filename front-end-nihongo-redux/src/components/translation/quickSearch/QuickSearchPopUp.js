@@ -12,16 +12,17 @@ import PropTypes from "prop-types";
 
 const styleTriggerButton = {
   display: "grid",
-  grid: "/ 1fr",
+  gridTemplateColumns: "1fr",
   padding: "0.4em",
 };
 
 const quickSearchPopUpStyle = {
-  backgroundColor: "blue",
+  backgroundColor: "var(--primary-bg-color)",
   width: "80em",
   height: "50em",
   borderRadius: "10px",
   overflow: "scroll",
+  border: "solid var(--third-bg-color)",
 };
 
 const headerStyle = {

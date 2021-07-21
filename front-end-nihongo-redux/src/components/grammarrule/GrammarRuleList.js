@@ -2,23 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { isConnected } from "../../utils/userUtils";
-
-const grammarRuleListStyle = {
-  borderRadius: "10px",
-  backgroundColor: "var(--fourth-bg-color)",
-  margin: "0.5em",
-  padding: "0.5em",
-};
-
-const grammarRuleTitleStyle = {
-  fontWeight: "bold",
-  fontSize: "xxx-large",
-};
-
-const keywordStyle = {
-  fontWeight: "bold",
-  fontSize: "large",
-};
+import "./GrammarRule.css";
 
 const styleLink = {
   margin: "0.5em",
@@ -29,8 +13,8 @@ function GrammarRuleList(props) {
     <div>
       {props.grammarRules.map((grammarRule) => {
         return (
-          <div key={grammarRule.id} style={grammarRuleListStyle}>
-            <div style={grammarRuleTitleStyle}>
+          <div key={grammarRule.id} className="grammarRuleListStyle">
+            <div className="grammarRuleTitleStyle">
               <Link
                 to={"/grammarRule/visualize/" + grammarRule.title}
                 className="visualizationObjectLink"
@@ -48,7 +32,7 @@ function GrammarRuleList(props) {
               />
 
               <h2>Keywords</h2>
-              <ul style={keywordStyle}>
+              <ul className="keywordStyle">
                 <li>{grammarRule.firstKeyWord}</li>
                 {grammarRule.secondKeyWord && (
                   <li>{grammarRule.secondKeyWord}</li>

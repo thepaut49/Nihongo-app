@@ -1,46 +1,15 @@
 import React from "react";
 import "../../iAdjective/IAdjectivesPage.css";
 import PropTypes from "prop-types";
+import IAdjective from "../../iAdjective/IAdjective";
 
 function IAdjectiveList(props) {
-  const orderPronunciation = (a, b) => {
-    return a.pronunciationNumber - b.pronunciationNumber;
-  };
-
-  const orderMeaning = (a, b) => {
-    return a.meaningNumber - b.meaningNumber;
-  };
-
   const iAdjectives = props.iAdjectives;
   return (
     <div>
-      <h2>List Of I-Adjectives</h2>
-      {iAdjectives.map((iAdjective) => {
-        return (
-          <div key={iAdjective.id} className="grid-container-iAdjective">
-            <div className="iAdjective">{iAdjective.kanjis}</div>
-            <div className="pronunciation">
-              {iAdjective.pronunciations
-                .sort(orderPronunciation)
-                .map((pro, index) => {
-                  return (
-                    <span key={index + 10000} className="onemeaning">
-                      {pro.pronunciation}
-                    </span>
-                  );
-                })}
-            </div>
-            <div className="meaning">
-              {iAdjective.meanings.sort(orderMeaning).map((mean, index) => {
-                return (
-                  <span key={index + 20000} className="onemeaning">
-                    {mean.meaning}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-        );
+      <h2>List of associated I-Adjectives</h2>
+      {iAdjectives.map((iAdjective, index) => {
+        return <IAdjective key={index + 6000} iAdjective={iAdjective} />;
       })}
     </div>
   );

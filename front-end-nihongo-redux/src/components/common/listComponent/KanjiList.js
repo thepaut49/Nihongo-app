@@ -1,85 +1,14 @@
 import React from "react";
 import "../../kanji/KanjisPage.css";
 import PropTypes from "prop-types";
-
-const styleGridContainer = {
-  display: "grid",
-  grid: "1fr 1fr 1fr / 1fr 1fr 1fr 1fr",
-  gap: "1em",
-  borderRadius: "10px",
-  backgroundColor: "var(--fourth-bg-color)",
-  margin: "0.5em",
-  padding: "0.5em",
-};
-
-const stylekanji = {
-  gridRowStart: "span 2",
-  textAlign: "left",
-  fontWeight: "bold",
-  fontSize: "xxx-large",
-};
-const stylePronunciation = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
-
-const styleMeaning = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
+import Kanji from "../../kanji/Kanji";
 
 function KanjiList(props) {
-  const orderPronunciation = (a, b) => {
-    return a.pronunciationNumber - b.pronunciationNumber;
-  };
-
-  const orderMeaning = (a, b) => {
-    return a.meaningNumber - b.meaningNumber;
-  };
-
   return (
     <div>
-      <h2>List of Kanjis</h2>
-      {props.kanjis.map((kanji) => {
-        return (
-          <div style={styleGridContainer} key={kanji.id}>
-            <div style={stylekanji}>{kanji.kanji}</div>
-            <div style={stylePronunciation}>
-              {kanji.pronunciations
-                .sort(orderPronunciation)
-                .map((pro, index) => {
-                  return (
-                    <span key={index} className="onemeaning">
-                      {pro.pronunciation}
-                    </span>
-                  );
-                })}
-            </div>
-            <div style={styleMeaning}>
-              {kanji.meanings.sort(orderMeaning).map((mean, index) => {
-                return (
-                  <span key={index} className="onemeaning">
-                    {mean.meaning}
-                  </span>
-                );
-              })}
-            </div>
-            <div>
-              <span>
-                <label>Strokes : </label>
-                {kanji.strokeNumber}
-              </span>
-            </div>
-            <div>
-              <span>
-                <label>Radicals : </label>
-                {kanji.radicals}
-              </span>
-            </div>
-          </div>
-        );
+      <h2>List of associated Kanjis</h2>
+      {props.kanjis.map((kanji, index) => {
+        return <Kanji kanji={kanji} key={index + 5000} />;
       })}
     </div>
   );

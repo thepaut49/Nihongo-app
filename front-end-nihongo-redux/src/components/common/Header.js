@@ -87,8 +87,14 @@ function Header() {
         <NavLink activeStyle={activeStyle} to="/sentences">
           Sentences
         </NavLink>
+        <NavLink activeStyle={activeStyle} to="/help">
+          Help
+        </NavLink>
         <NavLink activeStyle={activeStyle} to="/about">
           About
+        </NavLink>
+        <NavLink activeStyle={activeStyle} to="/contact">
+          Contact
         </NavLink>
       </nav>
     </>

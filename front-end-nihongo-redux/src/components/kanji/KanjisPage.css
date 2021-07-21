@@ -4,10 +4,9 @@
   gap: 1em 1em;
 }
 
-.grid-container {
+.grid-container-kanji {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid: 1fr 1fr 1fr / 1fr 1fr 1fr 1fr;
   gap: 1em;
   grid-template-areas:
     "kanji pronunciation pronunciation pronunciation"

@@ -17,10 +17,11 @@ function IAdjectiveList(props) {
     return a.meaningNumber - b.meaningNumber;
   };
 
+  const iAdjectives = props.iAdjectives;
   return (
     <table>
       <tbody>
-        {props.iAdjectives.map((iAdjective) => {
+        {iAdjectives.map((iAdjective) => {
           return (
             <tr key={iAdjective.id}>
               <td>

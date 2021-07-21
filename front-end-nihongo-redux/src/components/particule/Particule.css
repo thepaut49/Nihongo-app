@@ -1,0 +1,11 @@
+.particuleListStyle {
+  border-radius: 10px;
+  background-color: var(--fourth-bg-color);
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+.particuleTitleStyle {
+  font-weight: bold;
+  font-size: xxx-large;
+}

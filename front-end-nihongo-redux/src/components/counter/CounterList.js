@@ -13,10 +13,12 @@ function CounterList(props) {
     return a.pronunciationNumber - b.pronunciationNumber;
   };
 
+  const counters = props.counters;
+
   return (
     <table>
       <tbody>
-        {props.counters.map((counter) => {
+        {counters.map((counter) => {
           return (
             <tr key={counter.id}>
               <td>

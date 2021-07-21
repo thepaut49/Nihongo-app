@@ -1,15 +1,8 @@
 import React from "react";
 
-const divStyle = {
-  backgroundColor: "#4682b4",
-  borderRadius: "10px",
-  margin: "0.1em",
-  padding: "0.5em",
-};
-
 const ConjugationPage = () => {
   return (
-    <div style={divStyle}>
+    <>
       <h2>Japanese Conjugation</h2>
       <p>
         In the Japanese language, the beginning of a word is usually preserved
@@ -20,30 +13,30 @@ const ConjugationPage = () => {
         (such as the first/second/third person), gender (i.e.
         neutral/feminine/masculine) and plurality (e.g. &quot;they&quot;).
       </p>
-      <p>
+      <span>
         All the verbs are divided into 3 groups that share the same endings :
-        <ul>
-          <li>Godan verbs</li>
-          <li>Ichidan verbs</li>
-          <li>
-            Irregular verbs, most notably: する (suru, to do) and 来る (kuru, to
-            come)
-          </li>
-        </ul>
-      </p>
+      </span>
+      <ul>
+        <li>Godan verbs</li>
+        <li>Ichidan verbs</li>
+        <li>
+          Irregular verbs, most notably: する (suru, to do) and 来る (kuru, to
+          come)
+        </li>
+      </ul>
       <h3>Verb groups</h3>
       <h4>Godan verbs</h4>
-      <p>
+      <span>
         The basic form of Group 1 verbs end with &quot;~ u&quot;. This group is
         also called Consonant-stem verbs or Godan-doushi (Godan verbs).
-        <ul>
-          <li>hanasu （話す） - to speak</li>
-          <li>kaku （書く） - to write</li>
-          <li>kiku （聞く） - to listen</li>
-          <li>matsu （待つ） - to wait</li>
-          <li>nomu （飲む） - to drink</li>
-        </ul>
-      </p>
+      </span>
+      <ul>
+        <li>hanasu （話す） - to speak</li>
+        <li>kaku （書く） - to write</li>
+        <li>kiku （聞く） - to listen</li>
+        <li>matsu （待つ） - to wait</li>
+        <li>nomu （飲む） - to drink</li>
+      </ul>
       <h4>Ichidan verbs</h4>
       <p>
         The basic form of Group 2 verbs end with either &quot;~iru&quot; or
@@ -68,45 +61,43 @@ const ConjugationPage = () => {
         <li>neru （寝る） - to sleep</li>
         <li>taberu （食べる） - to eat</li>
       </ul>
-      <p>
+      <span>
         There are some exceptions. The following verbs belong to Group 1, though
         they end with &quot;~ iru&quot; or &quot;~ eru&quot;.
-        <ul>
-          <li>hairu （入る） - to enter</li>
-          <li>hashiru （走る） - to run</li>
-          <li>iru （いる） - to need</li>
-          <li>kaeru （帰る） - to return</li>
-          <li>kagiru （限る） - to limit</li>
-          <li>kiru （切る） - to cut</li>
-          <li>shaberu （しゃべる） - to chatter</li>
-          <li>shiru （知る） - to know </li>
-        </ul>
-      </p>
+      </span>
+      <ul>
+        <li>hairu （入る） - to enter</li>
+        <li>hashiru （走る） - to run</li>
+        <li>iru （いる） - to need</li>
+        <li>kaeru （帰る） - to return</li>
+        <li>kagiru （限る） - to limit</li>
+        <li>kiru （切る） - to cut</li>
+        <li>shaberu （しゃべる） - to chatter</li>
+        <li>shiru （知る） - to know </li>
+      </ul>
       <h4>Irregular verbs</h4>
-      <p>
+      <span>
         There are only two irregular verbs, kuru (to come) and suru (to do). The
         verb &quot;suru&quot; is probably the most often used verb in Japanese.
         It is used as &quot;to do,&quot; &quot;to make,&quot; or &quot;to
         cost.&quot; It is also combined with many nouns (of Chinese or Western
         origin) to make them into verbs. Here are some examples.
-        <ul>
-          <li>benkyousuru （勉強する） - to study</li>
-          <li>ryokousuru （旅行する） - to travel</li>
-          <li>yushutsusuru （輸出する） - to export</li>
-          <li>dansusuru （ダンスする） - to dance</li>
-          <li>shanpuusuru （シャンプーする） - to shampoo</li>
-        </ul>
-      </p>
+      </span>
+      <ul>
+        <li>benkyousuru （勉強する） - to study</li>
+        <li>ryokousuru （旅行する） - to travel</li>
+        <li>yushutsusuru （輸出する） - to export</li>
+        <li>dansusuru （ダンスする） - to dance</li>
+        <li>shanpuusuru （シャンプーする） - to shampoo</li>
+      </ul>
       <h3>Tenses</h3>
-      <p>
-        For each tense there are 4 different form :
-        <ul>
-          <li>plain </li>
-          <li>plain negative</li>
-          <li>polite </li>
-          <li>polite negative</li>
-        </ul>
-      </p>
+      <span>For each tense there are 4 different form :</span>
+      <ul>
+        <li>plain </li>
+        <li>plain negative</li>
+        <li>polite </li>
+        <li>polite negative</li>
+      </ul>
       <h4>PRESENT, FUTUR</h4>
       <p>The present tense is used for future and habitual action as well.</p>
       <h4>〜た PAST</h4>
@@ -178,7 +169,7 @@ const ConjugationPage = () => {
       <h4>〜たい DESIRE</h4>
       <h4>〜たがる WANTS TO</h4>
       <h4>〜ながら SIMULTANEOUS</h4>
-    </div>
+    </>
   );
 };
 

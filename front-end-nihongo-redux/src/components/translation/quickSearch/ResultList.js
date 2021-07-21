@@ -6,7 +6,7 @@ const objectStyle = {
   display: "grid",
   grid: "1fr 1fr / 1fr 1fr 1fr",
   borderRadius: "10px",
-  backgroundColor: "rgba(38, 113, 22, 0.48)",
+  backgroundColor: "var(--fourth-bg-color)",
   gap: "1em",
   margin: "0.5em",
   padding: "0.5em",

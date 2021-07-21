@@ -1,10 +1,6 @@
 import React from "react";
 
 const styleAboutPage = {
-  height: "100%",
-  width: "100%",
-  backgroundColor: "var(--fourth-bg-color)",
-  borderRadius: "30px",
   padding: "1em",
 };
 
@@ -12,20 +8,20 @@ class AboutPage extends React.Component {
   render() {
     return (
       <div style={styleAboutPage}>
-        <h1>About</h1>
+        <h2>About</h2>
         <p>
           This website is made by a web developer passionate about manga and
           Japanese animation who wanted to share his tool to help other people
           to read mangas in japanese.
         </p>
-        <h2>Application architecture</h2>
+        <h3>Application architecture</h3>
         <p>This app is divided in 2 parts, a back-end and a front-end.</p>
-        <h3>Back-end</h3>
+        <h4>Back-end</h4>
         <p>
           The back-end uses Java 11 with the frameworks Spring Boot and
           hibernate.
         </p>
-        <h4>List of dependencies :</h4>
+        <h5>List of dependencies :</h5>
         <ul>
           <li>maven-jar-plugin: 3.1.1</li>
           <li>spring-boot-starter-parent: 2.4.2</li>
@@ -36,9 +32,9 @@ class AboutPage extends React.Component {
           <li>spring-boot-starter-test:test</li>
           <li>keycloak-spring-boot-starter: keycloak.version</li>
         </ul>
-        <h3>Front-end</h3>
+        <h4>Front-end</h4>
         <p>The front-end uses javascript and the framework React js.</p>
-        <h4>List of dependencies :</h4>
+        <h5>List of dependencies :</h5>
         <ul>
           <li>bootstrap: 5.0.1</li>
           <li>immer: 9.0.2</li>

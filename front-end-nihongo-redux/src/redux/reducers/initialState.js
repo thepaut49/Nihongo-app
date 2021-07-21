@@ -31,5 +31,7 @@ export default {
     listOfKanjis: [],
     listOfGrammarRules: [],
   },
+  messages: [],
+  visitStats: [],
   apiCallsInProgress: 0,
 };

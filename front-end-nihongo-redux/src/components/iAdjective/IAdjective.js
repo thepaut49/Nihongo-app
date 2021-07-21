@@ -1,34 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const styleGridContainer = {
-  display: "grid",
-  grid: "1fr 1fr / 1fr 1fr 1fr 1fr",
-  gap: "1em",
-  borderRadius: "10px",
-  backgroundColor: "var(--fourth-bg-color)",
-  margin: "0.5em",
-  padding: "0.5em",
-};
-
-const styleiadjective = {
-  gridRowStart: "span 2",
-  textAlign: "left",
-  fontWeight: "bold",
-  fontSize: "xxx-large",
-};
-const stylePronunciation = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
-
-const styleMeaning = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
-
 function IAdjective(props) {
   const iAdjective = props.iAdjective;
 
@@ -41,9 +13,9 @@ function IAdjective(props) {
   };
 
   return (
-    <div style={styleGridContainer}>
-      <div style={styleiadjective}>{iAdjective.kanjis}</div>
-      <div style={stylePronunciation}>
+    <div className="grid-container-iAdjective">
+      <div className="iAdjective">{iAdjective.kanjis}</div>
+      <div className="pronunciation">
         {iAdjective.pronunciations
           .sort(orderPronunciation)
           .map((pro, index) => {
@@ -54,7 +26,7 @@ function IAdjective(props) {
             );
           })}
       </div>
-      <div style={styleMeaning}>
+      <div className="meaning">
         {iAdjective.meanings.sort(orderMeaning).map((mean, index) => {
           return (
             <span key={index} className="onemeaning">

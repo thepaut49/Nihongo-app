@@ -17,10 +17,12 @@ function NameList(props) {
     return a.meaningNumber - b.meaningNumber;
   };
 
+  const names = props.names;
+
   return (
     <table>
       <tbody>
-        {props.names.map((name) => {
+        {names.map((name) => {
           return (
             <tr key={name.id}>
               <td>

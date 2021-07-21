@@ -1,34 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const styleGridContainer = {
-  display: "grid",
-  grid: "1fr 1fr 1fr / 1fr 1fr 1fr 1fr",
-  gap: "1em",
-  borderRadius: "10px",
-  backgroundColor: "var(--fourth-bg-color)",
-  margin: "0.5em",
-  padding: "0.5em",
-};
-
-const stylekanji = {
-  gridRowStart: "span 2",
-  textAlign: "left",
-  fontWeight: "bold",
-  fontSize: "xxx-large",
-};
-const stylePronunciation = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
-
-const styleMeaning = {
-  gridColumnStart: "span 3",
-  fontWeight: "bold",
-  fontSize: "x-large",
-};
-
 function Kanji(props) {
   const kanji = props.kanji;
 
@@ -41,33 +13,35 @@ function Kanji(props) {
   };
 
   return (
-    <div style={styleGridContainer}>
-      <div style={stylekanji}>{kanji.kanji}</div>
-      <div style={stylePronunciation}>
-        {kanji.pronunciations.sort(orderPronunciation).map((pro, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {pro.pronunciation}
-            </span>
-          );
-        })}
+    <div className="grid-container-kanji">
+      <div className="kanji">{kanji.kanji}</div>
+      <div className="pronunciation">
+        {kanji.pronunciations &&
+          kanji.pronunciations.length > 0 &&
+          kanji.pronunciations.sort(orderPronunciation).map((pro, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {pro.pronunciation}
+              </span>
+            );
+          })}
       </div>
-      <div style={styleMeaning}>
-        {kanji.meanings.sort(orderMeaning).map((mean, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {mean.meaning}
-            </span>
-          );
-        })}
+      <div className="meaning">
+        {kanji.meanings &&
+          kanji.meanings.length > 0 &&
+          kanji.meanings.sort(orderMeaning).map((mean, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {mean.meaning}
+              </span>
+            );
+          })}
       </div>
-      <div>
+      <div className="strokes">
         <span>
           <label>Strokes : </label>
           {kanji.strokeNumber}
         </span>
-      </div>
-      <div>
         <span>
           <label>Radicals : </label>
           {kanji.radicals}

@@ -1,0 +1,33 @@
+.iAdjectiveConjugationTableStyle {
+  display: grid;
+  grid: min-content 1fr / repeat(3, 1fr);
+  border-radius: 10px;
+  margin: 0.5em;
+  font-weight: bold;
+  border: solid var(--third-bg-color);
+}
+
+.iAdjectiveTitleWithBorderStyle {
+  background-color: var(--secondary-bg-color);
+  border: solid var(--third-bg-color);
+  padding: 0.3em;
+}
+
+.iAdjectiveTenseStyle {
+  display: grid;
+  grid: 1fr / 1fr;
+  grid-row-start: span 4;
+  background-color: var(--secondary-bg-color);
+  font-weight: bold;
+}
+
+.iAdjectiveContentStyle {
+  grid-column-start: span 2;
+  display: grid;
+  grid: repeat(4, 1fr) / 1fr 1fr;
+}
+
+.iAdjectiveWithBorderStyle {
+  border: solid var(--third-bg-color);
+  padding: 0.3em;
+}
