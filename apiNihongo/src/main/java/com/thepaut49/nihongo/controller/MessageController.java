@@ -11,7 +11,7 @@ import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/messages")
 public class MessageController {
@@ -48,3 +48,17 @@ public class MessageController {
 				.collect(Collectors.toList());
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -27,7 +27,7 @@ import com.thepaut49.nihongo.service.IAdjectiveService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/iAdjectives")
 public class IAdjectiveController {
@@ -106,3 +106,17 @@ public class IAdjectiveController {
 				.collect(Collectors.toList());
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

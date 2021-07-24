@@ -27,7 +27,7 @@ import com.thepaut49.nihongo.service.VerbService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/verbs")
 public class VerbController {
@@ -108,3 +108,17 @@ public class VerbController {
 				.collect(Collectors.toList());
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
