@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Counter(props) {
-  const counter = props.counter;
+  const counter = {
+    ...props.counter,
+    pronunciations: [...props.counter.pronunciations],
+  };
 
   const orderPronunciation = (a, b) => {
     return a.pronunciationNumber - b.pronunciationNumber;

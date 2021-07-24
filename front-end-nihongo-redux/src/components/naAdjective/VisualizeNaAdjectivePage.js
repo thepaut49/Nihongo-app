@@ -76,7 +76,7 @@ const VisualizeNaAdjectivePage = ({
       setKanjisLinkedToNaAdjective(
         searchKanjisLinkedToNaAdjective(naAdjective, kanjis)
       );
-  }, [props.naAdjective]);
+  }, [props.naAdjective, kanjis.length, naAdjectives.length]);
 
   const allEntitiesLoaded = () => {
     if (naAdjectives.length === 0) return false;

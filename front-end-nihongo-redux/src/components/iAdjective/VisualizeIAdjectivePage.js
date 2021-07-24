@@ -81,7 +81,7 @@ const VisualizeIAdjectivePage = ({
         searchKanjisLinkedToIAdjective(iAdjective, kanjis)
       );
     }
-  }, [props.iAdjective]);
+  }, [props.iAdjective, iAdjectives.length, kanjis.length]);
 
   const allEntitiesLoaded = () => {
     if (iAdjectives.length === 0) return false;

@@ -2,7 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Kanji(props) {
-  const kanji = props.kanji;
+  const kanji = {
+    ...props.kanji,
+    pronunciations: [...props.kanji.pronunciations],
+    meanings: [...props.kanji.meanings],
+  };
 
   const orderPronunciation = (a, b) => {
     return a.pronunciationNumber - b.pronunciationNumber;

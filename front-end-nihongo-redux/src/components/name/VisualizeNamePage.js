@@ -74,7 +74,7 @@ const VisualizeNamePage = ({
     } else {
       setKanjisLinkedToName(searchKanjisLinkedToName(name, kanjis));
     }
-  }, [props.name]);
+  }, [names.length, kanjis.length, props.name]);
 
   const allEntitiesLoaded = () => {
     if (names.length === 0) return false;
@@ -118,10 +118,10 @@ export function getNameByKanjis(names, kanjis) {
 }
 
 function mapStateToProps(state, ownProps) {
-  const kanjis = ownProps.match.params.kanjis;
+  const kanjisParam = ownProps.match.params.kanjis;
   const name =
-    kanjis && state.names.length > 0
-      ? getNameByKanjis(state.names, kanjis)
+    kanjisParam && state.names.length > 0
+      ? getNameByKanjis(state.names, kanjisParam)
       : newName;
   return {
     name,

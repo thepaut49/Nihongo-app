@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Suffix(props) {
-  const suffix = props.suffix;
+  const suffix = {
+    ...props.suffix,
+    pronunciations: [...props.suffix.pronunciations],
+  };
 
   const orderPronunciation = (a, b) => {
     return a.pronunciationNumber - b.pronunciationNumber;

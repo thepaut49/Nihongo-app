@@ -2,7 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Word(props) {
-  const word = props.word;
+  const word = {
+    ...props.word,
+    pronunciations: [...props.word.pronunciations],
+    meanings: [...props.word.meanings],
+  };
 
   const orderPronunciation = (a, b) => {
     return a.pronunciationNumber - b.pronunciationNumber;

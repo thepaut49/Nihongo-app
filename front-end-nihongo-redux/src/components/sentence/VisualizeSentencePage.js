@@ -64,7 +64,7 @@ const VisualizeSentencePage = ({
     } else {
       setKanjisLinkedToSentence(searchKanjisLinkedToSentence(sentence, kanjis));
     }
-  }, [props.sentence]);
+  }, [props.sentence, kanjis.length, sentences.length]);
 
   const allEntitiesLoaded = () => {
     if (sentences.length === 0) return false;

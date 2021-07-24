@@ -70,7 +70,7 @@ const VisualizeCounterPage = ({
     } else {
       setKanjisLinkedToCounter(searchKanjisLinkedToCounter(counter, kanjis));
     }
-  }, [props.counter]);
+  }, [props.counter, kanjis.length, counters.length]);
 
   const allEntitiesLoaded = () => {
     if (kanjis.length === 0) return false;

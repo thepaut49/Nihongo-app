@@ -69,7 +69,7 @@ const VisualizeSuffixPage = ({
     } else {
       setKanjisLinkedToSuffix(searchKanjisLinkedToSuffix(suffix, kanjis));
     }
-  }, [props.suffix]);
+  }, [props.suffix, suffixs.length, kanjis.length]);
 
   const allEntitiesLoaded = () => {
     if (suffixs.length === 0) return false;

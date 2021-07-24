@@ -2,7 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function IAdjective(props) {
-  const iAdjective = props.iAdjective;
+  const iAdjective = {
+    ...props.iAdjective,
+    pronunciations: [...props.iAdjective.pronunciations],
+    meanings: [...props.iAdjective.meanings],
+  };
 
   const orderPronunciation = (a, b) => {
     return a.pronunciationNumber - b.pronunciationNumber;

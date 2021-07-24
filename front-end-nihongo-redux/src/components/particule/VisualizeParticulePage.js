@@ -26,7 +26,7 @@ const VisualizeParticulePage = ({ particules, loadParticules, ...props }) => {
     } else {
       setParticule({ ...props.particule });
     }
-  }, [props.particule]);
+  }, [props.particule, particules.length]);
 
   return (
     <>

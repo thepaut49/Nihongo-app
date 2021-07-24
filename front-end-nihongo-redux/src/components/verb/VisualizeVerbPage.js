@@ -76,7 +76,7 @@ const VisualizeVerbPage = ({
     } else {
       setKanjisLinkedToVerb(searchKanjisLinkedToVerb(verb, kanjis));
     }
-  }, [props.verb]);
+  }, [props.verb, verbs.length, kanjis.length]);
 
   const allEntitiesLoaded = () => {
     if (verbs.length === 0) return false;

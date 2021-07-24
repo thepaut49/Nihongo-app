@@ -74,7 +74,7 @@ const VisualizeWordPage = ({
     } else {
       setKanjisLinkedToWord(searchKanjisLinkedToWord(word, kanjis));
     }
-  }, [props.word, kanjis]);
+  }, [props.word, kanjis.length, words.length]);
 
   const allEntitiesLoaded = () => {
     if (words.length === 0) return false;

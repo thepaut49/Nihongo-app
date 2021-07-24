@@ -170,7 +170,15 @@ const VisualizeKanjiPage = ({
           translationConstants.TYPE_WORD
         )
       );
-  }, [props.kanji]);
+  }, [
+    props.kanji,
+    kanjis.length,
+    words.length,
+    names.length,
+    iAdjectives.length,
+    naAdjectives.length,
+    verbs.length,
+  ]);
 
   const allEntitiesLoaded = () => {
     if (iAdjectives.length === 0) return false;

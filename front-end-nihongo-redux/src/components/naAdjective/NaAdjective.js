@@ -2,8 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function NaAdjective(props) {
-  const naAdjective = props.naAdjective;
-
+  const naAdjective = {
+    ...props.naAdjective,
+    pronunciations: [...props.naAdjective.pronunciations],
+    meanings: [...props.naAdjective.meanings],
+  };
   const orderPronunciation = (a, b) => {
     return a.pronunciationNumber - b.pronunciationNumber;
   };
