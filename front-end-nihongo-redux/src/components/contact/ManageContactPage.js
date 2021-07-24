@@ -15,18 +15,14 @@ const newMessage = {
   version: 0,
 };
 
-const ManageContactPage = ({ saveMessage, ...props }) => {
+const ManageContactPage = ({ saveMessage, history, ...props }) => {
   const [modified, setModified] = useState(false);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState({ ...props.message });
   const [sending, setSending] = useState(false);
 
   function validateEmail(email) {
-    if (
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-        email
-      )
-    ) {
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return true;
     }
     return false;
@@ -46,7 +42,7 @@ const ManageContactPage = ({ saveMessage, ...props }) => {
     if (!message.title) _errors.title = "The title is required";
     if (!message.email) _errors.email = "The email is required";
     if (message.email && !validateEmail(message.email))
-      errors.email = "The email is incorrect";
+      _errors.email = "The email is incorrect";
     if (!message.content) _errors.content = "The content is required";
 
     setErrors(_errors);
@@ -62,6 +58,7 @@ const ManageContactPage = ({ saveMessage, ...props }) => {
     saveMessage(message)
       .then(() => {
         toast.success("Message sended.");
+        history.push("/");
       })
       .catch((error) => {
         setSending(false);

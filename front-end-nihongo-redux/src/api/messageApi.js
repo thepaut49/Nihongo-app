@@ -20,7 +20,6 @@ export function saveMessage(message) {
     method: method, // POST for create, PUT to update when id already exists.
     headers: {
       "content-type": "application/json",
-      Authorization: "bearer " + sessionStorage.getItem("token"),
     },
     body: JSON.stringify({
       ...message,

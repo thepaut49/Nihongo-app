@@ -2,17 +2,22 @@ import React from "react";
 import CustomInput from "../common/CustomInput";
 import CustomTextArea from "../common/CustomTextArea";
 import PropTypes from "prop-types";
+import "./ContactForm.css";
 
-const ContactForm = (
+const ContactForm = ({
   message,
   onSubmit,
   onChange,
   sending = false,
-  errors = {}
-) => {
+  errors = {},
+}) => {
   return (
-    <form onSubmit={onSubmit}>
-      <h2>For any questions or requests</h2>
+    <form onSubmit={onSubmit} className="contactForm">
+      <h2>Contact</h2>
+      <p>
+        For any questions or requests you can send me a message with the
+        following form.
+      </p>
       {errors.onSubmit && (
         <div className="alert alert-danger" role="alert">
           {errors.onSubmit}

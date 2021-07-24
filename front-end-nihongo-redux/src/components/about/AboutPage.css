@@ -1,0 +1,11 @@
+.appArchitecture {
+  display: grid;
+  grid: 1fr / 1fr 1fr;
+}
+
+.backend {
+  border-radius: 10px;
+  background-color: var(--fourth-bg-color);
+  margin: 0.5em;
+  padding: 0.5em;
+}

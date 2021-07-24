@@ -9,20 +9,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class MessageService {
-	
+
 	@Autowired
 	private MessageRepository MessageRepository;
 	
 	public Message createMessage(Message newMessage) {
-		if (!MessageRepository.dailyMessageLimitReached(LocalDate.now())) {
-			newMessage.setDateCreation(LocalDate.now());
+		LocalDate today = LocalDate.now();
+		long dailyMessageQuota = 10;
+		if (MessageRepository.countByDateCreation(today) < dailyMessageQuota) {
+			newMessage.setDateCreation(today);
 			return MessageRepository.save(newMessage);
 		}
 		else {

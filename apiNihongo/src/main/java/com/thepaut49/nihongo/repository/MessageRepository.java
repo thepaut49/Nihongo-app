@@ -9,7 +9,6 @@ import java.time.LocalDate;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-	@Query("SELECT count(*) FROM Message m WHERE dateCreation = :localDate Group by dateCreation")
-	boolean dailyMessageLimitReached(LocalDate localDate);
+	long countByDateCreation(LocalDate dateCreation);
 
 }

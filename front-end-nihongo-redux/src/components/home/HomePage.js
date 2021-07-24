@@ -6,24 +6,16 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 function HomePage(props) {
-  async function getIpClient() {
-    try {
-      const response = await fetch("https://api.ipify.org?format=json");
+  fetch("https://api.ipify.org?format=json")
+    .then((response) => response.json())
+    .then((data) => {
       debugger;
-      const data = await response.json();
-      return data.ip;
-    } catch (error) {
-      alert(error);
-    }
-  }
-
-  const { actions } = props;
-  const dateVisit = new Date().toLocaleDateString();
-  const newVisitStat = {
-    ip: getIpClient(),
-    dateVisit: dateVisit,
-  };
-  actions.saveVisitStat(newVisitStat);
+      const { actions } = props;
+      const newVisitStat = {
+        ip: data.ip,
+      };
+      actions.saveVisitStat(newVisitStat);
+    });
 
   return (
     <div className="styleHomePage">

@@ -35,14 +35,14 @@ public class WordController {
 	@Autowired
 	private WordService wordService;
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PostMapping("/create")
 	public WordDTO createWord( @RequestBody WordDTO wordDTO) {
 		Word newWord = WordToDTOMapper.map(wordDTO);
 		return WordToDTOMapper.map(wordService.createWord(newWord));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@PutMapping("/{id}")
 	public WordDTO updateWord( @RequestBody WordDTO wordDTO, @PathVariable Long id) {
 		Word updatedWord = WordToDTOMapper.map(wordDTO);  
@@ -55,7 +55,7 @@ public class WordController {
 		return WordToDTOMapper.map(wordService.updateWordNumberOfUse(id));
 	}
 
-	//@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		wordService.delete(id);
