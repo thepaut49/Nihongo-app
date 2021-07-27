@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ import com.thepaut49.nihongo.service.WordService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/words")
 public class WordController {
@@ -35,14 +36,14 @@ public class WordController {
 	@Autowired
 	private WordService wordService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public WordDTO createWord( @RequestBody WordDTO wordDTO) {
 		Word newWord = WordToDTOMapper.map(wordDTO);
 		return WordToDTOMapper.map(wordService.createWord(newWord));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public WordDTO updateWord( @RequestBody WordDTO wordDTO, @PathVariable Long id) {
 		Word updatedWord = WordToDTOMapper.map(wordDTO);  
@@ -55,7 +56,7 @@ public class WordController {
 		return WordToDTOMapper.map(wordService.updateWordNumberOfUse(id));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		wordService.delete(id);
@@ -105,6 +106,7 @@ public class WordController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

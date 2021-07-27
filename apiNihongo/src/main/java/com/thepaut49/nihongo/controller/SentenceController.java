@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ import com.thepaut49.nihongo.service.SentenceService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/sentences")
 public class SentenceController {
@@ -32,14 +33,14 @@ public class SentenceController {
 	@Autowired
 	private SentenceService sentenceService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public SentenceDTO createSentence( @RequestBody SentenceDTO sentenceDTO) {
 		Sentence newSentence = SentenceToDTOMapper.map(sentenceDTO);
 		return SentenceToDTOMapper.map(sentenceService.createSentence(newSentence));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public SentenceDTO updateSentence( @RequestBody SentenceDTO sentenceDTO, @PathVariable Long id) {
 		Sentence updatedSentence = SentenceToDTOMapper.map(sentenceDTO);  
@@ -47,7 +48,7 @@ public class SentenceController {
 		return SentenceToDTOMapper.map(sentenceService.updateSentence(updatedSentence));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		sentenceService.delete(id);
@@ -89,6 +90,7 @@ public class SentenceController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

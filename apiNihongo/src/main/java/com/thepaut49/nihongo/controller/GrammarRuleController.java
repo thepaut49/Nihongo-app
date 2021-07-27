@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ import com.thepaut49.nihongo.service.GrammarRuleService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/grammarRules")
 public class GrammarRuleController {
@@ -29,14 +30,14 @@ public class GrammarRuleController {
 	@Autowired
 	private GrammarRuleService grammarRuleService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public GrammarRuleDTO createGrammarRule( @RequestBody GrammarRuleDTO grammarRuleDTO) {
 		GrammarRule newGrammarRule = GrammarRuleToDTOMapper.map(grammarRuleDTO);
 		return GrammarRuleToDTOMapper.map(grammarRuleService.createGrammarRule(newGrammarRule));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public GrammarRuleDTO updateGrammarRule( @RequestBody GrammarRuleDTO grammarRuleDTO, @PathVariable Long id) {
 		GrammarRule updatedGrammarRule = GrammarRuleToDTOMapper.map(grammarRuleDTO);  
@@ -44,7 +45,7 @@ public class GrammarRuleController {
 		return GrammarRuleToDTOMapper.map(grammarRuleService.updateGrammarRule(updatedGrammarRule));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		grammarRuleService.delete(id);
@@ -70,6 +71,7 @@ public class GrammarRuleController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

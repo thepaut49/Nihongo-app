@@ -5,13 +5,14 @@ import com.thepaut49.nihongo.mapper.MessageToDTOMapper;
 import com.thepaut49.nihongo.model.Message;
 import com.thepaut49.nihongo.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/messages")
 public class MessageController {
@@ -25,20 +26,20 @@ public class MessageController {
 		return MessageToDTOMapper.map(messageService.createMessage(newMessage));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		messageService.delete(id);
 		return "Message deleted !";
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(value = "/{id}")
 	public MessageDTO findById( @PathVariable Long id) {
 		return MessageToDTOMapper.map(messageService.findById(id));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/all")
 	public List<MessageDTO> getAllMessages() {
 		List<Message> messages = messageService.findAll();
@@ -48,6 +49,7 @@ public class MessageController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

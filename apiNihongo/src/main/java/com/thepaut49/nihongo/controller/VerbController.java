@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ import com.thepaut49.nihongo.service.VerbService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/verbs")
 public class VerbController {
@@ -35,14 +36,14 @@ public class VerbController {
 	@Autowired
 	private VerbService verbService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public VerbDTO createVerb( @RequestBody VerbDTO verbDTO) {
 		Verb newVerb = VerbToDTOMapper.map(verbDTO);
 		return VerbToDTOMapper.map(verbService.createVerb(newVerb));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public VerbDTO updateVerb( @RequestBody VerbDTO verbDTO, @PathVariable Long id) {
 		Verb updatedVerb = VerbToDTOMapper.map(verbDTO);  
@@ -55,7 +56,7 @@ public class VerbController {
 		return VerbToDTOMapper.map(verbService.updateVerbNumberOfUse(id));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		verbService.delete(id);
@@ -108,6 +109,7 @@ public class VerbController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

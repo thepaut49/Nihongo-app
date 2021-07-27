@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ import com.thepaut49.nihongo.service.NaAdjectiveService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/naAdjectives")
 public class NaAdjectiveController {
@@ -35,14 +36,14 @@ public class NaAdjectiveController {
 	@Autowired
 	private NaAdjectiveService naAdjectiveService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public NaAdjectiveDTO createNaAdjective( @RequestBody NaAdjectiveDTO naAdjectiveDTO) {
 		NaAdjective newNaAdjective = NaAdjectiveToDTOMapper.map(naAdjectiveDTO);
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.createNaAdjective(newNaAdjective));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public NaAdjectiveDTO updateNaAdjective( @RequestBody NaAdjectiveDTO naAdjectiveDTO, @PathVariable Long id) {
 		NaAdjective updatedNaAdjective = NaAdjectiveToDTOMapper.map(naAdjectiveDTO);  
@@ -55,7 +56,7 @@ public class NaAdjectiveController {
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.updateNaAdjectiveNumberOfUse(id));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		naAdjectiveService.delete(id);
@@ -106,6 +107,7 @@ public class NaAdjectiveController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

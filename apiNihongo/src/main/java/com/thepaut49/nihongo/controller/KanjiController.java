@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ import com.thepaut49.nihongo.service.KanjiService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/kanjis")
 public class KanjiController {
@@ -35,14 +36,14 @@ public class KanjiController {
 	@Autowired
 	private KanjiService kanjiService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public KanjiDTO createKanji( @RequestBody KanjiDTO kanjiDTO) {
 		Kanji newKanji = KanjiToDTOMapper.map(kanjiDTO);
 		return KanjiToDTOMapper.map(kanjiService.createKanji(newKanji));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public KanjiDTO updateKanji( @RequestBody KanjiDTO kanjiDTO, @PathVariable Long id) {
 		Kanji updatedKanji = KanjiToDTOMapper.map(kanjiDTO);  
@@ -56,7 +57,7 @@ public class KanjiController {
 	}
 
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		kanjiService.delete(id);
@@ -120,6 +121,7 @@ public class KanjiController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

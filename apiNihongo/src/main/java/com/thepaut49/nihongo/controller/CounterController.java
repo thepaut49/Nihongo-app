@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ import com.thepaut49.nihongo.service.CounterService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/counters")
 public class CounterController {
@@ -35,14 +36,14 @@ public class CounterController {
 	@Autowired
 	private CounterService counterService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public CounterDTO createCounter( @RequestBody CounterDTO counterDTO) {
 		Counter newCounter = CounterToDTOMapper.map(counterDTO);
 		return CounterToDTOMapper.map(counterService.createCounter(newCounter));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public CounterDTO updateCounter( @RequestBody CounterDTO counterDTO, @PathVariable Long id) {
 		Counter updatedCounter = CounterToDTOMapper.map(counterDTO);  
@@ -55,7 +56,7 @@ public class CounterController {
 		return CounterToDTOMapper.map(counterService.updateCounterNumberOfUse(id));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		counterService.delete(id);
@@ -107,6 +108,7 @@ public class CounterController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

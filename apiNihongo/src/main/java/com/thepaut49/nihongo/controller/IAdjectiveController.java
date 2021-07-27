@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ import com.thepaut49.nihongo.service.IAdjectiveService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/iAdjectives")
 public class IAdjectiveController {
@@ -35,14 +36,14 @@ public class IAdjectiveController {
 	@Autowired
 	private IAdjectiveService iAdjectiveService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public IAdjectiveDTO createIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO) {
 		IAdjective newIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.createIAdjective(newIAdjective));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public IAdjectiveDTO updateIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO, @PathVariable Long id) {
 		IAdjective updatedIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);  
@@ -55,7 +56,7 @@ public class IAdjectiveController {
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.updateIAdjectiveNumberOfUse(id));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		iAdjectiveService.delete(id);
@@ -106,6 +107,7 @@ public class IAdjectiveController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

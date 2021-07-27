@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ import com.thepaut49.nihongo.service.SuffixService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/suffixs")
 public class SuffixController {
@@ -29,14 +30,14 @@ public class SuffixController {
 	@Autowired
 	private SuffixService suffixService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public SuffixDTO createSuffix( @RequestBody SuffixDTO suffixDTO) {
 		Suffix newSuffix = SuffixToDTOMapper.map(suffixDTO);
 		return SuffixToDTOMapper.map(suffixService.createSuffix(newSuffix));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public SuffixDTO updateSuffix( @RequestBody SuffixDTO suffixDTO, @PathVariable Long id) {
 		Suffix updatedSuffix = SuffixToDTOMapper.map(suffixDTO);  
@@ -44,7 +45,7 @@ public class SuffixController {
 		return SuffixToDTOMapper.map(suffixService.updateSuffix(updatedSuffix));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		suffixService.delete(id);
@@ -70,6 +71,7 @@ public class SuffixController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ import com.thepaut49.nihongo.service.ParticuleService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/particules")
 public class ParticuleController {
@@ -29,14 +30,14 @@ public class ParticuleController {
 	@Autowired
 	private ParticuleService particuleService;
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
 	public ParticuleDTO createParticule( @RequestBody ParticuleDTO particuleDTO) {
 		Particule newParticule = ParticuleToDTOMapper.map(particuleDTO);
 		return ParticuleToDTOMapper.map(particuleService.createParticule(newParticule));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ParticuleDTO updateParticule( @RequestBody ParticuleDTO particuleDTO, @PathVariable Long id) {
 		Particule updatedParticule = ParticuleToDTOMapper.map(particuleDTO);  
@@ -44,7 +45,7 @@ public class ParticuleController {
 		return ParticuleToDTOMapper.map(particuleService.updateParticule(updatedParticule));
 	}
 
-	@RolesAllowed("admin")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public String delete(@PathVariable Long id) {
 		particuleService.delete(id);
@@ -70,6 +71,7 @@ public class ParticuleController {
 				.collect(Collectors.toList());
 	}
 }
+
 
 
 
