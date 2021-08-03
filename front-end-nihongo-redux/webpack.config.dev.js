@@ -25,10 +25,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env.REACT_APP_API_BASE_URL": JSON.stringify(
-        "http://HOST_NAME:9090"
-      ),
-      "process.env.KEYCLOAK_URL": JSON.stringify(
-        "http://HOST_NAME:9999/auth/realms/Nihongo"
+        "http://192.168.1.10:9090"
       ),
     }),
     new HtmlWebpackPlugin({
@@ -50,14 +47,3 @@ module.exports = {
     ],
   },
 };
-
-
-
-
-
-
-
-
-
-
-

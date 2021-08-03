@@ -19,13 +19,13 @@ function WordForm({
   addPronunciation,
   addMeaning,
 }) {
-  const orderPronunciation = (a, b) => {
+  /*const orderPronunciation = (a, b) => {
     return a.pronunciationNumber - b.pronunciationNumber;
   };
 
   const orderMeaning = (a, b) => {
     return a.meaningNumber - b.meaningNumber;
-  };
+  };*/
 
   return (
     <form onSubmit={onSubmit} className="modificationForm">
@@ -47,7 +47,7 @@ function WordForm({
 
       {word.pronunciations &&
         word.pronunciations.length > 0 &&
-        word.pronunciations.sort(orderPronunciation).map((pro, index) => {
+        word.pronunciations.map((pro, index) => {
           return (
             <CustomInputPronunciations
               key={index}
@@ -71,7 +71,7 @@ function WordForm({
 
       {word.meanings &&
         word.meanings.length > 0 &&
-        word.meanings.sort(orderMeaning).map((_meaning, index) => {
+        word.meanings.map((_meaning, index) => {
           return (
             <CustomInputMeaning
               key={index}

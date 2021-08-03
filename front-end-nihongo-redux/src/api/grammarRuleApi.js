@@ -22,6 +22,7 @@ export function saveGrammarRule(grammarRule) {
   } else {
     url = url + grammarRule.id;
   }
+  debugger;
   return fetch(url, {
     method: method, // POST for create, PUT to update when id already exists.
     headers: {

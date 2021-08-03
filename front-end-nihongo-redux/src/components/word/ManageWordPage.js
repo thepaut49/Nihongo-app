@@ -34,7 +34,11 @@ const newWord = {
 const ManageWordPage = ({ words, loadWords, saveWord, history, ...props }) => {
   const [modified, setModified] = useState(false);
   const [errors, setErrors] = useState({});
-  const [word, setWord] = useState({ ...props.word });
+  const [word, setWord] = useState({
+    ...props.word,
+    pronunciations: [...props.word.pronunciations],
+    meanings: [...props.word.meanings],
+  });
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -43,7 +47,11 @@ const ManageWordPage = ({ words, loadWords, saveWord, history, ...props }) => {
         alert("Loading words failed" + error);
       });
     } else {
-      setWord({ ...props.word });
+      setWord({
+        ...props.word,
+        pronunciations: [...props.word.pronunciations],
+        meanings: [...props.word.meanings],
+      });
     }
   }, [props.word]);
 

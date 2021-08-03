@@ -13,6 +13,8 @@ foreach ($file in $controllersJava)
 ((Get-Content -Path '..\apiNihongo\src\main\resources\application.properties' -Raw) -replace 'DB_NAME',$config.db_name) | Set-Content -Path '..\apiNihongo\src\main\resources\application.properties'
 ((Get-Content -Path '..\apiNihongo\src\main\resources\application.properties' -Raw) -replace 'DB_USERNAME',$config.db_username) | Set-Content -Path '..\apiNihongo\src\main\resources\application.properties'
 ((Get-Content -Path '..\apiNihongo\src\main\resources\application.properties' -Raw) -replace 'DB_PASSWORD',$config.db_password) | Set-Content -Path '..\apiNihongo\src\main\resources\application.properties'
+((Get-Content -Path '..\apiNihongo\src\main\resources\application.properties' -Raw) -replace 'HOST_NAME',$config.host_name) | Set-Content -Path '..\apiNihongo\src\main\resources\application.properties'
+
 
 D:\Users\Antoine\Docker\Nihongo-app\apiNihongo\src\main\resources\application.properties
 

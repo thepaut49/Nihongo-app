@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { isConnected } from "../../utils/userUtils";
-import * as wordListActions from "../../redux/actions/wordListActions";
+import { filterWords } from "./filterWords";
 
 function WordsPage(props) {
   const [wordCriteria, setWordCriteria] = useState({
@@ -19,15 +19,17 @@ function WordsPage(props) {
     pronunciationCriteria: "",
     meaningCriteria: "",
   });
+  const [wordsList, setWordsList] = useState([]);
 
   useEffect(() => {
     const { words, actions } = props;
     if (words.length === 0) {
       actions.loadWords().catch((error) => {
-        alert("Loading iadjectives failed" + error);
+        alert("Loading words failed" + error);
       });
     }
-  }, []);
+    setWordsList(filterWords(words, wordCriteria));
+  }, [wordsList.length]);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
 
   // fonction for criteria form
@@ -56,9 +58,7 @@ function WordsPage(props) {
       pronunciationCriteria: "",
       meaningCriteria: "",
     });
-    props.actions.loadWords().catch((error) => {
-      alert("Loading words failed" + error);
-    });
+    setWordsList(filterWords(props.words, null));
   }
 
   function handleClick(event) {
@@ -73,20 +73,14 @@ function WordsPage(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const _word = {
-      kanjis: wordCriteria.kanjisCriteria,
-      pronunciation: wordCriteria.pronunciationCriteria,
-      meaning: wordCriteria.meaningCriteria,
-    };
-    props.actions.filterWords(_word).catch((error) => {
-      alert("Filtering words failed" + error);
-    });
+    setWordsList(filterWords(props.words, wordCriteria));
   }
 
   const handleDeleteWord = async (word) => {
     toast.success("Word deleted");
     try {
       await props.actions.deleteWord(word);
+      setWordsList(wordsList.filter((_word) => _word.id !== word.id));
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }
@@ -112,7 +106,7 @@ function WordsPage(props) {
             </Link>
           )}
 
-          <WordList words={props.wordsList} deleteWord={handleDeleteWord} />
+          <WordList words={wordsList} deleteWord={handleDeleteWord} />
         </>
       )}
     </div>
@@ -121,7 +115,6 @@ function WordsPage(props) {
 
 WordsPage.propTypes = {
   words: PropTypes.array.isRequired,
-  wordsList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -129,11 +122,6 @@ WordsPage.propTypes = {
 function mapStateToProps(state) {
   return {
     words: state.words.map((word) => {
-      return {
-        ...word,
-      };
-    }),
-    wordsList: state.wordsList.map((word) => {
       return {
         ...word,
       };
@@ -147,7 +135,6 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadWords: bindActionCreators(wordActions.loadWords, dispatch),
       deleteWord: bindActionCreators(wordActions.deleteWord, dispatch),
-      filterWords: bindActionCreators(wordListActions.filterWords, dispatch),
     },
   };
 }

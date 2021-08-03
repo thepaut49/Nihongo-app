@@ -29,10 +29,7 @@ module.exports = {
       //this global makes sure React is built in prod mod
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.REACT_APP_API_BASE_URL": JSON.stringify(
-        "http://HOST_NAME:9090"
-      ),
-      "process.env.KEYCLOAK_URL": JSON.stringify(
-        "http://HOST_NAME:9999/auth/realms/Nihongo"
+        "http://192.168.1.10:9090"
       ),
     }),
     new HtmlWebpackPlugin({
@@ -90,14 +87,3 @@ module.exports = {
     ],
   },
 };
-
-
-
-
-
-
-
-
-
-
-

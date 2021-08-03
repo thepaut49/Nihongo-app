@@ -1,8 +1,7 @@
 import React from "react";
-import Login from "../Login/Login";
 
 const Gestion = () => {
-  return <Login />;
+  return <></>;
 };
 
 export default Gestion;
