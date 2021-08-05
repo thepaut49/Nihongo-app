@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { isConnected } from "../../utils/userUtils";
-import * as sentenceListActions from "../../redux/actions/sentenceListActions";
+import { filterSentences } from "./filterSentences";
 
 function SentencesPage(props) {
   const [sentenceCriteria, setSentenceCriteria] = useState({
@@ -20,15 +20,21 @@ function SentencesPage(props) {
     meaningCriteria: "",
     topicCriteria: "",
   });
+  const [sentencesList, setSentencesList] = useState([]);
 
   useEffect(() => {
     const { sentences, actions } = props;
     if (sentences.length === 0) {
-      actions.loadSentences().catch((error) => {
-        alert("Loading iadjectives failed" + error);
-      });
+      actions
+        .loadSentences()
+        .then(setSentencesList(filterSentences(sentences, sentenceCriteria)))
+        .catch((error) => {
+          alert("Loading iadjectives failed" + error);
+        });
+    } else {
+      setSentencesList(filterSentences(sentences, sentenceCriteria));
     }
-  }, []);
+  }, [props.sentences.length, sentencesList.length]);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
   // fonction for criteria form
 
@@ -60,9 +66,7 @@ function SentencesPage(props) {
       meaningCriteria: "",
       topicCriteria: "",
     });
-    props.actions.loadSentences().catch((error) => {
-      alert("Loading sentences failed" + error);
-    });
+    setSentencesList(filterSentences(props.sentences, null));
   }
 
   function handleClick(event) {
@@ -77,15 +81,7 @@ function SentencesPage(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const _sentence = {
-      kanjis: sentenceCriteria.kanjisCriteria,
-      pronunciation: sentenceCriteria.pronunciationCriteria,
-      meaning: sentenceCriteria.meaningCriteria,
-      topic: sentenceCriteria.topicCriteria,
-    };
-    props.actions.filterSentences(_sentence).catch((error) => {
-      alert("Filtering iadjective failed" + error);
-    });
+    setSentencesList(filterSentences(props.sentences, sentenceCriteria));
   }
 
   const handleDeleteSentence = async (sentence) => {
@@ -118,7 +114,7 @@ function SentencesPage(props) {
           )}
 
           <SentenceList
-            sentences={props.sentencesList}
+            sentences={sentencesList}
             deleteSentence={handleDeleteSentence}
           />
         </>
@@ -128,7 +124,6 @@ function SentencesPage(props) {
 }
 SentencesPage.propTypes = {
   sentences: PropTypes.array.isRequired,
-  sentencesList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -136,11 +131,6 @@ SentencesPage.propTypes = {
 function mapStateToProps(state) {
   return {
     sentences: state.sentences.map((sentence) => {
-      return {
-        ...sentence,
-      };
-    }),
-    sentencesList: state.sentencesList.map((sentence) => {
       return {
         ...sentence,
       };
@@ -158,10 +148,6 @@ function mapDispatchToProps(dispatch) {
       ),
       deleteSentence: bindActionCreators(
         sentenceActions.deleteSentence,
-        dispatch
-      ),
-      filterSentences: bindActionCreators(
-        sentenceListActions.filterSentences,
         dispatch
       ),
     },

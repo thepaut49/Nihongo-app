@@ -7,15 +7,15 @@ export const filterWords = (words, wordCriteria) => {
       let word = words[index];
       let add = true;
       if (wordCriteria.kanjisCriteria) {
-        add = word.includes(wordCriteria.kanjisCriteria);
+        add = word.kanjis.includes(wordCriteria.kanjisCriteria);
       }
-      if (wordCriteria.pronunciationCriteria) {
+      if (add && wordCriteria.pronunciationCriteria) {
         add = checkStringArray(
           word.pronunciations.map((pro) => pro.pronunciation),
           wordCriteria.pronunciationCriteria
         );
       }
-      if (wordCriteria.meaningCriteria) {
+      if (add && wordCriteria.meaningCriteria) {
         add = checkStringArray(
           word.meanings.map((mean) => mean.meaning),
           wordCriteria.meaningCriteria
@@ -44,9 +44,9 @@ const wordCriteriaEmpty = (wordCriteria) => {
   if (!wordCriteria) {
     return true;
   } else if (
-    !wordCriteria.kanjis ||
-    !wordCriteria.pronunciation ||
-    !wordCriteria.meaning
+    wordCriteria.kanjisCriteria ||
+    wordCriteria.pronunciationCriteria ||
+    wordCriteria.meaningCriteria
   ) {
     return false;
   } else {

@@ -12,7 +12,7 @@ import KanjiCriteriaForm from "./KanjiCriteriaForm";
 import { radicals as radicalsList } from "../common/Radicals";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import { isConnected } from "../../utils/userUtils";
-import * as kanjiListActions from "../../redux/actions/kanjiListActions";
+import { filterKanjis } from "./filterKanjis";
 
 function KanjisPage(props) {
   const [kanjiCriteria, setKanjiCriteria] = useState({
@@ -26,6 +26,7 @@ function KanjisPage(props) {
     numberOfUse: null,
   });
   const [errors, setErrors] = useState({});
+  const [kanjisList, setKanjisList] = useState([]);
 
   useEffect(() => {
     const { kanjis, actions } = props;
@@ -40,11 +41,16 @@ function KanjisPage(props) {
       !kanjiCriteria.maxStrokeNumber &&
       !kanjiCriteria.radicalsCriteria
     ) {
-      actions.loadKanjis().catch((error) => {
-        alert("Loading kanjis failed" + error);
-      });
+      actions
+        .loadKanjis()
+        .then(setKanjisList(filterKanjis(kanjis, kanjiCriteria)))
+        .catch((error) => {
+          alert("Loading kanjis failed" + error);
+        });
+    } else {
+      setKanjisList(filterKanjis(kanjis, kanjiCriteria));
     }
-  }, []);
+  }, [props.kanjis.length, kanjisList.length]);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
 
   // fonction for criteria form
@@ -77,21 +83,23 @@ function KanjisPage(props) {
     return Object.keys(_errors).length === 0;
   }
 
-  function handleSubmit(event) {
+  function handleReset(event) {
     event.preventDefault();
-    if (!formIsValid()) return;
-    const _kanji = {
-      kanji: kanjiCriteria.kanjiCriteria,
-      pronunciation: kanjiCriteria.pronunciationCriteria,
-      meaning: kanjiCriteria.meaningCriteria,
-      strokeNumber: kanjiCriteria.strokeNumberCriteria,
-      minStrokeNumber: kanjiCriteria.minStrokeNumber,
-      maxStrokeNumber: kanjiCriteria.maxStrokeNumber,
-      radicals: kanjiCriteria.radicalsCriteria,
-    };
-    props.actions.filterKanjis(_kanji).catch((error) => {
-      alert("Filtering kanji failed" + error);
+    // ne marche pas
+    Array.from(document.querySelectorAll("input")).forEach(
+      (input) => (input.value = "")
+    );
+    setKanjiCriteria({
+      kanjiCriteria: "",
+      pronunciationCriteria: "",
+      meaningCriteria: "",
+      strokeNumberCriteria: null,
+      minStrokeNumber: null,
+      maxStrokeNumber: null,
+      radicalsCriteria: "",
+      numberOfUse: null,
     });
+    setKanjiCriteria(filterKanjis(props.kanjis, null));
   }
 
   function handleClick(event) {
@@ -113,25 +121,10 @@ function KanjisPage(props) {
     }
   }
 
-  function handleReset(event) {
+  function handleSubmit(event) {
     event.preventDefault();
-    // ne marche pas
-    Array.from(document.querySelectorAll("input")).forEach(
-      (input) => (input.value = "")
-    );
-    setKanjiCriteria({
-      kanjiCriteria: "",
-      pronunciationCriteria: "",
-      meaningCriteria: "",
-      strokeNumberCriteria: null,
-      minStrokeNumber: null,
-      maxStrokeNumber: null,
-      radicalsCriteria: "",
-      numberOfUse: null,
-    });
-    props.actions.loadKanjis().catch((error) => {
-      alert("Loading kanjis failed" + error);
-    });
+    if (!formIsValid()) return;
+    setKanjisList(filterKanjis(props.kanjis, kanjiCriteria));
   }
 
   const handleDeleteKanji = async (kanji) => {
@@ -163,10 +156,7 @@ function KanjisPage(props) {
               Add Kanji
             </Link>
           )}
-          <KanjiList
-            kanjis={props.kanjisList}
-            deleteKanji={handleDeleteKanji}
-          />
+          <KanjiList kanjis={kanjisList} deleteKanji={handleDeleteKanji} />
         </>
       )}
     </div>
@@ -175,7 +165,6 @@ function KanjisPage(props) {
 
 KanjisPage.propTypes = {
   kanjis: PropTypes.array.isRequired,
-  kanjisList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -183,11 +172,6 @@ KanjisPage.propTypes = {
 function mapStateToProps(state) {
   return {
     kanjis: state.kanjis.map((kanji) => {
-      return {
-        ...kanji,
-      };
-    }),
-    kanjisList: state.kanjisList.map((kanji) => {
       return {
         ...kanji,
       };
@@ -201,7 +185,6 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadKanjis: bindActionCreators(kanjiActions.loadKanjis, dispatch),
       deleteKanji: bindActionCreators(kanjiActions.deleteKanji, dispatch),
-      filterKanjis: bindActionCreators(kanjiListActions.filterKanjis, dispatch),
     },
   };
 }

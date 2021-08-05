@@ -1,7 +1,6 @@
 import * as sentenceApi from "../../api/sentenceApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-import * as sentenceListActions from "./sentenceListActions";
 
 export function loadSentenceSuccess(sentences) {
   return { type: types.LOAD_SENTENCES_SUCCESS, sentences };
@@ -26,7 +25,6 @@ export function loadSentences() {
       .getSentences()
       .then((sentences) => {
         dispatch(loadSentenceSuccess(sentences));
-        dispatch(sentenceListActions.loadSentenceSuccess(sentences));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,10 +42,8 @@ export function saveSentence(sentence) {
       .then((savedsentence) => {
         if (sentence.id) {
           dispatch(updateSentenceSuccess(savedsentence));
-          dispatch(sentenceListActions.updateSentenceSuccess(savedsentence));
         } else {
           dispatch(createSentenceSuccess(savedsentence));
-          dispatch(sentenceListActions.createSentenceSuccess(savedsentence));
         }
       })
       .catch((error) => {
@@ -62,7 +58,6 @@ export function deleteSentence(sentence) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteSentenceOptimistic(sentence));
-    dispatch(sentenceListActions.deleteSentenceOptimistic(sentence));
     return sentenceApi.deleteSentence(sentence.id);
   };
 }

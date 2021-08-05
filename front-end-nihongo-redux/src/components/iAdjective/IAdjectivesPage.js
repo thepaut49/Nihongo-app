@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { isConnected } from "../../utils/userUtils";
-import * as iAdjectiveListActions from "../../redux/actions/iAdjectiveListActions";
+import { filterIAdjectives } from "./filterIAdjectives";
 
 function IAdjectivesPage(props) {
   const [iAdjectiveCriteria, setIAdjectiveCriteria] = useState({
@@ -19,13 +19,21 @@ function IAdjectivesPage(props) {
     pronunciationCriteria: "",
     meaningCriteria: "",
   });
+  const [iAdjectivesList, setIAdjectivesList] = useState([]);
 
   useEffect(() => {
     const { iAdjectives, actions } = props;
     if (iAdjectives.length === 0) {
-      actions.loadIAdjectives().catch((error) => {
-        alert("Loading iadjectives failed" + error);
-      });
+      actions
+        .loadIAdjectives()
+        .then(
+          setIAdjectivesList(filterIAdjectives(iAdjectives, iAdjectiveCriteria))
+        )
+        .catch((error) => {
+          alert("Loading iadjectives failed" + error);
+        });
+    } else {
+      setIAdjectivesList(filterIAdjectives(iAdjectives, iAdjectiveCriteria));
     }
   }, []);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
@@ -56,9 +64,7 @@ function IAdjectivesPage(props) {
       pronunciationCriteria: "",
       meaningCriteria: "",
     });
-    props.actions.loadIAdjectives().catch((error) => {
-      alert("Loading i-adjectives failed" + error);
-    });
+    setIAdjectivesList(filterIAdjectives(props.iAdjectives, null));
   }
 
   function handleClick(event) {
@@ -73,14 +79,9 @@ function IAdjectivesPage(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const _iAdjective = {
-      kanjis: iAdjectiveCriteria.kanjisCriteria,
-      pronunciation: iAdjectiveCriteria.pronunciationCriteria,
-      meaning: iAdjectiveCriteria.meaningCriteria,
-    };
-    props.actions.filterIAdjectives(_iAdjective).catch((error) => {
-      alert("Filtering iadjective failed" + error);
-    });
+    setIAdjectivesList(
+      filterIAdjectives(props.iAdjectives, iAdjectiveCriteria)
+    );
   }
 
   const handleDeleteIAdjective = async (iAdjective) => {
@@ -113,7 +114,7 @@ function IAdjectivesPage(props) {
           )}
 
           <IAdjectiveList
-            iAdjectives={props.iAdjectivesList}
+            iAdjectives={iAdjectivesList}
             deleteIAdjective={handleDeleteIAdjective}
           />
         </>
@@ -124,7 +125,6 @@ function IAdjectivesPage(props) {
 
 IAdjectivesPage.propTypes = {
   iAdjectives: PropTypes.array.isRequired,
-  iAdjectivesList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -132,11 +132,6 @@ IAdjectivesPage.propTypes = {
 function mapStateToProps(state) {
   return {
     iAdjectives: state.iAdjectives.map((iAdjective) => {
-      return {
-        ...iAdjective,
-      };
-    }),
-    iAdjectivesList: state.iAdjectivesList.map((iAdjective) => {
       return {
         ...iAdjective,
       };
@@ -154,10 +149,6 @@ function mapDispatchToProps(dispatch) {
       ),
       deleteIAdjective: bindActionCreators(
         iAdjectiveActions.deleteIAdjective,
-        dispatch
-      ),
-      filterIAdjectives: bindActionCreators(
-        iAdjectiveListActions.filterIAdjectives,
         dispatch
       ),
     },

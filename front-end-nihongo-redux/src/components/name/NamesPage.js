@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import NameCriteriaForm from "./NameCriteriaForm";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import { isConnected } from "../../utils/userUtils";
-import * as nameListActions from "../../redux/actions/nameListActions";
+import { filterNames } from "./filterNames";
 
 function NamesPage(props) {
   const [nameCriteria, setNameCriteria] = useState({
@@ -19,15 +19,21 @@ function NamesPage(props) {
     pronunciationCriteria: "",
     meaningCriteria: "",
   });
+  const [namesList, setNamesList] = useState([]);
 
   useEffect(() => {
     const { names, actions } = props;
     if (names.length === 0) {
-      actions.loadNames().catch((error) => {
-        alert("Loading iadjectives failed" + error);
-      });
+      actions
+        .loadNames()
+        .then(setNamesList(filterNames(names, nameCriteria)))
+        .catch((error) => {
+          alert("Loading iadjectives failed" + error);
+        });
+    } else {
+      setNamesList(filterNames(names, nameCriteria));
     }
-  }, []);
+  }, [props.names.length, namesList.length]);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
 
   // fonction for criteria form
@@ -55,9 +61,7 @@ function NamesPage(props) {
       pronunciationCriteria: "",
       meaningCriteria: "",
     });
-    props.actions.loadNames().catch((error) => {
-      alert("Loading names failed" + error);
-    });
+    setNamesList(filterNames(props.names, null));
   }
 
   function handleClick(event) {
@@ -72,14 +76,7 @@ function NamesPage(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const _name = {
-      kanjis: nameCriteria.kanjisCriteria,
-      pronunciation: nameCriteria.pronunciationCriteria,
-      meaning: nameCriteria.meaningCriteria,
-    };
-    props.actions.filterNames(_name).catch((error) => {
-      alert("Filtering iadjective failed" + error);
-    });
+    setNamesList(filterNames(props.names, nameCriteria));
   }
 
   const handleDeleteName = async (name) => {
@@ -112,7 +109,7 @@ function NamesPage(props) {
             </Link>
           )}
 
-          <NameList names={props.namesList} deleteName={handleDeleteName} />
+          <NameList names={namesList} deleteName={handleDeleteName} />
         </>
       )}
     </div>
@@ -121,7 +118,6 @@ function NamesPage(props) {
 
 NamesPage.propTypes = {
   names: PropTypes.array.isRequired,
-  namesList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -129,11 +125,6 @@ NamesPage.propTypes = {
 function mapStateToProps(state) {
   return {
     names: state.names.map((name) => {
-      return {
-        ...name,
-      };
-    }),
-    namesList: state.namesList.map((name) => {
       return {
         ...name,
       };
@@ -147,7 +138,6 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadNames: bindActionCreators(nameActions.loadNames, dispatch),
       deleteName: bindActionCreators(nameActions.deleteName, dispatch),
-      filterNames: bindActionCreators(nameListActions.filterNames, dispatch),
     },
   };
 }

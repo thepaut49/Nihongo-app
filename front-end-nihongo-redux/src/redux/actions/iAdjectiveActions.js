@@ -1,7 +1,6 @@
 import * as iAdjectiveApi from "../../api/iAdjectiveApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-import * as iAdjectiveListActions from "./iAdjectiveListActions";
 
 export function loadIAdjectiveSuccess(iAdjectives) {
   return { type: types.LOAD_I_ADJECTIVES_SUCCESS, iAdjectives };
@@ -26,7 +25,6 @@ export function loadIAdjectives() {
       .getIAdjectives()
       .then((iAdjectives) => {
         dispatch(loadIAdjectiveSuccess(iAdjectives));
-        dispatch(iAdjectiveListActions.loadIAdjectiveSuccess(iAdjectives));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,14 +42,10 @@ export function saveIAdjective(iAdjective) {
       .then((savediAdjective) => {
         if (iAdjective.id) {
           dispatch(updateIAdjectiveSuccess(savediAdjective));
-          dispatch(
-            iAdjectiveListActions.updateIAdjectiveSuccess(savediAdjective)
-          );
+          dispatch();
         } else {
           dispatch(createIAdjectiveSuccess(savediAdjective));
-          dispatch(
-            iAdjectiveListActions.createIAdjectiveSuccess(savediAdjective)
-          );
+          dispatch();
         }
       })
       .catch((error) => {
@@ -66,7 +60,6 @@ export function deleteIAdjective(iAdjective) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteIAdjectiveOptimistic(iAdjective));
-    dispatch(iAdjectiveListActions.deleteIAdjectiveOptimistic(iAdjective));
     return iAdjectiveApi.deleteIAdjective(iAdjective.id);
   };
 }
@@ -79,9 +72,7 @@ export function updateNumberOfUse(id) {
       .updateNumberOfUse(id)
       .then((savediAdjective) => {
         dispatch(updateIAdjectiveSuccess(savediAdjective));
-        dispatch(
-          iAdjectiveListActions.updateIAdjectiveSuccess(savediAdjective)
-        );
+        dispatch();
       })
       .catch((error) => {
         dispatch(apiCallError(error));

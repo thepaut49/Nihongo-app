@@ -1,7 +1,6 @@
 import * as kanjiApi from "../../api/kanjiApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-import * as kanjiListActions from "./kanjiListActions";
 
 export function loadKanjiSuccess(kanjis) {
   return { type: types.LOAD_KANJIS_SUCCESS, kanjis };
@@ -26,7 +25,6 @@ export function loadKanjis() {
       .getKanjis()
       .then((kanjis) => {
         dispatch(loadKanjiSuccess(kanjis));
-        dispatch(kanjiListActions.loadKanjiSuccess(kanjis));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,10 +42,8 @@ export function saveKanji(kanji) {
       .then((savedKanji) => {
         if (kanji.id) {
           dispatch(updateKanjiSuccess(savedKanji));
-          dispatch(kanjiListActions.updateKanjiSuccess(savedKanji));
         } else {
           dispatch(createKanjiSuccess(savedKanji));
-          dispatch(kanjiListActions.createKanjiSuccess(savedKanji));
         }
       })
       .catch((error) => {
@@ -62,7 +58,6 @@ export function deleteKanji(kanji) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteKanjiOptimistic(kanji));
-    dispatch(kanjiListActions.deleteKanjiOptimistic(kanji));
     return kanjiApi.deleteKanji(kanji.id);
   };
 }
@@ -75,7 +70,6 @@ export function updateNumberOfUse(id) {
       .updateNumberOfUse(id)
       .then((savedKanji) => {
         dispatch(updateKanjiSuccess(savedKanji));
-        dispatch(kanjiListActions.updateKanjiSuccess(savedKanji));
       })
       .catch((error) => {
         dispatch(apiCallError(error));

@@ -24,12 +24,16 @@ function WordsPage(props) {
   useEffect(() => {
     const { words, actions } = props;
     if (words.length === 0) {
-      actions.loadWords().catch((error) => {
-        alert("Loading words failed" + error);
-      });
+      actions
+        .loadWords()
+        .then(setWordsList(filterWords(words, wordCriteria)))
+        .catch((error) => {
+          alert("Loading words failed" + error);
+        });
+    } else {
+      setWordsList(filterWords(words, wordCriteria));
     }
-    setWordsList(filterWords(words, wordCriteria));
-  }, [wordsList.length]);
+  }, [props.words.length, wordsList.length]);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
 
   // fonction for criteria form

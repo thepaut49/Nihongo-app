@@ -1,7 +1,6 @@
 import * as nameApi from "../../api/nameApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-import * as nameListActions from "./nameListActions";
 
 export function loadNameSuccess(names) {
   return { type: types.LOAD_NAMES_SUCCESS, names };
@@ -26,7 +25,6 @@ export function loadNames() {
       .getNames()
       .then((names) => {
         dispatch(loadNameSuccess(names));
-        dispatch(nameListActions.loadNameSuccess(names));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,10 +42,8 @@ export function saveName(name) {
       .then((savedname) => {
         if (name.id) {
           dispatch(updateNameSuccess(savedname));
-          dispatch(nameListActions.updateNameSuccess(savedname));
         } else {
           dispatch(createNameSuccess(savedname));
-          dispatch(nameListActions.createNameSuccess(savedname));
         }
       })
       .catch((error) => {
@@ -62,7 +58,6 @@ export function deleteName(name) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteNameOptimistic(name));
-    dispatch(nameListActions.deleteNameOptimistic(name));
     return nameApi.deleteName(name.id);
   };
 }
@@ -75,7 +70,6 @@ export function updateNumberOfUse(id) {
       .updateNumberOfUse(id)
       .then((savedname) => {
         dispatch(updateNameSuccess(savedname));
-        dispatch(nameListActions.updateNameSuccess(savedname));
       })
       .catch((error) => {
         dispatch(apiCallError(error));

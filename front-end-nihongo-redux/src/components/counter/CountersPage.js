@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { isConnected } from "../../utils/userUtils";
-import * as counterListActions from "../../redux/actions/counterListActions";
+import { filterCounters } from "./filterCounters";
 
 function CountersPage(props) {
   const [counterCriteria, setCounterCriteria] = useState({
@@ -19,15 +19,21 @@ function CountersPage(props) {
     pronunciationCriteria: "",
     useCriteria: "",
   });
+  const [countersList, setCountersList] = useState([]);
 
   useEffect(() => {
     const { counters, actions } = props;
     if (counters.length === 0) {
-      actions.loadCounters().catch((error) => {
-        alert("Loading counters failed" + error);
-      });
+      actions
+        .loadCounters()
+        .then(setCountersList(filterCounters(counters, counterCriteria)))
+        .catch((error) => {
+          alert("Loading counters failed" + error);
+        });
+    } else {
+      setCountersList(filterCounters(counters, counterCriteria));
     }
-  }, []);
+  }, [props.counters.length, countersList.length]);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
 
   // fonction for criteria form
@@ -59,9 +65,7 @@ function CountersPage(props) {
       pronunciationCriteria: "",
       useCriteria: "",
     });
-    props.actions.loadCounters().catch((error) => {
-      alert("Loading counters failed" + error);
-    });
+    setCountersList(filterCounters(props.counters, null));
   }
 
   function handleClick(event) {
@@ -76,14 +80,7 @@ function CountersPage(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const _counter = {
-      kanjis: counterCriteria.kanjisCriteria,
-      pronunciation: counterCriteria.pronunciationCriteria,
-      use: counterCriteria.useCriteria,
-    };
-    props.actions.filterCounters(_counter).catch((error) => {
-      alert("Filtering counter failed" + error);
-    });
+    setCountersList(filterCounters(props.counters, counterCriteria));
   }
 
   const handleDeleteCounter = async (counter) => {
@@ -117,7 +114,7 @@ function CountersPage(props) {
           )}
 
           <CounterList
-            counters={props.countersList}
+            counters={countersList}
             deleteCounter={handleDeleteCounter}
           />
         </>
@@ -128,7 +125,6 @@ function CountersPage(props) {
 
 CountersPage.propTypes = {
   counters: PropTypes.array.isRequired,
-  countersList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -136,11 +132,6 @@ CountersPage.propTypes = {
 function mapStateToProps(state) {
   return {
     counters: state.counters.map((counter) => {
-      return {
-        ...counter,
-      };
-    }),
-    countersList: state.countersList.map((counter) => {
       return {
         ...counter,
       };
@@ -154,10 +145,6 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadCounters: bindActionCreators(counterActions.loadCounters, dispatch),
       deleteCounter: bindActionCreators(counterActions.deleteCounter, dispatch),
-      filterCounters: bindActionCreators(
-        counterListActions.filterCounters,
-        dispatch
-      ),
     },
   };
 }

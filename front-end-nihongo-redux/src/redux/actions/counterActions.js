@@ -1,7 +1,6 @@
 import * as counterApi from "../../api/counterApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-import * as counterListActions from "./counterListActions";
 
 export function loadCounterSuccess(counters) {
   return { type: types.LOAD_COUNTERS_SUCCESS, counters };
@@ -26,7 +25,6 @@ export function loadCounters() {
       .getCounters()
       .then((counters) => {
         dispatch(loadCounterSuccess(counters));
-        dispatch(counterListActions.loadCounterSuccess(counters));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,10 +42,8 @@ export function saveCounter(counter) {
       .then((savedCounter) => {
         if (counter.id) {
           dispatch(updateCounterSuccess(savedCounter));
-          dispatch(counterListActions.updateCounterSuccess(savedCounter));
         } else {
           dispatch(createCounterSuccess(savedCounter));
-          dispatch(counterListActions.createCounterSuccess(savedCounter));
         }
       })
       .catch((error) => {
@@ -62,7 +58,6 @@ export function deleteCounter(counter) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteCounterOptimistic(counter));
-    dispatch(counterListActions.deleteCounterOptimistic(counter));
     return counterApi.deleteCounter(counter.id);
   };
 }
@@ -75,7 +70,6 @@ export function updateNumberOfUse(id) {
       .updateNumberOfUse(id)
       .then((savedCounter) => {
         dispatch(updateCounterSuccess(savedCounter));
-        dispatch(counterListActions.updateCounterSuccess(savedCounter));
       })
       .catch((error) => {
         dispatch(apiCallError(error));

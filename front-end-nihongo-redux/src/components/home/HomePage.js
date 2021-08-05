@@ -40,7 +40,7 @@ HomePage.propTypes = {
   actions: PropTypes.object.isRequired,
 };
 
-function mapStateToProps(state) {
+function mapStateToProps() {
   return {};
 }
 

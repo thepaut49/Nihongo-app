@@ -1,7 +1,6 @@
 import * as wordApi from "../../api/wordApi";
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
-import * as wordListActions from "./wordListActions";
 
 export function loadWordSuccess(words) {
   return { type: types.LOAD_WORDS_SUCCESS, words };
@@ -26,7 +25,6 @@ export function loadWords() {
       .getWords()
       .then((words) => {
         dispatch(loadWordSuccess(words));
-        //dispatch(wordListActions.loadWordSuccess(words));
       })
       .catch((error) => {
         dispatch(apiCallError(error));
@@ -44,10 +42,8 @@ export function saveWord(word) {
       .then((savedword) => {
         if (word.id) {
           dispatch(updateWordSuccess(savedword));
-          //dispatch(wordListActions.updateWordSuccess(savedword));
         } else {
           dispatch(createWordSuccess(savedword));
-          //dispatch(wordListActions.createWordSuccess(savedword));
         }
       })
       .catch((error) => {
@@ -62,7 +58,6 @@ export function deleteWord(word) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteWordOptimistic(word));
-    //dispatch(wordListActions.deleteWordOptimistic(word));
     return wordApi.deleteWord(word.id);
   };
 }
@@ -75,7 +70,6 @@ export function updateNumberOfUse(id) {
       .updateNumberOfUse(id)
       .then((savedword) => {
         dispatch(updateWordSuccess(savedword));
-        //dispatch(wordListActions.updateWordSuccess(savedword));
       })
       .catch((error) => {
         dispatch(apiCallError(error));

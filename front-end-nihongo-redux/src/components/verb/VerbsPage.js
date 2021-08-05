@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import VerbCriteriaForm from "./VerbCriteriaForm";
 import { translateRomajiToKana } from "../common/TranslateRomajiToKana";
 import { isConnected } from "../../utils/userUtils";
-import * as verbListActions from "../../redux/actions/verbListActions";
+import { filterVerbs } from "./filterVerbs";
 
 function VerbsPage(props) {
   const [verbCriteria, setVerbCriteria] = useState({
@@ -20,15 +20,21 @@ function VerbsPage(props) {
     meaningCriteria: "",
     groupeCriteria: "",
   });
+  const [verbsList, setVerbsList] = useState([]);
 
   useEffect(() => {
     const { verbs, actions } = props;
     if (verbs.length === 0) {
-      actions.loadVerbs().catch((error) => {
-        alert("Loading iadjectives failed" + error);
-      });
+      actions
+        .loadVerbs()
+        .then(setVerbsList(filterVerbs(verbs, verbCriteria)))
+        .catch((error) => {
+          alert("Loading iadjectives failed" + error);
+        });
+    } else {
+      setVerbsList(filterVerbs(verbs, verbCriteria));
     }
-  }, []);
+  }, [props.verbs.length, verbsList.length]);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
 
   // fonction for criteria form
@@ -60,9 +66,7 @@ function VerbsPage(props) {
       meaningCriteria: "",
       groupeCriteria: "",
     });
-    props.actions.loadVerbs().catch((error) => {
-      alert("Loading verbs failed" + error);
-    });
+    setVerbsList(filterVerbs(props.verbs, null));
   }
 
   // onclick function near pronunciation criteria
@@ -79,15 +83,7 @@ function VerbsPage(props) {
   // submit function of criteria form
   function handleSubmit(event) {
     event.preventDefault();
-    const _verb = {
-      neutralForm: verbCriteria.neutralFormCriteria,
-      pronunciation: verbCriteria.pronunciationCriteria,
-      meaning: verbCriteria.meaningCriteria,
-      groupe: verbCriteria.groupeCriteria,
-    };
-    props.actions.filterVerbs(_verb).catch((error) => {
-      alert("Filtering verbs failed" + error);
-    });
+    setVerbsList(filterVerbs(props.verbs, verbCriteria));
   }
 
   const handleDeleteVerb = async (verb) => {
@@ -119,7 +115,7 @@ function VerbsPage(props) {
             </Link>
           )}
 
-          <VerbList verbs={props.verbsList} deleteVerb={handleDeleteVerb} />
+          <VerbList verbs={verbsList} deleteVerb={handleDeleteVerb} />
         </>
       )}
     </div>
@@ -128,7 +124,6 @@ function VerbsPage(props) {
 
 VerbsPage.propTypes = {
   verbs: PropTypes.array.isRequired,
-  verbsList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -136,11 +131,6 @@ VerbsPage.propTypes = {
 function mapStateToProps(state) {
   return {
     verbs: state.verbs.map((verb) => {
-      return {
-        ...verb,
-      };
-    }),
-    verbsList: state.verbsList.map((verb) => {
       return {
         ...verb,
       };
@@ -154,7 +144,6 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadVerbs: bindActionCreators(verbActions.loadVerbs, dispatch),
       deleteVerb: bindActionCreators(verbActions.deleteVerb, dispatch),
-      filterVerbs: bindActionCreators(verbListActions.filterVerbs, dispatch),
     },
   };
 }

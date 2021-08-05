@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as naAdjectiveActions from "../../redux/actions/naAdjectiveActions";
-import * as naAdjectiveListActions from "../../redux/actions/naAdjectiveListActions";
 import "./NaAdjectivesPage.css";
 import NaAdjectiveList from "./NaAdjectiveList";
 import { Link } from "react-router-dom";
@@ -12,6 +11,7 @@ import { bindActionCreators } from "redux";
 import Spinner from "../common/spinner/Spinner";
 import { toast } from "react-toastify";
 import { isConnected } from "../../utils/userUtils";
+import { filterNaAdjectives } from "./filterNaAdjectives";
 
 function NaAdjectivesPage(props) {
   const [naAdjectiveCriteria, setNaAdjectiveCriteria] = useState({
@@ -19,15 +19,27 @@ function NaAdjectivesPage(props) {
     pronunciationCriteria: "",
     meaningCriteria: "",
   });
+  const [naAdjectivesList, setNaAdjectivesList] = useState([]);
 
   useEffect(() => {
     const { naAdjectives, actions } = props;
     if (naAdjectives.length === 0) {
-      actions.loadNaAdjectives().catch((error) => {
-        alert("Loading na-adjectives failed" + error);
-      });
+      actions
+        .loadNaAdjectives()
+        .then(
+          setNaAdjectivesList(
+            filterNaAdjectives(naAdjectives, naAdjectiveCriteria)
+          )
+        )
+        .catch((error) => {
+          alert("Loading na-adjectives failed" + error);
+        });
+    } else {
+      setNaAdjectivesList(
+        filterNaAdjectives(naAdjectives, naAdjectiveCriteria)
+      );
     }
-  }, []);
+  }, [props.naAdjectives.length, naAdjectivesList.length]);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
 
   // fonction for criteria form
@@ -55,9 +67,7 @@ function NaAdjectivesPage(props) {
       pronunciationCriteria: "",
       meaningCriteria: "",
     });
-    props.actions.loadNaAdjectives().catch((error) => {
-      alert("Loading na-adjectives failed" + error);
-    });
+    setNaAdjectivesList(filterNaAdjectives(props.naAdjectives, null));
   }
 
   function handleClick(event) {
@@ -72,14 +82,9 @@ function NaAdjectivesPage(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const _naAdjective = {
-      kanjis: naAdjectiveCriteria.kanjisCriteria,
-      pronunciation: naAdjectiveCriteria.pronunciationCriteria,
-      meaning: naAdjectiveCriteria.meaningCriteria,
-    };
-    props.actions.filterNaAdjectives(_naAdjective).catch((error) => {
-      alert("Filtering na-adjective failed" + error);
-    });
+    setNaAdjectivesList(
+      filterNaAdjectives(props.naAdjectives, naAdjectiveCriteria)
+    );
   }
 
   const handleDeleteNaAdjective = async (naAdjective) => {
@@ -113,7 +118,7 @@ function NaAdjectivesPage(props) {
           )}
 
           <NaAdjectiveList
-            naAdjectives={props.naAdjectivesList}
+            naAdjectives={naAdjectivesList}
             deleteNaAdjective={handleDeleteNaAdjective}
           />
         </>
@@ -124,7 +129,6 @@ function NaAdjectivesPage(props) {
 
 NaAdjectivesPage.propTypes = {
   naAdjectives: PropTypes.array.isRequired,
-  naAdjectivesList: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };
@@ -132,11 +136,6 @@ NaAdjectivesPage.propTypes = {
 function mapStateToProps(state) {
   return {
     naAdjectives: state.naAdjectives.map((naAdjective) => {
-      return {
-        ...naAdjective,
-      };
-    }),
-    naAdjectivesList: state.naAdjectivesList.map((naAdjective) => {
       return {
         ...naAdjective,
       };
@@ -154,10 +153,6 @@ function mapDispatchToProps(dispatch) {
       ),
       deleteNaAdjective: bindActionCreators(
         naAdjectiveActions.deleteNaAdjective,
-        dispatch
-      ),
-      filterNaAdjectives: bindActionCreators(
-        naAdjectiveListActions.filterNaAdjectives,
         dispatch
       ),
     },
