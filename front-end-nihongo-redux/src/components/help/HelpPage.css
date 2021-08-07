@@ -1,7 +1,11 @@
+.help-container {
+  display: grid;
+  grid: 1fr / 2fr 10fr;
+}
+
 .howToUseSection {
   display: grid;
   grid: min-content 1fr / 1fr;
-  background-color: var(--third-bg-color);
   border-radius: 10px;
   gap: 0.5em;
   margin: 0.5em;
@@ -11,7 +15,6 @@
   color: var(--primary-txt-color);
   font-weight: bold;
   font-size: xx-large;
-  background-color: var(--fourth-bg-color);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 0.1em;
@@ -24,23 +27,32 @@
   color: var(--secondary-txt-color);
 }
 
+/*** CSS for summary ***/
 #toc_container {
-  background: #f9f9f9 none repeat scroll 0 0;
+  background: blue none repeat scroll 0 0;
   border: 1px solid #aaa;
-  display: table;
-  font-size: 95%;
-  margin-bottom: 1em;
-  padding: 20px;
-  width: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0.5em;
+  gap: 1em;
+  border-radius: 10px;
 }
 
-.toc_title {
-  font-weight: 700;
+#toc_container div {
+  float: left;
+  color: white;
   text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  vertical-align: middle;
+  font-weight: bold;
 }
 
-#toc_container li,
-#toc_container ul,
-#toc_container ul li {
-  list-style: outside none none !important;
+#toc_container div a {
+  text-decoration: none;
+}
+
+#toc_container div:hover {
+  background-color: red;
+  border-radius: 10px;
 }

@@ -115,7 +115,7 @@ const ListOfParts = (props) => {
         <button
           id="buttonListOfParts"
           onClick={showListOfParts}
-          className="btn btn-success"
+          className="showListOfThingButtons"
         >
           List of parts
         </button>
@@ -123,7 +123,7 @@ const ListOfParts = (props) => {
         <button
           id="buttonListOfKanji"
           onClick={showListOfKanjis}
-          className="btn btn-success"
+          className="showListOfThingButtons"
         >
           List of Kanjis
         </button>
@@ -131,7 +131,7 @@ const ListOfParts = (props) => {
         <button
           id="buttonListOfGrammarRules"
           onClick={showListOfGrammarRules}
-          className="btn btn-success"
+          className="showListOfThingButtons"
         >
           List of grammar rules
         </button>

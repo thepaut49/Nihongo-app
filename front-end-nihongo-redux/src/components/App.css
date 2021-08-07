@@ -35,6 +35,12 @@ h3 {
   margin: 0.1em;
 }
 
+h4 {
+  padding: 0.1em;
+  width: max-content;
+  margin: 0.1em;
+}
+
 .app-container {
   display: grid;
   grid-template-rows: min-content max-content;
@@ -113,6 +119,19 @@ label {
 }
 
 /**** CSS for filter form ****/
+.hideFilterButtons {
+  background-color: var(--primary-bg-color);
+  border-radius: 10px;
+  color: white;
+  border: none;
+  outline: none;
+  margin: 0.4em;
+}
+
+.hideFilterButtons:hover {
+  background-color: black;
+}
+
 .filterStyle {
   background-color: var(--filters-bg-color);
   border-radius: 10px;
@@ -202,3 +221,5 @@ label {
   cursor: pointer;
   border: none;
 }
+
+/*** ***/

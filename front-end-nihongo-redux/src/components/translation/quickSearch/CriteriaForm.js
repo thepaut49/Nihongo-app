@@ -19,10 +19,6 @@ const filterStyle = {
   padding: "0.4em",
 };
 
-const buttonFiltersStyle = {
-  margin: "0.4em",
-};
-
 const buttonSearchClearStyle = {
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
@@ -64,8 +60,7 @@ function CriteriaForm(props) {
         <button
           id="buttonFiltersCriteria"
           onClick={hideFilters}
-          className="btn btn-success"
-          style={buttonFiltersStyle}
+          className="hideFilterButtons"
         >
           Filters
         </button>

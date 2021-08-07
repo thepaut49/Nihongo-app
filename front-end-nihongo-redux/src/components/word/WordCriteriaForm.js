@@ -3,10 +3,6 @@ import CustomInput from "../common/CustomInput";
 import PropTypes from "prop-types";
 import "./WordCriteriaForm.css";
 
-const buttonFiltersStyle = {
-  margin: "0.4em",
-};
-
 const buttonSearchClearStyle = {
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
@@ -27,11 +23,7 @@ const hideFilters = (event) => {
 function WordCriteriaForm({ wordCriteria, onChange, onReset, onSubmit }) {
   return (
     <div className="filterStyle">
-      <button
-        onClick={hideFilters}
-        className="btn btn-success"
-        style={buttonFiltersStyle}
-      >
+      <button onClick={hideFilters} className="hideFilterButtons">
         Filters
       </button>
       <form onSubmit={onSubmit} id="formFiltersWord">
