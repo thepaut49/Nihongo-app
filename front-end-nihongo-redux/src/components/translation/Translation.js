@@ -56,15 +56,46 @@ const getListObjectStyle = (typeSelect) => {
 
 const Translation = (props) => {
   // variables locales
+  const [sentence, setSentence] = useState(
+    sessionStorage.getItem("sentence") ? sessionStorage.getItem("sentence") : ""
+  );
+  const [quantity, setQuantity] = useState(
+    sessionStorage.getItem("quantity") ? sessionStorage.getItem("quantity") : 50
+  );
+  const [typeSelect, setTypeSelect] = useState(
+    sessionStorage.getItem("typeSelect")
+      ? sessionStorage.getItem("typeSelect")
+      : translationConstants.DEFAULT_TYPE
+  );
+  const [listObjects, setListObjects] = useState(
+    sessionStorage.getItem("listObjects")
+      ? JSON.parse(sessionStorage.getItem("listObjects"))
+      : []
+  );
+  const [listParts, setListParts] = useState(
+    sessionStorage.getItem("listParts")
+      ? JSON.parse(sessionStorage.getItem("listParts"))
+      : []
+  );
+  const [listOfKanjis, setListOfKanjis] = useState(
+    sessionStorage.getItem("listOfKanjis")
+      ? JSON.parse(sessionStorage.getItem("listOfKanjis"))
+      : []
+  );
+  const [listOfGrammarRules, setListOfGrammarRules] = useState(
+    sessionStorage.getItem("listOfGrammarRules")
+      ? JSON.parse(sessionStorage.getItem("listOfGrammarRules"))
+      : []
+  );
+
   let typeSelectField = document.querySelectorAll("typeSelect");
-  typeSelectField.value = props.translation.typeSelect;
+  typeSelectField.value = typeSelect;
   const [listObjectsStyle, setListObjectsStyle] = useState(
-    getListObjectStyle(props.translation.typeSelect)
+    getListObjectStyle(typeSelect)
   );
 
   useEffect(() => {
     const {
-      translation,
       counters,
       kanjis,
       iAdjectives,
@@ -87,39 +118,44 @@ const Translation = (props) => {
     if (counters.length === 0) actions.loadCounters();
     if (suffixs.length === 0) actions.loadSuffixs();
     if (grammarRules.length === 0) actions.loadGrammarRules();
-    if (translation.listObjects.length === 0) {
-      actions.loadListObjects(translation.typeSelect, translation.quantity);
+    if (listObjects.length === 0) {
+      translationActions.loadListObjects(typeSelect, quantity, setListObjects);
     }
-  }, []);
+  }, [typeSelect, quantity, listObjects]);
 
   const handleListClick = (event, id) => {
-    props.actions.updateSentence(
-      props.translation.sentence + event.target.innerText
+    translationActions.updateSentence(
+      sentence + event.target.innerText,
+      setSentence
     );
-    props.actions.updateNumberOfUse(props.translation.typeSelect, id);
+    translationActions.updateNumberOfUse(typeSelect, id);
   };
 
   const handleSelectChange = (event) => {
     let _typeSelect = "";
     let _quantity = 0;
     if (event.target.name === "typeSelect") {
-      props.actions.updateTypeSelect(event.target.value);
+      translationActions.updateTypeSelect(event.target.value, setTypeSelect);
       _typeSelect = event.target.value;
-      _quantity = props.translation.quantity;
+      _quantity = quantity;
     } else {
-      props.actions.updateQuantity(event.target.value);
-      _typeSelect = props.translation.typeSelect;
+      translationActions.updateQuantity(event.target.value, setQuantity);
+      _typeSelect = typeSelect;
       _quantity = event.target.value;
     }
     setListObjectsStyle(getListObjectStyle(_typeSelect));
-    props.actions.loadListObjects(_typeSelect, _quantity);
+    translationActions.loadListObjects(_typeSelect, _quantity, setListObjects);
   };
 
   const handleTranslateClick = (event) => {
     event.preventDefault();
-    props.actions.extractListOfKanji(props.translation.sentence, props.kanjis);
+    translationActions.extractListOfKanji(
+      sentence,
+      props.kanjis,
+      setListOfKanjis
+    );
     const _listOfParts = extractParts(
-      props.translation.sentence,
+      sentence,
       props.verbs,
       props.naAdjectives,
       props.iAdjectives,
@@ -129,26 +165,31 @@ const Translation = (props) => {
       props.counters,
       props.suffixs
     );
-    props.actions.loadParts(_listOfParts);
-    props.actions.extractListOfGrammarRules(_listOfParts, props.grammarRules);
+    translationActions.loadParts(_listOfParts, setListParts);
+    translationActions.extractListOfGrammarRules(
+      _listOfParts,
+      props.grammarRules,
+      setListOfGrammarRules
+    );
   };
 
   const handleClearClick = (event) => {
     event.preventDefault();
-    props.actions.clearTranslation();
+    translationActions.clearTranslation(setListOfKanjis, setListParts);
   };
 
   const handleQuickSearchClick = (event, result) => {
     if (!result.typeWord) {
-      props.actions.updateSentence(props.translation.sentence + result.kanji);
+      translationActions.updateSentence(sentence + result.kanji, setSentence);
     } else if (result.typeWord === translationConstants.TYPE_VERB) {
-      props.actions.updateSentence(
-        props.translation.sentence + result.neutralForm
+      translationActions.updateSentence(
+        sentence + result.neutralForm,
+        setSentence
       );
     } else {
-      props.actions.updateSentence(props.translation.sentence + result.kanjis);
+      translationActions.updateSentence(sentence + result.kanjis, setSentence);
     }
-    props.actions.updateNumberOfUse(props.translation.typeSelect, result.id);
+    translationActions.updateNumberOfUse(typeSelect, result.id);
   };
 
   const handleSentenceChange = (event) => {
@@ -157,14 +198,14 @@ const Translation = (props) => {
     newValue = translateRomajiToKana(newValue);
     let textArea = document.getElementById("textToTranslate");
     textArea.value = newValue;
-    props.actions.updateSentence(newValue);
+    translationActions.updateSentence(newValue, setSentence);
   };
 
   const handleKanaClick = (event) => {
     event.preventDefault();
     let textArea = document.getElementById("textToTranslate");
     textArea.value = textArea.value + event.target.innerHTML;
-    props.actions.updateSentence(textArea.value);
+    translationActions.updateSentence(textArea.value, setSentence);
   };
 
   const handleSplitPart = (newList) => {
@@ -191,26 +232,28 @@ const Translation = (props) => {
         newPartsList.push(part);
       }
     });
-    props.actions.loadParts(newPartsList);
+    translationActions.loadParts(newPartsList, setListParts);
     // reacalculer les gramamr rules
-    props.actions.extractListOfGrammarRules(newPartsList, props.grammarRules);
+    translationActions.extractListOfGrammarRules(
+      newPartsList,
+      props.grammarRules,
+      setListOfGrammarRules
+    );
   };
 
   const handleUnknownTransform = (event, part) => {
     event.preventDefault();
     let indexToTransform = 0;
-    for (let i = 0; i < props.translation.listParts.length; i++) {
-      if (props.translation.listParts[i] === part) indexToTransform = i;
+    for (let i = 0; i < listParts.length; i++) {
+      if (listParts[i] === part) indexToTransform = i;
     }
     let newPartsList = [];
-    const partToTransform = props.translation.listParts[indexToTransform];
+    const partToTransform = listParts[indexToTransform];
     const beforePart =
-      indexToTransform > 0
-        ? props.translation.listParts[indexToTransform - 1]
-        : null;
+      indexToTransform > 0 ? listParts[indexToTransform - 1] : null;
     const afterPart =
-      indexToTransform < props.translation.listParts.length - 1
-        ? props.translation.listParts[indexToTransform + 1]
+      indexToTransform < listParts.length - 1
+        ? listParts[indexToTransform + 1]
         : null;
     const fusionBeforeAndAfterPart =
       beforePart &&
@@ -236,7 +279,7 @@ const Translation = (props) => {
         currentIndex: beforePart.currentIndex,
         listOfValues: [],
       };
-      props.translation.listParts.forEach((item, index) => {
+      listParts.forEach((item, index) => {
         if (index === indexToTransform - 1) {
           newPartsList.push(newFusionPart);
         } else if (
@@ -259,7 +302,7 @@ const Translation = (props) => {
         currentIndex: beforePart.currentIndex,
         listOfValues: [],
       };
-      props.translation.listParts.forEach((item, index) => {
+      listParts.forEach((item, index) => {
         if (index === indexToTransform - 1) {
           newPartsList.push(newFusionPart);
         } else if (index < indexToTransform - 1 || index > indexToTransform) {
@@ -279,7 +322,7 @@ const Translation = (props) => {
         currentIndex: partToTransform.currentIndex,
         listOfValues: [],
       };
-      props.translation.listParts.forEach((item, index) => {
+      listParts.forEach((item, index) => {
         if (index === indexToTransform) {
           newPartsList.push(newFusionPart);
         } else if (index < indexToTransform || index > indexToTransform + 1) {
@@ -299,7 +342,7 @@ const Translation = (props) => {
         currentIndex: partToTransform.currentIndex,
         listOfValues: [],
       };
-      props.translation.listParts.forEach((item, index) => {
+      listParts.forEach((item, index) => {
         if (index < indexToTransform || index > indexToTransform) {
           newPartsList.push(item);
         } else {
@@ -307,9 +350,13 @@ const Translation = (props) => {
         }
       });
     }
-    props.actions.loadParts(newPartsList);
+    translationActions.loadParts(newPartsList, setListParts);
     // reacalculer les gramamr rules
-    props.actions.extractListOfGrammarRules(newPartsList, props.grammarRules);
+    translationActions.extractListOfGrammarRules(
+      newPartsList,
+      props.grammarRules,
+      setListOfGrammarRules
+    );
   };
 
   return (
@@ -323,7 +370,7 @@ const Translation = (props) => {
               label="Type"
               onChange={handleSelectChange}
               name="typeSelect"
-              value={props.translation.typeSelect}
+              value={typeSelect}
               listOfValues={typeSelectListOfValue}
             />
             <CustomIntegerSelect
@@ -331,20 +378,20 @@ const Translation = (props) => {
               label="Quantity"
               onChange={handleSelectChange}
               name="quantity"
-              value={props.translation.quantity}
+              value={quantity}
               listOfValues={quantityListOfValue}
             />
           </div>
 
           <ListObject
-            list={props.translation.listObjects}
+            list={listObjects}
             onClick={handleListClick}
             style={listObjectsStyle}
-            typeSelect={props.translation.typeSelect}
+            typeSelect={typeSelect}
           />
         </div>
         <TranslationArea
-          sentence={props.translation.sentence}
+          sentence={sentence}
           onSentenceChange={handleSentenceChange}
           onTranslateClick={handleTranslateClick}
           onClearClick={handleClearClick}
@@ -352,9 +399,9 @@ const Translation = (props) => {
           onQuickSearchClick={handleQuickSearchClick}
         />
         <ListOfParts
-          list={props.translation.listParts}
-          listOfKanjis={props.translation.listOfKanjis}
-          listOfGrammarRules={props.translation.listOfGrammarRules}
+          list={listParts}
+          listOfKanjis={listOfKanjis}
+          listOfGrammarRules={listOfGrammarRules}
           onSplitPart={handleSplitPart}
           onUnknownTransform={handleUnknownTransform}
         />
@@ -373,7 +420,6 @@ Translation.propTypes = {
   suffixs: PropTypes.array.isRequired,
   verbs: PropTypes.array.isRequired,
   words: PropTypes.array.isRequired,
-  translation: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   actions: PropTypes.object.isRequired,
   grammarRules: PropTypes.array.isRequired,
@@ -390,7 +436,6 @@ function mapStateToProps(state) {
     suffixs: state.suffixs,
     verbs: state.verbs,
     words: state.words,
-    translation: state.translation,
     apiCallsInProgress: state.apiCallsInProgress,
     grammarRules: state.grammarRules,
   };
@@ -419,39 +464,6 @@ function mapDispatchToProps(dispatch) {
       loadWords: bindActionCreators(wordActions.loadWords, dispatch),
       loadGrammarRules: bindActionCreators(
         grammarRuleActions.loadGrammarRules,
-        dispatch
-      ),
-      updateSentence: bindActionCreators(
-        translationActions.updateSentence,
-        dispatch
-      ),
-      updateQuantity: bindActionCreators(
-        translationActions.updateQuantity,
-        dispatch
-      ),
-      updateTypeSelect: bindActionCreators(
-        translationActions.updateTypeSelect,
-        dispatch
-      ),
-      updateNumberOfUse: bindActionCreators(
-        translationActions.updateNumberOfUse,
-        dispatch
-      ),
-      clearTranslation: bindActionCreators(
-        translationActions.clearTranslation,
-        dispatch
-      ),
-      loadParts: bindActionCreators(translationActions.loadParts, dispatch),
-      extractListOfKanji: bindActionCreators(
-        translationActions.extractListOfKanji,
-        dispatch
-      ),
-      loadListObjects: bindActionCreators(
-        translationActions.loadListObjects,
-        dispatch
-      ),
-      extractListOfGrammarRules: bindActionCreators(
-        translationActions.extractListOfGrammarRules,
         dispatch
       ),
     },

@@ -10,7 +10,6 @@ import sentences from "./sentenceReducer";
 import suffixs from "./suffixReducer";
 import verbs from "./verbReducer";
 import words from "./wordReducer";
-import translation from "./translationReducer";
 import messages from "./messageReducer";
 import visitStats from "./visitStatsReducer";
 import apiCallsInProgress from "./apiStatusReducer";
@@ -25,7 +24,6 @@ const rootReducer = combineReducers({
   particules,
   sentences,
   suffixs,
-  translation,
   verbs,
   words,
   messages,

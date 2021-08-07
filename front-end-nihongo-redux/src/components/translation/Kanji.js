@@ -12,7 +12,7 @@ const Kanji = (props) => {
   };
 
   return (
-    <div className="grid-container">
+    <div className="grid-container-kanji">
       <div className="kanji">{kanji.kanji}</div>
       <div className="pronunciation">
         {kanji.pronunciations.sort(orderPronunciation).map((pro, index) => {

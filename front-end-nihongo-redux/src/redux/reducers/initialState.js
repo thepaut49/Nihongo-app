@@ -1,5 +1,3 @@
-import translationConstants from "../../components/common/translationConstants";
-
 export default {
   counters: [],
   grammarRules: [],
@@ -12,16 +10,6 @@ export default {
   suffixs: [],
   verbs: [],
   words: [],
-  //partie translation
-  translation: {
-    sentence: "",
-    quantity: 50,
-    typeSelect: translationConstants.DEFAULT_TYPE,
-    listObjects: [],
-    listParts: [],
-    listOfKanjis: [],
-    listOfGrammarRules: [],
-  },
   messages: [],
   visitStats: [],
   apiCallsInProgress: 0,
