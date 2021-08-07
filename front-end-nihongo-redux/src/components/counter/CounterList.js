@@ -33,6 +33,7 @@ function CounterList(props) {
                     <h2>Pronunciations</h2>
                     <div>
                       {counter.pronunciations
+                        .slice()
                         .sort(orderPronunciation)
                         .map((pro, index) => {
                           return (

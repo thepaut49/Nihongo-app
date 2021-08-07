@@ -36,6 +36,7 @@ function IAdjectiveList(props) {
                   </div>
                   <div className="pronunciation">
                     {iAdjective.pronunciations
+                      .slice()
                       .sort(orderPronunciation)
                       .map((pro, index) => {
                         return (
@@ -47,6 +48,7 @@ function IAdjectiveList(props) {
                   </div>
                   <div className="meaning">
                     {iAdjective.meanings
+                      .slice()
                       .sort(orderMeaning)
                       .map((mean, index) => {
                         return (

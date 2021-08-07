@@ -22,24 +22,30 @@ function Kanji(props) {
       <div className="pronunciation">
         {kanji.pronunciations &&
           kanji.pronunciations.length > 0 &&
-          kanji.pronunciations.sort(orderPronunciation).map((pro, index) => {
-            return (
-              <span key={index} className="onemeaning">
-                {pro.pronunciation}
-              </span>
-            );
-          })}
+          kanji.pronunciations
+            .slice()
+            .sort(orderPronunciation)
+            .map((pro, index) => {
+              return (
+                <span key={index} className="onemeaning">
+                  {pro.pronunciation}
+                </span>
+              );
+            })}
       </div>
       <div className="meaning">
         {kanji.meanings &&
           kanji.meanings.length > 0 &&
-          kanji.meanings.sort(orderMeaning).map((mean, index) => {
-            return (
-              <span key={index} className="onemeaning">
-                {mean.meaning}
-              </span>
-            );
-          })}
+          kanji.meanings
+            .slice()
+            .sort(orderMeaning)
+            .map((mean, index) => {
+              return (
+                <span key={index} className="onemeaning">
+                  {mean.meaning}
+                </span>
+              );
+            })}
       </div>
       <div className="strokes">
         <span>

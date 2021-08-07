@@ -21,6 +21,7 @@ function Name(props) {
       <div className="name">{name.kanjis}</div>
       <div className="pronunciation">
         {name.pronunciations
+          .slice()
           .sort(orderPronunciation)
           .map((pronunciation, index) => {
             return (
@@ -31,13 +32,16 @@ function Name(props) {
           })}
       </div>
       <div className="meaning">
-        {name.meanings.sort(orderMeaning).map((mean, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {mean.meaning}
-            </span>
-          );
-        })}
+        {name.meanings
+          .slice()
+          .sort(orderMeaning)
+          .map((mean, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {mean.meaning}
+              </span>
+            );
+          })}
       </div>
     </div>
   );

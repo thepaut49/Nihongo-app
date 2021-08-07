@@ -21,6 +21,7 @@ function Verb(props) {
       <div className="verb">{verb.neutralForm}</div>
       <div className="pronunciation">
         {verb.pronunciations
+          .slice()
           .sort(orderPronunciation)
           .map((pronunciation, index) => {
             return (
@@ -31,13 +32,16 @@ function Verb(props) {
           })}
       </div>
       <div className="meaning">
-        {verb.meanings.sort(orderMeaning).map((mean, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {mean.meaning}
-            </span>
-          );
-        })}
+        {verb.meanings
+          .slice()
+          .sort(orderMeaning)
+          .map((mean, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {mean.meaning}
+              </span>
+            );
+          })}
       </div>
       <div className="groupe">
         <label>Group :</label>

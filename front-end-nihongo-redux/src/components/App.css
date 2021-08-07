@@ -175,14 +175,12 @@ label {
   margin: 0.5em;
 }
 
+/*** CSS for scroll to top button ***/
 .scroll {
   opacity: 0.3;
-  background-color: var(--fourth-bg-color);
+  background-color: var(--primary-bg-color);
   width: 40px;
   height: 40px;
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
   border-radius: 5px;
   border: none;
 }
@@ -193,4 +191,14 @@ label {
 
 .arrow-up {
   color: white;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background-color: var(--primary-bg-color);
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
 }

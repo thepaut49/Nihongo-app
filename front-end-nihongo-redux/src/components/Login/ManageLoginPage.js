@@ -31,7 +31,6 @@ const ManageLoginPage = ({ history }) => {
     setIsLogin(true);
     login(username, password)
       .then((response) => {
-        debugger;
         //store authentication tokens in sessionStorage
         sessionStorage.setItem("token", response.accessToken);
         toast.success("Log in success.");

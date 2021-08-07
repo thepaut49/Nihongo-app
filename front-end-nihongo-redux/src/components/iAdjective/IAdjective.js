@@ -21,6 +21,7 @@ function IAdjective(props) {
       <div className="iAdjective">{iAdjective.kanjis}</div>
       <div className="pronunciation">
         {iAdjective.pronunciations
+          .slice()
           .sort(orderPronunciation)
           .map((pro, index) => {
             return (
@@ -31,13 +32,16 @@ function IAdjective(props) {
           })}
       </div>
       <div className="meaning">
-        {iAdjective.meanings.sort(orderMeaning).map((mean, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {mean.meaning}
-            </span>
-          );
-        })}
+        {iAdjective.meanings
+          .slice()
+          .sort(orderMeaning)
+          .map((mean, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {mean.meaning}
+              </span>
+            );
+          })}
       </div>
     </div>
   );

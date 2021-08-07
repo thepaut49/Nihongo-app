@@ -37,6 +37,7 @@ function NaAdjectiveList(props) {
                   </div>
                   <div className="pronunciation">
                     {naAdjective.pronunciations
+                      .slice()
                       .sort(orderPronunciation)
                       .map((pro, index) => {
                         return (
@@ -48,6 +49,7 @@ function NaAdjectiveList(props) {
                   </div>
                   <div className="meaning">
                     {naAdjective.meanings
+                      .slice()
                       .sort(orderMeaning)
                       .map((mean, index) => {
                         return (

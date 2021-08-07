@@ -37,6 +37,7 @@ function KanjiList({ kanjis, deleteKanji }) {
                     {kanji.pronunciations &&
                       kanji.pronunciations.length > 0 &&
                       kanji.pronunciations
+                        .slice()
                         .sort(orderPronunciation)
                         .map((pro, index) => {
                           return (
@@ -49,13 +50,16 @@ function KanjiList({ kanjis, deleteKanji }) {
                   <div className="meaning">
                     {kanji.meanings &&
                       kanji.meanings.length > 0 &&
-                      kanji.meanings.sort(orderMeaning).map((mean, index) => {
-                        return (
-                          <span key={index} className="onemeaning">
-                            {mean.meaning}
-                          </span>
-                        );
-                      })}
+                      kanji.meanings
+                        .slice()
+                        .sort(orderMeaning)
+                        .map((mean, index) => {
+                          return (
+                            <span key={index} className="onemeaning">
+                              {mean.meaning}
+                            </span>
+                          );
+                        })}
                   </div>
                   <div className="strokes">
                     <span>

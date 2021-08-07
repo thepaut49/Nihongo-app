@@ -74,6 +74,7 @@ const ResultList = (props) => {
               </div>
               <div style={pronunciationStyle}>
                 {result.pronunciations
+                  .slice()
                   .sort(orderPronunciation)
                   .map((pro, index) => {
                     return (
@@ -84,13 +85,16 @@ const ResultList = (props) => {
                   })}
               </div>
               <div style={pronunciationStyle}>
-                {result.meanings.sort(orderMeaning).map((mean, index) => {
-                  return (
-                    <span key={index + 10000} className="onemeaning">
-                      {mean.meaning}
-                    </span>
-                  );
-                })}
+                {result.meanings
+                  .slice()
+                  .sort(orderMeaning)
+                  .map((mean, index) => {
+                    return (
+                      <span key={index + 10000} className="onemeaning">
+                        {mean.meaning}
+                      </span>
+                    );
+                  })}
               </div>
             </div>
           );

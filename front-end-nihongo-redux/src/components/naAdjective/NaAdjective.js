@@ -20,6 +20,7 @@ function NaAdjective(props) {
       <div className="naAdjective">{naAdjective.kanjis}</div>
       <div className="pronunciation">
         {naAdjective.pronunciations
+          .slice()
           .sort(orderPronunciation)
           .map((pro, index) => {
             return (
@@ -30,13 +31,16 @@ function NaAdjective(props) {
           })}
       </div>
       <div className="meaning">
-        {naAdjective.meanings.sort(orderMeaning).map((mean, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {mean.meaning}
-            </span>
-          );
-        })}
+        {naAdjective.meanings
+          .slice()
+          .sort(orderMeaning)
+          .map((mean, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {mean.meaning}
+              </span>
+            );
+          })}
       </div>
     </div>
   );

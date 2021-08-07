@@ -9,14 +9,15 @@ const partStyle = {
   display: "grid",
   gridTemplateRows: "repeat(6,max-content)",
   borderRadius: "10px",
-  backgroundColor: "rgba(38, 113, 22, 0.48)",
+  backgroundColor: "var(--fourth-bg-color)",
   padding: "0.5em",
+  gap: "0.6em",
   height: "min-content",
 };
 
 const partStyleUnknown = {
   ...partStyle,
-  backgroundColor: "#0e5805",
+  backgroundColor: "var(--fifth-bg-color)",
 };
 
 const kanjiStyle = {
@@ -83,14 +84,19 @@ const Part = (props) => {
         <label>Type : </label>
         {part.type}
       </div>
-      <div>
-        <label>Current Index : </label>
-        {part.currentIndex}
-      </div>
-      <div>
-        <label>Length : </label>
-        {part.length}
-      </div>
+      {process.env.NODE_ENV !== "development" && (
+        <>
+          <div>
+            <label>Current Index : </label>
+            {part.currentIndex}
+          </div>
+          <div>
+            <label>Length : </label>
+            {part.length}
+          </div>
+        </>
+      )}
+
       {translationConstants.TYPE_UNKNOWN === part.type && (
         <>
           {part.length > 1 && (

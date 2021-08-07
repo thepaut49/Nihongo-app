@@ -41,7 +41,6 @@ import SuffixsPage from "./suffix/SuffixsPage";
 import HiraganasPage from "./hiragana/HiraganasPage";
 import KatakanasPage from "./katakana/KatakanasPage";
 import Translation from "./translation/Translation";
-import ScrollToTop from "./common/ScrollToTop";
 import ButtonScrollToTop from "./common/ButtonScrollToTop";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
@@ -57,8 +56,6 @@ function App() {
     <>
       <div className="app-container">
         <Header />
-        <ScrollToTop />
-        <ButtonScrollToTop />
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/counters" component={CountersPage} />
@@ -159,6 +156,7 @@ function App() {
           <Route path="/contact" component={ManageContactPage} />
         </Switch>
         <ToastContainer autoClose={3000} hideProgressBar />
+        <ButtonScrollToTop />
       </div>
     </>
   );

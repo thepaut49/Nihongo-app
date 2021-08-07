@@ -32,6 +32,7 @@ function SuffixList(props) {
                     <h2>Pronunciations</h2>
                     <div>
                       {suffix.pronunciations
+                        .slice()
                         .sort(orderPronunciation)
                         .map((pro, index) => {
                           return (

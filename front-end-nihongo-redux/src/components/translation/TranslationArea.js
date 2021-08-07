@@ -38,10 +38,13 @@ const TranslationArea = ({
             onKanaClick={onKanaClick}
           />
           <div style={buttonGroupStyle}>
-            <button className="btn btn-primary" onClick={onTranslateClick}>
+            <button
+              className="translationAreaButtons"
+              onClick={onTranslateClick}
+            >
               Translate
             </button>
-            <button className="btn btn-primary" onClick={onClearClick}>
+            <button className="translationAreaButtons" onClick={onClearClick}>
               Clear
             </button>
           </div>

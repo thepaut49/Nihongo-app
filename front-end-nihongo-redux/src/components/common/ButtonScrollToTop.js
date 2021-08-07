@@ -1,48 +1,39 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 
-class ButtonScrollToTop extends React.Component {
-  constructor() {
-    super();
+export default function ButtonScrollToTop() {
+  const [isVisible, setIsVisible] = useState(false);
 
-    this.state = {
-      intervalId: 0,
-    };
-  }
-
-  scrollStep() {
-    if (window.pageYOffset === 0) {
-      clearInterval(this.state.intervalId);
+  // Show button when page is scorlled upto given distance
+  const toggleVisibility = () => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
     }
-    window.scroll(0, window.pageYOffset - this.props.scrollStepInPx);
-  }
+  };
 
-  scrollToTop() {
-    let intervalId = setInterval(
-      this.scrollStep.bind(this),
-      this.props.delayInMs
-    );
-    this.setState({ intervalId: intervalId });
-  }
+  // Set the top cordinate to 0
+  // make scrolling smooth
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
-  render() {
-    return (
-      <button
-        title="Back to top"
-        className="scroll"
-        onClick={() => {
-          this.scrollToTop();
-        }}
-      >
-        <span className="arrow-up">Top</span>
-      </button>
-    );
-  }
+  useEffect(() => {
+    window.addEventListener("scroll", toggleVisibility);
+  }, []);
+
+  return (
+    <div className="scroll-to-top">
+      {isVisible && (
+        <div onClick={scrollToTop}>
+          <button title="Go to top" className="scroll">
+            <span className="arrow-up">Top</span>
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }
-
-ButtonScrollToTop.propTypes = {
-  scrollStepInPx: PropTypes.number,
-  delayInMs: PropTypes.number,
-};
-
-export default ButtonScrollToTop;

@@ -21,7 +21,6 @@ export const constructListOfValues = (naAdj) => {
       }
     }
   }
-  debugger;
   return listOfValues;
 };
 

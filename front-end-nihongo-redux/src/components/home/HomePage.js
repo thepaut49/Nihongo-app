@@ -9,7 +9,6 @@ function HomePage(props) {
   fetch("https://api.ipify.org?format=json")
     .then((response) => response.json())
     .then((data) => {
-      debugger;
       const { actions } = props;
       const newVisitStat = {
         ip: data.ip,

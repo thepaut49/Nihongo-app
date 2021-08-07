@@ -17,13 +17,16 @@ function Suffix(props) {
       <div>
         <h2>Pronunciations</h2>
         <div>
-          {suffix.pronunciations.sort(orderPronunciation).map((pro, index) => {
-            return (
-              <span key={index + 1000} className="onemeaning">
-                {pro.pronunciation}
-              </span>
-            );
-          })}
+          {suffix.pronunciations
+            .slice()
+            .sort(orderPronunciation)
+            .map((pro, index) => {
+              return (
+                <span key={index + 1000} className="onemeaning">
+                  {pro.pronunciation}
+                </span>
+              );
+            })}
         </div>
       </div>
 

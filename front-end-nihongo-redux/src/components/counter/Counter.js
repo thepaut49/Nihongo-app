@@ -17,13 +17,16 @@ function Counter(props) {
       <div>
         <h2>Pronunciations</h2>
         <div>
-          {counter.pronunciations.sort(orderPronunciation).map((pro, index) => {
-            return (
-              <span key={index + 1000} className="onemeaning">
-                {pro.pronunciation}
-              </span>
-            );
-          })}
+          {counter.pronunciations
+            .slice()
+            .sort(orderPronunciation)
+            .map((pro, index) => {
+              return (
+                <span key={index + 1000} className="onemeaning">
+                  {pro.pronunciation}
+                </span>
+              );
+            })}
         </div>
       </div>
 

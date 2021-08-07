@@ -14,13 +14,21 @@
   grid: 1fr 1fr / 1fr 1fr;
 }
 
-.splitPopup > .content > .part {
+.splitPopup .content .part {
+  font-size: x-large;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
   grid-column-start: span 2;
 }
 
 .partButtons {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-column-start: span 2;
+  gap: 1em;
+  margin: 0.5em;
+  padding: 0.5em;
 }
 
 .splitPopup > .footer {
@@ -29,4 +37,8 @@
   gap: 1em;
   margin: 0.3em;
   padding: 0.3em;
+}
+
+.splitPopup .close {
+  border-radius: 10px;
 }

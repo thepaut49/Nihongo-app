@@ -112,43 +112,26 @@ const SplitPopup = (props) => {
             &times;
           </button>
           <div className="header">
-            <h4>Split part</h4>{" "}
+            <h4>Split part</h4>
           </div>
 
           <div className="content">
             <div>
               <div className="part">{firstPart.kanjis}</div>
-              <div className="partButtons">
-                <button
-                  className="btn btn-primary"
-                  onClick={addLetterToFirstPart}
-                >
-                  +
-                </button>
-                <button
-                  className="btn btn-primary"
-                  onClick={addLetterToSecondPart}
-                >
-                  -
-                </button>
-              </div>
             </div>
             <div>
               <div className="part">{secondPart.kanjis}</div>
-              <div className="partButtons">
-                <button
-                  className="btn btn-primary"
-                  onClick={addLetterToSecondPart}
-                >
-                  +
-                </button>
-                <button
-                  className="btn btn-primary"
-                  onClick={addLetterToFirstPart}
-                >
-                  -
-                </button>
-              </div>
+            </div>
+            <div className="partButtons">
+              <button className="filtersButtons" onClick={addLetterToFirstPart}>
+                Move character to the left
+              </button>
+              <button
+                className="filtersButtons"
+                onClick={addLetterToSecondPart}
+              >
+                Move character to the right
+              </button>
             </div>
           </div>
 

@@ -174,7 +174,7 @@ const QuickSearchPopUp = (props) => {
     <Popup
       trigger={(open) => (
         <div style={styleTriggerButton}>
-          <button className="btn btn-primary"> Quick search </button>
+          <button className="translationAreaButtons"> Quick search </button>
         </div>
       )}
       position="center center"

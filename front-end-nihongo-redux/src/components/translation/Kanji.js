@@ -15,22 +15,28 @@ const Kanji = (props) => {
     <div className="grid-container-kanji">
       <div className="kanji">{kanji.kanji}</div>
       <div className="pronunciation">
-        {kanji.pronunciations.sort(orderPronunciation).map((pro, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {pro.pronunciation}
-            </span>
-          );
-        })}
+        {kanji.pronunciations
+          .slice()
+          .sort(orderPronunciation)
+          .map((pro, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {pro.pronunciation}
+              </span>
+            );
+          })}
       </div>
       <div className="meaning">
-        {kanji.meanings.sort(orderMeaning).map((mean, index) => {
-          return (
-            <span key={index} className="onemeaning">
-              {mean.meaning}
-            </span>
-          );
-        })}
+        {kanji.meanings
+          .slice()
+          .sort(orderMeaning)
+          .map((mean, index) => {
+            return (
+              <span key={index} className="onemeaning">
+                {mean.meaning}
+              </span>
+            );
+          })}
       </div>
       <div className="strokes">
         <span>

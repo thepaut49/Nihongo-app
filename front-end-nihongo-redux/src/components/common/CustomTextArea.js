@@ -35,7 +35,7 @@ function CustomTextArea(props) {
             return (
               <button
                 key={index}
-                className="btn btn-primary"
+                className="translationAreaButtons"
                 onClick={props.onKanaClick}
               >
                 {punctuation}

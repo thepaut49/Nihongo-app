@@ -37,6 +37,7 @@ function NameList(props) {
                   </div>
                   <div className="pronunciation">
                     {name.pronunciations
+                      .slice()
                       .sort(orderPronunciation)
                       .map((pronunciation, index) => {
                         return (
@@ -47,13 +48,16 @@ function NameList(props) {
                       })}
                   </div>
                   <div className="meaning">
-                    {name.meanings.sort(orderMeaning).map((mean, index) => {
-                      return (
-                        <span key={index} className="onemeaning">
-                          {mean.meaning}
-                        </span>
-                      );
-                    })}
+                    {name.meanings
+                      .slice()
+                      .sort(orderMeaning)
+                      .map((mean, index) => {
+                        return (
+                          <span key={index} className="onemeaning">
+                            {mean.meaning}
+                          </span>
+                        );
+                      })}
                   </div>
                   {isConnected() && (
                     <div>
