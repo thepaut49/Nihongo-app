@@ -45,7 +45,7 @@ export function saveWord(word) {
     method: method, // POST for create, PUT to update when id already exists.
     headers: {
       "content-type": "application/json",
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
     body: JSON.stringify({
       ...word,
@@ -59,7 +59,7 @@ export function deleteWord(wordId) {
   return fetch(baseUrl + wordId, {
     method: "DELETE",
     headers: {
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   })
     .then((response) => {

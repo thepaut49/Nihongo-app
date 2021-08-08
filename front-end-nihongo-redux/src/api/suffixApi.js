@@ -26,7 +26,7 @@ export function saveSuffix(suffix) {
     method: method, // POST for create, PUT to update when id already exists.
     headers: {
       "content-type": "application/json",
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
     body: JSON.stringify({
       ...suffix,
@@ -40,7 +40,7 @@ export function deleteSuffix(suffixId) {
   return fetch(baseUrl + suffixId, {
     method: "DELETE",
     headers: {
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   })
     .then((response) => {

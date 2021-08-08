@@ -45,7 +45,7 @@ export function saveVerb(Verb) {
     method: method, // POST for create, PUT to update when id already exists.
     headers: {
       "content-type": "application/json",
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
     body: JSON.stringify({
       ...Verb,
@@ -59,7 +59,7 @@ export function deleteVerb(VerbId) {
   return fetch(baseUrl + VerbId, {
     method: "DELETE",
     headers: {
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   })
     .then((response) => {

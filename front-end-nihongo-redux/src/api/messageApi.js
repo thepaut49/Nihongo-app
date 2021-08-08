@@ -6,7 +6,7 @@ export function getMessages() {
   return fetch(baseUrl + "all", {
     method: "GET",
     headers: {
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   })
     .then(handleResponse)
@@ -33,7 +33,7 @@ export function deleteMessage(messageId) {
   return fetch(baseUrl + messageId, {
     method: "DELETE",
     headers: {
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   })
     .then((response) => {

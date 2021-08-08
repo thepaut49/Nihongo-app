@@ -45,7 +45,7 @@ export function saveIAdjective(iAdjective) {
     method: method, // POST for create, PUT to update when id already exists.
     headers: {
       "content-type": "application/json",
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
     body: JSON.stringify({
       ...iAdjective,
@@ -59,7 +59,7 @@ export function deleteIAdjective(iAdjectiveId) {
   return fetch(baseUrl + iAdjectiveId, {
     method: "DELETE",
     headers: {
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   })
     .then((response) => {

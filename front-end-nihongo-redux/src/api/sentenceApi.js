@@ -26,7 +26,7 @@ export function saveSentence(sentence) {
     method: method, // POST for create, PUT to update when id already exists.
     headers: {
       "content-type": "application/json",
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
     body: JSON.stringify({
       ...sentence,
@@ -40,7 +40,7 @@ export function deleteSentence(sentenceId) {
   return fetch(baseUrl + sentenceId, {
     method: "DELETE",
     headers: {
-      Authorization: "bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   })
     .then((response) => {
