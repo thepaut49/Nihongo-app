@@ -10,7 +10,7 @@ const styleButtons = {
 };
 
 function CustomTextArea(props) {
-  let wrapperClass = "form-group";
+  let wrapperClass = "form-group-modif";
   if (props.error.length > 0) {
     wrapperClass += "has-error";
   }
@@ -18,12 +18,12 @@ function CustomTextArea(props) {
   return (
     <div id={"div" + props.id} className={wrapperClass}>
       <label htmlFor={props.id}>{props.label}</label>
-      <div className="field">
+      <div>
         <textarea
           id={props.id}
           onChange={props.onChange}
           name={props.name}
-          className="form-control"
+          className="form-control-modif"
           value={props.value}
           cols={props.cols}
           rows={props.rows}
@@ -45,7 +45,9 @@ function CustomTextArea(props) {
         </div>
       )}
 
-      {props.error && <div className="alert alert-danger">{props.error}</div>}
+      {props.error && (
+        <div className="alert-modif alert-danger-modif">{props.error}</div>
+      )}
     </div>
   );
 }

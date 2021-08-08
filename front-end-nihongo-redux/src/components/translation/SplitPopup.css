@@ -1,12 +1,8 @@
 .splitPopup {
-  background-color: blue;
+  background-color: var(--primary-bg-color);
   width: 80em;
   border-radius: 10px;
-}
-.splitPopup > .header {
-  width: 100%;
-  text-align: center;
-  padding: 0.3em;
+  border: solid var(--third-bg-color);
 }
 
 .splitPopup > .content {
@@ -31,6 +27,20 @@
   padding: 0.5em;
 }
 
+.splitButtons {
+  background-color: var(--secondary-bg-color);
+  border-radius: 10px;
+  color: var(--primary-txt-color);
+  border: none;
+  outline: none;
+}
+
+.splitButtons:hover {
+  background-color: var(--fourth-bg-color);
+  color: var(--secondary-txt-color);
+  border-radius: 10px;
+}
+
 .splitPopup > .footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -39,6 +49,26 @@
   padding: 0.3em;
 }
 
+.splitPopUpTitle {
+  text-align: center;
+  margin: auto;
+}
+
+.splitPopup .header {
+  width: 100%;
+  text-align: center;
+  padding: 0.3em;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+}
+
 .splitPopup .close {
   border-radius: 10px;
+  text-align: center;
+  margin: auto;
+}
+
+.splitPopup .close:hover {
+  background-color: red;
+  color: white;
 }

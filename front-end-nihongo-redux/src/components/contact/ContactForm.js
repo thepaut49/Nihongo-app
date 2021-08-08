@@ -19,7 +19,7 @@ const ContactForm = ({
         following form.
       </p>
       {errors.onSubmit && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert-modif alert-danger-modif" role="alert">
           {errors.onSubmit}
         </div>
       )}

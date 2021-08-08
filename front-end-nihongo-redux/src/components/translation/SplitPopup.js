@@ -108,11 +108,11 @@ const SplitPopup = (props) => {
     >
       {(close) => (
         <div className="splitPopup">
-          <button className="close" onClick={close}>
-            &times;
-          </button>
           <div className="header">
-            <h4>Split part</h4>
+            <button className="close" onClick={close}>
+              &times;
+            </button>
+            <h2 className="splitPopUpTitle">Split part</h2>
           </div>
 
           <div className="content">
@@ -123,13 +123,10 @@ const SplitPopup = (props) => {
               <div className="part">{secondPart.kanjis}</div>
             </div>
             <div className="partButtons">
-              <button className="filtersButtons" onClick={addLetterToFirstPart}>
+              <button className="splitButtons" onClick={addLetterToFirstPart}>
                 Move character to the left
               </button>
-              <button
-                className="filtersButtons"
-                onClick={addLetterToSecondPart}
-              >
+              <button className="splitButtons" onClick={addLetterToSecondPart}>
                 Move character to the right
               </button>
             </div>

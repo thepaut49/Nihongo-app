@@ -31,7 +31,7 @@ function NaAdjectiveForm({
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{naAdjective.id ? "Edit" : "Add"} na-Adjective</h2>
       {errors.onSubmit && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert-modif alert-danger-modif" role="alert">
           {errors.onSubmit}
         </div>
       )}
@@ -87,7 +87,7 @@ function NaAdjectiveForm({
       <button className="btn btn-primary" onClick={addMeaning}>
         Add meaning
       </button>
-      <button type="submit" disabled={saving} className="btn btn-success">
+      <button type="submit" disabled={saving} className="validFormButton">
         {saving ? "Saving..." : "Save"}
       </button>{" "}
     </form>

@@ -21,7 +21,7 @@ function GrammarRuleForm({
     <form onSubmit={onSubmit} style={formStyle}>
       <h2>{grammarRule.id ? "Edit" : "Add"} Grammar rule</h2>
       {errors.onSubmit && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert-modif alert-danger-modif" role="alert">
           {errors.onSubmit}
         </div>
       )}

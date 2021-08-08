@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function CustomInput(props) {
-  let wrapperClass = "form-group";
+  let wrapperClass = "form-group-modif";
   if (props.error.length > 0) {
     wrapperClass += "has-error";
   }
@@ -10,18 +10,20 @@ function CustomInput(props) {
   return (
     <div id={"div" + props.id} className={wrapperClass}>
       <label htmlFor={props.id}>{props.label}</label>
-      <div className="field">
+      <div>
         <input
           id={props.id}
           type="text"
           onChange={props.onChange}
           name={props.name}
-          className="form-control"
+          className="form-control-modif"
           value={props.value}
           maxLength={props.maxLength}
         />
       </div>
-      {props.error && <div className="alert alert-danger">{props.error}</div>}
+      {props.error && (
+        <div className="alert-modif alert-danger-modif">{props.error}</div>
+      )}
     </div>
   );
 }

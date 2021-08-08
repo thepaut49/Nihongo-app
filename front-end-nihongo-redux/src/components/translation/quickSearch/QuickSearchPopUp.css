@@ -1,0 +1,15 @@
+.QuickSearchTitle {
+  text-align: center;
+  margin: auto;
+}
+
+.close {
+  border-radius: 10px;
+  text-align: center;
+  margin: auto;
+}
+
+.close:hover {
+  background-color: red;
+  color: white;
+}

@@ -68,7 +68,7 @@ function SuffixForm({
         onChange={onChange}
         error={errors.summary}
       />
-      <button type="submit" disabled={saving} className="btn btn-success">
+      <button type="submit" disabled={saving} className="validFormButton">
         {saving ? "Saving..." : "Save"}
       </button>
     </form>

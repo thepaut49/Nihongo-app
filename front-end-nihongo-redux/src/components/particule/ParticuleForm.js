@@ -21,7 +21,7 @@ function ParticuleForm({
     <form onSubmit={onSubmit} style={formStyle}>
       <h2>{particule.id ? "Edit" : "Add"} Particle</h2>
       {errors.onSubmit && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert-modif alert-danger-modif" role="alert">
           {errors.onSubmit}
         </div>
       )}
@@ -77,7 +77,7 @@ function ParticuleForm({
         error={errors.examples}
       />
 
-      <button type="submit" disabled={saving} className="btn btn-success">
+      <button type="submit" disabled={saving} className="validFormButton">
         {saving ? "Saving..." : "Save"}
       </button>
     </form>

@@ -9,6 +9,7 @@ import { filterObjects } from "./filter";
 import ResultList from "./ResultList";
 import { filterKanjis } from "../../../api/kanjiApi";
 import PropTypes from "prop-types";
+import "./QuickSearchPopUp.css";
 
 const styleTriggerButton = {
   display: "grid",
@@ -29,6 +30,8 @@ const headerStyle = {
   width: "100%",
   textAlign: "center",
   padding: "0.3em",
+  display: "grid",
+  gridTemplateColumns: "min-content 1fr",
 };
 
 const contentStyle = {
@@ -183,11 +186,11 @@ const QuickSearchPopUp = (props) => {
     >
       {(close) => (
         <div style={quickSearchPopUpStyle}>
-          <button className="close" onClick={close}>
-            &times;
-          </button>
           <div style={headerStyle}>
-            <h4>Quick search</h4>
+            <button className="close" onClick={close}>
+              &times;
+            </button>
+            <h2 className="QuickSearchTitle">Quick search</h2>
           </div>
 
           <div style={contentStyle}>

@@ -33,7 +33,7 @@ function VerbForm({
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{verb.id ? "Edit" : "Add"} Verb</h2>
       {errors.onSubmit && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert-modif alert-danger-modif" role="alert">
           {errors.onSubmit}
         </div>
       )}
@@ -103,7 +103,7 @@ function VerbForm({
         listOfValues={verbConstants.verbGroupList}
       />
 
-      <button type="submit" disabled={saving} className="btn btn-success">
+      <button type="submit" disabled={saving} className="validFormButton">
         {saving ? "Saving..." : "Save"}
       </button>
     </form>

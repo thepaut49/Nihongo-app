@@ -62,7 +62,7 @@ const ResultList = (props) => {
               <div style={kanjisStyle}>
                 <button
                   onClick={(event) => handleClick(event, result)}
-                  className="btn btn-success"
+                  className="resultButtons"
                   style={resultButtonStyle}
                 >
                   {typeSelectSearch === translationConstants.TYPE_KANJI

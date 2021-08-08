@@ -31,7 +31,7 @@ function IAdjectiveForm({
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{iAdjective.id ? "Edit" : "Add"} i-Adjective</h2>
       {errors.onSubmit && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert-modif alert-danger-modif" role="alert">
           {errors.onSubmit}
         </div>
       )}
@@ -91,7 +91,7 @@ function IAdjectiveForm({
         Add meaning
       </button>
 
-      <button type="submit" disabled={saving} className="btn btn-success">
+      <button type="submit" disabled={saving} className="validFormButton">
         {saving ? "Saving..." : "Save"}
       </button>
     </form>

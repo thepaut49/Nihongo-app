@@ -33,7 +33,7 @@ const LoginForm = ({
         value={password}
         error={errors.password}
       />
-      <button type="submit" disabled={isLogin} className="btn btn-success">
+      <button type="submit" disabled={isLogin} className="validFormButton">
         {isLogin ? "Log in progress..." : "Log in"}
       </button>
     </form>

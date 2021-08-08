@@ -79,7 +79,7 @@ function NameForm({
       <button className="btn btn-primary" onClick={addMeaning}>
         Add meaning
       </button>
-      <button type="submit" disabled={saving} className="btn btn-success">
+      <button type="submit" disabled={saving} className="validFormButton">
         {saving ? "Saving..." : "Save"}
       </button>{" "}
     </form>

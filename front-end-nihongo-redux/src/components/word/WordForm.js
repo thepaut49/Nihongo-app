@@ -19,19 +19,19 @@ function WordForm({
   addPronunciation,
   addMeaning,
 }) {
-  /*const orderPronunciation = (a, b) => {
+  const orderPronunciation = (a, b) => {
     return a.pronunciationNumber - b.pronunciationNumber;
   };
 
   const orderMeaning = (a, b) => {
     return a.meaningNumber - b.meaningNumber;
-  };*/
+  };
 
   return (
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{word.id ? "Edit" : "Add"} Word</h2>
       {errors.onSubmit && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert-modif alert-danger-modif" role="alert">
           {errors.onSubmit}
         </div>
       )}
@@ -47,23 +47,26 @@ function WordForm({
 
       {word.pronunciations &&
         word.pronunciations.length > 0 &&
-        word.pronunciations.map((pro, index) => {
-          return (
-            <CustomInputPronunciations
-              key={index}
-              id={"pronunciation" + index}
-              label={"Pronunciation " + (index + 1) + " :"}
-              typeInput="text"
-              onChange={onPronunciationChange}
-              name={"pronunciation" + index}
-              value={word.pronunciations[index].pronunciation}
-              index={index}
-              deletePronunciation={deletePronunciation}
-              onMiddlePointClick={onMiddlePointClick}
-              onTranslateClick={onTranslateClick}
-            />
-          );
-        })}
+        word.pronunciations
+          .splice()
+          .sort(orderPronunciation)
+          .map((pro, index) => {
+            return (
+              <CustomInputPronunciations
+                key={index}
+                id={"pronunciation" + index}
+                label={"Pronunciation " + (index + 1) + " :"}
+                typeInput="text"
+                onChange={onPronunciationChange}
+                name={"pronunciation" + index}
+                value={word.pronunciations[index].pronunciation}
+                index={index}
+                deletePronunciation={deletePronunciation}
+                onMiddlePointClick={onMiddlePointClick}
+                onTranslateClick={onTranslateClick}
+              />
+            );
+          })}
 
       <button className="btn btn-primary" onClick={addPronunciation}>
         Add pronunciation
@@ -71,27 +74,30 @@ function WordForm({
 
       {word.meanings &&
         word.meanings.length > 0 &&
-        word.meanings.map((_meaning, index) => {
-          return (
-            <CustomInputMeaning
-              key={index}
-              id={"meaning" + index}
-              label={"Meaning " + (index + 1) + " :"}
-              typeInput="text"
-              onChange={(event) => onMeaningChange(event, index)}
-              name={"meaning" + index}
-              value={word.meanings[index].meaning}
-              index={index}
-              deleteMeaning={deleteMeaning}
-            />
-          );
-        })}
+        word.meanings
+          .splice()
+          .sort(orderMeaning)
+          .map((_meaning, index) => {
+            return (
+              <CustomInputMeaning
+                key={index}
+                id={"meaning" + index}
+                label={"Meaning " + (index + 1) + " :"}
+                typeInput="text"
+                onChange={(event) => onMeaningChange(event, index)}
+                name={"meaning" + index}
+                value={word.meanings[index].meaning}
+                index={index}
+                deleteMeaning={deleteMeaning}
+              />
+            );
+          })}
 
       <button className="btn btn-primary" onClick={addMeaning}>
         Add meaning
       </button>
 
-      <button type="submit" disabled={saving} className="btn btn-success">
+      <button type="submit" disabled={saving} className="validFormButton">
         {saving ? "Saving..." : "Save"}
       </button>
     </form>

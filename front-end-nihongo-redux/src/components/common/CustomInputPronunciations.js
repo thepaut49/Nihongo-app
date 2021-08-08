@@ -6,7 +6,7 @@ const styleButtons = {
 };
 
 function CustomInputPronunciation(props) {
-  let wrapperClass = "form-group";
+  let wrapperClass = "form-group-modif";
   if (props.error.length > 0) {
     wrapperClass += "has-error";
   }
@@ -14,34 +14,34 @@ function CustomInputPronunciation(props) {
   return (
     <div id={"div" + props.id} className={wrapperClass}>
       <label htmlFor={props.id}>{props.label}</label>
-      <div className="field">
+      <div>
         <input
           id={props.id}
           type="text"
           onChange={(event) => props.onChange(event, props.index)}
           name={props.name}
-          className="form-control"
+          className="form-control-modif"
           value={props.value}
           maxLength={props.maxLength}
         />
         <div>
           <button
             style={styleButtons}
-            className="btn btn-primary"
+            className="translationAreaButtons"
             onClick={(event) => props.onMiddlePointClick(event, props.index)}
           >
             ・
           </button>
           <button
             style={styleButtons}
-            className="btn btn-primary"
+            className="translationAreaButtons"
             onClick={(event) => props.onMiddlePointClick(event, props.index)}
           >
             〜
           </button>
           <button
             style={styleButtons}
-            className="btn btn-primary"
+            className="translationAreaButtons"
             onClick={(event) => props.onTranslateClick(event, props.index)}
           >
             Translate to kanas
@@ -55,7 +55,9 @@ function CustomInputPronunciation(props) {
           Delete pronunciation {props.index + 1}
         </button>
       </div>
-      {props.error && <div className="alert alert-danger">{props.error}</div>}
+      {props.error && (
+        <div className="alert-modif alert-danger-modif">{props.error}</div>
+      )}
     </div>
   );
 }

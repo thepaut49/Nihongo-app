@@ -25,7 +25,7 @@ function SentenceForm({
     <form onSubmit={onSubmit} style={formStyle}>
       <h2>{sentence.id ? "Edit" : "Add"} Sentence</h2>
       {errors.onSubmit && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert-modif alert-danger-modif" role="alert">
           {errors.onSubmit}
         </div>
       )}
@@ -67,7 +67,7 @@ function SentenceForm({
         listOfValues={topicList}
       />
 
-      <button type="submit" disabled={saving} className="btn btn-success">
+      <button type="submit" disabled={saving} className="validFormButton">
         {saving ? "Saving..." : "Save"}
       </button>
     </form>

@@ -42,7 +42,7 @@ function KanjiForm({
     <form onSubmit={onSubmit} className="modificationForm">
       <h2>{kanji.id ? "Edit" : "Add"} Kanji</h2>
       {errors.onSubmit && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert-modif alert-danger-modif" role="alert">
           {errors.onSubmit}
         </div>
       )}
