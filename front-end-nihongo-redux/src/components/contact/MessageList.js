@@ -5,22 +5,27 @@ import "./Message.css";
 function MessageList(props) {
   const messages = props.messages;
   return (
-    <div>
+    <div className="messageListStyle">
       {messages.map((message) => {
         return (
-          <div key={message.id} className="messageListStyle">
-            <div className="messageEmailStyle">Email : {message.email}</div>
+          <div key={message.id} className="message-container">
+            <div className="messageEmailStyle">
+              <label>Email : </label> {message.email}
+            </div>
 
-            <div className="messageTitleStyle">Title : {message.title}</div>
+            <div className="messageTitleStyle">
+              <label>Title : </label>
+              {message.title}
+            </div>
 
             <div className="messageContentStyle">
               <label>Content : </label>
-              <br />
               <p>{message.title}</p>
             </div>
 
             <div className="messageDateCreationStyle">
-              <p>Date creation : : {message.dateCreation}</p>
+              <label>Date creation : </label>
+              {message.dateCreation}
             </div>
             <div>
               <button

@@ -64,6 +64,10 @@
 }
 
 /*** translation area ***/
+#translationArea label {
+  font-size: x-large;
+}
+
 .translationAreaButtons {
   background-color: var(--third-bg-color);
   border-radius: 10px;

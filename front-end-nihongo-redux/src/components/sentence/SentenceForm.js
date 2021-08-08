@@ -6,10 +6,9 @@ import PropTypes from "prop-types";
 import { topicList } from "../common/sentenceConstants";
 
 const formStyle = {
-  backgroundColor: "#4682B4",
   margin: "1em",
-  padding: "0.5em",
-  borderRadius: "10px",
+  display: "grid",
+  gap: "0.5em",
 };
 
 function SentenceForm({

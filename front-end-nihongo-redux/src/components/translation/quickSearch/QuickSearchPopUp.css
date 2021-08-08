@@ -11,5 +11,5 @@
 
 .close:hover {
   background-color: red;
-  color: white;
+  color: var(--primary-txt-color);
 }

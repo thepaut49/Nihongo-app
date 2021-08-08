@@ -50,6 +50,7 @@ import ConjugationPage from "./conjugation/ConjugationPage";
 import AdjectivesPage from "./adjectives/AdjectivesPage";
 import HelpPage from "./help/HelpPage";
 import ManageContactPage from "./contact/ManageContactPage";
+import MessagesPage from "./contact/MessagesPage";
 
 function App() {
   return (
@@ -154,6 +155,7 @@ function App() {
           <Route path="/help" component={HelpPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/contact" component={ManageContactPage} />
+          <Route path="/messages" component={MessagesPage} />
         </Switch>
         <ToastContainer autoClose={3000} hideProgressBar />
         <ButtonScrollToTop />

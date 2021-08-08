@@ -1,7 +1,7 @@
 .listObjectButtons {
   background-color: #333;
   border-radius: 10px;
-  color: white;
+  color: var(--primary-txt-color);
   border: none;
   outline: none;
 }

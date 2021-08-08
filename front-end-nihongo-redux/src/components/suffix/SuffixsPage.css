@@ -17,4 +17,5 @@
 .suffix {
   font-weight: bold;
   font-size: xxx-large;
+  width: fit-content;
 }

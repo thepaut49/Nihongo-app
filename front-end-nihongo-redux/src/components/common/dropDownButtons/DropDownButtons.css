@@ -6,7 +6,7 @@
 
 .dropdownChoiceDiv button {
   float: left;
-  color: white;
+  color: var(--primary-txt-color);
   text-align: center;
 }
 
@@ -17,7 +17,7 @@
 .dropdownChoice .dropbtn {
   border: none;
   outline: none;
-  color: white;
+  color: var(--primary-txt-color);
   background-color: inherit;
   margin: auto;
   width: 100%;
@@ -25,14 +25,14 @@
 
 .dropdowntoto button:hover,
 .dropdownChoice:hover .dropbtn {
-  background-color: #0d6efd;
+  background-color: blue;
   border-radius: 10px;
 }
 
 .dropdownChoice-content {
   display: none;
   position: absolute;
-  background-color: #4682b4;
+  background-color: #333;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -42,7 +42,7 @@
 
 .dropdownChoice-content button {
   float: none;
-  color: white;
+  color: var(--primary-txt-color);
   text-decoration: none;
   background-color: #333;
   display: block;
@@ -52,7 +52,7 @@
 }
 
 .dropdownChoice-content button:hover {
-  background-color: #0d6efd;
+  background-color: blue;
 }
 
 .dropdownChoice:hover .dropdownChoice-content {
@@ -60,5 +60,5 @@
 }
 
 .choiceButton {
-  background-color: #0d6efd;
+  background-color: blue;
 }

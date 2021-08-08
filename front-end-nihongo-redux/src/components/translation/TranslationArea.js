@@ -13,7 +13,6 @@ const TranslationArea = ({
 }) => {
   const styleTranslationArea = {
     width: "100%",
-    padding: "0.4em",
   };
 
   const buttonGroupStyle = {
@@ -29,7 +28,7 @@ const TranslationArea = ({
         <form style={styleTranslationArea}>
           <CustomTextArea
             id="textToTranslate"
-            label="Sentence to Translate :"
+            label="Sentence to Translate"
             name="textToTranslate"
             cols={35}
             rows={5}

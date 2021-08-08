@@ -124,14 +124,16 @@ const SplitPopup = (props) => {
             </div>
             <div className="partButtons">
               <button
-                className="btn splitButtons"
+                className="splitButtons"
                 onClick={addLetterToFirstPart}
+                disabled={secondPart.kanjis.length === 1}
               >
                 Move character to the left
               </button>
               <button
-                className="btn splitButtons"
+                className="splitButtons"
                 onClick={addLetterToSecondPart}
+                disabled={firstPart.kanjis.length === 1}
               >
                 Move character to the right
               </button>

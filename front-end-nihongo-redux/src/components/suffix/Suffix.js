@@ -13,9 +13,9 @@ function Suffix(props) {
 
   return (
     <div className="grid-container-suffix">
-      <h1>The {suffix.kanjis} suffix</h1>
+      <h2>The {suffix.kanjis} suffix</h2>
       <div>
-        <h2>Pronunciations</h2>
+        <h3>Pronunciations</h3>
         <div>
           {suffix.pronunciations
             .slice()
@@ -30,9 +30,9 @@ function Suffix(props) {
         </div>
       </div>
 
-      <h2>Use</h2>
+      <h3>Use</h3>
       <div className="use">{suffix.use}</div>
-      <h2>Summary</h2>
+      <h3>Summary</h3>
       <div className="use">{suffix.summary}</div>
     </div>
   );

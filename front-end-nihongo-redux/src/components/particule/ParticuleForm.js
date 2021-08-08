@@ -4,10 +4,9 @@ import CustomTextArea from "../common/CustomTextArea";
 import PropTypes from "prop-types";
 
 const formStyle = {
-  backgroundColor: "#4682B4",
   margin: "1em",
-  padding: "0.5em",
-  borderRadius: "10px",
+  display: "grid",
+  gap: "0.5em",
 };
 
 function ParticuleForm({

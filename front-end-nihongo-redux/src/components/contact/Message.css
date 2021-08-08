@@ -1,0 +1,23 @@
+.messageListStyle {
+  display: grid;
+  gap: 0.4em;
+}
+
+.messageListStyle div {
+  margin: 0.5em;
+}
+
+.message-container {
+  background-color: var(--fifth-bg-color);
+  border-radius: 10px;
+}
+
+.messageListStyle label {
+  font-weight: bold;
+}
+
+.messageListStyle p {
+  padding: 0.5em;
+  background-color: var(--fourth-bg-color);
+  border-radius: 10px;
+}

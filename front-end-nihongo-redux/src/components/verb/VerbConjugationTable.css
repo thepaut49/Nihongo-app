@@ -24,7 +24,7 @@
   border: solid;
   border-color: var(--third-bg-color);
   background-color: var(--secondary-bg-color);
-  color: white;
+  color: var(--primary-txt-color);
   font-weight: bold;
   font-size: large;
 }
@@ -38,7 +38,7 @@
   text-align: center;
   vertical-align: middle;
   background-color: var(--secondary-bg-color);
-  color: white;
+  color: var(--primary-txt-color);
   font-weight: bold;
 }
 
@@ -50,7 +50,7 @@
   border-color: var(--third-bg-color);
   padding: 0.5em;
   background-color: var(--secondary-bg-color);
-  color: white;
+  color: var(--primary-txt-color);
   font-weight: bold;
 }
 
@@ -62,7 +62,7 @@
   border-color: var(--third-bg-color);
   padding: 0.5em;
   background-color: var(--secondary-bg-color);
-  color: white;
+  color: var(--primary-txt-color);
   font-weight: bold;
 }
 
@@ -74,7 +74,7 @@
   border-color: var(--third-bg-color);
   padding: 0.5em;
   background-color: var(--secondary-bg-color);
-  color: white;
+  color: var(--primary-txt-color);
   font-weight: bold;
 }
 
@@ -104,7 +104,7 @@
   border-color: var(--third-bg-color);
   padding: 0.5em;
   background-color: var(--secondary-bg-color);
-  color: white;
+  color: var(--primary-txt-color);
   font-weight: bold;
 }
 
