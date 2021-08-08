@@ -7,44 +7,40 @@ function HelpPage() {
       <h2>Help</h2>
       <div className="help-container">
         <section id="toc_container">
-          <div>
-            <a href="#how_to_use_translation_tool">
-              How to use the translation tool
-            </a>
-          </div>
+          <a href="#how_to_use_translation_tool" className="toc_title">
+            How to use the translation tool
+          </a>
 
-          <div>
-            <a href="#t1_1">How to use list of most used kanjis and words </a>
-          </div>
+          <a href="#t1_1" className="toc_subtitle">
+            How to use list of most used kanjis and words{" "}
+          </a>
 
-          <div>
-            <a href="#t1_2">How to use the text area with the buttons bellow</a>
-          </div>
+          <a href="#t1_2" className="toc_subtitle">
+            How to use the text area with the buttons bellow
+          </a>
 
-          <div>
-            <a href="#t1_3">
-              How to use the list of kanjis / list of parts / list of grammar
-              rules
-            </a>
-          </div>
+          <a href="#t1_3" className="toc_subtitle">
+            How to use the list of kanjis / list of parts / list of grammar
+            rules
+          </a>
 
-          <div>
-            <a href="#t1_3_1">How to use the list of parts</a>
-          </div>
+          <a href="#t1_3_1" className="toc_subsubtitle">
+            How to use the list of parts
+          </a>
 
-          <div>
-            <a href="#how_to_use_search_tool">How to use the search tool</a>
-          </div>
+          <a href="#how_to_use_search_tool" className="toc_title">
+            How to use the search tool
+          </a>
 
-          <div>
-            <a href="#t2_1">How to use list of most used kanjis and words </a>
-          </div>
+          <a href="#t2_1" className="toc_subtitle">
+            How to use filters
+          </a>
 
-          <div>
-            <a href="#t2_2">Pronunciation fields</a>
-          </div>
+          <a href="#t2_2" className="toc_subtitle">
+            Pronunciation fields
+          </a>
         </section>
-        <section className="styleHomePage">
+        <section>
           <div className="howToUseSection">
             <h3
               id="how_to_use_translation_tool"

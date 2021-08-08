@@ -1,6 +1,7 @@
 .help-container {
   display: grid;
-  grid: 1fr / 2fr 10fr;
+  grid: 1fr;
+  gap: 1em;
 }
 
 .howToUseSection {
@@ -8,7 +9,7 @@
   grid: min-content 1fr / 1fr;
   border-radius: 10px;
   gap: 0.5em;
-  margin: 0.5em;
+  margin-top: 2em;
 }
 
 .howToUseSectionTitle {
@@ -25,34 +26,50 @@
   grid: 1fr / min-content 1fr;
   padding: 0.5em;
   color: var(--secondary-txt-color);
+  line-height: 2;
 }
 
 /*** CSS for summary ***/
 #toc_container {
-  background: blue none repeat scroll 0 0;
   border: 1px solid #aaa;
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 0.5em;
-  gap: 1em;
   border-radius: 10px;
+  height: 100%;
+  border: solid var(--third-bg-color);
 }
 
-#toc_container div {
+#toc_container {
   float: left;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
+  text-align: left;
   text-decoration: none;
   vertical-align: middle;
   font-weight: bold;
+  padding: 14px 16px;
 }
 
-#toc_container div a {
+#toc_container a {
+  color: var(--primary-txt-color);
+}
+
+#toc_container a:hover {
+  border-radius: 10px;
   text-decoration: none;
 }
 
-#toc_container div:hover {
-  background-color: red;
-  border-radius: 10px;
+.toc_title {
+  font-size: x-large;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.toc_subtitle {
+  font-size: large;
+  padding-left: 2em;
+  font-style: italic;
+}
+
+.toc_subsubtitle {
+  font-size: small;
+  padding-left: 4em;
+  font-style: italic;
 }

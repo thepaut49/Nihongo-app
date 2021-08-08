@@ -3,7 +3,7 @@
   width: 100%;
   padding: 1em;
   display: grid;
-  grid: 1fr 2fr / 1fr;
+  grid: min-content 1fr / 1fr;
 }
 
 h1 {
@@ -16,4 +16,6 @@ h1 {
   font-size: xx-large;
   color: var(--secondary-txt-color);
   margin: auto;
+  line-height: 2;
+  text-align: justify;
 }
