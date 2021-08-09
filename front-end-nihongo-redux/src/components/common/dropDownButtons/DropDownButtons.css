@@ -23,7 +23,6 @@
   width: 100%;
 }
 
-.dropdowntoto button:hover,
 .dropdownChoice:hover .dropbtn {
   background-color: blue;
   border-radius: 10px;

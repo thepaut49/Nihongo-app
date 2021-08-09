@@ -10,13 +10,14 @@
 
   --primary-txt-color: white;
   --secondary-txt-color: orange;
-  --third-txt-color: blue;
+  --third-txt-color: var(--fourth-bg-color);
+  --fourth-txt-color: black;
 }
 
 /**** global CSS *****/
 body {
   background-color: var(--primary-bg-color);
-  color: #ffffff;
+  color: var(--primary-txt-color);
   height: minmax(100%, fit-content());
   font-family: Arial, Helvetica, sans-serif;
 }

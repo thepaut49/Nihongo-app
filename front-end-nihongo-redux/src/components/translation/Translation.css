@@ -70,9 +70,7 @@
 
 .translationAreaButtons {
   background-color: var(--third-bg-color);
-  border-radius: 10px;
   color: var(--secondary-txt-color);
-  border: none;
   outline: none;
   font-weight: bold;
   font-size: large;
