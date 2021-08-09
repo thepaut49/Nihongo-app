@@ -55,7 +55,7 @@ function HelpPage() {
                   alt="Screen shot of the translation page."
                 />
                 <div>
-                  <ol>
+                  <ul className="numbered-list">
                     <li>
                       A list of buttons that contains the most used kanjis or
                       words grouped by types.
@@ -66,7 +66,7 @@ function HelpPage() {
                       for launching the translation or clearing the area below.
                     </li>
                     <li>List of kanjis and words in the text above</li>
-                  </ol>
+                  </ul>
                 </div>
               </div>
 
@@ -77,7 +77,7 @@ function HelpPage() {
                   alt="Screen shot of the translation page."
                 />
                 <div>
-                  <ol>
+                  <ul className="numbered-list">
                     <li>
                       You can choose the types either kanji or i-adjective,
                       na-adjective, verbs, words.
@@ -91,7 +91,7 @@ function HelpPage() {
                       When the type is adjective or verb all the conjugation
                       possibilities are available.
                     </li>
-                  </ol>
+                  </ul>
                 </div>
               </div>
 
@@ -104,7 +104,7 @@ function HelpPage() {
                   alt="Text to translate + buttons."
                 />
                 <div>
-                  <ol>
+                  <ul className="numbered-list">
                     <li>
                       You can type in the text area in romaji it will be
                       automatically translated in hiragana (for lowercase) or
@@ -121,7 +121,7 @@ function HelpPage() {
                       begin and the words and kanjis identified will appear
                       bellow. The button clear will clear the area bellow.
                     </li>
-                  </ol>
+                  </ul>
                 </div>
               </div>
 
@@ -135,7 +135,7 @@ function HelpPage() {
                   alt="List of kanjis, parts and grammar rules identified"
                 />
                 <div>
-                  <ol>
+                  <ul className="numbered-list">
                     <li>
                       When you click on list of kanjis it will display the list
                       of kanjis identified in the text.
@@ -158,7 +158,7 @@ function HelpPage() {
                       begin and the words and kanjis identified will appear
                       bellow. The button clear will clear the area bellow.
                     </li>
-                  </ol>
+                  </ul>
                 </div>
               </div>
 
@@ -166,7 +166,7 @@ function HelpPage() {
               <div className="howToUse">
                 <img src={"./src/images/berserk.jpg"} alt="List of parts" />
                 <div>
-                  <ol>
+                  <ul className="numbered-list">
                     <li>
                       For each part you can choose the pronunciation and the
                       meaning that fits the context.
@@ -195,7 +195,7 @@ function HelpPage() {
                       association possible this button will show a pop up to
                       select the association corresponding to the context
                     </li>
-                  </ol>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -212,7 +212,7 @@ function HelpPage() {
                 alt="Screenshots filters."
               />
               <div>
-                <ol>
+                <ul className="numbered-list">
                   <li>
                     In the filter kanjis you can copy paste a kanji or an
                     association of kanjis
@@ -233,7 +233,7 @@ function HelpPage() {
                     There is a filter on the pronunciation see section below for
                     more detail
                   </li>
-                </ol>
+                </ul>
               </div>
             </div>
 
