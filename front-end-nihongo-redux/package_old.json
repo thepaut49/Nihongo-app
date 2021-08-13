@@ -9,7 +9,9 @@
     "test:ci": "jest",
     "clean:build": "rimraf ./build && mkdir build",
     "prebuild": "run-p clean:build",
-    "build": "webpack --config webpack.config.prod.js"
+    "build": "webpack --config webpack.config.prod.js",
+    "postbuild": "run-p serve:build",
+    "serve:build": "http-server ./build -a localhost -p 3000"
   },
   "author": "Antoine Thépaut",
   "license": "ISC",
@@ -66,9 +68,7 @@
     "node": ">=10"
   },
   "babel": {
-    "presets": [
-      "babel-preset-react-app"
-    ]
+    "presets": ["babel-preset-react-app"]
   },
   "eslintConfig": {
     "extends": [

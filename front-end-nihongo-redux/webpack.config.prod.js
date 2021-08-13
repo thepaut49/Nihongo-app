@@ -29,7 +29,7 @@ module.exports = {
       //this global makes sure React is built in prod mod
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.REACT_APP_API_BASE_URL": JSON.stringify(
-        "http://192.168.1.10:9090"
+        "http://192.168.1.10:8080"
       ),
     }),
     new HtmlWebpackPlugin({
@@ -50,10 +50,7 @@ module.exports = {
       },
     }),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: "src/images", to: "src/images" },
-        { from: path.resolve(__dirname, "keycloak.json") },
-      ],
+      patterns: [{ from: "src/images", to: "src/images" }],
     }),
   ],
   module: {

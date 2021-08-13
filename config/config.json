@@ -2,5 +2,7 @@
   "host_name": "192.168.1.10",
   "db_name": "dbnihongodev",
   "db_username": "thepolo49",
-  "db_password": "Pastel12008?"
+  "db_password": "Pastel12008?",
+  "back_port: "8080",
+  "front_port": "3000"
 }
