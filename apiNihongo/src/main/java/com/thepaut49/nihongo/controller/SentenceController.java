@@ -25,7 +25,7 @@ import com.thepaut49.nihongo.service.SentenceService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/sentences")
 public class SentenceController {

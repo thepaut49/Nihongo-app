@@ -25,7 +25,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env.REACT_APP_API_BASE_URL": JSON.stringify(
-        "http://192.168.1.10:9090"
+        "http://HOST_NAME:BACK_PORT"
       ),
     }),
     new HtmlWebpackPlugin({
