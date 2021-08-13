@@ -11,14 +11,14 @@ services:
       context: apiNihongo # Use an image built from the specified dockerfile in the `apiNihongo` directory.
       dockerfile: Dockerfile
     ports:
-      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+      - "BACK_PORT:BACK_PORT" # Forward the exposed port BACK_PORT on the container to port BACK_PORT on the host machine
     restart: always
     depends_on: 
       - db # This service depends on mysql. Start that first.
     environment: # Pass environment variables to the service
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/dbnihongodev?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: thepolo49
-      SPRING_DATASOURCE_PASSWORD: Pastel12008?     
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/DB_NAME?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: DB_USERNAME
+      SPRING_DATASOURCE_PASSWORD: DB_PASSWORD?     
 
 
   # Frontend Service 
@@ -27,7 +27,7 @@ services:
       context: front-end-nihongo-redux # Use an image built from the specified dockerfile in the `front-end-nihongo` directory.
       dockerfile: Dockerfile
       args:
-        REACT_APP_API_BASE_URL: http://127.0.0.1:8080
+        REACT_APP_API_BASE_URL: http://HOST_NAME:BACK_PORT
     ports:
       - "3000:80" # Forward the exposed port 80 on the container to port 80 on the host machine
     restart: always
@@ -41,10 +41,10 @@ services:
       - "3306:3306"
     restart: always
     environment:
-      MYSQL_DATABASE: dbnihongodev
-      MYSQL_USER: thepolo49
-      MYSQL_PASSWORD: Pastel12008?
-      MYSQL_ROOT_PASSWORD: Pastel12008?
+      MYSQL_DATABASE: DB_NAME
+      MYSQL_USER: DB_USERNAME
+      MYSQL_PASSWORD: DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: DB_PASSWORD
     volumes:
       - db-data:/var/lib/mysql
  
