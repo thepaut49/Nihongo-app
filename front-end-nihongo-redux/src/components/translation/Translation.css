@@ -1,6 +1,6 @@
 #translation {
   display: grid;
-  grid: 28em 33em 1fr / repeat(12, 1fr);
+  grid: min-content min-content 1fr / repeat(12, 1fr);
   gap: 1em;
   width: 100%;
 }
@@ -10,6 +10,7 @@
   grid-column-end: 13;
   grid-row-start: 1;
   grid-row-end: 2;
+  margin: 0.5em;
 }
 
 /*** CSS for list of Parts ***/
@@ -18,6 +19,7 @@
   grid-column-end: 13;
   grid-row-start: 2;
   grid-row-end: 4;
+  margin: 0.5em;
 }
 
 .showListOfThingButtons {
@@ -55,6 +57,7 @@
   grid-row-end: 4;
   border-radius: 10px;
   padding: 0.4em;
+  margin-left: 0.5em;
 }
 
 #select-group {

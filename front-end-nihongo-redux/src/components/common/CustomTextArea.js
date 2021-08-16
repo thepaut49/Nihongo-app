@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { japanesePunctuationList } from "./japanesePunctuation";
 
 const styleButtons = {
-  marginTop: "0.4em",
+  marginTop: "1em",
   display: "grid",
   gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
-  gap: "1em 1em",
+  gap: "1em",
 };
 
 function CustomTextArea(props) {

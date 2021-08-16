@@ -11,10 +11,6 @@ const TranslationArea = ({
   onClearClick,
   onQuickSearchClick,
 }) => {
-  const styleTranslationArea = {
-    width: "100%",
-  };
-
   const buttonGroupStyle = {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
@@ -25,12 +21,12 @@ const TranslationArea = ({
   return (
     <>
       <div id="translationArea">
-        <form style={styleTranslationArea}>
+        <form>
           <CustomTextArea
             id="textToTranslate"
             label="Sentence to Translate"
             name="textToTranslate"
-            cols={35}
+            cols={30}
             rows={5}
             value={sentence}
             onChange={onSentenceChange}

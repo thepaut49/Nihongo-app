@@ -8,7 +8,7 @@
 .homePageHeader {
   display: grid;
   grid-template-columns: 2fr 8fr 2fr;
-  margin: auto;
+  margin: 0.5em;
   gap: 1em;
   vertical-align: middle;
 }
@@ -16,7 +16,7 @@
 .homePageContent {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-top: 1em;
+  margin: 0.5em;
   gap: 1em;
 }
 

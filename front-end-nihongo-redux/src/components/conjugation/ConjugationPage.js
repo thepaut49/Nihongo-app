@@ -2,7 +2,7 @@ import React from "react";
 
 const ConjugationPage = () => {
   return (
-    <>
+    <section className="adjectiveCourse">
       <h2>Japanese Conjugation</h2>
       <p>
         In the Japanese language, the beginning of a word is usually preserved
@@ -169,7 +169,7 @@ const ConjugationPage = () => {
       <h4>〜たい DESIRE</h4>
       <h4>〜たがる WANTS TO</h4>
       <h4>〜ながら SIMULTANEOUS</h4>
-    </>
+    </section>
   );
 };
 

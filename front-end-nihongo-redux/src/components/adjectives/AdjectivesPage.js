@@ -50,7 +50,7 @@ const AdjectivesPage = () => {
   };
 
   return (
-    <>
+    <div className="adjectiveCourse">
       <h2>Adjectives</h2>
       <span>There are two kinds of adjectives in the Japanese language :</span>
       <ul>
@@ -81,7 +81,7 @@ const AdjectivesPage = () => {
       </p>
 
       <NaAdjectiveConjugationTable naAdjective={exampleNaAdjective} />
-    </>
+    </div>
   );
 };
 

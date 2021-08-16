@@ -14,7 +14,7 @@ import "./QuickSearchPopUp.css";
 const styleTriggerButton = {
   display: "grid",
   gridTemplateColumns: "1fr",
-  padding: "0.4em",
+  paddingTop: "1em",
 };
 
 const quickSearchPopUpStyle = {
