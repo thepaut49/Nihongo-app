@@ -30,7 +30,7 @@ const ParticulesPage = (props) => {
   };
 
   return (
-    <>
+    <section className="pageSection">
       <h2>Particules</h2>
       {props.loading ? (
         <Spinner />
@@ -50,7 +50,7 @@ const ParticulesPage = (props) => {
           )}
         </>
       )}
-    </>
+    </section>
   );
 };
 

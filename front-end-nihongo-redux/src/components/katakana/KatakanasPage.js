@@ -27,7 +27,7 @@ const KatakanasPage = () => {
   });
 
   return (
-    <>
+    <section className="pageSection">
       <h2>Katakana (片仮名, カタカナ)</h2>
       <div style={hiraganaListStyle}>
         {listOfHiraganaKeys.map((hiraganaKey, index) => {
@@ -39,7 +39,7 @@ const KatakanasPage = () => {
           );
         })}
       </div>
-    </>
+    </section>
   );
 };
 

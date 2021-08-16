@@ -1,7 +1,8 @@
 .verbsPage {
   display: grid;
   grid-template-rows: min-content min-content min-content auto;
-  gap: 1em 1em;
+  gap: 1em;
+  margin: 0.5em;
 }
 
 .grid-container-verb {

@@ -27,7 +27,7 @@ const HiraganasPage = () => {
   });
 
   return (
-    <>
+    <section className="pageSection">
       <h2>Hiragana (平仮名, ひらがな)</h2>
       <div style={hiraganaListStyle}>
         {listOfHiraganaKeys.map((hiraganaKey, index) => {
@@ -39,7 +39,7 @@ const HiraganasPage = () => {
           );
         })}
       </div>
-    </>
+    </section>
   );
 };
 

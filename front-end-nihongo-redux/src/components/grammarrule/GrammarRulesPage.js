@@ -30,7 +30,7 @@ const GrammarRulesPage = (props) => {
   };
 
   return (
-    <>
+    <section className="pageSection">
       <h2>GrammarRules</h2>
       {props.loading ? (
         <Spinner />
@@ -48,7 +48,7 @@ const GrammarRulesPage = (props) => {
           />
         </>
       )}
-    </>
+    </section>
   );
 };
 
