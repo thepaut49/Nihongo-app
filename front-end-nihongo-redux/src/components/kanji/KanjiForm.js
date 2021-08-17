@@ -58,23 +58,26 @@ function KanjiForm({
 
       {kanji.pronunciations &&
         kanji.pronunciations.length > 0 &&
-        kanji.pronunciations.sort(orderPronunciation).map((pro, index) => {
-          return (
-            <CustomInputPronunciations
-              key={index + 1000}
-              id={"pronunciation" + index}
-              label={"Pronunciation " + (index + 1) + " :"}
-              typeInput="text"
-              onChange={onPronunciationChange}
-              name={"pronunciation" + index}
-              value={kanji.pronunciations[index].pronunciation}
-              index={index}
-              deletePronunciation={deletePronunciation}
-              onMiddlePointClick={onMiddlePointClick}
-              onTranslateClick={onTranslateClick}
-            />
-          );
-        })}
+        kanji.pronunciations
+          .slice()
+          .sort(orderPronunciation)
+          .map((pro, index) => {
+            return (
+              <CustomInputPronunciations
+                key={index + 1000}
+                id={"pronunciation" + index}
+                label={"Pronunciation " + (index + 1) + " :"}
+                typeInput="text"
+                onChange={onPronunciationChange}
+                name={"pronunciation" + index}
+                value={kanji.pronunciations[index].pronunciation}
+                index={index}
+                deletePronunciation={deletePronunciation}
+                onMiddlePointClick={onMiddlePointClick}
+                onTranslateClick={onTranslateClick}
+              />
+            );
+          })}
 
       <button className="btn btn-primary" onClick={addPronunciation}>
         Add pronunciation
@@ -82,21 +85,24 @@ function KanjiForm({
 
       {kanji.meanings &&
         kanji.meanings.length > 0 &&
-        kanji.meanings.sort(orderMeaning).map((_meaning, index) => {
-          return (
-            <CustomInputMeaning
-              key={index + 2000}
-              id={"meaning" + index}
-              label={"Meaning " + (index + 1) + " :"}
-              typeInput="text"
-              onChange={(event) => onMeaningChange(event, index)}
-              name={"meaning" + index}
-              value={kanji.meanings[index].meaning}
-              index={index}
-              deleteMeaning={deleteMeaning}
-            />
-          );
-        })}
+        kanji.meanings
+          .slice()
+          .sort(orderMeaning)
+          .map((_meaning, index) => {
+            return (
+              <CustomInputMeaning
+                key={index + 2000}
+                id={"meaning" + index}
+                label={"Meaning " + (index + 1) + " :"}
+                typeInput="text"
+                onChange={(event) => onMeaningChange(event, index)}
+                name={"meaning" + index}
+                value={kanji.meanings[index].meaning}
+                index={index}
+                deleteMeaning={deleteMeaning}
+              />
+            );
+          })}
 
       <button className="btn btn-primary" onClick={addMeaning}>
         Add meaning

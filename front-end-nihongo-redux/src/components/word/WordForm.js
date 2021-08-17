@@ -48,7 +48,7 @@ function WordForm({
       {word.pronunciations &&
         word.pronunciations.length > 0 &&
         word.pronunciations
-          .splice()
+          .slice()
           .sort(orderPronunciation)
           .map((pro, index) => {
             return (
@@ -75,7 +75,7 @@ function WordForm({
       {word.meanings &&
         word.meanings.length > 0 &&
         word.meanings
-          .splice()
+          .slice()
           .sort(orderMeaning)
           .map((_meaning, index) => {
             return (
