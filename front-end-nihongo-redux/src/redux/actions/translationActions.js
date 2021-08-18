@@ -4,19 +4,31 @@ import * as naAdjectiveActions from "./naAdjectiveActions";
 import * as iAdjectiveActions from "./iAdjectiveActions";
 import * as nameActions from "./nameActions";
 import * as wordActions from "./wordActions";
-import * as translationApi from "../../api/translationApi";
 import translationConstants from "../../components/common/translationConstants";
+import { loadListObjects } from "../../components/translation/loadListOfObjectsUtils";
 
-export function loadListObjects(typeSelect, quantity, setListObjects) {
-  translationApi
-    .getMostUsedObject(typeSelect, quantity)
-    .then((listObjects) => {
-      sessionStorage.setItem("listObjects", JSON.stringify(listObjects));
-      setListObjects(listObjects);
-    })
-    .catch((error) => {
-      throw error;
-    });
+export function loadListOfObjects(
+  typeSelect,
+  quantity,
+  kanjis,
+  iAdjectives,
+  naAdjectives,
+  names,
+  words,
+  verbs,
+  setListObjects
+) {
+  loadListObjects(
+    typeSelect,
+    quantity,
+    kanjis,
+    iAdjectives,
+    naAdjectives,
+    names,
+    words,
+    verbs,
+    setListObjects
+  );
 }
 
 export function updateNumberOfUse(typeSelect, id) {

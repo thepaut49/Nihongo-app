@@ -24,6 +24,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 
 const typeSelectListOfValue = [
+  translationConstants.TYPE_ALL,
   translationConstants.TYPE_KANJI,
   translationConstants.TYPE_VERB,
   translationConstants.TYPE_NA_ADJECTIVE,
@@ -94,6 +95,40 @@ const Translation = (props) => {
     getListObjectStyle(typeSelect)
   );
 
+  const doLoadObjects = (
+    typeSelect,
+    kanjis,
+    iAdjectives,
+    naAdjectives,
+    names,
+    words,
+    verbs
+  ) => {
+    switch (typeSelect) {
+      case translationConstants.TYPE_KANJI:
+        return kanjis.length !== 0;
+      case translationConstants.TYPE_I_ADJECTIVE:
+        return iAdjectives.length !== 0;
+      case translationConstants.TYPE_NA_ADJECTIVE:
+        return naAdjectives.length !== 0;
+      case translationConstants.TYPE_NAME:
+        return names.length !== 0;
+      case translationConstants.TYPE_WORD:
+        return words.length !== 0;
+      case translationConstants.TYPE_VERB:
+        return verbs.length !== 0;
+      default:
+        return (
+          kanjis.length !== 0 &&
+          verbs.length !== 0 &&
+          naAdjectives.length !== 0 &&
+          iAdjectives.length !== 0 &&
+          names.length !== 0 &&
+          words.length !== 0
+        );
+    }
+  };
+
   useEffect(() => {
     const {
       counters,
@@ -118,10 +153,40 @@ const Translation = (props) => {
     if (counters.length === 0) actions.loadCounters();
     if (suffixs.length === 0) actions.loadSuffixs();
     if (grammarRules.length === 0) actions.loadGrammarRules();
-    if (listObjects.length === 0) {
-      translationActions.loadListObjects(typeSelect, quantity, setListObjects);
+
+    if (
+      doLoadObjects(
+        typeSelect,
+        kanjis,
+        iAdjectives,
+        naAdjectives,
+        names,
+        words,
+        verbs
+      )
+    ) {
+      translationActions.loadListOfObjects(
+        typeSelect,
+        quantity,
+        kanjis,
+        iAdjectives,
+        naAdjectives,
+        names,
+        words,
+        verbs,
+        setListObjects
+      );
     }
-  }, [typeSelect, quantity, listObjects]);
+  }, [
+    typeSelect,
+    quantity,
+    props.kanjis.length,
+    props.iAdjectives.length,
+    props.naAdjectives.length,
+    props.names.length,
+    props.words.length,
+    props.verbs.length,
+  ]);
 
   const handleListClick = (event, id) => {
     translationActions.updateSentence(
@@ -144,7 +209,17 @@ const Translation = (props) => {
       _quantity = event.target.value;
     }
     setListObjectsStyle(getListObjectStyle(_typeSelect));
-    translationActions.loadListObjects(_typeSelect, _quantity, setListObjects);
+    translationActions.loadListOfObjects(
+      _typeSelect,
+      _quantity,
+      props.kanjis,
+      props.iAdjectives,
+      props.naAdjectives,
+      props.names,
+      props.words,
+      props.verbs,
+      setListObjects
+    );
   };
 
   const handleTranslateClick = (event) => {
@@ -422,6 +497,7 @@ Translation.propTypes = {
   words: PropTypes.array.isRequired,
   loading: PropTypes.bool,
   actions: PropTypes.object.isRequired,
+  apiCallsInProgress: PropTypes.number.isRequired,
   grammarRules: PropTypes.array.isRequired,
 };
 
