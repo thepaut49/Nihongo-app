@@ -109,7 +109,7 @@ function CountersPage(props) {
 
           {isConnected() && (
             <Link className="btn btn-primary" to="/counter/create">
-              Add Kanji
+              Add Counter
             </Link>
           )}
 
