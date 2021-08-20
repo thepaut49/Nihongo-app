@@ -14,9 +14,7 @@ const newParticule = {
   id: 0,
   kanjis: "",
   summary: "",
-  function: "",
-  howToUse: "",
-  examples: "",
+  htmlPage: "",
   version: 0,
 };
 
@@ -57,6 +55,8 @@ const ManageParticulePage = ({
       _errors.kanjis = "Kanjis of the particule is required";
     if (!particule.summary)
       _errors.summary = "Summary of the particule is required";
+    if (!particule.htmlPage)
+      _errors.htmlPage = "description of the particule is required";
 
     setErrors(_errors);
     // form is valid if the erros object has no properties

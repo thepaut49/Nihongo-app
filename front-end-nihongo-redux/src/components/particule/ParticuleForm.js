@@ -44,36 +44,14 @@ function ParticuleForm({
       />
 
       <CustomTextArea
-        id="function"
-        label="Function of the particle"
-        name="function"
+        id="htmlPage"
+        label="Uses of the particle "
+        name="htmlPage"
         cols={70}
-        rows={5}
-        value={particule.function}
+        rows={50}
+        value={particule.htmlPage}
         onChange={onChange}
-        error={errors.function}
-      />
-
-      <CustomTextArea
-        id="howToUse"
-        label="How to use the particle"
-        name="howToUse"
-        cols={70}
-        rows={5}
-        value={particule.howToUse}
-        onChange={onChange}
-        error={errors.howToUse}
-      />
-
-      <CustomTextArea
-        id="examples"
-        label="Examples sentence for the particle "
-        name="examples"
-        cols={70}
-        rows={20}
-        value={particule.examples}
-        onChange={onChange}
-        error={errors.examples}
+        error={errors.htmlPage}
       />
 
       <button type="submit" disabled={saving} className="validFormButton">

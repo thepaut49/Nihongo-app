@@ -1,3 +1,10 @@
+.particulePage {
+  display: grid;
+  grid-template-rows: min-content min-content min-content auto;
+  gap: 1em;
+  margin: 0.5em;
+}
+
 .particuleListStyle {
   border-radius: 10px;
   background-color: var(--fourth-bg-color);

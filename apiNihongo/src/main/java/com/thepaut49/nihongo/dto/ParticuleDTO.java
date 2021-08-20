@@ -5,9 +5,7 @@ public class ParticuleDTO {
 	private Long id;
 	private String kanjis;
 	private String summary;
-	private String function;
-	private String howToUse;
-	private String examples;
+	private String htmlPage;
 	private int version;
 	
 	/*** getter-setter ***/
@@ -36,28 +34,12 @@ public class ParticuleDTO {
 		this.summary = summary;
 	}
 
-	public String getFunction() {
-		return function;
+	public String getHtmlPage() {
+		return htmlPage;
 	}
 
-	public void setFunction(String function) {
-		this.function = function;
-	}
-
-	public String getHowToUse() {
-		return howToUse;
-	}
-
-	public void setHowToUse(String howToUse) {
-		this.howToUse = howToUse;
-	}
-	
-	public String getExamples() {
-		return examples;
-	}
-
-	public void setExamples(String examples) {
-		this.examples = examples;
+	public void setHtmlPage(String htmlPage) {
+		this.htmlPage = htmlPage;
 	}
 
 	public int getVersion() {

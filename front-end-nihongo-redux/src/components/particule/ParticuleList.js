@@ -29,18 +29,9 @@ function ParticuleList(props) {
               <h2>Summary</h2>
               {particule.summary}
 
-              <h2>Function of the {particule.kanjis}</h2>
-              {particule.function}
-
-              <h2>How to use the particle {particule.kanjis}</h2>
-              {particule.howToUse}
-
-              <h2>
-                Japanese Examples SENTENCES with the particle {particule.kanjis}
-              </h2>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: particule.examples,
+                  __html: particule.htmlPage,
                 }}
               />
             </div>

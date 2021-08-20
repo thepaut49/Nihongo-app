@@ -26,16 +26,10 @@ public class Particule implements Serializable {
 	@Column(nullable = false)
 	private String summary;
 
-	@Column
-	private String particuleFunction;
-	
-	@Column
-	private String howToUse;
-	
 	@Lob
 	@Column(nullable = false)
-	private String examples;
-	
+	private String htmlPage;
+
 	@Version
 	private int version;
 	
@@ -65,30 +59,6 @@ public class Particule implements Serializable {
 		this.summary = summary;
 	}
 
-	public String getParticuleFunction() {
-		return particuleFunction;
-	}
-
-	public void setParticuleFunction(String function) {
-		this.particuleFunction = function;
-	}
-
-	public String getHowToUse() {
-		return howToUse;
-	}
-
-	public void setHowToUse(String howToUse) {
-		this.howToUse = howToUse;
-	}
-	
-	public String getExamples() {
-		return examples;
-	}
-
-	public void setExamples(String examples) {
-		this.examples = examples;
-	}
-
 	public int getVersion() {
 		return version;
 	}
@@ -96,24 +66,30 @@ public class Particule implements Serializable {
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	
+
+	public String getHtmlPage() {
+		return htmlPage;
+	}
+
+	public void setHtmlPage(String htmlPage) {
+		this.htmlPage = htmlPage;
+	}
+
 	/*** methods ***/
 
 	@Override
 	public String toString() {
 		return " Particule : { Id : " + this.id + " , Kanjis : " + this.kanjis + " , Summary : " + this.summary +
-				" , Function : " + this.particuleFunction + " , How to use : " + this.howToUse  + " , Version : " + this.version + " }" ;
+				" , Html : " + htmlPage + " , Version : " + this.version + " }" ;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((examples == null) ? 0 : examples.hashCode());
-		result = prime * result + ((howToUse == null) ? 0 : howToUse.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((kanjis == null) ? 0 : kanjis.hashCode());
-		result = prime * result + ((particuleFunction == null) ? 0 : particuleFunction.hashCode());
+		result = prime * result + ((htmlPage == null) ? 0 : htmlPage.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		return result;
 	}
@@ -127,15 +103,10 @@ public class Particule implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Particule other = (Particule) obj;
-		if (examples == null) {
-			if (other.examples != null)
+		if (htmlPage == null) {
+			if (other.htmlPage != null)
 				return false;
-		} else if (!examples.equals(other.examples))
-			return false;
-		if (howToUse == null) {
-			if (other.howToUse != null)
-				return false;
-		} else if (!howToUse.equals(other.howToUse))
+		} else if (!htmlPage.equals(other.htmlPage))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -146,11 +117,6 @@ public class Particule implements Serializable {
 			if (other.kanjis != null)
 				return false;
 		} else if (!kanjis.equals(other.kanjis))
-			return false;
-		if (particuleFunction == null) {
-			if (other.particuleFunction != null)
-				return false;
-		} else if (!particuleFunction.equals(other.particuleFunction))
 			return false;
 		if (summary == null) {
 			if (other.summary != null)
