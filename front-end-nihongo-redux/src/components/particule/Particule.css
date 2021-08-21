@@ -16,3 +16,8 @@
   font-weight: bold;
   font-size: xxx-large;
 }
+
+.particuleDescription p,
+.particuleSummary {
+  margin: 0.5em;
+}

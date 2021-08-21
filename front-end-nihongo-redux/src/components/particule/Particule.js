@@ -11,10 +11,11 @@ function Particule(props) {
       </div>
 
       <div>
-        <h2>Summary</h2>
-        {particule.summary}
+        <h4>Summary</h4>
+        <p className="particuleSummary">{particule.summary}</p>
 
         <div
+          className="particuleDescription"
           dangerouslySetInnerHTML={{
             __html: particule.htmlPage,
           }}
