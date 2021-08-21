@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/visitStats")
 public class VisitStatsController {
@@ -63,6 +62,8 @@ public class VisitStatsController {
 				.collect(Collectors.toList());
 	}
 }
+
+
 
 
 

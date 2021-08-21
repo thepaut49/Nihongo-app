@@ -10,10 +10,6 @@ import java.util.List;
 
 public interface VisitStatsRepository extends JpaRepository<VisitStats, Long> {
 
-    boolean existsByIpAndDateVisit(String ip, LocalDate dateVisit);
-
     List<VisitStats> findByDateVisit(LocalDate dateVisit);
-
-    List<VisitStats> findByIp(String ip);
 
 }
