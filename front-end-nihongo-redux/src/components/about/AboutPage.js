@@ -2,7 +2,7 @@ import React from "react";
 import "./AboutPage.css";
 
 const styleAboutPage = {
-  padding: "1em",
+  margin: "0.5em",
 };
 
 class AboutPage extends React.Component {

@@ -1,132 +1,57 @@
 .grid-container-mainGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 55em);
-  gap: "1em 1em";
-}
-
-.tenseGrid {
-  display: grid;
-  grid-template-columns: repeat(14, 1fr);
-  grid-template-areas:
-    "tense tense tense tense empty empty positive positive positive positive negative negative negative negative "
-    "tense tense tense tense plain plain plainpositive plainpositive plainpositive plainpositive plainnegative plainnegative plainnegative plainnegative"
-    "tense tense tense tense polite polite politepositive politepositive politepositive politepositive politenegative politenegative politenegative politenegative";
+  gap: 1em;
   margin: 1em;
-  border: solid;
-  border-color: var(--third-bg-color);
-  border-radius: 10px;
-}
-
-.tense {
-  height: 100%;
-  width: 100%;
-  grid-area: tense;
-  border: solid;
-  border-color: var(--third-bg-color);
-  background-color: var(--secondary-bg-color);
-  color: var(--primary-txt-color);
-  font-weight: bold;
-  font-size: large;
-}
-
-.empty {
-  height: 100%;
-  width: 100%;
-  grid-area: empty;
-  border: solid;
-  border-color: var(--third-bg-color);
-  text-align: center;
-  vertical-align: middle;
-  background-color: var(--secondary-bg-color);
-  color: var(--primary-txt-color);
-  font-weight: bold;
-}
-
-.positive {
-  height: 100%;
-  width: 100%;
-  grid-area: positive;
-  border: solid;
-  border-color: var(--third-bg-color);
-  padding: 0.5em;
-  background-color: var(--secondary-bg-color);
-  color: var(--primary-txt-color);
-  font-weight: bold;
-}
-
-.negative {
-  height: 100%;
-  width: 100%;
-  grid-area: negative;
-  border: solid;
-  border-color: var(--third-bg-color);
-  padding: 0.5em;
-  background-color: var(--secondary-bg-color);
-  color: var(--primary-txt-color);
-  font-weight: bold;
-}
-
-.plain {
-  height: 100%;
-  width: 100%;
-  grid-area: plain;
-  border: solid;
-  border-color: var(--third-bg-color);
-  padding: 0.5em;
-  background-color: var(--secondary-bg-color);
-  color: var(--primary-txt-color);
-  font-weight: bold;
-}
-
-.plainpositive {
-  height: 100%;
-  width: 100%;
-  grid-area: plainpositive;
-  border: solid;
-  border-color: var(--third-bg-color);
-  padding: 0.5em;
-}
-
-.plainnegative {
-  height: 100%;
-  width: 100%;
-  grid-area: plainnegative;
-  border: solid;
-  border-color: var(--third-bg-color);
-  padding: 0.5em;
-}
-
-.polite {
-  height: 100%;
-  width: 100%;
-  grid-area: polite;
-  border: solid;
-  border-color: var(--third-bg-color);
-  padding: 0.5em;
-  background-color: var(--secondary-bg-color);
-  color: var(--primary-txt-color);
-  font-weight: bold;
-}
-
-.politepositive {
-  height: 100%;
-  width: 100%;
-  grid-area: politepositive;
-  border: solid;
-  border-color: var(--third-bg-color);
-  padding: 0.5em;
-}
-
-.politenegative {
-  height: 100%;
-  width: 100%;
-  grid-area: politenegative;
-  border: solid;
-  border-color: var(--third-bg-color);
-  padding: 0.5em;
 }
 
 .ending {
   color: var(--secondary-txt-color);
   font-weight: bold;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.tenseName {
+  color: var(--fourth-txt-color);
+}
+
+.verbConjugationTableStyle {
+  display: grid;
+  grid: 1fr 2fr / repeat(3, 1fr);
+  border-radius: 10px;
+  margin: 0.5em;
+  font-weight: bold;
+  border: solid var(--third-bg-color);
+}
+
+.verbTitleWithBorderStyle {
+  background-color: var(--secondary-bg-color);
+  border: solid var(--third-bg-color);
+  padding: 0.3em;
+}
+
+.verbTenseStyle {
+  display: grid;
+  grid-row-start: span 4;
+  background-color: var(--secondary-bg-color);
+  font-weight: bold;
+}
+
+.verbContentStyle {
+  grid-column-start: span 2;
+  display: grid;
+  grid: repeat(2, 1fr) / 1fr 1fr;
+}
+
+.verbWithBorderStyle div {
+  text-align: left;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.verbWithBorderStyle {
+  border: solid var(--third-bg-color);
+  padding: 0.3em;
+  display: flex;
 }

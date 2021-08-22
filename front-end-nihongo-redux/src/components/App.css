@@ -52,7 +52,6 @@ h4 {
   width: 100%;
   display: grid;
   grid-template-rows: min-content max-content;
-  gap: 1em;
 }
 
 /* css pour la nav bar*/

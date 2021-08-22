@@ -230,6 +230,20 @@ export function presentIndicative(verb, form, sign) {
             return "きません";
           }
         }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "だ";
+          } else {
+            return "じゃない/ではない";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "です";
+          } else {
+            return "じゃありません/ではありません";
+          }
+        }
       }
   }
 }
@@ -419,6 +433,20 @@ export function presumptiveVolitional(verb, form, sign) {
             return "ましょう/るでしょう";
           } else {
             return "ないでしょう";
+          }
+        }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
           }
         }
       }
@@ -616,6 +644,20 @@ export function imperative(verb, form, sign) {
             return "来ないでください";
           }
         }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        }
       }
   }
 }
@@ -809,6 +851,20 @@ export function pastIndicative(verb, form, sign) {
             return "ました";
           } else {
             return "ませんでした";
+          }
+        }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "だった";
+          } else {
+            return "ではなかった";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "でした";
+          } else {
+            return "ではありませんでした";
           }
         }
       }
@@ -1008,6 +1064,20 @@ export function pastPresumptive(verb, form, sign) {
             return "たでしょう";
           } else {
             return "なかったでしょう";
+          }
+        }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "だろう";
+          } else {
+            return "ではないだろう";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "でしょう";
+          } else {
+            return "ではないでしょう";
           }
         }
       }
@@ -1217,6 +1287,20 @@ export function presentProgressive(verb, form, sign) {
             return "";
           }
         }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        }
       }
   }
 }
@@ -1424,6 +1508,20 @@ export function pastProgressive(verb, form, sign) {
             return "";
           }
         }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        }
       }
   }
 }
@@ -1615,6 +1713,20 @@ export function provisionalConditionalEba(verb, form, sign) {
             return "ませんなら";
           }
         }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        }
       }
   }
 }
@@ -1804,6 +1916,20 @@ export function potential(verb, form, sign) {
             return "られます";
           } else {
             return "られません";
+          }
+        }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
           }
         }
       }
@@ -2001,6 +2127,20 @@ export function conditionalTara(verb, form, sign) {
             return "ませんでしたら";
           }
         }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        }
       }
   }
 }
@@ -2192,6 +2332,20 @@ export function causative(verb, form, sign) {
             return "させません";
           }
         }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        }
       }
   }
 }
@@ -2381,6 +2535,20 @@ export function passive(verb, form, sign) {
             return "られます";
           } else {
             return "られません";
+          }
+        }
+      } else if (verb.neutralForm === "です") {
+        if (form === verbConstants.PLAIN_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
+          }
+        } else if (form === verbConstants.POLITE_FORM) {
+          if (sign === verbConstants.POSITIVE_SIGN) {
+            return "N/A";
+          } else {
+            return "N/A";
           }
         }
       }

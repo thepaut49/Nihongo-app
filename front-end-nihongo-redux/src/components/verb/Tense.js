@@ -7,11 +7,6 @@ const POLITE_FORM = "Polite";
 const NEGATIVE_SIGN = "Negative";
 const POSITIVE_SIGN = "Positive";
 
-const spanStyle = {
-  margin: "auto",
-  textAlign: "center",
-};
-
 function Tense(props) {
   const verb = props.verb;
   const stem = verb.neutralForm.substring(0, verb.neutralForm.length - 1);
@@ -42,37 +37,68 @@ function Tense(props) {
     NEGATIVE_SIGN
   );
 
-  function isSuru(verb) {
-    return verb.neutralForm === "する" ? true : false;
+  const showTense =
+    verbEndingPolitePositive !== "N/A" &&
+    verbEndingPoliteNegative !== "N/A" &&
+    verbEndingPlainPositive !== "N/A" &&
+    verbEndingPlainNegative !== "N/A";
+
+  function isSuruOrDesu(neutralForm) {
+    return neutralForm === "する" || neutralForm === "です";
   }
 
   return (
-    <div className="tenseGrid">
-      <div className="tense">
-        <p style={spanStyle}>{tense}</p>
-      </div>
-      <div className="empty"></div>
-      <div className="positive">Positive</div>
-      <div className="negative">Negative</div>
-      <div className="plain">Plain</div>
-      <div className="polite">Polite</div>
-      <div className="plainpositive">
-        <span className="stem">{isSuru(verb.neutralForm) || stem}</span>
-        <span className="ending">{verbEndingPlainPositive}</span>
-      </div>
-      <div className="plainnegative">
-        <span className="stem">{isSuru(verb.neutralForm) || stem}</span>
-        <span className="ending">{verbEndingPlainNegative}</span>
-      </div>
-      <div className="politepositive">
-        <span className="stem">{isSuru(verb.neutralForm) || stem}</span>
-        <span className="ending">{verbEndingPolitePositive}</span>
-      </div>
-      <div className="politenegative">
-        <span className="stem">{isSuru(verb.neutralForm) || stem}</span>
-        <span className="ending">{verbEndingPoliteNegative}</span>
-      </div>
-    </div>
+    <>
+      {showTense && (
+        <div className="verbConjugationTableStyle">
+          <div className="verbTitleWithBorderStyle">
+            <p className="tenseName">{tense}</p>
+          </div>
+          <div className="verbTitleWithBorderStyle">
+            <p>Plain</p>
+          </div>
+          <div className="verbTitleWithBorderStyle">
+            <p>Polite</p>
+          </div>
+
+          <div className="verbTenseStyle">
+            <div className="verbWithBorderStyle">
+              <p>Positive</p>
+            </div>
+            <div className="verbWithBorderStyle">
+              <p>Negative</p>
+            </div>
+          </div>
+          <div className="verbContentStyle">
+            <div className="verbWithBorderStyle">
+              <div className="stem">
+                {isSuruOrDesu(verb.neutralForm) || stem}
+              </div>
+              <div className="ending">{verbEndingPlainPositive}</div>
+            </div>
+            <div className="verbWithBorderStyle">
+              <div className="stem">
+                {isSuruOrDesu(verb.neutralForm) || stem}
+              </div>
+              <div className="ending">{verbEndingPlainNegative}</div>
+            </div>
+
+            <div className="verbWithBorderStyle">
+              <div className="stem">
+                {isSuruOrDesu(verb.neutralForm) || stem}
+              </div>
+              <div className="ending">{verbEndingPolitePositive}</div>
+            </div>
+            <div className="verbWithBorderStyle">
+              <div className="stem">
+                {isSuruOrDesu(verb.neutralForm) || stem}
+              </div>
+              <div className="ending">{verbEndingPoliteNegative}</div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
