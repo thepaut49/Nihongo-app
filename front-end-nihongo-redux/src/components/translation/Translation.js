@@ -24,8 +24,8 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 
 const typeSelectListOfValue = [
-  translationConstants.TYPE_ALL,
   translationConstants.TYPE_KANJI,
+  translationConstants.TYPE_ALL,
   translationConstants.TYPE_VERB,
   translationConstants.TYPE_NA_ADJECTIVE,
   translationConstants.TYPE_I_ADJECTIVE,
@@ -447,6 +447,7 @@ const Translation = (props) => {
               name="typeSelect"
               value={typeSelect}
               listOfValues={typeSelectListOfValue}
+              emptyOption={false}
             />
             <CustomIntegerSelect
               id="quantity"
@@ -455,6 +456,7 @@ const Translation = (props) => {
               name="quantity"
               value={quantity}
               listOfValues={quantityListOfValue}
+              emptyOption={false}
             />
           </div>
 

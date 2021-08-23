@@ -66,6 +66,7 @@ function SentenceCriteriaForm({
             name="topicCriteria"
             value={sentenceCriteria.topic}
             listOfValues={topicList}
+            emptyOption={true}
           />
         </div>
         <div style={buttonSearchClearStyle}>

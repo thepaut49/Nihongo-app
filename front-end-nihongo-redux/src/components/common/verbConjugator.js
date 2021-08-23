@@ -1,7 +1,7 @@
 import { verbConstants } from "./verbConstants";
 
-function isSuru(verb) {
-  return verb.neutralForm === "する" ? true : false;
+function isSuruOrDesu(neutralForm) {
+  return neutralForm === "する" || neutralForm === "です";
 }
 
 export const constructListOfValues = (verb) => {
@@ -23,7 +23,7 @@ export const constructListOfValues = (verb) => {
   const formList = [verbConstants.PLAIN_FORM, verbConstants.POLITE_FORM];
   const signList = [verbConstants.POSITIVE_SIGN, verbConstants.NEGATIVE_SIGN];
   let stem = "";
-  if (!isSuru(verb)) {
+  if (!isSuruOrDesu(verb.neutralForm)) {
     stem = verb.neutralForm.substr(0, verb.neutralForm.length - 1);
   }
 
@@ -37,7 +37,17 @@ export const constructListOfValues = (verb) => {
         let tense = tenseFunctionList[indexTense];
         let form = formList[indexForm];
         let sign = signList[indexSign];
-        listOfValues.push(stem + tense(verb, form, sign));
+        let ending = tense(verb, form, sign);
+        if (ending !== "N/A") {
+          if (ending.includes("/")) {
+            const listOfEnding = ending.split("/");
+            for (let index = 0; index < listOfEnding.length; index++) {
+              listOfValues.push(stem + listOfEnding[index]);
+            }
+          } else {
+            listOfValues.push(stem + ending);
+          }
+        }
       }
     }
   }
@@ -1540,9 +1550,9 @@ export function provisionalConditionalEba(verb, form, sign) {
       //form === verbConstants.POLITE_FORM
       else {
         if (sign === verbConstants.POSITIVE_SIGN) {
-          return "n/a";
+          return "N/A";
         } else {
-          return "n/a";
+          return "N/A";
         }
       }
     case verbConstants.GODAN_GROUPE:
@@ -1556,9 +1566,9 @@ export function provisionalConditionalEba(verb, form, sign) {
             }
           } else if (form === verbConstants.POLITE_FORM) {
             if (sign === verbConstants.POSITIVE_SIGN) {
-              return "n/a";
+              return "N/A";
             } else {
-              return "n/a";
+              return "N/A";
             }
           }
           break;
@@ -1571,9 +1581,9 @@ export function provisionalConditionalEba(verb, form, sign) {
             }
           } else if (form === verbConstants.POLITE_FORM) {
             if (sign === verbConstants.POSITIVE_SIGN) {
-              return "n/a";
+              return "N/A";
             } else {
-              return "n/a";
+              return "N/A";
             }
           }
           break;
@@ -1586,9 +1596,9 @@ export function provisionalConditionalEba(verb, form, sign) {
             }
           } else if (form === verbConstants.POLITE_FORM) {
             if (sign === verbConstants.POSITIVE_SIGN) {
-              return "n/a";
+              return "N/A";
             } else {
-              return "n/a";
+              return "N/A";
             }
           }
           break;
@@ -1601,9 +1611,9 @@ export function provisionalConditionalEba(verb, form, sign) {
             }
           } else if (form === verbConstants.POLITE_FORM) {
             if (sign === verbConstants.POSITIVE_SIGN) {
-              return "n/a";
+              return "N/A";
             } else {
-              return "n/a";
+              return "N/A";
             }
           }
           break;
@@ -1616,9 +1626,9 @@ export function provisionalConditionalEba(verb, form, sign) {
             }
           } else if (form === verbConstants.POLITE_FORM) {
             if (sign === verbConstants.POSITIVE_SIGN) {
-              return "n/a";
+              return "N/A";
             } else {
-              return "n/a";
+              return "N/A";
             }
           }
           break;
@@ -1631,9 +1641,9 @@ export function provisionalConditionalEba(verb, form, sign) {
             }
           } else if (form === verbConstants.POLITE_FORM) {
             if (sign === verbConstants.POSITIVE_SIGN) {
-              return "n/a";
+              return "N/A";
             } else {
-              return "n/a";
+              return "N/A";
             }
           }
           break;
@@ -1646,9 +1656,9 @@ export function provisionalConditionalEba(verb, form, sign) {
             }
           } else if (form === verbConstants.POLITE_FORM) {
             if (sign === verbConstants.POSITIVE_SIGN) {
-              return "n/a";
+              return "N/A";
             } else {
-              return "n/a";
+              return "N/A";
             }
           }
           break;
@@ -1661,9 +1671,9 @@ export function provisionalConditionalEba(verb, form, sign) {
             }
           } else if (form === verbConstants.POLITE_FORM) {
             if (sign === verbConstants.POSITIVE_SIGN) {
-              return "n/a";
+              return "N/A";
             } else {
-              return "n/a";
+              return "N/A";
             }
           }
           break;
@@ -1677,9 +1687,9 @@ export function provisionalConditionalEba(verb, form, sign) {
             }
           } else if (form === verbConstants.POLITE_FORM) {
             if (sign === verbConstants.POSITIVE_SIGN) {
-              return "n/a";
+              return "N/A";
             } else {
-              return "n/a";
+              return "N/A";
             }
           }
       }

@@ -8,6 +8,7 @@ function CustomSelect(props) {
   }
 
   const listOfValues = props.listOfValues;
+  const emptyOption = props.emptyOption ? props.emptyOption : false;
   return (
     <div id={"div" + props.id} className={wrapperClass}>
       <label htmlFor={props.id}>{props.label}</label>
@@ -20,7 +21,8 @@ function CustomSelect(props) {
           className="form-control-modif"
           value={props.value}
         >
-          <option value="" />
+          {emptyOption && <option value="" />}
+
           {listOfValues &&
             listOfValues.map((item) => {
               return (
@@ -50,6 +52,7 @@ CustomSelect.propTypes = {
   value: PropTypes.string,
   error: PropTypes.string,
   listOfValues: PropTypes.arrayOf(PropTypes.string).isRequired,
+  emptyOption: PropTypes.bool.isRequired,
 };
 
 export default CustomSelect;

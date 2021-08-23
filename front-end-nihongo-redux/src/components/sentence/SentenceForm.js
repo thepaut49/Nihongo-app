@@ -64,6 +64,7 @@ function SentenceForm({
         name="topic"
         value={sentence.topic}
         listOfValues={topicList}
+        emptyOption={true}
       />
 
       <button type="submit" disabled={saving} className="validFormButton">

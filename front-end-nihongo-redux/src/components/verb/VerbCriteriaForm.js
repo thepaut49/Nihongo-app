@@ -61,6 +61,7 @@ function VerbCriteriaForm({ verbCriteria, onChange, onReset, onSubmit }) {
             name="groupeCriteria"
             value={verbCriteria.groupe}
             listOfValues={verbConstants.verbGroupList}
+            emptyOption={true}
           />
         </div>
         <div style={buttonSearchClearStyle}>

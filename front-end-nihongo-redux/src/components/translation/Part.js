@@ -71,6 +71,7 @@ const Part = (props) => {
         value={part.selectedPronunciation}
         listOfValues={part.pronunciations}
         onChange={handleChange}
+        emptyOption={false}
       />
       <CustomSelect
         id="selectedMeaning"
@@ -79,6 +80,7 @@ const Part = (props) => {
         value={part.selectedMeaning}
         listOfValues={part.meanings}
         onChange={handleChange}
+        emptyOption={false}
       />
       <div>
         <label>Type : </label>

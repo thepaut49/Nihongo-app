@@ -7,6 +7,8 @@ function CustomIntegerSelect(props) {
     wrapperClass += "has-error";
   }
 
+  const emptyOption = props.emptyOption ? props.emptyOption : false;
+
   return (
     <div id={"div" + props.id} className={wrapperClass}>
       <label htmlFor={props.id}>{props.label}</label>
@@ -19,7 +21,7 @@ function CustomIntegerSelect(props) {
           className="form-control-modif"
           value={props.value}
         >
-          <option value="" />
+          {emptyOption && <option value="" />}
           {props.listOfValues.map((item) => {
             return (
               <option key={item} value={item}>
@@ -48,6 +50,7 @@ CustomIntegerSelect.propTypes = {
   value: PropTypes.number,
   error: PropTypes.string,
   listOfValues: PropTypes.arrayOf(PropTypes.number).isRequired,
+  emptyOption: PropTypes.bool.isRequired,
 };
 
 export default CustomIntegerSelect;

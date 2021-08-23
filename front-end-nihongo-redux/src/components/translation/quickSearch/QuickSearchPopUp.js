@@ -201,6 +201,7 @@ const QuickSearchPopUp = (props) => {
               name="typeSelectSearch"
               value={typeSelectSearch}
               listOfValues={typeSelectSearchListOfValue}
+              emptyOption={false}
             />
 
             <CriteriaForm

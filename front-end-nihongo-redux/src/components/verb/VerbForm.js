@@ -101,6 +101,7 @@ function VerbForm({
         name="groupe"
         value={verb.groupe}
         listOfValues={verbConstants.verbGroupList}
+        emptyOption={false}
       />
 
       <button type="submit" disabled={saving} className="validFormButton">
