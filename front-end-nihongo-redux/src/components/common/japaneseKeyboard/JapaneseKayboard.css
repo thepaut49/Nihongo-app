@@ -1,0 +1,17 @@
+.japaneseKeyboard {
+  display: grid;
+  margin: 1em;
+  gap: 1em;
+}
+
+.listOfKanjisButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 2em);
+  margin: 1em;
+  gap: 1em;
+  align-items: center;
+}
+
+.listOfKanjisButtons button {
+  margin: auto;
+}

@@ -99,7 +99,7 @@ function KanjisPage(props) {
       radicalsCriteria: "",
       numberOfUse: null,
     });
-    setKanjiCriteria(filterKanjis(props.kanjis, null));
+    setKanjisList(filterKanjis(props.kanjis, null));
   }
 
   function handleClick(event) {
