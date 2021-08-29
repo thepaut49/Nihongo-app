@@ -55,18 +55,18 @@ function Tense(props) {
             <p className="tenseName">{tense}</p>
           </div>
           <div className="verbTitleWithBorderStyle">
-            <p>Plain</p>
+            <p>Positive</p>
           </div>
           <div className="verbTitleWithBorderStyle">
-            <p>Polite</p>
+            <p>Negative</p>
           </div>
 
           <div className="verbTenseStyle">
             <div className="verbWithBorderStyle">
-              <p>Positive</p>
+              <p>Plain</p>
             </div>
             <div className="verbWithBorderStyle">
-              <p>Negative</p>
+              <p>Polite</p>
             </div>
           </div>
           <div className="verbContentStyle">

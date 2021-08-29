@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { loadVerbs, saveVerb } from "../../redux/actions/verbActions";
 import PropTypes from "prop-types";
 import Spinner from "../common/spinner/Spinner";
+import { verbConstants } from "../common/verbConstants";
 
 const newVerb = {
   id: null,
@@ -31,7 +32,7 @@ const newVerb = {
       version: 0,
     },
   ],
-  groupe: "",
+  groupe: verbConstants.ICHIDAN_GROUPE,
   numberOfUse: null,
   version: null,
 };

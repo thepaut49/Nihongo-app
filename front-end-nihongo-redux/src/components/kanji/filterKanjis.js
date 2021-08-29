@@ -70,7 +70,8 @@ const kanjiCriteriaEmpty = (kanjiCriteria) => {
     kanjiCriteria.meaningCriteria ||
     kanjiCriteria.strokeNumberCriteria ||
     kanjiCriteria.minStrokeNumber ||
-    kanjiCriteria.maxStrokeNumber
+    kanjiCriteria.maxStrokeNumber ||
+    kanjiCriteria.radicalsCriteria
   ) {
     return false;
   } else {
