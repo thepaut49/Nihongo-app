@@ -51,7 +51,7 @@ function HelpPage() {
             <div>
               <div className="howToUse">
                 <img
-                  src={"./src/images/berserk.jpg"}
+                  src={"./src/images/translation-tools.png"}
                   alt="Screen shot of the translation page."
                 />
                 <div>
@@ -73,14 +73,14 @@ function HelpPage() {
               <h4 id="t1_1">How to use list of most used kanjis and words </h4>
               <div className="howToUse">
                 <img
-                  src={"./src/images/berserk.jpg"}
+                  src={"./src/images/most-used-words.png"}
                   alt="Screen shot of the translation page."
                 />
                 <div>
                   <ul className="numbered-list">
                     <li>
-                      You can choose the types either kanji or i-adjective,
-                      na-adjective, verbs, words.
+                      You can choose the types either kanji, i-adjective,
+                      na-adjective, verbs, words or all.
                     </li>
                     <li>You can choose the number of buttons displayed.</li>
                     <li>
@@ -100,7 +100,7 @@ function HelpPage() {
               </h4>
               <div className="howToUse">
                 <img
-                  src={"./src/images/berserk.jpg"}
+                  src={"./src/images/translation-area.png"}
                   alt="Text to translate + buttons."
                 />
                 <div>
@@ -112,14 +112,11 @@ function HelpPage() {
                     </li>
                     <li>
                       When you click on the buttons bellow the text area it will
-                      add the content of the button in the text. The quick
-                      search button will open a popup to help you to find words
-                      or kanjis.
+                      add the content of the button in the text.
                     </li>
                     <li>
-                      When you click the button search the translation will
-                      begin and the words and kanjis identified will appear
-                      bellow. The button clear will clear the area bellow.
+                      The quick search button will open a popup to help you to
+                      find words or kanjis.
                     </li>
                   </ul>
                 </div>
@@ -131,7 +128,7 @@ function HelpPage() {
               </h4>
               <div className="howToUse">
                 <img
-                  src={"./src/images/berserk.jpg"}
+                  src={"./src/images/listOfParts.png"}
                   alt="List of kanjis, parts and grammar rules identified"
                 />
                 <div>
@@ -164,7 +161,7 @@ function HelpPage() {
 
               <h5 id="t1_3_1">How to use the list of parts</h5>
               <div className="howToUse">
-                <img src={"./src/images/berserk.jpg"} alt="List of parts" />
+                <img src={"./src/images/part.png"} alt="List of parts" />
                 <div>
                   <ul className="numbered-list">
                     <li>
@@ -208,7 +205,7 @@ function HelpPage() {
             <h4 id="t2_1">How to use filters </h4>
             <div className="howToUse">
               <img
-                src={"./src/images/berserk.jpg"}
+                src={"./src/images/filters.png"}
                 alt="Screenshots filters."
               />
               <div>
@@ -242,9 +239,10 @@ function HelpPage() {
               All the pronunciation criteria fields in filters and in the
               translation in this app translate automatically romaji into
               hiragana and katakana. The others pronunciation fields have a
-              button to translate romaji into hiragana and katakana.
+              button to translate romaji into hiragana and katakana. You have to
+              write in lowercase for hiragana and uppercase for katakana.
             </p>
-            <span>For these six hiragana and katakana you have to type :</span>
+            <p>For these eight hiragana and katakana you have to type :</p>
             <ul>
               <li>ん: -n</li>
               <li>ぢ: dji</li>
@@ -252,6 +250,8 @@ function HelpPage() {
               <li>ン: -N</li>
               <li>ヂ: DJI</li>
               <li>ヅ: DZU</li>
+              <li>っ: tsu=</li>
+              <li>ッ: TSU=</li>
             </ul>
           </div>
         </section>

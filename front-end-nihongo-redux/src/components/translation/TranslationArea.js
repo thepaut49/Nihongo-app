@@ -32,6 +32,7 @@ const TranslationArea = ({
             onChange={onSentenceChange}
             onKanaClick={onKanaClick}
           />
+          <QuickSearchPopUp onQuickSearchClick={onQuickSearchClick} />
           <div style={buttonGroupStyle}>
             <button
               className="translationAreaButtons"
@@ -44,7 +45,6 @@ const TranslationArea = ({
             </button>
           </div>
         </form>
-        <QuickSearchPopUp onQuickSearchClick={onQuickSearchClick} />
       </div>
     </>
   );

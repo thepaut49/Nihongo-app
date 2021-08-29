@@ -4,6 +4,7 @@ import CustomInputPronunciation from "../common/CustomInputPronunciation";
 import CustomSelect from "../common/CustomSelect";
 import PropTypes from "prop-types";
 import { topicList } from "../common/sentenceConstants";
+import JapaneseKeyboard from "../common/japaneseKeyboard/JapaneseKeyboard";
 
 const formStyle = {
   margin: "1em",
@@ -21,56 +22,59 @@ function SentenceForm({
   onTranslateClick,
 }) {
   return (
-    <form onSubmit={onSubmit} style={formStyle}>
-      <h2>{sentence.id ? "Edit" : "Add"} Sentence</h2>
-      {errors.onSubmit && (
-        <div className="alert-modif alert-danger-modif" role="alert">
-          {errors.onSubmit}
-        </div>
-      )}
-      <CustomInput
-        id="kanjis"
-        label="Kanjis"
-        onChange={onChange}
-        name="kanjis"
-        value={sentence.kanjis}
-        error={errors.kanjis}
-      />
+    <>
+      <form onSubmit={onSubmit} style={formStyle}>
+        <h2>{sentence.id ? "Edit" : "Add"} Sentence</h2>
+        {errors.onSubmit && (
+          <div className="alert-modif alert-danger-modif" role="alert">
+            {errors.onSubmit}
+          </div>
+        )}
+        <CustomInput
+          id="kanjis"
+          label="Kanjis"
+          onChange={onChange}
+          name="kanjis"
+          value={sentence.kanjis}
+          error={errors.kanjis}
+        />
 
-      <CustomInputPronunciation
-        id="pronunciation"
-        label="Pronunciation"
-        onChange={onChange}
-        name="pronunciation"
-        value={sentence.pronunciation}
-        error={errors.pronunciation}
-        onMiddlePointClick={onMiddlePointClick}
-        onTranslateClick={onTranslateClick}
-      />
+        <CustomInputPronunciation
+          id="pronunciation"
+          label="Pronunciation"
+          onChange={onChange}
+          name="pronunciation"
+          value={sentence.pronunciation}
+          error={errors.pronunciation}
+          onMiddlePointClick={onMiddlePointClick}
+          onTranslateClick={onTranslateClick}
+        />
 
-      <CustomInput
-        id="meaning"
-        label="Meaning"
-        onChange={onChange}
-        name="meaning"
-        value={sentence.meaning}
-        error={errors.meaning}
-      />
+        <CustomInput
+          id="meaning"
+          label="Meaning"
+          onChange={onChange}
+          name="meaning"
+          value={sentence.meaning}
+          error={errors.meaning}
+        />
 
-      <CustomSelect
-        id="topic"
-        label="Topic"
-        onChange={onChange}
-        name="topic"
-        value={sentence.topic}
-        listOfValues={topicList}
-        emptyOption={true}
-      />
+        <CustomSelect
+          id="topic"
+          label="Topic"
+          onChange={onChange}
+          name="topic"
+          value={sentence.topic}
+          listOfValues={topicList}
+          emptyOption={true}
+        />
 
-      <button type="submit" disabled={saving} className="validFormButton">
-        {saving ? "Saving..." : "Save"}
-      </button>
-    </form>
+        <button type="submit" disabled={saving} className="validFormButton">
+          {saving ? "Saving..." : "Save"}
+        </button>
+      </form>
+      <JapaneseKeyboard />
+    </>
   );
 }
 

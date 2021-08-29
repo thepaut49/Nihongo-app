@@ -30,6 +30,11 @@
   line-height: 2;
 }
 
+.howToUse img {
+  width: 53em;
+  height: 30em;
+}
+
 /*** CSS for summary ***/
 #toc_container {
   border: 1px solid #aaa;

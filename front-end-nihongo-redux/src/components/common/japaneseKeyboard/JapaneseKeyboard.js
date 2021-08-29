@@ -105,7 +105,7 @@ const JapanesKeyboard = (props) => {
 
           {noResult && <p>0 results</p>}
 
-          <span>For these six hiragana and katakana you have to type :</span>
+          <p>For these eight hiragana and katakana you have to type :</p>
           <ul>
             <li>ん: -n</li>
             <li>ぢ: dji</li>
