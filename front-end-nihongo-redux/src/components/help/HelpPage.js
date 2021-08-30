@@ -211,48 +211,48 @@ function HelpPage() {
               <div>
                 <ul className="numbered-list">
                   <li>
-                    In the filter kanjis you can copy paste a kanji or an
-                    association of kanjis
+                    In the kanjis search tools there are 7 filters, a kanji
+                    filter, a pronunciation filter (see section below), a
+                    meaning filter, you can also filter by number of strokes,
+                    finally you can filter with little component of the kanji
+                    called radicals.
                   </li>
                   <li>
-                    In the filter meaning you can write part of the meaning
+                    In the verb search tool there are 4 filters, a filter for
+                    the neutral form of the verb, a filter for a possible
+                    pronunciation, a filter for a possible meaning and finally
+                    one for the group of the verb (Ichidan, Godan, Irregulars).
                   </li>
                   <li>
-                    For kanjis search there are the filters on the kanji number
-                    of strokes
-                  </li>
-                  <li>
-                    For verbs there is also a filter to filter by group of verbs
-                    (Ichidan, Godan, irregulars)
-                  </li>
-                  <li>For sentences there is a filter to filter by topic</li>
-                  <li>
-                    There is a filter on the pronunciation see section below for
-                    more detail
+                    For all the other types of words there are 3 filters, one to
+                    filter with kanjis, one to filter by a possible
+                    pronunciation, and finally a filter for a possible meaning.
                   </li>
                 </ul>
               </div>
             </div>
 
             <h4 id="t2_2">Pronunciation fields</h4>
-            <p>
-              All the pronunciation criteria fields in filters and in the
-              translation in this app translate automatically romaji into
-              hiragana and katakana. The others pronunciation fields have a
-              button to translate romaji into hiragana and katakana. You have to
-              write in lowercase for hiragana and uppercase for katakana.
-            </p>
-            <p>For these eight hiragana and katakana you have to type :</p>
-            <ul>
-              <li>ん: -n</li>
-              <li>ぢ: dji</li>
-              <li>づ: dzu</li>
-              <li>ン: -N</li>
-              <li>ヂ: DJI</li>
-              <li>ヅ: DZU</li>
-              <li>っ: tsu=</li>
-              <li>ッ: TSU=</li>
-            </ul>
+            <div className="helpPronunciationFields">
+              <p>
+                All the pronunciation criteria fields in filters and in the
+                translation in this app translate automatically romaji into
+                hiragana and katakana. The others pronunciation fields have a
+                button to translate romaji into hiragana and katakana. You have
+                to write in lowercase for hiragana and uppercase for katakana.
+              </p>
+              <p>For these eight hiragana and katakana you have to type :</p>
+              <ul>
+                <li>ん: -n</li>
+                <li>ぢ: dji</li>
+                <li>づ: dzu</li>
+                <li>ン: -N</li>
+                <li>ヂ: DJI</li>
+                <li>ヅ: DZU</li>
+                <li>っ: tsu=</li>
+                <li>ッ: TSU=</li>
+              </ul>
+            </div>
           </div>
         </section>
       </div>

@@ -35,6 +35,14 @@
   height: 30em;
 }
 
+.helpPronunciationFields {
+  color: var(--secondary-txt-color);
+}
+
+.helpPronunciationFields li {
+  list-style-type: circle;
+}
+
 /*** CSS for summary ***/
 #toc_container {
   border: 1px solid #aaa;
