@@ -35,7 +35,7 @@ function IAdjectivesPage(props) {
     } else {
       setIAdjectivesList(filterIAdjectives(iAdjectives, iAdjectiveCriteria));
     }
-  }, []);
+  }, [props.iAdjectives.length, iAdjectivesList.length]);
   // le second arg [] empeche de relancer en boucle l'appel à l'api
 
   // fonction for criteria form

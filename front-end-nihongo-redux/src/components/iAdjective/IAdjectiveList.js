@@ -59,7 +59,7 @@ function IAdjectiveList(props) {
                       })}
                   </div>
                   {isConnected() && (
-                    <div>
+                    <div className="iAdjButtons">
                       <button
                         className="btn btn-outline-danger"
                         onClick={() => {

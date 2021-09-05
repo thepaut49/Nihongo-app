@@ -7,12 +7,13 @@
 
 .grid-container-iAdjective {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1em 1em;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 1fr 1fr min-content;
+  gap: 1em;
   grid-template-areas:
-    "iAdjective pronunciation pronunciation pronunciation"
-    "iAdjective meaning meaning meaning";
+    "iAdjective iAdjective iAdjective pronunciation pronunciation pronunciation pronunciation pronunciation pronunciation pronunciation pronunciation pronunciation"
+    "iAdjective iAdjective iAdjective meaning meaning meaning meaning meaning meaning meaning meaning meaning"
+    "iAdjButtons iAdjButtons iAdjButtons iAdjButtons iAdjButtons iAdjButtons iAdjButtons iAdjButtons iAdjButtons iAdjButtons iAdjButtons iAdjButtons";
   border-radius: 10px;
   background-color: var(--fourth-bg-color);
   margin: 0.5em;
@@ -27,5 +28,10 @@
 }
 .pronunciation {
   grid-area: pronunciation;
+  font-weight: bold;
+}
+
+.iAdjButtons {
+  grid-area: iAdjButtons;
   font-weight: bold;
 }

@@ -60,7 +60,7 @@ function NaAdjectiveList(props) {
                       })}
                   </div>
                   {isConnected() && (
-                    <div className="delete">
+                    <div className="iAdjButtons">
                       <button
                         className="btn btn-outline-danger"
                         onClick={() => {

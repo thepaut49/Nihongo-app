@@ -382,3 +382,16 @@ label {
 .pageSection {
   margin: 0.5em;
 }
+
+/*** CSS for meanings ***/
+.meaning {
+  grid-area: meaning;
+  font-weight: bold;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.meaning span {
+  margin: 0.5em;
+}

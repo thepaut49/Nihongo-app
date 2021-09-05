@@ -33,13 +33,6 @@
 .pronunciation span {
   margin: 0.5em;
 }
-.meaning {
-  grid-area: meaning;
-  font-weight: bold;
-}
-.meaning span {
-  margin: 0.5em;
-}
 
 .strokes {
   grid-area: strokes;
