@@ -15,7 +15,7 @@
 
 .iAdjectiveTenseStyle {
   display: grid;
-  grid: 1fr / 1fr;
+  grid: repeat(4, 1fr) / 1fr;
   grid-row-start: span 4;
   background-color: var(--secondary-bg-color);
   font-weight: bold;

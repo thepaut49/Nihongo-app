@@ -42,10 +42,8 @@ export function saveIAdjective(iAdjective) {
       .then((savediAdjective) => {
         if (iAdjective.id) {
           dispatch(updateIAdjectiveSuccess(savediAdjective));
-          dispatch();
         } else {
           dispatch(createIAdjectiveSuccess(savediAdjective));
-          dispatch();
         }
       })
       .catch((error) => {
@@ -72,7 +70,6 @@ export function updateNumberOfUse(id) {
       .updateNumberOfUse(id)
       .then((savediAdjective) => {
         dispatch(updateIAdjectiveSuccess(savediAdjective));
-        dispatch();
       })
       .catch((error) => {
         dispatch(apiCallError(error));
