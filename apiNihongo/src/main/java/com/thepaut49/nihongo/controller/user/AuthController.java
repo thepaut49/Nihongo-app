@@ -2,15 +2,18 @@ package com.thepaut49.nihongo.controller.user;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 
 import com.thepaut49.nihongo.model.user.ERole;
 import com.thepaut49.nihongo.model.user.Role;
 import com.thepaut49.nihongo.model.user.User;
 import com.thepaut49.nihongo.payload.request.LoginRequest;
+import com.thepaut49.nihongo.payload.request.ModifyRequest;
 import com.thepaut49.nihongo.payload.request.SignupRequest;
 import com.thepaut49.nihongo.payload.response.JwtResponse;
 import com.thepaut49.nihongo.payload.response.MessageResponse;
@@ -25,12 +28,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -126,5 +124,28 @@ public class AuthController {
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
+
+	@PutMapping("/modify/{id}")
+	public ResponseEntity<?> modifyUser(@Valid @RequestBody ModifyRequest modifyRequest, @PathVariable Long id) {
+		Optional<User> userOptional = userRepository.findById(id);
+		if (userOptional.isEmpty()) {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Error: User does not exist!"));
+		}
+		else {
+			User user = userOptional.get();
+			if (!encoder.matches(modifyRequest.getOldPassword(),user.getPassword())) {
+				return ResponseEntity
+						.badRequest()
+						.body(new MessageResponse("Error: Password incorrect!"));
+			}
+			else {
+				user.setPassword(encoder.encode(modifyRequest.getNewPassword()));
+				userRepository.save(user);
+			}
+		}
+		return ResponseEntity.ok(new MessageResponse("User modified successfully!"));
 	}
 }
