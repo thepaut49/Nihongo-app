@@ -1,11 +1,11 @@
 #!/bin/bash
 # read config.json file
-host_name=jq . host_name config.json;  
-db_name=jq . db_name config.json;  
-db_username=jq . db_username config.json;  
-db_password=jq . db_password config.json;  
-back_port=jq . back_port config.json;  
-front_port=jq . front_port config.json;  
+host_name=jq .config.host_name config.json;  
+db_name=jq .config.db_name config.json;  
+db_username=jq .config.db_username config.json;  
+db_password=jq .config.db_password config.json;  
+back_port=jq .config.back_port config.json;  
+front_port=jq .config.front_port config.json;  
 
 
 printf "host_name = %s \n" $host_name
