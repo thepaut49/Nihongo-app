@@ -1,27 +1,25 @@
 #!/bin/bash
 # read config.json file
-host_name=jq .config.host_name config.json;  
-db_name=jq .config.db_name config.json;  
-db_username=jq .config.db_username config.json;  
-db_password=jq .config.db_password config.json;  
-back_port=jq .config.back_port config.json;  
-front_port=jq .config.front_port config.json;  
+config_file=config.json
+host_name=$(cat $config_file | jq '. | .host_name');
+db_name=$(cat $config_file | jq '. | .db_name');
+db_username=$(cat $config_file | jq '. | .db_username');
+db_password=$(cat $config_file | jq '. | .db_password');
+back_port=$(cat $config_file | jq '. | .back_port');
+front_port=$(cat $config_file | jq '. | .front_port');
 
-
-printf "host_name = %s \n" $host_name
-printf "db_name = %s \n" $db_name 
-printf "db_username = %s \n" $db_username
-printf "db_password = %s \n" $db_password
-printf "back_port = %s \n" $back_port
-printf "front_port = %s \n" $front_port
-
-
-#DESC=`readJson package.json description` || exit 2;  
-# $DESC is "A great project"
-#$config = Get-Content config.json | ConvertFrom-Json
-
+echo "host_name   = $host_name";
+echo "db_name     = $db_name";
+echo "db_username = $db_username";
+echo "db_password = $db_password";
+echo "back_port   = $back_port";
+echo "front_port  = $front_port";
 
 # Modify file in back-end
+cd ..
+cd apiNihongo/src/main/java/com/thepaut49/nihongo/controller
+ls
+grep -RiIl "$host_name" | xargs sed -i "s/$host_name/HOST_NAME/g"
 #$controllersJava = Get-ChildItem -Path ..\apiNihongo\src\main\java\com\thepaut49\nihongo\controller #create list of files
 #foreach ($file in $controllersJava)
 # {

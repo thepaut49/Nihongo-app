@@ -4,5 +4,6 @@
   "db_username": "thepolo49",
   "db_password": "Pastel12008?",
   "back_port": "8080",
-  "front_port": "3000"
+  "front_port": "3000",
+  "secret": "Mon nouveau Secret"
 }

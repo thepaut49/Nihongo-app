@@ -1,6 +1,6 @@
 # Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
 
-version: '3.1'
+version: "3.1"
 
 # Define services
 services:
@@ -13,15 +13,14 @@ services:
     ports:
       - "BACK_PORT:BACK_PORT" # Forward the exposed port BACK_PORT on the container to port BACK_PORT on the host machine
     restart: always
-    depends_on: 
+    depends_on:
       - db # This service depends on mysql. Start that first.
     environment: # Pass environment variables to the service
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/DB_NAME?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: DB_USERNAME
-      SPRING_DATASOURCE_PASSWORD: DB_PASSWORD?     
+      SPRING_DATASOURCE_PASSWORD: DB_PASSWORD
 
-
-  # Frontend Service 
+  # Frontend Service
   app-client:
     build:
       context: front-end-nihongo-redux # Use an image built from the specified dockerfile in the `front-end-nihongo` directory.
@@ -29,7 +28,7 @@ services:
       args:
         REACT_APP_API_BASE_URL: http://HOST_NAME:BACK_PORT
     ports:
-      - "3000:80" # Forward the exposed port 80 on the container to port 80 on the host machine
+      - "FRONT_PORT:80" # Forward the exposed port 80 on the container to port 80 on the host machine
     restart: always
     depends_on:
       - app-server
@@ -47,9 +46,7 @@ services:
       MYSQL_ROOT_PASSWORD: DB_PASSWORD
     volumes:
       - db-data:/var/lib/mysql
- 
-  
+
 # Volumes
 volumes:
   db-data:
- 
