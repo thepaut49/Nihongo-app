@@ -2,6 +2,7 @@
 # read config.json file
 config_file=config.json
 host_name=$(cat $config_file | jq '. | .host_name' | tr -d '"') ;
+db_host=$(cat $config_file | jq '. | .db_host' | tr -d '"');
 db_name=$(cat $config_file | jq '. | .db_name' | tr -d '"');
 db_username=$(cat $config_file | jq '. | .db_username' | tr -d '"');
 db_password=$(cat $config_file | jq '. | .db_password' | tr -d '"');
@@ -10,6 +11,7 @@ front_port=$(cat $config_file | jq '. | .front_port' | tr -d '"');
 secret=$(cat $config_file | jq '. | .secret' | tr -d '"');
 
 echo "host_name   = $host_name";
+echo "db_host     = $db_host";
 echo "db_name     = $db_name";
 echo "db_username = $db_username";
 echo "db_password = $db_password";
@@ -44,6 +46,7 @@ grep -RiIl 'FRONT_PORT' | xargs sed -i "s/FRONT_PORT/$front_port/g"
 #grep -RiIl 'FRONT_PORT' | xargs sed -i "s/FRONT_PORT/$front_port/g"
 
 cd "$BACK_DIR/src/main/resources"
+sed -i "s/DB_HOST/$db_host/g" application.properties
 sed -i "s/DB_NAME/$db_name/g" application.properties
 sed -i "s/DB_USERNAME/$db_username/g" application.properties
 sed -i "s/DB_PASSWORD/$db_password/g" application.properties

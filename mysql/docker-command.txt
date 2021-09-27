@@ -1,0 +1,6 @@
+docker container exec -it nihongo-app_db_1 /bin/bash
+mysql --user=DB_USERNAME --password=DB_PASSWORD DB_NAME < /home/thepolo49/Docker/Nihongo-app/mysql/nihongo-tool-db.sql
+mysql --user=root --password=Pastel12008? ndbnihongodev < /home/thepolo49/Docker/Nihongo-app/mysql/nihongo-tool-db.sql
+docker exec -i nihongo-app_db_1  sh -c 'exec mysql -uthepolo49 -pPastel12008? -D dbnihongodev' --binary-mode -o < /home/thepolo49/Docker/Nihongo-app/mysql/nihongo-tool_db.sql
+
+cat nihongo-tool-db.sql |  docker exec -i CONTAINER mysql -uthepolo49 -pPastel12008?
