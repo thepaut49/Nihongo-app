@@ -1,5 +1,6 @@
 {
-  "host_name": "localhost",
+  "host_name": "0.0.0.0",
+  "db_host": "db",
   "db_name": "dbnihongodev",
   "db_username": "thepolo49",
   "db_password": "Pastel12008?",
