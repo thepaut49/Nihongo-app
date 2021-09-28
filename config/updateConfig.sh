@@ -72,6 +72,6 @@ cd "$BASE_DIR"
 sed -i "s/DB_NAME/$db_name/g" docker-compose.yml
 sed -i "s/DB_USERNAME/$db_username/g" docker-compose.yml
 sed -i "s/DB_PASSWORD/$db_password/g" docker-compose.yml
-sed -i "s/HOST_NAME/$host_name/g" docker-compose.yml
+sed -i "s/BACK_HOST_NAME/$back_host_name/g" docker-compose.yml
 sed -i "s/BACK_PORT/$back_port/g" docker-compose.yml
 sed -i "s/FRONT_PORT/$front_port/g" docker-compose.yml
