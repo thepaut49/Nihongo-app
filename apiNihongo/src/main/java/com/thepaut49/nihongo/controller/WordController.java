@@ -28,7 +28,7 @@ import com.thepaut49.nihongo.service.WordService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/words")
 public class WordController {
@@ -38,21 +38,21 @@ public class WordController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public WordDTO createWord( @RequestBody WordDTO wordDTO) {
+	public WordDTO createWord(@RequestBody WordDTO wordDTO) {
 		Word newWord = WordToDTOMapper.map(wordDTO);
 		return WordToDTOMapper.map(wordService.createWord(newWord));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public WordDTO updateWord( @RequestBody WordDTO wordDTO, @PathVariable Long id) {
-		Word updatedWord = WordToDTOMapper.map(wordDTO);  
+	public WordDTO updateWord(@RequestBody WordDTO wordDTO, @PathVariable Long id) {
+		Word updatedWord = WordToDTOMapper.map(wordDTO);
 		updatedWord.setId(id);
 		return WordToDTOMapper.map(wordService.updateWord(updatedWord));
 	}
-	
+
 	@PatchMapping("/{id}")
-	public WordDTO updateWordNumberOfUse( @PathVariable Long id) {
+	public WordDTO updateWordNumberOfUse(@PathVariable Long id) {
 		return WordToDTOMapper.map(wordService.updateWordNumberOfUse(id));
 	}
 
@@ -64,60 +64,37 @@ public class WordController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public WordDTO findById( @PathVariable Long id) {
+	public WordDTO findById(@PathVariable Long id) {
 		return WordToDTOMapper.map(wordService.findById(id));
 	}
-	
+
 	@GetMapping(value = "/findByKanjis/{kanjis}")
-	public WordDTO findByKanjis( @PathVariable String kanjis) {
+	public WordDTO findByKanjis(@PathVariable String kanjis) {
 		return WordToDTOMapper.map(wordService.findByKanjis(kanjis));
 	}
 
 	@GetMapping("/all")
 	public List<WordDTO> getAllWords() {
 		List<Word> words = wordService.findAll();
-		return words
-				.stream()
-				.map(word -> WordToDTOMapper.map(word))
-				.collect(Collectors.toList());
+		return words.stream().map(word -> WordToDTOMapper.map(word)).collect(Collectors.toList());
 	}
 
 	@GetMapping("/findWithCriteria")
 	@ResponseBody
-	public List<WordDTO> getAllWordsAccortingToCriteria( @RequestParam(required = false) String kanjis,@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning ) { 
+	public List<WordDTO> getAllWordsAccortingToCriteria(@RequestParam(required = false) String kanjis,
+			@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning) {
 		WordCriteriaDTO wordCriteriaDTO = new WordCriteriaDTO();
 		wordCriteriaDTO.setKanjis(kanjis);
 		wordCriteriaDTO.setPronunciation(pronunciation);
 		wordCriteriaDTO.setMeaning(meaning);
-		
+
 		List<Word> words = wordService.findWithCriteria(wordCriteriaDTO);
-		return words
-				.stream()
-				.map(lWord -> WordToDTOMapper.map(lWord))
-				.collect(Collectors.toList());
+		return words.stream().map(lWord -> WordToDTOMapper.map(lWord)).collect(Collectors.toList());
 	}
 
 	@GetMapping("/findMostUsedWords/{quantity}")
-	public List<ObjectDTO> findMostUsedWords(@PathVariable Integer quantity) { 
+	public List<ObjectDTO> findMostUsedWords(@PathVariable Integer quantity) {
 		List<Word> words = wordService.findMostUsedWords(quantity);
-		return words
-				.stream()
-				.map(word -> ObjectDTOMapper.map(word))
-				.collect(Collectors.toList());
+		return words.stream().map(word -> ObjectDTOMapper.map(word)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

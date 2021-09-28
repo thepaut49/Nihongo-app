@@ -28,7 +28,7 @@ import com.thepaut49.nihongo.service.KanjiService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/kanjis")
 public class KanjiController {
@@ -38,24 +38,23 @@ public class KanjiController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public KanjiDTO createKanji( @RequestBody KanjiDTO kanjiDTO) {
+	public KanjiDTO createKanji(@RequestBody KanjiDTO kanjiDTO) {
 		Kanji newKanji = KanjiToDTOMapper.map(kanjiDTO);
 		return KanjiToDTOMapper.map(kanjiService.createKanji(newKanji));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public KanjiDTO updateKanji( @RequestBody KanjiDTO kanjiDTO, @PathVariable Long id) {
-		Kanji updatedKanji = KanjiToDTOMapper.map(kanjiDTO);  
+	public KanjiDTO updateKanji(@RequestBody KanjiDTO kanjiDTO, @PathVariable Long id) {
+		Kanji updatedKanji = KanjiToDTOMapper.map(kanjiDTO);
 		updatedKanji.setId(id);
 		return KanjiToDTOMapper.map(kanjiService.updateKanji(updatedKanji));
 	}
 
 	@PatchMapping("/{id}")
-	public KanjiDTO updateKanjiNumberOfUse( @PathVariable Long id) {
+	public KanjiDTO updateKanjiNumberOfUse(@PathVariable Long id) {
 		return KanjiToDTOMapper.map(kanjiService.updateKanjiNumberOfUse(id));
 	}
-
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
@@ -65,28 +64,28 @@ public class KanjiController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public KanjiDTO search( @PathVariable Long id) {
+	public KanjiDTO search(@PathVariable Long id) {
 		return KanjiToDTOMapper.map(kanjiService.search(id));
 	}
-	
+
 	@GetMapping(value = "/findByKanji/{kanji}")
-	public KanjiDTO findWithKanji( @PathVariable String kanji) {
+	public KanjiDTO findWithKanji(@PathVariable String kanji) {
 		return KanjiToDTOMapper.map(kanjiService.findByKanji(kanji));
 	}
 
 	@GetMapping("/all")
 	public List<KanjiDTO> getAllKanjis() {
 		List<Kanji> kanjis = kanjiService.findAll();
-		return kanjis
-				.stream()
-				.map(kanji -> KanjiToDTOMapper.map(kanji))
-				.collect(Collectors.toList());
+		return kanjis.stream().map(kanji -> KanjiToDTOMapper.map(kanji)).collect(Collectors.toList());
 	}
 
 	@GetMapping("/findWithCriteria")
 	@ResponseBody
-	public List<KanjiDTO> getAllKanjisAccortingToCriteria( @RequestParam(required = false) Character kanji,@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning,
-			@RequestParam(required = false) Integer strokeNumber,@RequestParam(required = false) Integer minStrokeNumber, @RequestParam(required = false) Integer maxStrokeNumber, @RequestParam(required = false) String radicals ) { 
+	public List<KanjiDTO> getAllKanjisAccortingToCriteria(@RequestParam(required = false) Character kanji,
+			@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning,
+			@RequestParam(required = false) Integer strokeNumber,
+			@RequestParam(required = false) Integer minStrokeNumber,
+			@RequestParam(required = false) Integer maxStrokeNumber, @RequestParam(required = false) String radicals) {
 		KanjiCriteriaDTO kanjiCriteriaDTO = new KanjiCriteriaDTO();
 		kanjiCriteriaDTO.setKanji(kanji);
 		kanjiCriteriaDTO.setPronunciation(pronunciation);
@@ -95,44 +94,20 @@ public class KanjiController {
 		kanjiCriteriaDTO.setMinStrokeNumber(minStrokeNumber);
 		kanjiCriteriaDTO.setMaxStrokeNumber(maxStrokeNumber);
 		kanjiCriteriaDTO.setRadicals(radicals);
-		
+
 		List<Kanji> kanjis = kanjiService.findWithCriteria(kanjiCriteriaDTO);
-		return kanjis
-				.stream()
-				.map(lKanji -> KanjiToDTOMapper.map(lKanji))
-				.collect(Collectors.toList());
+		return kanjis.stream().map(lKanji -> KanjiToDTOMapper.map(lKanji)).collect(Collectors.toList());
 	}
-	
+
 	@GetMapping("/findKanjiInSentence")
-	public List<KanjiDTO> findKanjiInSentence(@RequestBody String sentence) { 
+	public List<KanjiDTO> findKanjiInSentence(@RequestBody String sentence) {
 		List<Kanji> kanjis = kanjiService.listOfKanjiContainedinSentence(sentence);
-		return kanjis
-				.stream()
-				.map(kanji -> KanjiToDTOMapper.map(kanji))
-				.collect(Collectors.toList());
+		return kanjis.stream().map(kanji -> KanjiToDTOMapper.map(kanji)).collect(Collectors.toList());
 	}
-	
+
 	@GetMapping("/findMostUsedKanji/{quantity}")
-	public List<ObjectDTO> findMostUsedKanji(@PathVariable Integer quantity) { 
+	public List<ObjectDTO> findMostUsedKanji(@PathVariable Integer quantity) {
 		List<Kanji> kanjis = kanjiService.findMostUsedKanji(quantity);
-		return kanjis
-				.stream()
-				.map(kanji -> ObjectDTOMapper.map(kanji))
-				.collect(Collectors.toList());
+		return kanjis.stream().map(kanji -> ObjectDTOMapper.map(kanji)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

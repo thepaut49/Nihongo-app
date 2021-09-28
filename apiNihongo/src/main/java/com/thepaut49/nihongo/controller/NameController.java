@@ -28,7 +28,7 @@ import com.thepaut49.nihongo.service.NameService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/names")
 public class NameController {
@@ -38,21 +38,21 @@ public class NameController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public NameDTO createName( @RequestBody NameDTO nameDTO) {
+	public NameDTO createName(@RequestBody NameDTO nameDTO) {
 		Name newName = NameToDTOMapper.map(nameDTO);
 		return NameToDTOMapper.map(nameService.createName(newName));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public NameDTO updateName( @RequestBody NameDTO nameDTO, @PathVariable Long id) {
-		Name updatedName = NameToDTOMapper.map(nameDTO);  
+	public NameDTO updateName(@RequestBody NameDTO nameDTO, @PathVariable Long id) {
+		Name updatedName = NameToDTOMapper.map(nameDTO);
 		updatedName.setId(id);
 		return NameToDTOMapper.map(nameService.updateName(updatedName));
 	}
-	
+
 	@PatchMapping("/{id}")
-	public NameDTO updateNameNumberOfUse( @PathVariable Long id) {
+	public NameDTO updateNameNumberOfUse(@PathVariable Long id) {
 		return NameToDTOMapper.map(nameService.updateNameNumberOfUse(id));
 	}
 
@@ -64,61 +64,37 @@ public class NameController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public NameDTO findById( @PathVariable Long id) {
+	public NameDTO findById(@PathVariable Long id) {
 		return NameToDTOMapper.map(nameService.findById(id));
 	}
-	
+
 	@GetMapping(value = "/findByKanjis/{kanjis}")
-	public NameDTO findByKanjis( @PathVariable String kanjis) {
+	public NameDTO findByKanjis(@PathVariable String kanjis) {
 		return NameToDTOMapper.map(nameService.findByKanjis(kanjis));
 	}
 
 	@GetMapping("/all")
 	public List<NameDTO> getAllNames() {
 		List<Name> names = nameService.findAll();
-		return names
-				.stream()
-				.map(name -> NameToDTOMapper.map(name))
-				.collect(Collectors.toList());
+		return names.stream().map(name -> NameToDTOMapper.map(name)).collect(Collectors.toList());
 	}
 
 	@GetMapping("/findWithCriteria")
 	@ResponseBody
-	public List<NameDTO> getAllNamesAccortingToCriteria( @RequestParam(required = false) String kanjis,@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning ) { 
+	public List<NameDTO> getAllNamesAccortingToCriteria(@RequestParam(required = false) String kanjis,
+			@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning) {
 		NameCriteriaDTO nameCriteriaDTO = new NameCriteriaDTO();
 		nameCriteriaDTO.setKanjis(kanjis);
 		nameCriteriaDTO.setPronunciation(pronunciation);
 		nameCriteriaDTO.setMeaning(meaning);
-		
+
 		List<Name> names = nameService.findWithCriteria(nameCriteriaDTO);
-		return names
-				.stream()
-				.map(lName -> NameToDTOMapper.map(lName))
-				.collect(Collectors.toList());
+		return names.stream().map(lName -> NameToDTOMapper.map(lName)).collect(Collectors.toList());
 	}
-	
-	
+
 	@GetMapping("/findMostUsedNames/{quantity}")
-	public List<ObjectDTO> findMostUsedNames(@PathVariable Integer quantity) { 
+	public List<ObjectDTO> findMostUsedNames(@PathVariable Integer quantity) {
 		List<Name> names = nameService.findMostUsedNames(quantity);
-		return names
-				.stream()
-				.map(name -> ObjectDTOMapper.map(name))
-				.collect(Collectors.toList());
+		return names.stream().map(name -> ObjectDTOMapper.map(name)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

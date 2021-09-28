@@ -22,7 +22,7 @@ import com.thepaut49.nihongo.service.SuffixService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/suffixs")
 public class SuffixController {
@@ -32,15 +32,15 @@ public class SuffixController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public SuffixDTO createSuffix( @RequestBody SuffixDTO suffixDTO) {
+	public SuffixDTO createSuffix(@RequestBody SuffixDTO suffixDTO) {
 		Suffix newSuffix = SuffixToDTOMapper.map(suffixDTO);
 		return SuffixToDTOMapper.map(suffixService.createSuffix(newSuffix));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public SuffixDTO updateSuffix( @RequestBody SuffixDTO suffixDTO, @PathVariable Long id) {
-		Suffix updatedSuffix = SuffixToDTOMapper.map(suffixDTO);  
+	public SuffixDTO updateSuffix(@RequestBody SuffixDTO suffixDTO, @PathVariable Long id) {
+		Suffix updatedSuffix = SuffixToDTOMapper.map(suffixDTO);
 		updatedSuffix.setId(id);
 		return SuffixToDTOMapper.map(suffixService.updateSuffix(updatedSuffix));
 	}
@@ -53,36 +53,18 @@ public class SuffixController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public SuffixDTO findById( @PathVariable Long id) {
+	public SuffixDTO findById(@PathVariable Long id) {
 		return SuffixToDTOMapper.map(suffixService.findById(id));
 	}
-	
+
 	@GetMapping(value = "/findByKanjis/{kanjis}")
-	public SuffixDTO findByNeutralForm( @PathVariable String kanjis) {
+	public SuffixDTO findByNeutralForm(@PathVariable String kanjis) {
 		return SuffixToDTOMapper.map(suffixService.findByKanjis(kanjis));
 	}
 
 	@GetMapping("/all")
 	public List<SuffixDTO> getAllSuffixs() {
 		List<Suffix> suffixs = suffixService.findAll();
-		return suffixs
-				.stream()
-				.map(suffix -> SuffixToDTOMapper.map(suffix))
-				.collect(Collectors.toList());
+		return suffixs.stream().map(suffix -> SuffixToDTOMapper.map(suffix)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

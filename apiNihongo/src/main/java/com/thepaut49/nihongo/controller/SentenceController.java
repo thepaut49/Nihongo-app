@@ -25,7 +25,7 @@ import com.thepaut49.nihongo.service.SentenceService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/sentences")
 public class SentenceController {
@@ -35,15 +35,15 @@ public class SentenceController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public SentenceDTO createSentence( @RequestBody SentenceDTO sentenceDTO) {
+	public SentenceDTO createSentence(@RequestBody SentenceDTO sentenceDTO) {
 		Sentence newSentence = SentenceToDTOMapper.map(sentenceDTO);
 		return SentenceToDTOMapper.map(sentenceService.createSentence(newSentence));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public SentenceDTO updateSentence( @RequestBody SentenceDTO sentenceDTO, @PathVariable Long id) {
-		Sentence updatedSentence = SentenceToDTOMapper.map(sentenceDTO);  
+	public SentenceDTO updateSentence(@RequestBody SentenceDTO sentenceDTO, @PathVariable Long id) {
+		Sentence updatedSentence = SentenceToDTOMapper.map(sentenceDTO);
 		updatedSentence.setId(id);
 		return SentenceToDTOMapper.map(sentenceService.updateSentence(updatedSentence));
 	}
@@ -56,52 +56,33 @@ public class SentenceController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public SentenceDTO findById( @PathVariable Long id) {
+	public SentenceDTO findById(@PathVariable Long id) {
 		return SentenceToDTOMapper.map(sentenceService.findById(id));
 	}
-	
+
 	@GetMapping(value = "/findByKanjis/{kanjis}")
-	public SentenceDTO findByKanjis( @PathVariable String kanjis) {
+	public SentenceDTO findByKanjis(@PathVariable String kanjis) {
 		return SentenceToDTOMapper.map(sentenceService.findByKanjis(kanjis));
 	}
 
 	@GetMapping("/all")
 	public List<SentenceDTO> getAllSentences() {
 		List<Sentence> sentences = sentenceService.findAll();
-		return sentences
-				.stream()
-				.map(sentence -> SentenceToDTOMapper.map(sentence))
-				.collect(Collectors.toList());
+		return sentences.stream().map(sentence -> SentenceToDTOMapper.map(sentence)).collect(Collectors.toList());
 	}
 
 	@GetMapping("/findWithCriteria")
 	@ResponseBody
-	public List<SentenceDTO> getAllSentencesAccortingToCriteria( @RequestParam(required = false) String kanjis,@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning, @RequestParam(required = false) String topic ) { 
+	public List<SentenceDTO> getAllSentencesAccortingToCriteria(@RequestParam(required = false) String kanjis,
+			@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning,
+			@RequestParam(required = false) String topic) {
 		SentenceCriteriaDTO sentenceCriteriaDTO = new SentenceCriteriaDTO();
 		sentenceCriteriaDTO.setKanjis(kanjis);
 		sentenceCriteriaDTO.setPronunciation(pronunciation);
 		sentenceCriteriaDTO.setMeaning(meaning);
 		sentenceCriteriaDTO.setTopic(topic);
-		
+
 		List<Sentence> sentences = sentenceService.findWithCriteria(sentenceCriteriaDTO);
-		return sentences
-				.stream()
-				.map(lSentence -> SentenceToDTOMapper.map(lSentence))
-				.collect(Collectors.toList());
+		return sentences.stream().map(lSentence -> SentenceToDTOMapper.map(lSentence)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

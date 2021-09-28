@@ -12,7 +12,7 @@ import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/messages")
 public class MessageController {
@@ -21,7 +21,7 @@ public class MessageController {
 	private MessageService messageService;
 
 	@PostMapping("/create")
-	public MessageDTO createMessage( @RequestBody MessageDTO messageDTO) {
+	public MessageDTO createMessage(@RequestBody MessageDTO messageDTO) {
 		Message newMessage = MessageToDTOMapper.map(messageDTO);
 		return MessageToDTOMapper.map(messageService.createMessage(newMessage));
 	}
@@ -35,7 +35,7 @@ public class MessageController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping(value = "/{id}")
-	public MessageDTO findById( @PathVariable Long id) {
+	public MessageDTO findById(@PathVariable Long id) {
 		return MessageToDTOMapper.map(messageService.findById(id));
 	}
 
@@ -43,24 +43,6 @@ public class MessageController {
 	@GetMapping("/all")
 	public List<MessageDTO> getAllMessages() {
 		List<Message> messages = messageService.findAll();
-		return messages
-				.stream()
-				.map(message -> MessageToDTOMapper.map(message))
-				.collect(Collectors.toList());
+		return messages.stream().map(message -> MessageToDTOMapper.map(message)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

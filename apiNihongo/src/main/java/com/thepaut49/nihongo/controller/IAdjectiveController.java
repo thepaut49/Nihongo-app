@@ -28,7 +28,7 @@ import com.thepaut49.nihongo.service.IAdjectiveService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/iAdjectives")
 public class IAdjectiveController {
@@ -38,21 +38,21 @@ public class IAdjectiveController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public IAdjectiveDTO createIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO) {
+	public IAdjectiveDTO createIAdjective(@RequestBody IAdjectiveDTO iAdjectiveDTO) {
 		IAdjective newIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.createIAdjective(newIAdjective));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public IAdjectiveDTO updateIAdjective( @RequestBody IAdjectiveDTO iAdjectiveDTO, @PathVariable Long id) {
-		IAdjective updatedIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);  
+	public IAdjectiveDTO updateIAdjective(@RequestBody IAdjectiveDTO iAdjectiveDTO, @PathVariable Long id) {
+		IAdjective updatedIAdjective = IAdjectiveToDTOMapper.map(iAdjectiveDTO);
 		updatedIAdjective.setId(id);
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.updateIAdjective(updatedIAdjective));
 	}
-	
+
 	@PatchMapping("/{id}")
-	public IAdjectiveDTO updateIAdjectiveNumberOfUse( @PathVariable Long id) {
+	public IAdjectiveDTO updateIAdjectiveNumberOfUse(@PathVariable Long id) {
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.updateIAdjectiveNumberOfUse(id));
 	}
 
@@ -64,61 +64,39 @@ public class IAdjectiveController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public IAdjectiveDTO findById( @PathVariable Long id) {
+	public IAdjectiveDTO findById(@PathVariable Long id) {
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.findById(id));
 	}
-	
+
 	@GetMapping(value = "/findByKanjis/{kanjis}")
-	public IAdjectiveDTO findByNeutralForm( @PathVariable String kanjis) {
+	public IAdjectiveDTO findByNeutralForm(@PathVariable String kanjis) {
 		return IAdjectiveToDTOMapper.map(iAdjectiveService.findByKanjis(kanjis));
 	}
 
 	@GetMapping("/all")
 	public List<IAdjectiveDTO> getAllIAdjectives() {
 		List<IAdjective> iAdjectives = iAdjectiveService.findAll();
-		return iAdjectives
-				.stream()
-				.map(iAdjective -> IAdjectiveToDTOMapper.map(iAdjective))
+		return iAdjectives.stream().map(iAdjective -> IAdjectiveToDTOMapper.map(iAdjective))
 				.collect(Collectors.toList());
 	}
 
 	@GetMapping("/findWithCriteria")
 	@ResponseBody
-	public List<IAdjectiveDTO> getAllIAdjectivesAccortingToCriteria( @RequestParam(required = false) String kanjis,@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning ) { 
+	public List<IAdjectiveDTO> getAllIAdjectivesAccortingToCriteria(@RequestParam(required = false) String kanjis,
+			@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning) {
 		IAdjectiveCriteriaDTO iAdjectiveCriteriaDTO = new IAdjectiveCriteriaDTO();
 		iAdjectiveCriteriaDTO.setKanjis(kanjis);
 		iAdjectiveCriteriaDTO.setPronunciation(pronunciation);
 		iAdjectiveCriteriaDTO.setMeaning(meaning);
-		
+
 		List<IAdjective> iAdjectives = iAdjectiveService.findWithCriteria(iAdjectiveCriteriaDTO);
-		return iAdjectives
-				.stream()
-				.map(lIAdjective -> IAdjectiveToDTOMapper.map(lIAdjective))
+		return iAdjectives.stream().map(lIAdjective -> IAdjectiveToDTOMapper.map(lIAdjective))
 				.collect(Collectors.toList());
 	}
-	
-	
+
 	@GetMapping("/findMostUsedIAdjectives/{quantity}")
-	public List<ObjectDTO> findMostUsedIAdjectives(@PathVariable Integer quantity) { 
+	public List<ObjectDTO> findMostUsedIAdjectives(@PathVariable Integer quantity) {
 		List<IAdjective> iAdjectives = iAdjectiveService.findMostUsedIAdjectives(quantity);
-		return iAdjectives
-				.stream()
-				.map(iAdjective -> ObjectDTOMapper.map(iAdjective))
-				.collect(Collectors.toList());
+		return iAdjectives.stream().map(iAdjective -> ObjectDTOMapper.map(iAdjective)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

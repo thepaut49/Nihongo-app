@@ -28,7 +28,7 @@ import com.thepaut49.nihongo.service.VerbService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/verbs")
 public class VerbController {
@@ -38,21 +38,21 @@ public class VerbController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public VerbDTO createVerb( @RequestBody VerbDTO verbDTO) {
+	public VerbDTO createVerb(@RequestBody VerbDTO verbDTO) {
 		Verb newVerb = VerbToDTOMapper.map(verbDTO);
 		return VerbToDTOMapper.map(verbService.createVerb(newVerb));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public VerbDTO updateVerb( @RequestBody VerbDTO verbDTO, @PathVariable Long id) {
-		Verb updatedVerb = VerbToDTOMapper.map(verbDTO);  
+	public VerbDTO updateVerb(@RequestBody VerbDTO verbDTO, @PathVariable Long id) {
+		Verb updatedVerb = VerbToDTOMapper.map(verbDTO);
 		updatedVerb.setId(id);
 		return VerbToDTOMapper.map(verbService.updateVerb(updatedVerb));
 	}
-	
+
 	@PatchMapping("/{id}")
-	public VerbDTO updateVerbNumberOfUse( @PathVariable Long id) {
+	public VerbDTO updateVerbNumberOfUse(@PathVariable Long id) {
 		return VerbToDTOMapper.map(verbService.updateVerbNumberOfUse(id));
 	}
 
@@ -64,63 +64,39 @@ public class VerbController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public VerbDTO findById( @PathVariable Long id) {
+	public VerbDTO findById(@PathVariable Long id) {
 		return VerbToDTOMapper.map(verbService.findById(id));
 	}
-	
+
 	@GetMapping(value = "/findByNeutralForm/{neutralForm}")
-	public VerbDTO findByNeutralForm( @PathVariable String neutralForm) {
+	public VerbDTO findByNeutralForm(@PathVariable String neutralForm) {
 		return VerbToDTOMapper.map(verbService.findByNeutralForm(neutralForm));
 	}
 
 	@GetMapping("/all")
 	public List<VerbDTO> getAllVerbs() {
 		List<Verb> verbs = verbService.findAll();
-		return verbs
-				.stream()
-				.map(verb -> VerbToDTOMapper.map(verb))
-				.collect(Collectors.toList());
+		return verbs.stream().map(verb -> VerbToDTOMapper.map(verb)).collect(Collectors.toList());
 	}
 
 	@GetMapping("/findWithCriteria")
 	@ResponseBody
-	public List<VerbDTO> getAllVerbsAccortingToCriteria( @RequestParam(required = false) String neutralForm,@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning,
-			@RequestParam(required = false) String groupe ) { 
+	public List<VerbDTO> getAllVerbsAccortingToCriteria(@RequestParam(required = false) String neutralForm,
+			@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning,
+			@RequestParam(required = false) String groupe) {
 		VerbCriteriaDTO verbCriteriaDTO = new VerbCriteriaDTO();
 		verbCriteriaDTO.setNeutralForm(neutralForm);
 		verbCriteriaDTO.setPronunciation(pronunciation);
 		verbCriteriaDTO.setMeaning(meaning);
 		verbCriteriaDTO.setGroupe(groupe);
-		
+
 		List<Verb> verbs = verbService.findWithCriteria(verbCriteriaDTO);
-		return verbs
-				.stream()
-				.map(lVerb -> VerbToDTOMapper.map(lVerb))
-				.collect(Collectors.toList());
+		return verbs.stream().map(lVerb -> VerbToDTOMapper.map(lVerb)).collect(Collectors.toList());
 	}
-	
-	
+
 	@GetMapping("/findMostUsedVerbs/{quantity}")
-	public List<ObjectDTO> findMostUsedVerbs(@PathVariable Integer quantity) { 
+	public List<ObjectDTO> findMostUsedVerbs(@PathVariable Integer quantity) {
 		List<Verb> verbs = verbService.findMostUsedVerbs(quantity);
-		return verbs
-				.stream()
-				.map(verb -> ObjectDTOMapper.map(verb))
-				.collect(Collectors.toList());
+		return verbs.stream().map(verb -> ObjectDTOMapper.map(verb)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

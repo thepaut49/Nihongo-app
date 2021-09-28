@@ -28,7 +28,7 @@ import com.thepaut49.nihongo.service.NaAdjectiveService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/naAdjectives")
 public class NaAdjectiveController {
@@ -38,21 +38,21 @@ public class NaAdjectiveController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public NaAdjectiveDTO createNaAdjective( @RequestBody NaAdjectiveDTO naAdjectiveDTO) {
+	public NaAdjectiveDTO createNaAdjective(@RequestBody NaAdjectiveDTO naAdjectiveDTO) {
 		NaAdjective newNaAdjective = NaAdjectiveToDTOMapper.map(naAdjectiveDTO);
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.createNaAdjective(newNaAdjective));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public NaAdjectiveDTO updateNaAdjective( @RequestBody NaAdjectiveDTO naAdjectiveDTO, @PathVariable Long id) {
-		NaAdjective updatedNaAdjective = NaAdjectiveToDTOMapper.map(naAdjectiveDTO);  
+	public NaAdjectiveDTO updateNaAdjective(@RequestBody NaAdjectiveDTO naAdjectiveDTO, @PathVariable Long id) {
+		NaAdjective updatedNaAdjective = NaAdjectiveToDTOMapper.map(naAdjectiveDTO);
 		updatedNaAdjective.setId(id);
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.updateNaAdjective(updatedNaAdjective));
 	}
-	
+
 	@PatchMapping("/{id}")
-	public NaAdjectiveDTO updateNaAdjectiveNumberOfUse( @PathVariable Long id) {
+	public NaAdjectiveDTO updateNaAdjectiveNumberOfUse(@PathVariable Long id) {
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.updateNaAdjectiveNumberOfUse(id));
 	}
 
@@ -64,61 +64,39 @@ public class NaAdjectiveController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public NaAdjectiveDTO findById( @PathVariable Long id) {
+	public NaAdjectiveDTO findById(@PathVariable Long id) {
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.findById(id));
 	}
-	
+
 	@GetMapping(value = "/findByKanjis/{kanjis}")
-	public NaAdjectiveDTO findByNeutralForm( @PathVariable String kanjis) {
+	public NaAdjectiveDTO findByNeutralForm(@PathVariable String kanjis) {
 		return NaAdjectiveToDTOMapper.map(naAdjectiveService.findByKanjis(kanjis));
 	}
 
 	@GetMapping("/all")
 	public List<NaAdjectiveDTO> getAllNaAdjectives() {
 		List<NaAdjective> naAdjectives = naAdjectiveService.findAll();
-		return naAdjectives
-				.stream()
-				.map(naAdjective -> NaAdjectiveToDTOMapper.map(naAdjective))
+		return naAdjectives.stream().map(naAdjective -> NaAdjectiveToDTOMapper.map(naAdjective))
 				.collect(Collectors.toList());
 	}
 
 	@GetMapping("/findWithCriteria")
 	@ResponseBody
-	public List<NaAdjectiveDTO> getAllNaAdjectivesAccortingToCriteria( @RequestParam(required = false) String kanjis,@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning ) { 
+	public List<NaAdjectiveDTO> getAllNaAdjectivesAccortingToCriteria(@RequestParam(required = false) String kanjis,
+			@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String meaning) {
 		NaAdjectiveCriteriaDTO naAdjectiveCriteriaDTO = new NaAdjectiveCriteriaDTO();
 		naAdjectiveCriteriaDTO.setKanjis(kanjis);
 		naAdjectiveCriteriaDTO.setPronunciation(pronunciation);
 		naAdjectiveCriteriaDTO.setMeaning(meaning);
-		
+
 		List<NaAdjective> naAdjectives = naAdjectiveService.findWithCriteria(naAdjectiveCriteriaDTO);
-		return naAdjectives
-				.stream()
-				.map(lNaAdjective -> NaAdjectiveToDTOMapper.map(lNaAdjective))
+		return naAdjectives.stream().map(lNaAdjective -> NaAdjectiveToDTOMapper.map(lNaAdjective))
 				.collect(Collectors.toList());
 	}
-	
-	
+
 	@GetMapping("/findMostUsedNaAdjectives/{quantity}")
-	public List<ObjectDTO> findMostUsedNaAdjectives(@PathVariable Integer quantity) { 
+	public List<ObjectDTO> findMostUsedNaAdjectives(@PathVariable Integer quantity) {
 		List<NaAdjective> naAdjectives = naAdjectiveService.findMostUsedNaAdjectives(quantity);
-		return naAdjectives
-				.stream()
-				.map(naAdjective -> ObjectDTOMapper.map(naAdjective))
-				.collect(Collectors.toList());
+		return naAdjectives.stream().map(naAdjective -> ObjectDTOMapper.map(naAdjective)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

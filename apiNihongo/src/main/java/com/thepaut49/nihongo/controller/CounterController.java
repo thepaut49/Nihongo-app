@@ -28,7 +28,7 @@ import com.thepaut49.nihongo.service.CounterService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/counters")
 public class CounterController {
@@ -38,21 +38,21 @@ public class CounterController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public CounterDTO createCounter( @RequestBody CounterDTO counterDTO) {
+	public CounterDTO createCounter(@RequestBody CounterDTO counterDTO) {
 		Counter newCounter = CounterToDTOMapper.map(counterDTO);
 		return CounterToDTOMapper.map(counterService.createCounter(newCounter));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public CounterDTO updateCounter( @RequestBody CounterDTO counterDTO, @PathVariable Long id) {
-		Counter updatedCounter = CounterToDTOMapper.map(counterDTO);  
+	public CounterDTO updateCounter(@RequestBody CounterDTO counterDTO, @PathVariable Long id) {
+		Counter updatedCounter = CounterToDTOMapper.map(counterDTO);
 		updatedCounter.setId(id);
 		return CounterToDTOMapper.map(counterService.updateCounter(updatedCounter));
 	}
-	
+
 	@PatchMapping("/{id}")
-	public CounterDTO updateCounterNumberOfUse( @PathVariable Long id) {
+	public CounterDTO updateCounterNumberOfUse(@PathVariable Long id) {
 		return CounterToDTOMapper.map(counterService.updateCounterNumberOfUse(id));
 	}
 
@@ -64,62 +64,37 @@ public class CounterController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public CounterDTO findById( @PathVariable Long id) {
+	public CounterDTO findById(@PathVariable Long id) {
 		return CounterToDTOMapper.map(counterService.findById(id));
 	}
 
-
 	@GetMapping(value = "/findByKanjis/{kanjis}")
-	public CounterDTO findByNeutralForm( @PathVariable String kanjis) {
+	public CounterDTO findByNeutralForm(@PathVariable String kanjis) {
 		return CounterToDTOMapper.map(counterService.findByKanjis(kanjis));
 	}
 
 	@GetMapping("/all")
 	public List<CounterDTO> getAllCounters() {
 		List<Counter> counters = counterService.findAll();
-		return counters
-				.stream()
-				.map(counter -> CounterToDTOMapper.map(counter))
-				.collect(Collectors.toList());
+		return counters.stream().map(counter -> CounterToDTOMapper.map(counter)).collect(Collectors.toList());
 	}
 
 	@GetMapping("/findWithCriteria")
 	@ResponseBody
-	public List<CounterDTO> getAllCountersAccortingToCriteria( @RequestParam(required = false) String kanjis,@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String use ) { 
+	public List<CounterDTO> getAllCountersAccortingToCriteria(@RequestParam(required = false) String kanjis,
+			@RequestParam(required = false) String pronunciation, @RequestParam(required = false) String use) {
 		CounterCriteriaDTO counterCriteriaDTO = new CounterCriteriaDTO();
 		counterCriteriaDTO.setKanjis(kanjis);
 		counterCriteriaDTO.setPronunciation(pronunciation);
 		counterCriteriaDTO.setUse(use);
-		
+
 		List<Counter> counters = counterService.findWithCriteria(counterCriteriaDTO);
-		return counters
-				.stream()
-				.map(lCounter -> CounterToDTOMapper.map(lCounter))
-				.collect(Collectors.toList());
+		return counters.stream().map(lCounter -> CounterToDTOMapper.map(lCounter)).collect(Collectors.toList());
 	}
-	
-	
+
 	@GetMapping("/findMostUsedCounters/{quantity}")
-	public List<ObjectDTO> findMostUsedCounters(@PathVariable Integer quantity) { 
+	public List<ObjectDTO> findMostUsedCounters(@PathVariable Integer quantity) {
 		List<Counter> counters = counterService.findMostUsedCounters(quantity);
-		return counters
-				.stream()
-				.map(counter -> ObjectDTOMapper.map(counter))
-				.collect(Collectors.toList());
+		return counters.stream().map(counter -> ObjectDTOMapper.map(counter)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

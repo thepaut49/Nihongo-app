@@ -22,7 +22,7 @@ import com.thepaut49.nihongo.service.ParticuleService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
 @RestController
 @RequestMapping("/particules")
 public class ParticuleController {
@@ -32,15 +32,15 @@ public class ParticuleController {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/create")
-	public ParticuleDTO createParticule( @RequestBody ParticuleDTO particuleDTO) {
+	public ParticuleDTO createParticule(@RequestBody ParticuleDTO particuleDTO) {
 		Particule newParticule = ParticuleToDTOMapper.map(particuleDTO);
 		return ParticuleToDTOMapper.map(particuleService.createParticule(newParticule));
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public ParticuleDTO updateParticule( @RequestBody ParticuleDTO particuleDTO, @PathVariable Long id) {
-		Particule updatedParticule = ParticuleToDTOMapper.map(particuleDTO);  
+	public ParticuleDTO updateParticule(@RequestBody ParticuleDTO particuleDTO, @PathVariable Long id) {
+		Particule updatedParticule = ParticuleToDTOMapper.map(particuleDTO);
 		updatedParticule.setId(id);
 		return ParticuleToDTOMapper.map(particuleService.updateParticule(updatedParticule));
 	}
@@ -53,36 +53,18 @@ public class ParticuleController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ParticuleDTO findById( @PathVariable Long id) {
+	public ParticuleDTO findById(@PathVariable Long id) {
 		return ParticuleToDTOMapper.map(particuleService.findById(id));
 	}
-	
+
 	@GetMapping(value = "/findByKanjis/{kanjis}")
-	public ParticuleDTO findByKanjis( @PathVariable String kanjis) {
+	public ParticuleDTO findByKanjis(@PathVariable String kanjis) {
 		return ParticuleToDTOMapper.map(particuleService.findByKanjis(kanjis));
 	}
 
 	@GetMapping("/all")
 	public List<ParticuleDTO> getAllParticules() {
 		List<Particule> particules = particuleService.findAll();
-		return particules
-				.stream()
-				.map(particule -> ParticuleToDTOMapper.map(particule))
-				.collect(Collectors.toList());
+		return particules.stream().map(particule -> ParticuleToDTOMapper.map(particule)).collect(Collectors.toList());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
