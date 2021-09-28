@@ -26,7 +26,7 @@ services:
       context: front-end-nihongo-redux # Use an image built from the specified dockerfile in the `front-end-nihongo` directory.
       dockerfile: Dockerfile
       args:
-        REACT_APP_API_BASE_URL: http://HOST_NAME:BACK_PORT
+        REACT_APP_API_BASE_URL: http://BACK_HOST_NAME:BACK_PORT
     ports:
       - "FRONT_PORT:80" # Forward the exposed port 80 on the container to port 80 on the host machine
     restart: always
