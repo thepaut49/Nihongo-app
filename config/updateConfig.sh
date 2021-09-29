@@ -8,7 +8,6 @@ db_name=$(cat $config_file | jq '. | .db_name' | tr -d '"');
 db_username=$(cat $config_file | jq '. | .db_username' | tr -d '"');
 db_password=$(cat $config_file | jq '. | .db_password' | tr -d '"');
 back_port=$(cat $config_file | jq '. | .back_port' | tr -d '"');
-front_port=$(cat $config_file | jq '. | .front_port' | tr -d '"');
 secret=$(cat $config_file | jq '. | .secret' | tr -d '"');
 
 echo "front_host_name   = $front_host_name";
@@ -18,7 +17,6 @@ echo "db_name     = $db_name";
 echo "db_username = $db_username";
 echo "db_password = $db_password";
 echo "back_port   = $back_port";
-echo "front_port  = $front_port";
 echo "secret  = $secret";
 
 cd ..
@@ -40,12 +38,10 @@ echo "BACK_DIR   = $BACK_DIR";
 cd "$BACK_DIR/src/main/java/com/thepaut49/nihongo/controller"
 ls
 grep -RiIl 'FRONT_HOST_NAME' | xargs sed -i "s/FRONT_HOST_NAME/$front_host_name/g"
-grep -RiIl 'FRONT_PORT' | xargs sed -i "s/FRONT_PORT/$front_port/g"
 
 #cd user
 #ls
-#grep -RiIl 'HOST_NAME' | xargs sed -i "s/HOST_NAME/$host_name/g"
-#grep -RiIl 'FRONT_PORT' | xargs sed -i "s/FRONT_PORT/$front_port/g"
+#grep -RiIl 'FRONT_HOST_NAME' | xargs sed -i "s/FRONT_HOST_NAME/$front_host_name/g"
 
 cd "$BACK_DIR/src/main/resources"
 sed -i "s/DB_HOST/$db_host/g" application.properties
@@ -74,4 +70,3 @@ sed -i "s/DB_USERNAME/$db_username/g" docker-compose.yml
 sed -i "s/DB_PASSWORD/$db_password/g" docker-compose.yml
 sed -i "s/BACK_HOST_NAME/$back_host_name/g" docker-compose.yml
 sed -i "s/BACK_PORT/$back_port/g" docker-compose.yml
-sed -i "s/FRONT_PORT/$front_port/g" docker-compose.yml

@@ -28,7 +28,7 @@ import com.thepaut49.nihongo.service.KanjiService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://FRONT_HOST_NAME:FRONT_PORT", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME", maxAge = 3600)
 @RestController
 @RequestMapping("/kanjis")
 public class KanjiController {

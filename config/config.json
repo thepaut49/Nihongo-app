@@ -1,11 +1,10 @@
 {
-  "front_host_name": "0.0.0.0",
+  "front_host_name": "0.0.0.0:3000",
   "back_host_name": "0.0.0.0",
   "db_host": "db",
   "db_name": "dbnihongodev",
   "db_username": "thepolo49",
   "db_password": "Pastel12008?",
   "back_port": "8080",
-  "front_port": "3000",
   "secret": "Mon nouveau Secret"
 }
