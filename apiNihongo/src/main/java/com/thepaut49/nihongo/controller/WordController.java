@@ -28,7 +28,7 @@ import com.thepaut49.nihongo.service.WordService;
 
 import javax.annotation.security.RolesAllowed;
 
-@CrossOrigin(origins = "http://FRONT_HOST_NAME", maxAge = 3600)
+@CrossOrigin(origins = "http://nihongo-tool.ovh", maxAge = 3600)
 @RestController
 @RequestMapping("/words")
 public class WordController {

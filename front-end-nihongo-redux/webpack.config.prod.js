@@ -29,7 +29,7 @@ module.exports = {
       //this global makes sure React is built in prod mod
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "process.env.REACT_APP_API_BASE_URL": JSON.stringify(
-        "http://BACK_HOST_NAME:BACK_PORT"
+        "http://0.0.0.0:9090"
       ),
     }),
     new HtmlWebpackPlugin({
