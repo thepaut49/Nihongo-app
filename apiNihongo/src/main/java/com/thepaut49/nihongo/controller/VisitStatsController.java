@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://192.168.1.10:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://FRONT_HOST_NAME", maxAge = 3600)
 @RestController
 @RequestMapping("/visitStats")
 public class VisitStatsController {
